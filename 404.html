@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,follow">
+<title>Loading… | CryptoRebateHub</title>
+<link rel="canonical" href="https://cryptorebatehub.com/">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei","Noto Sans KR",sans-serif;background:#070b13;color:#f0f3f8;display:flex;align-items:center;justify-content:center;min-height:100vh;text-align:center;padding:20px}
+.box{max-width:480px}
+.spinner{width:48px;height:48px;border:3px solid rgba(16,216,160,.2);border-top-color:#10d8a0;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 24px}
+@keyframes spin{to{transform:rotate(360deg)}}
+h1{font-size:20px;margin-bottom:12px;color:#10d8a0}
+p{color:#a8b1c2;font-size:14px;margin-bottom:24px;line-height:1.7}
+a{color:#10d8a0;text-decoration:none;border:1px solid rgba(16,216,160,.4);padding:10px 24px;border-radius:8px;display:inline-block;font-size:13.5px;font-weight:500;transition:.2s}
+a:hover{background:rgba(16,216,160,.1)}
+</style>
+<script>
+// SPA fallback: GitHub Pages serves this 404 for any URL that has no actual file.
+// We pass the original path to /?p=... so the SPA can restore it via history.replaceState.
+(function(){
+  var path=location.pathname;
+  // Don't loop redirect for root
+  if(path==='/'||path===''||path==='/index.html'){
+    location.replace('/');
+    return;
+  }
+  // Pass the path (and query, hash) to index.html
+  var encoded=encodeURIComponent(path+location.search+location.hash);
+  location.replace('/?p='+encoded);
+})();
+</script>
+</head>
+<body>
+<div class="box">
+<div class="spinner"></div>
+<h1>正在跳转 / Loading...</h1>
+<p>页面正在加载，请稍候。<br>If not redirected, click below.</p>
+<a href="/">返回首页 / Home</a>
+</div>
+</body>
+</html>

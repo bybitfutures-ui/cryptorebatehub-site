@@ -1,0 +1,75 @@
+# CryptoRebateHub robots.txt
+# Updated: 2026-05-05
+
+User-agent: *
+Allow: /
+Disallow: /mgr-7a9f3c2e.html
+Disallow: /admin
+Disallow: /go/
+
+User-agent: Googlebot
+Allow: /
+Disallow: /mgr-7a9f3c2e.html
+Disallow: /go/
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Googlebot-Mobile
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+Disallow: /mgr-7a9f3c2e.html
+Disallow: /go/
+
+User-agent: Baiduspider
+Allow: /
+Disallow: /mgr-7a9f3c2e.html
+Disallow: /go/
+
+User-agent: Sogou
+Allow: /
+Disallow: /mgr-7a9f3c2e.html
+
+User-agent: 360Spider
+Allow: /
+Disallow: /mgr-7a9f3c2e.html
+
+User-agent: NaverBot
+Allow: /
+
+User-agent: Yeti
+Allow: /
+
+User-agent: Yandex
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+Disallow: /mgr-7a9f3c2e.html
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /mgr-7a9f3c2e.html
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+Sitemap: https://cryptorebatehub.com/sitemap.xml
+Host: cryptorebatehub.com

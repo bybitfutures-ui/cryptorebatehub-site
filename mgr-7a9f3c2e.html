@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Management · CryptoRebateHub</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#070b13;--bg2:#0b1019;--bg3:#101724;--bg4:#192030;--tx:#f0f3f8;--tx2:#c2cad8;--tx3:#8a93a4;--bd:#1f2b42;--bd2:#2c3a55;--grn:#10d8a0;--grn2:#0fb88a;--grnA:rgba(16,216,160,.13);--blu:#7ac0ff;--bluA:rgba(122,192,255,.13);--red:#ff5060;--redA:rgba(255,80,96,.12);--yel:#fbbf24;--yelA:rgba(251,191,36,.12);--org:#ff8a3a;--r:10px;--r2:14px}
+body{font-family:'Inter','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC','Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',system-ui,-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--tx);line-height:1.6;font-size:14px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
+a{color:inherit;text-decoration:none}
+code{font-family:'JetBrains Mono',monospace;background:var(--bg3);padding:1px 5px;border-radius:4px;font-size:.92em;color:var(--grn)}
+.app{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+.sb{background:var(--bg2);border-right:1px solid var(--bd);padding:18px 14px;position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column}
+.sb-hd{display:flex;align-items:center;gap:9px;padding:0 6px 16px;border-bottom:1px solid var(--bd);margin-bottom:14px}
+.sb-mark{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--grn),var(--grn2));display:flex;align-items:center;justify-content:center;font-weight:900;font-size:17px;color:var(--bg)}
+.sb-tt{font-size:14px;font-weight:800;line-height:1.1}
+.sb-tt small{display:block;font-size:10.5px;color:var(--tx3);font-weight:500;margin-top:2px}
+.sb-nav{flex:1}
+.sb-nav a{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;color:var(--tx2);font-size:13.5px;font-weight:500;cursor:pointer;transition:.15s;margin-bottom:2px}
+.sb-nav a:hover{background:var(--bg3);color:var(--tx)}
+.sb-nav a.ac{background:var(--grnA);color:var(--grn);font-weight:600}
+.sb-nav a .ic{font-size:16px;width:18px;text-align:center}
+.sb-nav a .ct{margin-left:auto;font-size:10.5px;background:var(--bg3);padding:1px 7px;border-radius:99px;color:var(--tx3);font-family:'JetBrains Mono',monospace;font-weight:600}
+.sb-nav a.ac .ct{background:var(--grn);color:var(--bg)}
+.sb-nav .gp{font-size:10px;text-transform:uppercase;letter-spacing:1.3px;color:var(--tx3);font-weight:700;padding:14px 12px 6px}
+.sb-ft{padding-top:14px;border-top:1px solid var(--bd);font-size:12px;color:var(--tx3)}
+.main{padding:22px 30px 50px;min-width:0;max-width:100%}
+.mb-tg{display:none;background:var(--bg2);border:1px solid var(--bd);color:var(--tx);padding:7px 11px;border-radius:6px;cursor:pointer;font-size:14px;margin-bottom:14px}
+@media(max-width:900px){.app{grid-template-columns:1fr}.sb{position:fixed;top:0;left:-100%;width:240px;z-index:50;transition:.25s}.sb.opn{left:0}.mb-tg{display:inline-block}.main{padding:14px 16px 40px}}
+.tb{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:18px}
+.tb h1{font-size:20px;font-weight:800;letter-spacing:-.3px}
+.tb-r{display:flex;gap:8px;flex-wrap:wrap}
+.b{padding:8px 14px;border:none;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;font-family:inherit;transition:.15s;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.b:hover{transform:translateY(-1px)}
+.b:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.b-g{background:linear-gradient(135deg,var(--grn),var(--grn2));color:var(--bg)}
+.b-o{background:var(--bg2);border:1px solid var(--bd);color:var(--tx)}
+.b-o:hover{background:var(--bg3)}
+.b-r{background:var(--redA);color:var(--red)}
+.b-r:hover{background:var(--red);color:#fff}
+.b-y{background:var(--yelA);color:var(--yel)}
+.b-y:hover{background:var(--yel);color:var(--bg)}
+.b-b{background:var(--bluA);color:var(--blu)}
+.b-b:hover{background:var(--blu);color:var(--bg)}
+.clk{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r);padding:8px 14px;display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:8px;font-size:12.5px}
+.clk #clk-dis{font-family:'JetBrains Mono',monospace;color:var(--tx)}
+.pn{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r2);padding:22px 24px;margin-bottom:16px}
+.pn-h{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--bd)}
+.pn-h h2{font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px}
+.dash{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:18px}
+.dc{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r);padding:14px 16px}
+.dc-l{font-size:10.5px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-bottom:5px}
+.dc-v{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:800;line-height:1.1}
+.dc-s{font-size:12px;color:var(--tx3);margin-top:3px}
+.r{margin-bottom:12px}
+.r>label{display:block;font-size:12px;color:var(--tx3);text-transform:uppercase;letter-spacing:.7px;margin-bottom:5px;font-weight:600}
+.r input,.r textarea,.r select{width:100%;padding:9px 12px;background:var(--bg);border:1px solid var(--bd);border-radius:var(--r);color:var(--tx);font-family:inherit;font-size:13.5px;outline:none;transition:.15s}
+.r input:focus,.r textarea:focus,.r select:focus{border-color:var(--grn);background:var(--bg3)}
+.r textarea{font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.7;min-height:120px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.cb{display:inline-flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;user-select:none}
+.cb input{width:auto}
+@media(max-width:680px){.row2,.row3{grid-template-columns:1fr}}
+.ci{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--bg);border:1px solid var(--bd);border-radius:8px;margin-bottom:6px;flex-wrap:wrap}
+.ci input{flex:1;min-width:80px;font-size:13px;padding:6px 10px;background:var(--bg3)}
+.ci input[type="color"]{padding:0;height:30px;max-width:50px}
+.ci .rm{background:var(--redA);color:var(--red);border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;flex-shrink:0}
+.ci .rm:hover{background:var(--red);color:#fff}
+.ex-card{background:var(--bg);border:1px solid var(--bd);border-radius:var(--r2);padding:16px 18px;margin-bottom:14px}
+.ex-head{display:flex;align-items:center;gap:11px;flex-wrap:wrap;padding-bottom:12px;border-bottom:1px solid var(--bd);margin-bottom:14px}
+.ex-handle{display:flex;gap:4px}
+.ex-logo{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0}
+.ex-langs{margin-top:14px;background:var(--bg2);border:1px solid var(--bd);border-radius:9px;padding:14px}
+.ex-langs summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--tx2);padding:4px 0;user-select:none;list-style:none}
+.ex-langs summary::before{content:'▶';display:inline-block;margin-right:6px;font-size:9px;transition:.2s;color:var(--tx3)}
+.ex-langs[open] summary::before{transform:rotate(90deg)}
+.lang-r{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.lang-r>input{flex:1;min-width:100px}
+.lang-tag{display:inline-block;padding:4px 10px;border-radius:99px;font-size:12px;font-weight:700;background:var(--bg3);color:var(--tx2);min-width:46px;text-align:center;flex-shrink:0}
+.fr-card{padding:13px 14px;background:var(--bg);border:1px solid var(--bd);border-radius:9px;margin-bottom:10px}
+.al{display:flex;align-items:center;gap:12px;padding:13px 16px;background:var(--bg);border:1px solid var(--bd);border-radius:9px;margin-bottom:6px;flex-wrap:wrap;transition:.15s}
+.al:hover{border-color:var(--bd2)}
+.al h4{font-size:13.5px;font-weight:600;margin-bottom:3px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.al .am{font-size:12px;color:var(--tx3)}
+.lb-indi{display:inline-flex;gap:3px;margin-left:6px}
+.lb-indi span{font-size:9.5px;padding:2px 6px;border-radius:99px;background:var(--bg3);color:var(--tx3);font-weight:600}
+.lb-indi span.on{background:var(--grnA);color:var(--grn)}
+.asb{margin-bottom:12px;position:relative}
+.asb input{padding:9px 12px 9px 36px;width:100%;background:var(--bg);border:1px solid var(--bd);border-radius:var(--r);color:var(--tx);font-family:inherit;font-size:13.5px;outline:none}
+.asb::before{content:'🔍';position:absolute;left:13px;top:50%;transform:translateY(-50%);opacity:.5;pointer-events:none;font-size:13px}
+.ts{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--bg2);border:1px solid var(--grn);color:var(--grn);padding:11px 22px;border-radius:99px;font-size:13px;font-weight:600;z-index:99;transition:.3s;opacity:0;pointer-events:none;max-width:90vw;text-align:center}
+.ts.sh{transform:translateX(-50%) translateY(0);opacity:1}
+.ts.err{border-color:var(--red);color:var(--red)}
+.mb{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:100;display:none;align-items:center;justify-content:center;padding:18px}
+.mb.sh{display:flex}
+.mx{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r2);padding:24px;max-width:500px;width:100%;max-height:86vh;overflow-y:auto}
+.mx h2{font-size:17px;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.mx table{width:100%;border-collapse:collapse;font-size:13px}
+.mx td{padding:7px 4px;border-bottom:1px solid var(--bd)}
+.mx kbd{background:var(--bg3);border:1px solid var(--bd);border-radius:5px;padding:2px 8px;font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:600;color:var(--grn)}
+.lg-w{display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px}
+.lg-c{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r2);padding:36px 32px;max-width:380px;width:100%}
+.lg-c h1{font-size:22px;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.lg-c p{color:var(--tx3);font-size:13px;margin-bottom:20px;line-height:1.6}
+.lg-c input{width:100%;padding:12px 14px;background:var(--bg);border:1px solid var(--bd);border-radius:var(--r);color:var(--tx);font-family:inherit;font-size:14px;margin-bottom:14px;outline:none}
+.lg-c input:focus{border-color:var(--grn)}
+.tip{background:var(--bluA);border:1px solid rgba(95,177,255,.25);color:var(--blu);padding:10px 14px;border-radius:9px;font-size:12.5px;line-height:1.65;margin-bottom:14px}
+.tip code{background:var(--bg3);color:var(--blu)}
+.warn{background:var(--yelA);border-color:rgba(251,191,36,.25);color:var(--yel)}
+.ok{background:var(--grnA);border-color:rgba(16,216,160,.25);color:var(--grn)}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div class="ts" id="ts"></div>
+
+<script>
+'use strict';
+const $=q=>document.querySelector(q);
+const $$=q=>document.querySelectorAll(q);
+
+const DF={coins:[{inst:'BTC-USDT',sym:'BTC',color:'#f7931a',on:1,hidden:0},{inst:'ETH-USDT',sym:'ETH',color:'#627eea',on:1,hidden:0},{inst:'SOL-USDT',sym:'SOL',color:'#9945ff',on:1,hidden:0},{inst:'BNB-USDT',sym:'BNB',color:'#f0b41e',on:1,hidden:0},{inst:'XRP-USDT',sym:'XRP',color:'#00aae4',on:1,hidden:0},{inst:'DOGE-USDT',sym:'DOGE',color:'#c2a633',on:1,hidden:0},{inst:'ADA-USDT',sym:'ADA',color:'#0d3eaa',on:1,hidden:0},{inst:'AVAX-USDT',sym:'AVAX',color:'#e84142',on:1,hidden:0},{inst:'LINK-USDT',sym:'LINK',color:'#2a5ada',on:1,hidden:0},{inst:'DOT-USDT',sym:'DOT',color:'#e6007a',on:1,hidden:0}],exs:[{id:'okx',url:'https://www.okx.com/join/WLFI47',code:'WLFI47',ft:1,hidden:0,logo:'OK',color:'#10d8a0',rebate:'20%',name:{zh:'OKX 欧易','zh-TW':'OKX 歐易',en:'OKX',ko:'OKX'},sub:{zh:'综合实力领先 · 中文友好','zh-TW':'綜合實力領先 · 中文友好',en:'Leading global exchange',ko:'종합 선도 거래소'},features:{zh:['现货费率 0.08%（最低）','300+ 交易对','Web3 钱包功能完善','C2C 法币通道丰富','Proof of Reserves 公开'],'zh-TW':[],en:[],ko:[]}},{id:'binance',url:'https://www.binance.com/join?ref=WLFI47',code:'WLFI47',ft:1,hidden:0,logo:'BN',color:'#f0b41e',rebate:'20%',name:{zh:'Binance 币安','zh-TW':'Binance 幣安',en:'Binance',ko:'Binance'},sub:{zh:'全球交易量第一','zh-TW':'全球交易量第一',en:'Largest by volume',ko:'세계 최대 거래량'},features:{zh:['500+ 币种最多','全球流动性最佳','Launchpad 新币首发','BNB 抵扣手续费','Earn 理财产品最丰富'],'zh-TW':[],en:[],ko:[]}},{id:'bybit',url:'https://www.bybit.com/invite?ref=8DXZXGZ',code:'8DXZXGZ',ft:1,hidden:0,logo:'BY',color:'#ff8a3a',rebate:'33%',name:{zh:'Bybit','zh-TW':'Bybit',en:'Bybit',ko:'Bybit'},sub:{zh:'衍生品专业平台','zh-TW':'衍生品專業平台',en:'Pro derivatives platform',ko:'전문 파생상품 플랫폼'},features:{zh:['永续合约深度业内顶级','高达 100 倍杠杆','跟单交易生态成熟','API 稳定延迟低','返佣比例行业最高'],'zh-TW':[],en:[],ko:[]}}],links:{social:[{name:'Twitter',url:'',icon:'𝕏'},{name:'Telegram',url:'',icon:'✈'}],friends:[]},arts:[],autoTL:1};
+
+let D=ld(),AL=sessionStorage.getItem('crh_auth')==='1';
+
+function ld(){try{const s=localStorage.getItem('crh_d');const base=JSON.parse(JSON.stringify(DF));if(s){return Object.assign(base,JSON.parse(s))}return base}catch(e){return JSON.parse(JSON.stringify(DF))}}
+let SV_TIMER=null,SV_DIRTY=false;
+function sv(immediate){
+  SV_DIRTY=true;
+  if(immediate){
+    if(SV_TIMER){clearTimeout(SV_TIMER);SV_TIMER=null}
+    return svNow();
+  }
+  // Debounce: schedule write 350ms later, batches rapid edits
+  if(SV_TIMER)clearTimeout(SV_TIMER);
+  SV_TIMER=setTimeout(svNow,350);
+  return true;
+}
+function svNow(){
+  SV_TIMER=null;
+  try{localStorage.setItem('crh_d',JSON.stringify(D));SV_DIRTY=false;return true}
+  catch(e){tst('保存失败：'+e.message,1);return false}
+}
+// Force immediate flush on tab close / navigation
+window.addEventListener('beforeunload',()=>{if(SV_DIRTY)svNow()});
+window.addEventListener('pagehide',()=>{if(SV_DIRTY)svNow()});
+function es(s){return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function tst(m,err){const t=$('#ts');t.textContent=m;t.className='ts sh'+(err?' err':'');setTimeout(()=>t.classList.remove('sh'),2400)}
+
+let NET_OFFSET=0,NET_OK=false,NET_LAST=0,NET_SRC='',LAST_DAY=null;
+async function syncTime(silent){
+  const sources=[{n:'OKX',u:'https://www.okx.com/api/v5/public/time',p:r=>parseInt(r.data?.[0]?.ts)},{n:'WorldTime',u:'https://worldtimeapi.org/api/timezone/Etc/UTC',p:r=>new Date(r.utc_datetime).getTime()}];
+  for(const src of sources){
+    try{
+      const t0=Date.now();
+      const r=await fetch(src.u,{cache:'no-store'});
+      if(!r.ok)continue;
+      const d=await r.json();
+      const ms=src.p(d);
+      if(!ms||isNaN(ms))continue;
+      NET_OFFSET=ms+(Date.now()-t0)/2-Date.now();
+      NET_OK=true;NET_LAST=Date.now();NET_SRC=src.n;
+      updClock();
+      if(!silent)tst('✓ 已同步 ('+src.n+')');
+      return true;
+    }catch(e){}
+  }
+  NET_OK=false;updClock();
+  if(!silent)tst('⚠️ 同步失败，使用本地时间',1);
+  return false;
+}
+function netNow(){return new Date(Date.now()+NET_OFFSET)}
+function netDay(){const d=netNow();return d.getUTCFullYear()*10000+(d.getUTCMonth()+1)*100+d.getUTCDate()}
+function netToday(){return netNow().toISOString().slice(0,10)}
+function fmtT(d){return d.getUTCFullYear()+'-'+String(d.getUTCMonth()+1).padStart(2,'0')+'-'+String(d.getUTCDate()).padStart(2,'0')+' '+String(d.getUTCHours()).padStart(2,'0')+':'+String(d.getUTCMinutes()).padStart(2,'0')+':'+String(d.getUTCSeconds()).padStart(2,'0')+' UTC'}
+function updClock(){
+  const el=$('#clk-dis');if(!el)return;
+  const n=netNow();
+  const badge=NET_OK?'<span style="color:var(--grn)">● '+NET_SRC+'</span>':'<span style="color:var(--yel)">● 本地</span>';
+  const age=NET_LAST?Math.round((Date.now()-NET_LAST)/1000):0;
+  el.innerHTML=fmtT(n)+' · '+badge+(NET_LAST?' · '+(age<60?age+'s':Math.round(age/60)+'m')+'前同步':'');
+}
+function checkDayChange(){const d=netDay();if(LAST_DAY===null){LAST_DAY=d;return}if(d!==LAST_DAY){LAST_DAY=d;if(AL)render()}}
+// Auto-publish scheduled articles when their time arrives
+function checkScheduled(){
+  const nowMs=netNow().getTime();
+  let published=0,publishedTitles=[];
+  for(const a of D.arts){
+    if(a.scheduledAt&&!a.pub){
+      const t=new Date(a.scheduledAt).getTime();
+      if(!isNaN(t)&&t<=nowMs){
+        a.pub=1;
+        a.scheduledAt=null;
+        // Set date to today if not set or is in the future relative to now
+        const today=netToday();
+        if(!a.date||a.date>today)a.date=today;
+        published++;
+        publishedTitles.push(a.title?.zh||a.title?.en||'(无标题)');
+      }
+    }
+  }
+  if(published){
+    sv(true);
+    tst('⏰ 定时发布：已发布 '+published+' 篇 ['+publishedTitles.slice(0,2).join('、')+(publishedTitles.length>2?' 等':'')+']');
+    if(AL)scheduleRender();
+  }
+}
+setInterval(updClock,1000);
+setInterval(checkDayChange,60*1000);
+setInterval(checkScheduled,60*1000); // Check every 60s for scheduled publishing
+setInterval(()=>syncTime(1),30*60*1000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){checkDayChange();checkScheduled();syncTime(1)}});
+
+const PAGES={dash:{ic:'📊',n:'仪表盘'},arts:{ic:'📝',n:'文章管理'},exs:{ic:'🏦',n:'交易所'},coins:{ic:'💰',n:'币种行情'},links:{ic:'🔗',n:'链接中心'},data:{ic:'💾',n:'数据备份'},settings:{ic:'⚙',n:'网站设置'}};
+
+function gr(){
+  const h=location.hash.slice(1)||'';
+  if(!h||h==='/')return{p:'dash'};
+  const s=h.split('/').filter(Boolean);
+  if(s[0]==='art'&&s[1]==='new')return{p:'arts',sub:'new'};
+  if(s[0]==='art'&&s[1])return{p:'arts',sub:'edit',id:+s[1]};
+  if(PAGES[s[0]])return{p:s[0]};
+  return{p:'dash'};
+}
+function go(p){location.hash=p?'/'+p:'/'}
+window.addEventListener('hashchange',render);
+
+function rLogin(){
+  const lockUntil=parseInt(localStorage.getItem('crh_lock')||'0');
+  const now=Date.now();
+  const locked=lockUntil>now;
+  const remaining=locked?Math.ceil((lockUntil-now)/1000):0;
+  return '<div class="lg-w"><div class="lg-c"><h1><div class="sb-mark">R</div>CryptoRebateHub · 后台</h1><p>请输入管理密码继续。<br>默认密码：<code>admin888</code> · <strong style="color:#fbbf24">登录后立即修改</strong>。</p>'+(locked?'<div class="tip warn" style="margin-bottom:12px">⚠ 失败次数过多，请等待 <strong>'+remaining+'</strong> 秒后重试。</div>':'')+'<input type="password" id="pwd" placeholder="管理密码" '+(locked?'disabled':'autofocus')+'><button class="b b-g" style="width:100%;justify-content:center" onclick="doLogin()" '+(locked?'disabled':'')+'>登录</button></div></div>';
+}
+function doLogin(){
+  const lockUntil=parseInt(localStorage.getItem('crh_lock')||'0');
+  if(lockUntil>Date.now()){tst('登录已锁定，请稍后再试',1);return}
+  const p=$('#pwd').value;
+  const stored=localStorage.getItem('crh_pwd')||'admin888';
+  if(p===stored){
+    AL=true;
+    sessionStorage.setItem('crh_auth','1');
+    localStorage.removeItem('crh_fails');
+    localStorage.removeItem('crh_lock');
+    location.hash='/dash';
+    render();
+  }else{
+    const fails=parseInt(localStorage.getItem('crh_fails')||'0')+1;
+    localStorage.setItem('crh_fails',String(fails));
+    if(fails>=5){
+      localStorage.setItem('crh_lock',String(Date.now()+5*60*1000));
+      localStorage.setItem('crh_fails','0');
+      tst('密码错误次数过多，已锁定 5 分钟',1);
+      render();
+    }else{
+      tst('密码错误（剩余 '+(5-fails)+' 次尝试）',1);
+    }
+  }
+}
+
+window.addEventListener('keydown',e=>{
+  if(!AL&&e.key==='Enter'&&$('#pwd')){doLogin();return}
+  if(!AL)return;
+  const mod=e.ctrlKey||e.metaKey;
+  const inEd=/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName);
+  if(mod&&e.key==='s'){const sb=$('[data-shortcut="save"]');if(sb){e.preventDefault();sb.click()}return}
+  if(mod&&e.key==='b'){e.preventDefault();xpD();return}
+  if(inEd)return;
+  if(e.key==='n'){go('art/new');return}
+  if(e.key==='Escape'){if(gr().sub){go('arts')}else{const m=$('.mb.sh');if(m)m.classList.remove('sh')}return}
+  if(e.key==='/'){const qs=$('#qs');if(qs){e.preventDefault();qs.focus()}return}
+  if(e.key==='?'){e.preventDefault();showHelp()}
+});
+
+function rNavItem(key,cur,count){
+  const p=PAGES[key];
+  return'<a class="'+(cur===key?'ac':'')+'" onclick="go(\''+key+'\');$(\'#sb\').classList.remove(\'opn\')"><span class="ic">'+p.ic+'</span><span>'+p.n+'</span>'+(count!==undefined?'<span class="ct">'+count+'</span>':'')+'</a>';
+}
+function rLayout(content){
+  const cur=gr().p;
+  // Cache counts (avoids re-iterating on each render)
+  let coinsOn=0;for(const c of D.coins)if(c.on)coinsOn++;
+  const linksCt=(D.links?.social?.length||0)+(D.links?.friends?.length||0);
+  return'<div class="app"><aside class="sb" id="sb"><div class="sb-hd"><div class="sb-mark">R</div><div class="sb-tt">CryptoRebateHub<small>管理后台</small></div></div><nav class="sb-nav">'+
+    rNavItem('dash',cur)+
+    '<div class="gp">内容</div>'+
+    rNavItem('arts',cur,D.arts.length)+
+    rNavItem('exs',cur,D.exs.length)+
+    rNavItem('coins',cur,coinsOn)+
+    rNavItem('links',cur,linksCt)+
+    '<div class="gp">系统</div>'+
+    rNavItem('data',cur)+
+    rNavItem('settings',cur)+
+    '</nav><div class="sb-ft"><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="b b-o" onclick="window.open(\'/\',\'_blank\')" title="查看网站" style="flex:1;justify-content:center">🌐 网站</button><button class="b b-o" onclick="showHelp()" title="快捷键 (?)" style="padding:8px 10px">⌨</button></div><button class="b b-r" onclick="logout()" style="width:100%;justify-content:center;margin-top:8px">🚪 退出</button></div></aside><main class="main"><button class="mb-tg" onclick="$(\'#sb\').classList.toggle(\'opn\')">☰ 菜单</button>'+content+'</main></div>';
+}
+function rTopBar(title,sub,actions){
+  return'<div class="tb"><div><h1>'+es(title)+'</h1>'+(sub?'<div style="font-size:12.5px;color:var(--tx3);margin-top:3px">'+es(sub)+'</div>':'')+'</div>'+(actions?'<div class="tb-r">'+actions+'</div>':'')+'</div><div class="clk"><div><span style="font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:1.2px;font-weight:700">网络时间</span> <span id="clk-dis" style="margin-left:8px">同步中...</span></div><button class="b b-o" style="padding:5px 11px;font-size:12px" onclick="syncTime()">🔄 立即同步</button></div>';
+}
+
+// Article status badge helper (3 states)
+function statusBadge(a){
+  if(a.scheduledAt){
+    const t=new Date(a.scheduledAt);
+    const dt=t.toLocaleString(undefined,{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false});
+    return '<span style="color:var(--blu)">⏰ 定时 '+es(dt)+'</span>';
+  }
+  if(a.pub)return'<span style="color:var(--grn)">● 已发布</span>';
+  return'<span style="color:var(--yel)">○ 草稿</span>';
+}
+function rDash(){
+  const Y=netNow().getUTCFullYear();
+  // Compute stats in single pass
+  const today=netToday();
+  let pub=0,draft=0,future=0,scheduled=0;
+  for(const a of D.arts){
+    if(a.scheduledAt)scheduled++;
+    if(a.pub)pub++;else draft++;
+    if(a.date&&a.date>today)future++;
+  }
+  const stats={total:D.arts.length,pub,draft,scheduled,futureDated:future};
+  let exFt=0,exUrl=0,exMir=0;
+  for(const e of D.exs){if(e.ft)exFt++;if(e.url)exUrl++;if(e.mirrors&&e.mirrors.length)exMir+=e.mirrors.length}
+  let coinsOn=0;
+  for(const c of D.coins)if(c.on)coinsOn++;
+  const recentArts=D.arts.slice().sort((a,b)=>(b.date||'').localeCompare(a.date||'')).slice(0,5);
+  const dataKB=(JSON.stringify(D).length/1024).toFixed(1);
+  return rTopBar('仪表盘','网站当前状态总览','<button class="b b-g" onclick="go(\'art/new\')">+ 新建文章</button> <button class="b b-o" onclick="xpD()">📤 备份</button>')+
+    '<div class="dash">'+
+      '<div class="dc"><div class="dc-l">当前年份</div><div class="dc-v" style="color:var(--grn)">'+Y+'</div><div class="dc-s">网站显示自动跟随</div></div>'+
+      '<div class="dc"><div class="dc-l">文章总数</div><div class="dc-v">'+stats.total+'</div><div class="dc-s">已发布 '+stats.pub+' · 草稿 '+stats.draft+(stats.scheduled?' · ⏰ 定时 '+stats.scheduled:'')+'</div></div>'+
+      '<div class="dc"><div class="dc-l">交易所</div><div class="dc-v" style="color:var(--blu)">'+D.exs.length+'</div><div class="dc-s">'+exFt+' 推荐 · '+exUrl+' 含链接'+(exMir?' · 🌐 '+exMir+' 备用':'')+'</div></div>'+
+      '<div class="dc"><div class="dc-l">币种</div><div class="dc-v" style="color:var(--org)">'+coinsOn+'</div><div class="dc-s">在首页和行情页显示</div></div>'+
+      '<div class="dc"><div class="dc-l">自动翻译</div><div class="dc-v" style="font-size:18px;color:'+(D.autoTL?'var(--grn)':'var(--tx3)')+'">'+(D.autoTL?'ON':'OFF')+'</div><div class="dc-s">保存时填补其他语言</div></div>'+
+      '<div class="dc"><div class="dc-l">数据大小</div><div class="dc-v" style="font-size:18px">'+dataKB+'<small style="font-size:12px;color:var(--tx3)"> KB</small></div><div class="dc-s">localStorage 限 5MB</div></div>'+
+    '</div>'+
+    (stats.futureDated?'<div class="tip warn">⚠ 检测到 <strong>'+stats.futureDated+'</strong> 篇文章日期晚于今天 '+netToday()+'。这类文章在网站上不会显示。<a onclick="go(\'data\')" style="color:inherit;text-decoration:underline;cursor:pointer">前往修复 →</a></div>':'')+
+    '<div class="pn"><div class="pn-h"><h2>📝 最近文章</h2><a class="b b-o" onclick="go(\'arts\')">查看全部</a></div>'+
+    (recentArts.length?recentArts.map(a=>'<div class="al"><div style="flex:1;min-width:200px"><h4>'+es(a.title?.zh||a.title?.en||'(无标题)')+'</h4><div class="am">'+es(a.date||'')+' · '+statusBadge(a)+(a.cat?' · '+es(a.cat):'')+'</div></div><button class="b b-o" style="padding:5px 11px;font-size:12px" onclick="go(\'art/'+a.id+'\')">编辑</button></div>').join(''):'<div style="color:var(--tx3);text-align:center;padding:24px">暂无文章</div>')+
+    '</div>'+
+    '<div class="pn"><div class="pn-h"><h2>⚡ 快速操作</h2></div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px">'+
+      '<a class="dc" onclick="go(\'art/new\')" style="cursor:pointer;text-align:center;padding:20px"><div style="font-size:24px;margin-bottom:6px">+</div><div style="font-weight:700;color:var(--grn)">写新文章</div><div class="dc-s">支持 4 语言</div></a>'+
+      '<a class="dc" onclick="go(\'exs\')" style="cursor:pointer;text-align:center;padding:20px"><div style="font-size:24px;margin-bottom:6px">🏦</div><div style="font-weight:700;color:var(--blu)">编辑交易所</div><div class="dc-s">返佣 · 链接 · 资料</div></a>'+
+      '<a class="dc" onclick="go(\'links\')" style="cursor:pointer;text-align:center;padding:20px"><div style="font-size:24px;margin-bottom:6px">🔗</div><div style="font-weight:700;color:var(--yel)">链接中心</div><div class="dc-s">社交 · 友情链接</div></a>'+
+      '<a class="dc" onclick="xpD()" style="cursor:pointer;text-align:center;padding:20px"><div style="font-size:24px;margin-bottom:6px">📤</div><div style="font-weight:700;color:var(--org)">导出备份</div><div class="dc-s">下载 JSON</div></a>'+
+    '</div></div>';
+}
+
+function rArticles(){
+  const r=gr();
+  if(r.sub==='new'||r.sub==='edit')return rArtEditor(r.sub==='new'?-1:r.id);
+  const sortedArts=D.arts.slice().sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+  let html=rTopBar('文章管理','按 N 新建 · / 搜索 · Ctrl+S 保存','<button class="b b-g" onclick="go(\'art/new\')">+ 新建文章</button>');
+  html+='<div class="asb"><input type="text" id="qs" placeholder="搜索标题、标签、内容..." oninput="filterArts(this.value)" autocomplete="off"></div><div id="artL">';
+  if(!sortedArts.length)html+='<div class="tip">暂无文章。按 <kbd>N</kbd> 或点击「新建文章」开始。如需加载默认 20 篇，去「数据备份」→「重新加载」。</div>';
+  for(const a of sortedArts){
+    const ls=['zh','zh-TW','en','ko'],dn={zh:'简','zh-TW':'繁',en:'EN',ko:'한'};
+    const sx=[a.title?.zh,a.title?.en,a.cnt?.zh?.slice(0,200),a.tag?.zh,a.slug].filter(Boolean).join(' ').toLowerCase();
+    const isFuture=a.date&&a.date>netToday();
+    html+='<div class="al" data-search="'+es(sx)+'"><div style="flex:1;min-width:240px"><h4>'+es(a.title?.zh||a.title?.en||'(无标题)')+'<span class="lb-indi">'+ls.map(l=>'<span class="'+(a.title?.[l]?'on':'')+'">'+dn[l]+'</span>').join('')+'</span></h4><div class="am">'+es(a.date||'')+(isFuture?' <span style="color:var(--red);font-weight:700">⚠ 未来日期</span>':'')+' · '+statusBadge(a)+(a.tag?.zh?' · '+es(a.tag.zh):'')+(a.cat?' · '+es(a.cat):'')+(a.featured?' · ⭐':'')+'</div>'+(a.slug?'<div class="am" style="font-family:\'JetBrains Mono\',monospace;color:var(--blu);margin-top:3px;font-size:10.5px">🔗 /article/'+es(a.slug)+'</div>':'<div class="am" style="color:var(--yel);margin-top:3px;font-size:10.5px">⚠ 缺少 SEO slug</div>')+'</div><div style="display:flex;gap:5px;flex-wrap:wrap"><button class="b b-'+(a.pub?'y':'g')+'" style="padding:5px 10px;font-size:12.5px" onclick="togglePub('+a.id+')">'+(a.pub?'转草稿':'发布')+'</button><button class="b b-o" style="padding:5px 10px;font-size:12.5px" onclick="go(\'art/'+a.id+'\')">✎ 编辑</button><button class="b b-o" style="padding:5px 10px;font-size:12.5px" onclick="copyArt('+a.id+')" title="复制">⎘</button><button class="b b-r" style="padding:5px 10px;font-size:12.5px" onclick="delArt('+a.id+')">🗑</button></div></div>';
+  }
+  html+='</div>';
+  return html;
+}
+function filterArts(q){q=q.toLowerCase().trim();$$('#artL .al').forEach(el=>{el.style.display=(!q||el.dataset.search.includes(q))?'':'none'})}
+function togglePub(id){
+  const a=D.arts.find(x=>x.id===id);if(!a)return;
+  a.pub=a.pub?0:1;
+  a.scheduledAt=null;  // clear scheduled state when manually toggled
+  sv();
+  scheduleRender();
+  tst(a.pub?'✓ 已发布':'✓ 已转草稿');
+}
+function delArt(id){if(!confirm('确定删除？此操作不可撤销。'))return;D.arts=D.arts.filter(x=>x.id!==id);sv();go('arts');tst('✓ 已删除')}
+function copyArt(id){const o=D.arts.find(x=>x.id===id);if(!o)return;const n=JSON.parse(JSON.stringify(o));n.id=Date.now();n.pub=0;n.date=netToday();if(n.slug)n.slug=n.slug+'-copy';['zh','zh-TW','en','ko'].forEach(l=>{if(n.title?.[l])n.title[l]='[副本] '+n.title[l]});D.arts.unshift(n);sv();render();tst('✓ 已复制为草稿')}
+
+function rArtEditor(id){
+  const a=id===-1?{id:Date.now(),slug:'',date:netToday(),pub:0,featured:0,cat:'general',title:{zh:'','zh-TW':'',en:'',ko:''},exc:{zh:'','zh-TW':'',en:'',ko:''},cnt:{zh:'','zh-TW':'',en:'',ko:''},tag:{zh:'','zh-TW':'',en:'',ko:''}}:D.arts.find(x=>x.id===id);
+  if(!a)return rTopBar('文章不存在','','<button class="b b-o" onclick="go(\'arts\')">← 返回</button>');
+  const ls=[{k:'zh',n:'简中'},{k:'zh-TW',n:'繁中'},{k:'en',n:'EN'},{k:'ko',n:'한'}];
+  let html=rTopBar(id===-1?'新建文章':'编辑文章','Ctrl+S 保存 · Esc 返回','<button class="b b-o" onclick="go(\'arts\')">← 返回列表</button> <button class="b b-g" data-shortcut="save" onclick="svArt('+a.id+')">💾 保存 (Ctrl+S)</button>');
+  html+='<div class="pn"><div class="row3">';
+  html+='<div class="r"><label>发布日期</label><input type="date" id="ed-date" value="'+es(a.date)+'"></div>';
+  html+='<div class="r"><label>分类</label><select id="ed-cat"><option value="okx"'+(a.cat==='okx'?' selected':'')+'>OKX</option><option value="binance"'+(a.cat==='binance'?' selected':'')+'>Binance</option><option value="bybit"'+(a.cat==='bybit'?' selected':'')+'>Bybit</option><option value="general"'+((a.cat==='general'||!a.cat)?' selected':'')+'>通用</option></select></div>';
+  // Determine current state (0=draft, 1=published, 2=scheduled)
+  const curState=a.scheduledAt?2:(a.pub?1:0);
+  html+='<div class="r"><label>⭐ 精选</label><div style="display:flex;gap:14px;padding-top:8px"><label class="cb"><input type="checkbox" id="ed-ft"'+(a.featured?' checked':'')+'> 在首页突出</label></div></div>';
+  html+='</div>';
+  // Publishing state — 3 modes
+  html+='<div class="r" style="background:var(--bg);border:1px solid var(--bd);padding:14px 16px;border-radius:var(--r)"><label style="font-size:12px;color:var(--tx2);margin-bottom:10px">📢 发布状态</label>';
+  html+='<div style="display:flex;gap:18px;flex-wrap:wrap;margin-bottom:10px">';
+  html+='<label class="cb"><input type="radio" name="ed-status" value="0"'+(curState===0?' checked':'')+' onchange="togglePubMode()"> <span style="color:var(--yel);font-weight:600">○ 草稿</span><span style="color:var(--tx3);font-size:12.5px;margin-left:4px">仅后台可见</span></label>';
+  html+='<label class="cb"><input type="radio" name="ed-status" value="1"'+(curState===1?' checked':'')+' onchange="togglePubMode()"> <span style="color:var(--grn);font-weight:600">● 立即发布</span><span style="color:var(--tx3);font-size:12.5px;margin-left:4px">网站立即显示</span></label>';
+  html+='<label class="cb"><input type="radio" name="ed-status" value="2"'+(curState===2?' checked':'')+' onchange="togglePubMode()"> <span style="color:var(--blu);font-weight:600">⏰ 定时发布</span><span style="color:var(--tx3);font-size:12.5px;margin-left:4px">到达时间自动发布</span></label>';
+  html+='</div>';
+  // Scheduled time picker (shown only when state=2)
+  const schedVal=a.scheduledAt?a.scheduledAt.slice(0,16):'';  // datetime-local format: YYYY-MM-DDTHH:MM
+  html+='<div id="schedRow" style="display:'+(curState===2?'block':'none')+';margin-top:8px;padding:11px 14px;background:var(--bluA);border:1px solid rgba(95,177,255,.25);border-radius:8px"><label style="color:var(--blu);display:block;margin-bottom:6px">⏰ 定时发布时间（你的本地时间）</label><input type="datetime-local" id="ed-sched" value="'+es(schedVal)+'" min="'+netNow().toISOString().slice(0,16)+'" style="max-width:280px"><div style="margin-top:6px;font-size:12px;color:var(--tx3)">到达此时间后，文章会自动从「定时」变为「已发布」状态。</div></div>';
+  html+='</div>';
+  html+='<div class="r" style="background:var(--bluA);border:1px solid rgba(95,177,255,.2);padding:12px 14px;border-radius:9px"><label style="color:var(--blu);display:flex;align-items:center;gap:6px">🔗 URL Slug · SEO 关键</label><div style="display:flex;gap:6px;align-items:center;margin-top:6px"><span style="font-family:\'JetBrains Mono\',monospace;font-size:12.5px;color:var(--tx3);white-space:nowrap">/#/article/</span><input id="ed-slug" value="'+es(a.slug||'')+'" placeholder="okx-account-setup-guide" style="flex:1;font-family:\'JetBrains Mono\',monospace"><button type="button" class="b b-b" style="padding:7px 12px;font-size:12px" onclick="autoSlug()">⚡ 自动</button></div><div style="margin-top:6px;font-size:12px;color:var(--tx3);line-height:1.5">英文小写 + 连字符 + 关键词。例 <code style="color:var(--blu);font-size:10.5px">okx-fees-explained</code></div></div>';
+  html+='<div class="tip">💡 在标题、摘要、正文中输入 <code>{YEAR}</code> 让年份自动跟随实际时间。例：<code>{YEAR} 最新指南</code> 当前显示「'+netNow().getUTCFullYear()+' 最新指南」。</div>';
+  for(const l of ls){
+    const filled=a.title?.[l.k]?'<span style="color:var(--grn);font-size:12px;font-weight:500">✓ 已填写</span>':'<span style="color:var(--tx3);font-size:12px;font-weight:500">空白</span>';
+    html+='<details'+(l.k==='zh'?' open':'')+' style="background:var(--bg);border:1px solid var(--bd);border-radius:var(--r);padding:14px;margin-top:10px"><summary style="font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px;cursor:pointer;list-style:none"><span class="lang-tag">'+l.n+'</span> '+l.k+' '+filled+'</summary><div style="margin-top:10px"><div class="r"><label>标题</label><input id="ed-title-'+l.k+'" value="'+es(a.title?.[l.k]||'')+'"></div><div class="r"><label>摘要（160 字以内为佳）</label><input id="ed-exc-'+l.k+'" value="'+es(a.exc?.[l.k]||'')+'"></div><div class="r"><label>标签</label><input id="ed-tag-'+l.k+'" value="'+es(a.tag?.[l.k]||'')+'" style="max-width:240px"></div><div class="r"><label>正文（Markdown）</label><textarea id="ed-cnt-'+l.k+'" rows="14">'+es(a.cnt?.[l.k]||'')+'</textarea></div></div></details>';
+  }
+  html+='<div style="margin-top:18px;display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between;align-items:center"><button class="b b-g" data-shortcut="save" onclick="svArt('+a.id+')">💾 保存文章</button>'+(id!==-1?'<button class="b b-r" onclick="delArt('+a.id+')">🗑 删除文章</button>':'')+'</div></div>';
+  return html;
+}
+function autoSlug(){
+  const en=$('#ed-title-en').value.trim();const zh=$('#ed-title-zh').value.trim();
+  let src=en||zh;if(!src){tst('请先填写英文或中文标题',1);return}
+  let slug=src.toLowerCase().replace(/[^\w\s-]/g,'').replace(/\s+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');
+  if(!slug||/^[\d-]+$/.test(slug)){tst('标题为空时无法生成',1);return}
+  if(slug.length>60)slug=slug.slice(0,60).replace(/-[^-]*$/,'');
+  $('#ed-slug').value=slug;tst('✓ 已生成 slug');
+}
+function togglePubMode(){
+  const v=document.querySelector('input[name="ed-status"]:checked')?.value;
+  const sr=$('#schedRow');if(sr)sr.style.display=(v==='2')?'block':'none';
+}
+async function svArt(id){
+  const ls=['zh','zh-TW','en','ko'];
+  let slug=$('#ed-slug').value.trim().toLowerCase().replace(/[^a-z0-9-]/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');
+  if(slug){const dup=D.arts.find(x=>x.id!==id&&x.slug===slug);if(dup){tst('Slug 已被「'+(dup.title?.zh||dup.title?.en)+'」占用',1);return}}
+  const inputDate=$('#ed-date').value.trim();
+  const status=document.querySelector('input[name="ed-status"]:checked')?.value||'0';
+  const today=netToday();
+  // Build base article
+  const data={id,slug,date:inputDate,cat:$('#ed-cat').value,featured:$('#ed-ft').checked?1:0,title:{},exc:{},tag:{},cnt:{}};
+  // Handle 3 states
+  if(status==='2'){
+    // Scheduled publishing
+    const schedRaw=$('#ed-sched').value.trim();
+    if(!schedRaw){tst('请选择定时发布时间',1);return}
+    // Convert local datetime-local to UTC ISO string for storage
+    const schedDate=new Date(schedRaw);
+    if(isNaN(schedDate.getTime())){tst('定时发布时间无效',1);return}
+    const nowMs=netNow().getTime();
+    if(schedDate.getTime()<=nowMs){
+      if(!confirm('⚠️ 定时发布时间已过。要立即发布吗？'))return;
+      data.pub=1;data.scheduledAt=null;
+    }else{
+      data.pub=0;
+      data.scheduledAt=schedDate.toISOString();
+      // Use scheduled date as article date if input date is empty
+      if(!data.date)data.date=schedDate.toISOString().slice(0,10);
+    }
+  }else if(status==='1'){
+    data.pub=1;data.scheduledAt=null;
+    if(!data.date)data.date=today;
+    if(data.date>today){
+      if(!confirm('⚠️ 文章日期 '+data.date+' 晚于今天。\n网站不会显示未来日期文章。是否仍立即发布？'))return;
+    }
+  }else{
+    data.pub=0;data.scheduledAt=null;
+  }
+  ls.forEach(l=>{data.title[l]=$('#ed-title-'+l).value.trim();data.exc[l]=$('#ed-exc-'+l).value.trim();data.tag[l]=$('#ed-tag-'+l).value.trim();data.cnt[l]=$('#ed-cnt-'+l).value});
+  if(!data.title.zh&&!data.title.en){tst('至少填写一种语言的标题',1);return}
+  if(!data.slug){const en=data.title.en;if(en)data.slug=en.toLowerCase().replace(/[^\w\s-]/g,'').replace(/\s+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'').slice(0,60);if(!data.slug)data.slug='article-'+id}
+  if(D.autoTL&&data.title.zh){
+    const btn=document.querySelector('[data-shortcut="save"]');if(btn){btn.disabled=true;btn.innerHTML='⏳ 翻译中...'}
+    try{
+      for(const tgt of ['zh-TW','en','ko']){
+        if(data.title.zh&&!data.title[tgt])data.title[tgt]=await tl(data.title.zh,'zh',tgt);
+        if(data.exc.zh&&!data.exc[tgt])data.exc[tgt]=await tl(data.exc.zh,'zh',tgt);
+        if(data.tag.zh&&!data.tag[tgt])data.tag[tgt]=await tl(data.tag.zh,'zh',tgt);
+        // Translate body — uses tlChunk for paragraph-by-paragraph (handles long markdown)
+        if(data.cnt.zh&&!data.cnt[tgt]){
+          if(btn)btn.innerHTML='⏳ 翻译正文 → '+tgt+'...';
+          data.cnt[tgt]=await tlChunk(data.cnt.zh,'zh',tgt);
+        }
+      }
+    }catch(e){tst('部分翻译失败',1)}
+    if(btn){btn.disabled=false;btn.innerHTML='💾 保存文章'}
+  }
+  const idx=D.arts.findIndex(x=>x.id===id);
+  if(idx>=0)D.arts[idx]=data;else D.arts.unshift(data);
+  sv();go('arts');tst('✓ 已保存 · slug: '+data.slug);
+}
+async function tl(text,src,tgt){
+  if(!text||src===tgt)return text;
+  const tgtMap={zh:'zh-CN','zh-TW':'zh-TW',en:'en',ko:'ko'};
+  try{const r=await fetch('https://translate.googleapis.com/translate_a/single?client=gtx&sl='+(tgtMap[src]||src)+'&tl='+(tgtMap[tgt]||tgt)+'&dt=t&q='+encodeURIComponent(text));const d=await r.json();return d[0].map(x=>x[0]).join('')}
+  catch(e){try{const r=await fetch('https://api.mymemory.translated.net/get?q='+encodeURIComponent(text)+'&langpair='+tgtMap[src]+'|'+tgtMap[tgt]);const d=await r.json();return d.responseData?.translatedText||text}catch(e2){return text}}
+}
+
+function rExs(){
+  let html=rTopBar('交易所管理','返佣比例 · 4 语言资料 · 排序拖拽','<button class="b b-g" onclick="addEx()">+ 添加交易所</button> <button class="b b-g" onclick="saveExs()">💾 保存全部</button>');
+  html+='<div class="tip">💡 排序靠前的交易所在网站上优先展示。「⭐ 推荐」标签会显示在卡片右上角。「返佣比例」是用户最关心的数据，请保持准确。</div>';
+  for(let i=0;i<D.exs.length;i++)html+=rExCard(D.exs[i],i);
+  html+='<div style="margin-top:14px"><button class="b b-g" onclick="saveExs()">💾 保存全部交易所</button></div>';
+  return html;
+}
+function rExCard(ex,i){
+  const ls=[{k:'zh',n:'简中'},{k:'zh-TW',n:'繁中'},{k:'en',n:'EN'},{k:'ko',n:'한'}];
+  const mirs=ex.mirrors||[];
+  let html='<div class="ex-card"><div class="ex-head"><div class="ex-handle"><button class="b b-o" style="padding:4px 8px;font-size:12px"'+(i===0?' disabled':'')+' onclick="moveEx('+i+',-1)">↑</button><button class="b b-o" style="padding:4px 8px;font-size:12px"'+(i===D.exs.length-1?' disabled':'')+' onclick="moveEx('+i+',1)">↓</button></div><div class="ex-logo" style="background:'+ex.color+'22;color:'+ex.color+'">'+es(ex.logo||ex.id?.slice(0,2).toUpperCase()||'EX')+'</div><div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:700">'+es(ex.name?.zh||ex.id||'(新交易所)')+'</div><div style="font-size:12px;color:var(--tx3);font-family:\'JetBrains Mono\',monospace">id: '+es(ex.id||'?')+' · '+(ex.url?'✓ 链接已设':'⚠ 缺链接')+(mirs.length?' · 🌐 '+mirs.length+' 备用':'')+'</div></div><label class="cb"><input type="checkbox" data-ft-i="'+i+'"'+(ex.ft?' checked':'')+'> ⭐ 推荐</label><button class="b b-r" style="padding:5px 10px;font-size:12px" onclick="delEx('+i+')">🗑</button></div>';
+  html+='<div class="row3"><div class="r"><label>ID（URL 用）</label><input data-exi="'+i+'" data-exf="id" value="'+es(ex.id)+'"></div><div class="r"><label>注册链接（含返佣码）</label><input data-exi="'+i+'" data-exf="url" value="'+es(ex.url)+'" placeholder="https://..."></div><div class="r"><label>返佣比例</label><input data-exi="'+i+'" data-exf="rebate" value="'+es(ex.rebate||'')+'" placeholder="30%"></div></div>';
+  html+='<div class="row3"><div class="r"><label>邀请码</label><input data-exi="'+i+'" data-exf="code" value="'+es(ex.code||'')+'" placeholder="WLFI47"></div><div class="r"><label>Logo 文字（2-4 字）</label><input data-exi="'+i+'" data-exf="logo" value="'+es(ex.logo)+'" maxlength="4"></div><div class="r"><label>品牌色</label><input type="color" data-exi="'+i+'" data-exf="color" value="'+es(ex.color||'#10d8a0')+'" style="height:38px"></div></div>';
+  // Mirror URLs editor
+  html+='<details class="ex-langs"'+(mirs.length?' open':'')+'><summary>🌐 备用网址（'+mirs.length+'）<span style="float:right;font-size:12px;color:var(--tx3);font-weight:400">官方多区域入口 · 留空时不显示</span></summary>';
+  html+='<div class="tip" style="margin:10px 0 12px;font-size:12.5px">用于在用户无法访问主域名时提供官方备用入口。请只填写交易所官方公告确认的域名（避免给用户添加钓鱼风险）。每个备用域名可设区域标签和 4 语言说明。</div>';
+  for(let mi=0;mi<mirs.length;mi++){
+    const m=mirs[mi];
+    html+='<div class="mir-edit" style="background:var(--bg);padding:12px 14px;border-radius:8px;border:1px solid var(--bd);margin-bottom:10px">';
+    html+='<div class="row3"><div class="r"><label>备用 URL</label><input data-exi="'+i+'" data-mi="'+mi+'" data-mf="url" value="'+es(m.url||'')+'" placeholder="https://..."></div><div class="r"><label>区域</label><select data-exi="'+i+'" data-mi="'+mi+'" data-mf="region"><option value="GLOBAL"'+(m.region==='GLOBAL'?' selected':'')+'>🌍 GLOBAL（全球）</option><option value="CN"'+(m.region==='CN'?' selected':'')+'>🇨🇳 CN（国内）</option><option value="HK"'+(m.region==='HK'?' selected':'')+'>🇭🇰 HK（香港）</option><option value="TW"'+(m.region==='TW'?' selected':'')+'>🇹🇼 TW（台湾）</option><option value="JP"'+(m.region==='JP'?' selected':'')+'>🇯🇵 JP（日本）</option><option value="KR"'+(m.region==='KR'?' selected':'')+'>🇰🇷 KR（韩国）</option><option value="SG"'+(m.region==='SG'?' selected':'')+'>🇸🇬 SG（新加坡）</option><option value="EU"'+(m.region==='EU'?' selected':'')+'>🇪🇺 EU（欧洲）</option><option value="US"'+(m.region==='US'?' selected':'')+'>🇺🇸 US（美国）</option></select></div><div class="r" style="display:flex;align-items:flex-end"><button class="b b-r" style="padding:7px 12px;font-size:12px;width:100%" onclick="delMir('+i+','+mi+')">🗑 删除此备用</button></div></div>';
+    html+='<div style="margin-top:6px"><label style="font-size:12px;color:var(--tx3);text-transform:uppercase;letter-spacing:.8px;font-weight:600">显示标签 / 备注（4 语言，可选）</label></div>';
+    for(const l of ls)html+='<div class="lang-r"><span class="lang-tag">'+l.n+'</span><input data-exi="'+i+'" data-mi="'+mi+'" data-mf="label" data-ml="'+l.k+'" value="'+es(m.label?.[l.k]||'')+'" placeholder="如：欧易官方备用"><input data-exi="'+i+'" data-mi="'+mi+'" data-mf="note" data-ml="'+l.k+'" value="'+es(m.note?.[l.k]||'')+'" placeholder="如：国内可访问"></div>';
+    html+='</div>';
+  }
+  html+='<button class="b b-o" onclick="addMir('+i+')" style="margin-top:6px">➕ 添加备用网址</button>';
+  html+='</details>';
+  html+='<details class="ex-langs" open><summary>📝 4 语言名称和简介</summary>';
+  for(const l of ls)html+='<div class="lang-r"><span class="lang-tag">'+l.n+'</span><input data-exi="'+i+'" data-exf="name" data-exl="'+l.k+'" value="'+es(ex.name?.[l.k]||'')+'" placeholder="名称"><input data-exi="'+i+'" data-exf="sub" data-exl="'+l.k+'" value="'+es(ex.sub?.[l.k]||'')+'" placeholder="一句话简介"></div>';
+  html+='</details><details class="ex-langs"><summary>✨ 平台特性（每行一条，4 语言）</summary>';
+  for(const l of ls)html+='<div class="r"><label><span class="lang-tag" style="margin-right:6px">'+l.n+'</span> '+l.k+'</label><textarea data-exi="'+i+'" data-exf="features" data-exl="'+l.k+'" rows="5">'+es((ex.features?.[l.k]||[]).join('\n'))+'</textarea></div>';
+  html+='</details></div>';
+  return html;
+}
+function addMir(i){
+  if(!D.exs[i].mirrors)D.exs[i].mirrors=[];
+  D.exs[i].mirrors.push({url:'',region:'GLOBAL',label:{zh:'','zh-TW':'',en:'',ko:''},note:{zh:'','zh-TW':'',en:'',ko:''}});
+  sv();scheduleRender();tst('✓ 已添加备用，请填写信息');
+}
+function delMir(i,mi){
+  if(!confirm('删除此备用网址？'))return;
+  D.exs[i].mirrors.splice(mi,1);
+  sv();scheduleRender();tst('✓ 已删除');
+}
+function moveEx(i,d){const t=i+d;if(t<0||t>=D.exs.length)return;[D.exs[i],D.exs[t]]=[D.exs[t],D.exs[i]];sv();scheduleRender()}
+function addEx(){const id='exchange'+(D.exs.length+1);D.exs.push({id,url:'',ft:0,logo:'EX',color:'#5fb1ff',rebate:'',name:{zh:'新交易所','zh-TW':'',en:'New Exchange',ko:''},sub:{zh:'','zh-TW':'',en:'',ko:''},features:{zh:[],'zh-TW':[],en:[],ko:[]}});sv();scheduleRender();tst('✓ 已添加，请完善信息')}
+function delEx(i){if(!confirm('删除「'+(D.exs[i].name?.zh||D.exs[i].id)+'」？'))return;D.exs.splice(i,1);sv();scheduleRender();tst('✓ 已删除')}
+function saveExs(){
+  $$('[data-exf]').forEach(inp=>{
+    const i=+inp.dataset.exi,f=inp.dataset.exf,l=inp.dataset.exl;
+    if(!D.exs[i])return;
+    if(f==='features'){D.exs[i].features=D.exs[i].features||{};D.exs[i].features[l]=inp.value.split('\n').map(s=>s.trim()).filter(Boolean)}
+    else if(l){D.exs[i][f]=D.exs[i][f]||{};D.exs[i][f][l]=inp.value.trim()}
+    else{D.exs[i][f]=inp.value.trim()}
+  });
+  // Save mirrors
+  $$('[data-mf]').forEach(inp=>{
+    const i=+inp.dataset.exi,mi=+inp.dataset.mi,f=inp.dataset.mf,l=inp.dataset.ml;
+    if(!D.exs[i]||!D.exs[i].mirrors||!D.exs[i].mirrors[mi])return;
+    const m=D.exs[i].mirrors[mi];
+    if(l){m[f]=m[f]||{};m[f][l]=inp.value.trim()}
+    else{m[f]=inp.value.trim()}
+  });
+  // Drop empty mirrors (no URL)
+  D.exs.forEach(e=>{if(e.mirrors)e.mirrors=e.mirrors.filter(m=>m.url)});
+  $$('[data-ft-i]').forEach(cb=>{D.exs[+cb.dataset.ftI].ft=cb.checked?1:0});
+  D.exs=D.exs.filter(e=>e.id);
+  sv(true);tst('✓ 全部交易所已保存（含备用网址）');
+}
+
+function rCoins(){
+  let html=rTopBar('币种行情管理','首页和行情页显示的币种','<button class="b b-g" onclick="addCoin()">+ 添加币种</button> <button class="b b-g" onclick="saveCoins()">💾 保存全部</button>');
+  html+='<div class="tip">💡 这些币种会显示在 <code>/markets</code> 行情页和 <code>/coin/&lt;ID&gt;</code> 详情页。<br>• <strong>交易对</strong>：OKX/Binance 格式，例 <code>BTC-USDT</code><br>• <strong>启用</strong>：取消勾选则隐藏，不在网站显示<br>• 输入完成后点「保存全部」</div>';
+  html+='<div class="pn">';
+  if(!D.coins.length){
+    html+='<div style="color:var(--tx3);text-align:center;padding:20px">暂无币种</div>';
+  }else{
+    // Table-like header
+    html+='<div style="display:grid;grid-template-columns:30px 2fr 1fr 60px 80px 80px;gap:10px;padding:8px 12px;font-size:10.5px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px;font-weight:700;border-bottom:1px solid var(--bd);margin-bottom:8px">';
+    html+='<div>#</div><div>交易对</div><div>符号</div><div>颜色</div><div>状态</div><div>操作</div>';
+    html+='</div>';
+    html+='<div id="coinList">';
+    for(let i=0;i<D.coins.length;i++){
+      const c=D.coins[i];
+      html+='<div style="display:grid;grid-template-columns:30px 2fr 1fr 60px 80px 80px;gap:10px;padding:10px 12px;background:var(--bg);border:1px solid var(--bd);border-radius:8px;margin-bottom:6px;align-items:center">';
+      html+='<div style="color:var(--tx3);font-family:\'JetBrains Mono\',monospace;font-size:12px">'+(i+1)+'</div>';
+      html+='<input data-cf="inst" data-ci="'+i+'" value="'+es(c.inst)+'" placeholder="BTC-USDT" style="padding:7px 10px;background:var(--bg3);border:1px solid var(--bd);border-radius:6px;color:var(--tx);font-family:inherit;font-size:13px;outline:none;width:100%">';
+      html+='<input data-cf="sym" data-ci="'+i+'" value="'+es(c.sym)+'" placeholder="BTC" style="padding:7px 10px;background:var(--bg3);border:1px solid var(--bd);border-radius:6px;color:var(--tx);font-family:inherit;font-size:13px;outline:none;width:100%">';
+      html+='<input type="color" data-cf="color" data-ci="'+i+'" value="'+es(c.color||'#10d8a0')+'" style="padding:0;height:34px;width:100%;background:var(--bg3);border:1px solid var(--bd);border-radius:6px;cursor:pointer">';
+      html+='<label class="cb" style="display:flex;justify-content:center"><input type="checkbox" data-cf="on" data-ci="'+i+'"'+(c.on?' checked':'')+'> '+(c.on?'<span style="color:var(--grn)">启用</span>':'<span style="color:var(--tx3)">隐藏</span>')+'</label>';
+      html+='<button class="rm" onclick="delCoin('+i+')" style="padding:7px 10px">🗑</button>';
+      html+='</div>';
+    }
+    html+='</div>';
+  }
+  html+='<div style="margin-top:14px;display:flex;gap:8px"><button class="b b-g" onclick="saveCoins()">💾 保存全部</button><button class="b b-o" onclick="addCoin()">+ 添加新币种</button></div></div>';
+  return html;
+}
+function delCoin(i){if(!confirm('删除 '+D.coins[i].sym+'？'))return;D.coins.splice(i,1);sv();scheduleRender();tst('✓ 已删除')}
+function addCoin(){D.coins.push({inst:'NEW-USDT',sym:'NEW',color:'#10d8a0',on:1});sv();scheduleRender()}
+function saveCoins(){
+  $$('[data-cf]').forEach(inp=>{
+    const i=+inp.dataset.ci,f=inp.dataset.cf;
+    if(!D.coins[i])return;
+    if(f==='on')D.coins[i].on=inp.checked?1:0;
+    else D.coins[i][f]=inp.value.trim();
+  });
+  D.coins=D.coins.filter(c=>c.inst&&c.sym);
+  sv(true);tst('✓ 币种已保存');
+}
+
+function rLinks(){
+  D.links=D.links||{social:[],friends:[]};D.links.social=D.links.social||[];D.links.friends=D.links.friends||[];
+  let html=rTopBar('链接中心','社交媒体 · 友情链接','<button class="b b-g" onclick="saveLinks()">💾 保存</button>');
+  html+='<div class="tip">💡 社交图标显示在网站页脚。友情链接也在页脚，名称和描述支持 4 语言。</div>';
+  html+='<div class="pn"><div class="pn-h"><h2>📱 社交媒体</h2><button class="b b-o" onclick="addSocial()">+ 添加</button></div><div id="socL">';
+  if(D.links.social.length){
+    for(let i=0;i<D.links.social.length;i++){
+      const s=D.links.social[i];
+      html+='<div class="ci" data-soci="'+i+'"><input data-socf="icon" value="'+es(s.icon)+'" placeholder="图标" maxlength="3" style="max-width:60px"><input data-socf="name" value="'+es(s.name)+'" placeholder="名称" style="max-width:130px"><input data-socf="url" value="'+es(s.url)+'" placeholder="https://..." style="flex:2"><button class="rm" onclick="delSocial('+i+')">删除</button></div>';
+    }
+  }else html+='<div style="color:var(--tx3);text-align:center;padding:14px">暂无社交链接</div>';
+  html+='</div></div>';
+  html+='<div class="pn"><div class="pn-h"><h2>🤝 友情链接</h2><button class="b b-o" onclick="addFriend()">+ 添加</button></div><div id="frL">';
+  if(D.links.friends.length){
+    for(let i=0;i<D.links.friends.length;i++){
+      const f=D.links.friends[i];
+      html+='<div class="fr-card" data-fri="'+i+'"><div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap"><input data-frf="url" value="'+es(f.url)+'" placeholder="https://... (链接 URL)" style="flex:1;min-width:200px"><button class="b b-r" style="padding:5px 11px;font-size:12px" onclick="delFriend('+i+')">🗑 删除</button></div><div class="row2"><input data-frf="name" data-frl="zh" value="'+es(f.name?.zh||'')+'" placeholder="简中名称"><input data-frf="name" data-frl="en" value="'+es(f.name?.en||'')+'" placeholder="English name"></div><div class="row2" style="margin-top:6px"><input data-frf="name" data-frl="zh-TW" value="'+es(f.name?.['zh-TW']||'')+'" placeholder="繁中"><input data-frf="name" data-frl="ko" value="'+es(f.name?.ko||'')+'" placeholder="한국어"></div><div class="row2" style="margin-top:8px"><input data-frf="desc" data-frl="zh" value="'+es(f.desc?.zh||'')+'" placeholder="描述（鼠标悬停显示）"><input data-frf="desc" data-frl="en" value="'+es(f.desc?.en||'')+'" placeholder="Tooltip"></div></div>';
+    }
+  }else html+='<div style="color:var(--tx3);text-align:center;padding:14px">暂无友情链接</div>';
+  html+='</div></div><div style="margin-top:14px"><button class="b b-g" onclick="saveLinks()">💾 保存全部链接</button></div>';
+  return html;
+}
+function addSocial(){D.links.social.push({name:'',url:'',icon:''});sv();scheduleRender()}
+function delSocial(i){D.links.social.splice(i,1);sv();scheduleRender();tst('✓ 已删除')}
+function addFriend(){D.links.friends.push({name:{zh:'','zh-TW':'',en:'',ko:''},url:'',desc:{zh:'','zh-TW':'',en:'',ko:''}});sv();scheduleRender()}
+function delFriend(i){D.links.friends.splice(i,1);sv();scheduleRender();tst('✓ 已删除')}
+function saveLinks(){
+  $$('[data-soci]').forEach(el=>{
+    const i=+el.dataset.soci;if(!D.links.social[i])return;
+    $$('input',el).forEach(inp=>{D.links.social[i][inp.dataset.socf]=inp.value.trim()});
+  });
+  D.links.social=D.links.social.filter(s=>s.url||s.name);
+  $$('[data-fri]').forEach(el=>{
+    const i=+el.dataset.fri;if(!D.links.friends[i])return;
+    const f=D.links.friends[i];f.name=f.name||{};f.desc=f.desc||{};
+    $$('input',el).forEach(inp=>{
+      const ff=inp.dataset.frf,l=inp.dataset.frl;
+      if(ff==='url')f.url=inp.value.trim();
+      else if(l){f[ff]=f[ff]||{};f[ff][l]=inp.value.trim()}
+    });
+  });
+  D.links.friends=D.links.friends.filter(f=>f.url);
+  sv(true);tst('✓ 链接已保存');
+}
+
+function rDataPage(){
+  const Y=netNow().getUTCFullYear();
+  let stale=0;
+  // Translation audit
+  let missingTrans=0,untransByLang={'zh-TW':0,en:0,ko:0};
+  D.arts.forEach(a=>{
+    ['title','exc','tag','cnt'].forEach(f=>{
+      if(!a[f])return;
+      Object.values(a[f]).forEach(v=>{
+        if(typeof v==='string'){
+          const m=v.match(/(?<!\d)(\d{4})(?!\d)/g);
+          if(m&&m.some(yr=>+yr<Y&&+yr>=2020))stale++;
+        }
+      });
+    });
+    // Count missing translations (when zh exists but other langs empty)
+    ['title','exc','cnt','tag'].forEach(f=>{
+      if(!a[f]?.zh)return;
+      ['zh-TW','en','ko'].forEach(lng=>{
+        if(!a[f][lng]||a[f][lng].trim()===''){missingTrans++;untransByLang[lng]++}
+      });
+    });
+  });
+  const futureDated=D.arts.filter(a=>a.date&&a.date>netToday()).length;
+  let html=rTopBar('数据备份','导入导出 · 翻译 · 年份审计 · 重置');
+  html+='<div class="dash"><div class="dc"><div class="dc-l">数据大小</div><div class="dc-v" style="font-size:18px">'+(JSON.stringify(D).length/1024).toFixed(1)+'<small style="font-size:12px;color:var(--tx3)"> KB / 5 MB</small></div></div><div class="dc"><div class="dc-l">文章</div><div class="dc-v">'+D.arts.length+'</div></div><div class="dc"><div class="dc-l">交易所</div><div class="dc-v">'+D.exs.length+'</div></div><div class="dc"><div class="dc-l">币种</div><div class="dc-v">'+D.coins.length+'</div></div></div>';
+  html+='<div class="pn"><div class="pn-h"><h2>📦 备份与恢复</h2></div><div class="tip">💡 数据保存在浏览器 <code>localStorage</code>（key: <code>crh_d</code>）。建议每周导出一次 JSON 备份。换浏览器或清缓存会丢数据。</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="b b-g" onclick="xpD()">📤 导出 JSON 备份 (Ctrl+B)</button><input type="file" id="impFile" accept=".json" style="display:none" onchange="impD(this.files[0])"><button class="b b-o" onclick="$(\'#impFile\').click()">📥 导入备份</button><button class="b b-o" onclick="loadDefault()">🔄 从 articles.json 重新加载</button></div></div>';
+  // BULK TRANSLATION
+  html+='<div class="pn"><div class="pn-h"><h2>🌐 批量翻译</h2><span style="font-size:12.5px;color:var(--tx3)">未翻译字段：<strong style="color:var(--yel)">'+missingTrans+'</strong></span></div>';
+  if(missingTrans){
+    html+='<div class="tip warn">⚠ 有 <strong>'+missingTrans+'</strong> 处中文内容尚未翻译到其他语言（zh-TW '+untransByLang['zh-TW']+' · EN '+untransByLang.en+' · KO '+untransByLang.ko+'）。点击下方按钮，浏览器会调用免费翻译 API 批量翻译。<br>⏱ 28 篇全文翻译预计 5-15 分钟，进度可见。<br>⚠ 翻译过程不要关闭页面。</div>';
+    html+='<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">';
+    html+='<button class="b b-g" onclick="bulkTranslate()" id="bt-btn">🌐 一键翻译所有文章到 4 语言</button>';
+    html+='<button class="b b-o" onclick="bulkTranslateZhTW()">📝 仅翻译繁体（最快）</button>';
+    html+='<button class="b b-o" onclick="bulkTranslateEN()">🇬🇧 仅翻译英文</button>';
+    html+='<button class="b b-o" onclick="bulkTranslateKO()">🇰🇷 仅翻译韩文</button>';
+    html+='</div>';
+    html+='<div id="bt-progress" style="margin-top:14px;font-size:12.5px;color:var(--tx3);display:none"></div>';
+  }else{
+    html+='<div class="tip ok">✓ 所有文章字段已翻译完成</div>';
+  }
+  html+='</div>';
+  html+='<div class="pn"><div class="pn-h"><h2>🗓 年份审计</h2></div>'+(stale?'<div class="tip warn">⚠ 检测到 <strong>'+stale+'</strong> 处旧年份引用（'+Y+' 之前的）。点击下方按钮一键替换为 <code>{YEAR}</code> 占位符。</div>':'<div class="tip ok">✓ 所有内容年份已使用动态占位符</div>')+(futureDated?'<div class="tip warn">⚠ <strong>'+futureDated+'</strong> 篇文章日期晚于今天 '+netToday()+'（这些文章不会在网站显示）。</div>':'')+'<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="b b-y" onclick="auditYears()"'+(stale?'':' disabled')+'>🗓 替换旧年份为 {YEAR}</button>'+(futureDated?'<button class="b b-y" onclick="fixFutureDates()">📅 修正未来日期</button>':'')+'</div></div>';
+  html+='<div class="pn"><div class="pn-h"><h2 style="color:var(--red)">⚠ 危险区</h2></div><div class="tip warn">以下操作不可撤销。请先导出备份。</div><button class="b b-r" onclick="clearAll()">🗑 清空所有数据并恢复出厂设置</button></div>';
+  return html;
+}
+
+// ═══════════════════════════════════════════════
+// BULK TRANSLATION
+// ═══════════════════════════════════════════════
+async function tlChunk(text,src,tgt){
+  if(!text||src===tgt)return text;
+  // Split very long text into chunks of ~3000 chars at paragraph boundaries
+  const MAX=3000;
+  if(text.length<=MAX)return await tl(text,src,tgt);
+  // Split by double newline (paragraphs)
+  const parts=text.split(/\n\n+/);
+  let chunks=[],buf='';
+  for(const p of parts){
+    if((buf+p).length>MAX&&buf){chunks.push(buf);buf=p}
+    else{buf+=(buf?'\n\n':'')+p}
+  }
+  if(buf)chunks.push(buf);
+  const translated=[];
+  for(const c of chunks){
+    try{translated.push(await tl(c,src,tgt))}
+    catch(e){translated.push(c)}
+    await new Promise(r=>setTimeout(r,200)); // gentle rate limit
+  }
+  return translated.join('\n\n');
+}
+async function bulkTranslate(){
+  await bulkTranslateForLangs(['zh-TW','en','ko']);
+}
+async function bulkTranslateZhTW(){
+  await bulkTranslateForLangs(['zh-TW']);
+}
+async function bulkTranslateEN(){
+  await bulkTranslateForLangs(['en']);
+}
+async function bulkTranslateKO(){
+  await bulkTranslateForLangs(['ko']);
+}
+let BT_RUNNING=false;
+async function bulkTranslateForLangs(langs){
+  if(BT_RUNNING){tst('已在翻译中，请稍候',1);return}
+  if(!confirm('开始批量翻译到 ['+langs.join(', ')+']？\n\n• 仅翻译当前为空的字段\n• 翻译过程不会覆盖已有翻译\n• 28 篇全文预计 5-15 分钟\n• 不要关闭浏览器或刷新\n\n继续？'))return;
+  BT_RUNNING=true;
+  const btn=$('#bt-btn');if(btn){btn.disabled=true;btn.innerHTML='⏳ 翻译中...'}
+  const prog=$('#bt-progress');if(prog)prog.style.display='block';
+  const fields=['title','exc','tag','cnt'];
+  let done=0,total=0,failed=0;
+  // Count total tasks
+  for(const a of D.arts){
+    if(!a.title?.zh)continue;
+    for(const lng of langs){
+      for(const f of fields){
+        if(a[f]?.zh&&!a[f][lng])total++;
+      }
+    }
+  }
+  if(prog)prog.innerHTML='准备翻译 '+total+' 个字段...';
+  for(const a of D.arts){
+    if(!a.title?.zh)continue;
+    for(const lng of langs){
+      for(const f of fields){
+        if(!a[f]?.zh)continue;
+        if(a[f][lng])continue; // skip already translated
+        try{
+          const result=f==='cnt'?await tlChunk(a[f].zh,'zh',lng):await tl(a[f].zh,'zh',lng);
+          if(result&&result!==a[f].zh){
+            a[f][lng]=result;
+            done++;
+          }else{failed++}
+        }catch(e){failed++;console.warn('Translate fail:',e)}
+        if(prog)prog.innerHTML=`进度：<strong>${done+failed}/${total}</strong> · 成功 ${done} · 失败 ${failed} · 当前：${a.title.zh.slice(0,30)}... → ${lng}`;
+        if((done+failed)%10===0)sv(true); // periodic save
+      }
+    }
+  }
+  sv(true);
+  BT_RUNNING=false;
+  if(btn){btn.disabled=false;btn.innerHTML='🌐 一键翻译所有文章到 4 语言'}
+  if(prog)prog.innerHTML=`✅ 完成！成功翻译 <strong>${done}</strong> 个字段，失败 <strong>${failed}</strong> 个。`;
+  tst(`✓ 翻译完成 · ${done} 成功 · ${failed} 失败`);
+  setTimeout(()=>scheduleRender(),2000);
+}
+function xpD(){const b=new Blob([JSON.stringify(D,null,2)],{type:'application/json'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download='cryptorebatehub_'+netToday()+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),2000);tst('✓ 已导出备份')}
+function impD(f){if(!f)return;const r=new FileReader();r.onload=e=>{try{const j=JSON.parse(e.target.result);if(!j.exs||!j.coins){tst('文件格式不对',1);return}if(!confirm('确定导入？将覆盖当前数据。'))return;D=Object.assign(JSON.parse(JSON.stringify(DF)),j);sv();render();tst('✓ 导入成功')}catch(e){tst('JSON 解析失败：'+e.message,1)}};r.readAsText(f)}
+async function loadDefault(){
+  if(!confirm('从 articles.json 重新加载文章？现有同 ID 文章会保留（不覆盖）。'))return;
+  try{
+    const r=await fetch('articles.json',{cache:'no-store'});
+    if(!r.ok)throw new Error('文件不存在');
+    const arts=await r.json();
+    arts.forEach(a=>{if(a.pub===undefined)a.pub=1});
+    const ids=new Set(D.arts.map(a=>a.id));let added=0;
+    arts.forEach(a=>{if(!ids.has(a.id)){D.arts.push(a);added++}});
+    sv();render();tst('✓ 加载完成，新增 '+added+' 篇 · 共 '+D.arts.length+' 篇');
+  }catch(e){tst('加载失败：'+e.message,1)}
+}
+function auditYears(){
+  const Y=netNow().getUTCFullYear();
+  if(!confirm('将所有文章中 '+Y+' 之前的年份引用替换为 {YEAR} 占位符？\n\n这些位置会自动显示当前年份。日期字段和 slug 不会修改。\n\n操作前建议先导出 JSON 备份。'))return;
+  let count=0;
+  D.arts.forEach(a=>{
+    ['title','exc','tag','cnt'].forEach(f=>{
+      if(!a[f])return;
+      Object.keys(a[f]).forEach(l=>{
+        const v=a[f][l];if(typeof v!=='string')return;
+        const newV=v.replace(/(?<!\d)(\d{4})(?!\d)/g,(m,yr)=>{
+          const n=+yr;
+          if(n>=2020&&n<Y){count++;return'{YEAR}'}
+          return m;
+        });
+        if(newV!==v)a[f][l]=newV;
+      });
+    });
+  });
+  if(count===0){tst('未发现需要替换的年份',1);return}
+  sv();render();tst('✓ 已替换 '+count+' 处年份引用为 {YEAR}');
+}
+function fixFutureDates(){
+  const today=netToday();let n=0;
+  D.arts.forEach(a=>{if(a.date&&a.date>today){a.date=today;n++}});
+  if(!n){tst('无需修正',1);return}
+  sv();render();tst('✓ '+n+' 篇文章日期已修正为 '+today);
+}
+function clearAll(){if(!confirm('确定清空所有数据并恢复默认？此操作不可撤销！'))return;if(!confirm('再次确认：所有自定义文章、交易所、币种、链接都会丢失。继续吗？'))return;localStorage.removeItem('crh_d');location.reload()}
+
+function rSettings(){
+  let html=rTopBar('网站设置','管理密码 · 翻译开关');
+  html+='<div class="pn"><div class="pn-h"><h2>🔐 修改管理密码</h2></div><div class="tip warn">⚠ 默认密码 <code>admin888</code> 必须立即修改。<br>要求：至少 <strong>8 位</strong>，必须包含字母和数字。</div><div class="row2"><div class="r"><label>新密码</label><input type="password" id="newpwd1" placeholder="至少 8 位 + 字母 + 数字"></div><div class="r"><label>再次确认</label><input type="password" id="newpwd2" placeholder="重复一次"></div></div><button class="b b-g" onclick="changePwd()">💾 更新密码</button></div>';
+  html+='<div class="pn"><div class="pn-h"><h2>🌐 自动翻译</h2></div><div class="tip">💡 开启后，保存文章时若其他语言为空，会自动调用 Google Translate / MyMemory 填补。免费 API，可能限速，建议保存后人工校对。</div><label class="cb" style="font-size:14px;font-weight:600"><input type="checkbox" id="autoTL"'+(D.autoTL?' checked':'')+' onchange="D.autoTL=this.checked?1:0;sv();tst(this.checked?\'✓ 已启用自动翻译\':\'✓ 已关闭自动翻译\')"> 保存文章时自动翻译到其他 3 种语言</label></div>';
+  html+='<div class="pn"><div class="pn-h"><h2>📊 系统信息</h2></div><table style="width:100%;font-size:13px"><tr><td style="padding:6px 0;color:var(--tx3);width:40%">后台版本</td><td>v2 · 多页面架构</td></tr><tr><td style="padding:6px 0;color:var(--tx3)">网络时间源</td><td>'+(NET_OK?NET_SRC+' ✓':'本地时间')+'</td></tr><tr><td style="padding:6px 0;color:var(--tx3)">当前年份</td><td>'+netNow().getUTCFullYear()+'（自动跟随）</td></tr><tr><td style="padding:6px 0;color:var(--tx3)">数据存储</td><td>localStorage · key <code>crh_d</code></td></tr><tr><td style="padding:6px 0;color:var(--tx3)">数据大小</td><td>'+(JSON.stringify(D).length/1024).toFixed(1)+' KB / 5 MB</td></tr></table></div>';
+  return html;
+}
+function changePwd(){
+  const p1=$('#newpwd1').value;
+  const p2=$('#newpwd2').value;
+  if(p1.length<8){tst('密码至少 8 位',1);return}
+  if(p1==='admin888'){tst('请勿使用默认密码',1);return}
+  if(!/[A-Za-z]/.test(p1)||!/[0-9]/.test(p1)){tst('密码应包含字母和数字',1);return}
+  if(p1!==p2){tst('两次输入不一致',1);return}
+  localStorage.setItem('crh_pwd',p1);
+  localStorage.removeItem('crh_fails');
+  localStorage.removeItem('crh_lock');
+  $('#newpwd1').value='';
+  $('#newpwd2').value='';
+  tst('✓ 密码已更新');
+}
+
+function showHelp(){
+  let bd=$('#helpBd');
+  if(!bd){bd=document.createElement('div');bd.id='helpBd';bd.className='mb';bd.onclick=e=>{if(e.target===bd)bd.classList.remove('sh')};document.body.appendChild(bd)}
+  bd.innerHTML='<div class="mx"><h2>⌨ 键盘快捷键</h2><table><tr><td style="width:38%"><kbd>N</kbd></td><td>新建文章</td></tr><tr><td><kbd>/</kbd></td><td>聚焦搜索框</td></tr><tr><td><kbd>Ctrl/⌘</kbd>+<kbd>S</kbd></td><td>保存当前文章</td></tr><tr><td><kbd>Ctrl/⌘</kbd>+<kbd>B</kbd></td><td>导出备份</td></tr><tr><td><kbd>Esc</kbd></td><td>返回列表 / 关闭弹窗</td></tr><tr><td><kbd>?</kbd></td><td>显示此帮助</td></tr></table><h2 style="margin-top:18px">⏰ 定时发布</h2><p style="font-size:13px;color:var(--tx2);line-height:1.7">编辑文章时选「定时发布」并设置具体时间。后台每 60 秒自动检查，到时间后会自动从「定时」转为「已发布」状态。访客打开网站时也会自动检查（即使后台没开）。</p><h2 style="margin-top:18px">💡 使用提示</h2><p style="font-size:13px;color:var(--tx2);line-height:1.7">· 文章正文用 <code>{YEAR}</code> 占位符自动跟随实际年份<br>· 网络时间每 30 分钟同步、每 60 秒检查日期变化<br>· 跨年时全站自动重新渲染显示新年份<br>· 未来日期文章不会在网站显示<br>· 建议每周导出 JSON 备份<br>· localStorage 容量约 5MB</p><div style="margin-top:18px;text-align:right"><button class="b b-o" onclick="$(\'#helpBd\').classList.remove(\'sh\')">关闭</button></div></div>';
+  bd.classList.add('sh');
+}
+
+function logout(){if(!confirm('确定退出登录？'))return;sessionStorage.removeItem('crh_auth');AL=false;location.hash='';render()}
+
+let RENDER_PENDING=false;
+function scheduleRender(){
+  if(RENDER_PENDING)return;
+  RENDER_PENDING=true;
+  requestAnimationFrame(()=>{RENDER_PENDING=false;render()});
+}
+function render(){
+  if(!AL){$('#app').innerHTML=rLogin();return}
+  const r=gr();
+  let content='';
+  switch(r.p){
+    case'dash':content=rDash();break;
+    case'arts':content=rArticles();break;
+    case'exs':content=rExs();break;
+    case'coins':content=rCoins();break;
+    case'links':content=rLinks();break;
+    case'data':content=rDataPage();break;
+    case'settings':content=rSettings();break;
+    default:content=rDash();
+  }
+  $('#app').innerHTML=rLayout(content);
+  updClock();
+  window.scrollTo(0,0);
+}
+
+render();
+syncTime(1);
+checkScheduled();
+</script>
+</body>
+</html>
