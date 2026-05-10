@@ -2,43 +2,44 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="robots" content="noindex,follow">
-<title>Loading… | CryptoRebateHub</title>
+<title>404 · 页面未找到 / Page Not Found · CryptoRebateHub</title>
 <link rel="canonical" href="https://cryptorebatehub.com/">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei","Noto Sans KR",sans-serif;background:#070b13;color:#f0f3f8;display:flex;align-items:center;justify-content:center;min-height:100vh;text-align:center;padding:20px}
-.box{max-width:480px}
-.spinner{width:48px;height:48px;border:3px solid rgba(16,216,160,.2);border-top-color:#10d8a0;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 24px}
-@keyframes spin{to{transform:rotate(360deg)}}
-h1{font-size:20px;margin-bottom:12px;color:#10d8a0}
-p{color:#a8b1c2;font-size:14px;margin-bottom:24px;line-height:1.7}
-a{color:#10d8a0;text-decoration:none;border:1px solid rgba(16,216,160,.4);padding:10px 24px;border-radius:8px;display:inline-block;font-size:13.5px;font-weight:500;transition:.2s}
-a:hover{background:rgba(16,216,160,.1)}
+.box{max-width:560px}
+h1{font-size:64px;margin-bottom:8px;color:#10d8a0;font-weight:800;letter-spacing:-2px}
+h2{font-size:18px;margin-bottom:14px;color:#c2cad8;font-weight:600}
+p{color:#8a93a4;font-size:14px;margin-bottom:24px;line-height:1.7}
+.actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:20px}
+.actions a{color:#10d8a0;text-decoration:none;border:1px solid rgba(16,216,160,.4);padding:10px 22px;border-radius:8px;font-size:14px;font-weight:600;transition:.2s}
+.actions a:hover{background:rgba(16,216,160,.12);transform:translateY(-1px)}
+.suggested{padding-top:16px;border-top:1px solid rgba(255,255,255,.08)}
+.suggested p{margin-bottom:10px;color:#8a93a4;font-size:13px}
+.suggested a{display:inline-block;margin:4px;padding:7px 14px;font-size:12.5px;color:#7ac0ff;border:1px solid rgba(122,192,255,.25);border-radius:6px;text-decoration:none;transition:.15s}
+.suggested a:hover{background:rgba(122,192,255,.1)}
 </style>
-<script>
-// SPA fallback: GitHub Pages serves this 404 for any URL that has no actual file.
-// We pass the original path to /?p=... so the SPA can restore it via history.replaceState.
-(function(){
-  var path=location.pathname;
-  // Don't loop redirect for root
-  if(path==='/'||path===''||path==='/index.html'){
-    location.replace('/');
-    return;
-  }
-  // Pass the path (and query, hash) to index.html
-  var encoded=encodeURIComponent(path+location.search+location.hash);
-  location.replace('/?p='+encoded);
-})();
-</script>
 </head>
 <body>
 <div class="box">
-<div class="spinner"></div>
-<h1>正在跳转 / Loading...</h1>
-<p>页面正在加载，请稍候。<br>If not redirected, click below.</p>
-<a href="/">返回首页 / Home</a>
+<h1>404</h1>
+<h2>页面未找到 / Page Not Found</h2>
+<p>抱歉，您访问的资源不存在。<br>The resource you're looking for doesn't exist.</p>
+<div class="actions">
+<a href="/">🏠 返回首页 / Home</a>
+<a href="/articles">📚 浏览文章 / Articles</a>
+</div>
+<div class="suggested">
+<p>您可能在找:</p>
+<a href="/exchanges">交易所对比</a>
+<a href="/markets">实时行情</a>
+<a href="/exchange/okx">OKX</a>
+<a href="/exchange/binance">Binance</a>
+<a href="/exchange/bybit">Bybit</a>
+<a href="/register-bonus">返佣福利</a>
+</div>
 </div>
 </body>
 </html>

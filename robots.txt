@@ -1,11 +1,12 @@
 # CryptoRebateHub robots.txt
-# Updated: 2026-05-05
+# Cloudflare Pages — all URLs return HTTP 200 via _redirects
+# Updated: 2026-05-09
 
 User-agent: *
 Allow: /
 Disallow: /mgr-7a9f3c2e.html
-Disallow: /admin
 Disallow: /go/
+Disallow: /api/
 
 User-agent: Googlebot
 Allow: /
@@ -28,7 +29,10 @@ Allow: /
 Disallow: /mgr-7a9f3c2e.html
 Disallow: /go/
 
-User-agent: Sogou
+User-agent: Baiduspider-image
+Allow: /
+
+User-agent: Sogou web spider
 Allow: /
 Disallow: /mgr-7a9f3c2e.html
 
@@ -54,7 +58,9 @@ Disallow: /mgr-7a9f3c2e.html
 
 User-agent: ChatGPT-User
 Allow: /
-Disallow: /mgr-7a9f3c2e.html
+
+User-agent: OAI-SearchBot
+Allow: /
 
 User-agent: ClaudeBot
 Allow: /
@@ -62,6 +68,10 @@ Allow: /
 User-agent: PerplexityBot
 Allow: /
 
+User-agent: Applebot
+Allow: /
+
+# Block aggressive scrapers / SEO tools
 User-agent: AhrefsBot
 Disallow: /
 
@@ -69,6 +79,12 @@ User-agent: SemrushBot
 Disallow: /
 
 User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: BLEXBot
 Disallow: /
 
 Sitemap: https://cryptorebatehub.com/sitemap.xml

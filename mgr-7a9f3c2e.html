@@ -326,6 +326,19 @@ function rDash(){
   for(const e of D.exs){if(e.ft)exFt++;if(e.url)exUrl++;if(e.mirrors&&e.mirrors.length)exMir+=e.mirrors.length}
   let coinsOn=0;
   for(const c of D.coins)if(c.on)coinsOn++;
+  // SEO health check
+  let seoMissingSlug=0,seoMissingTag=0,seoMissingExc=0,seoMissingMultilang=0;
+  for(const a of D.arts){
+    if(!a.pub)continue;
+    if(!a.slug)seoMissingSlug++;
+    if(!a.tag||!a.tag.zh)seoMissingTag++;
+    if(!a.exc||!a.exc.zh||a.exc.zh.length<50)seoMissingExc++;
+    const langs=['zh','zh-TW','en','ko'];
+    let hasAll=langs.every(l=>a.title&&a.title[l]&&a.cnt&&a.cnt[l]);
+    if(!hasAll)seoMissingMultilang++;
+  }
+  const seoIssues=seoMissingSlug+seoMissingTag+seoMissingExc;
+  const seoColor=seoIssues===0?'var(--grn)':seoIssues<5?'var(--yel)':'var(--red)';
   const recentArts=D.arts.slice().sort((a,b)=>(b.date||'').localeCompare(a.date||'')).slice(0,5);
   const dataKB=(JSON.stringify(D).length/1024).toFixed(1);
   return rTopBar('仪表盘','网站当前状态总览','<button class="b b-g" onclick="go(\'art/new\')">+ 新建文章</button> <button class="b b-o" onclick="xpD()">📤 备份</button>')+
@@ -336,8 +349,10 @@ function rDash(){
       '<div class="dc"><div class="dc-l">币种</div><div class="dc-v" style="color:var(--org)">'+coinsOn+'</div><div class="dc-s">在首页和行情页显示</div></div>'+
       '<div class="dc"><div class="dc-l">自动翻译</div><div class="dc-v" style="font-size:18px;color:'+(D.autoTL?'var(--grn)':'var(--tx3)')+'">'+(D.autoTL?'ON':'OFF')+'</div><div class="dc-s">保存时填补其他语言</div></div>'+
       '<div class="dc"><div class="dc-l">数据大小</div><div class="dc-v" style="font-size:18px">'+dataKB+'<small style="font-size:12px;color:var(--tx3)"> KB</small></div><div class="dc-s">localStorage 限 5MB</div></div>'+
+      '<div class="dc"><div class="dc-l">SEO 健康</div><div class="dc-v" style="font-size:18px;color:'+seoColor+'">'+(seoIssues===0?'✓ 完美':seoIssues+' 个问题')+'</div><div class="dc-s">'+(seoMissingSlug?'⚠ '+seoMissingSlug+' 缺 slug':'')+(seoMissingTag?(seoMissingSlug?' · ':'')+'缺 '+seoMissingTag+' 标签':'')+(!seoMissingSlug&&!seoMissingTag?'已发布文章 SEO 完整':'')+'</div></div>'+
     '</div>'+
     (stats.futureDated?'<div class="tip warn">⚠ 检测到 <strong>'+stats.futureDated+'</strong> 篇文章日期晚于今天 '+netToday()+'。这类文章在网站上不会显示。<a onclick="go(\'data\')" style="color:inherit;text-decoration:underline;cursor:pointer">前往修复 →</a></div>':'')+
+    (seoIssues>0?'<div class="tip warn">⚠ <strong>'+seoIssues+' 个 SEO 问题</strong>影响搜索引擎收录：'+(seoMissingSlug?seoMissingSlug+' 篇文章缺少 URL slug · ':'')+(seoMissingTag?seoMissingTag+' 篇缺少标签 · ':'')+(seoMissingExc?seoMissingExc+' 篇摘要太短 (<50 字) · ':'')+'<a onclick="go(\'arts\')" style="color:inherit;text-decoration:underline;cursor:pointer">前往修复 →</a></div>':'')+
     '<div class="pn"><div class="pn-h"><h2>📝 最近文章</h2><a class="b b-o" onclick="go(\'arts\')">查看全部</a></div>'+
     (recentArts.length?recentArts.map(a=>'<div class="al"><div style="flex:1;min-width:200px"><h4>'+es(a.title?.zh||a.title?.en||'(无标题)')+'</h4><div class="am">'+es(a.date||'')+' · '+statusBadge(a)+(a.cat?' · '+es(a.cat):'')+'</div></div><button class="b b-o" style="padding:5px 11px;font-size:12px" onclick="go(\'art/'+a.id+'\')">编辑</button></div>').join(''):'<div style="color:var(--tx3);text-align:center;padding:24px">暂无文章</div>')+
     '</div>'+
