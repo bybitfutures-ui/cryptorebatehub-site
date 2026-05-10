@@ -526,7 +526,8 @@ function rExCard(ex,i){
     for(const l of ls)html+='<div class="lang-r"><span class="lang-tag">'+l.n+'</span><input data-exi="'+i+'" data-mi="'+mi+'" data-mf="label" data-ml="'+l.k+'" value="'+es(m.label?.[l.k]||'')+'" placeholder="如：欧易官方备用"><input data-exi="'+i+'" data-mi="'+mi+'" data-mf="note" data-ml="'+l.k+'" value="'+es(m.note?.[l.k]||'')+'" placeholder="如：国内可访问"></div>';
     html+='</div>';
   }
-  html+='<button class="b b-o" onclick="addMir('+i+')" style="margin-top:6px">➕ 添加备用网址</button>';
+  html+='<button class="b b-o" onclick="addMir('+i+')" style="margin-top:6px;margin-right:6px">➕ 添加备用网址</button>';
+  html+='<button class="b b-o" onclick="bulkAddMirs('+i+')" style="margin-top:6px;font-size:12px">📋 批量粘贴</button>';
   html+='</details>';
   html+='<details class="ex-langs" open><summary>📝 4 语言名称和简介</summary>';
   for(const l of ls)html+='<div class="lang-r"><span class="lang-tag">'+l.n+'</span><input data-exi="'+i+'" data-exf="name" data-exl="'+l.k+'" value="'+es(ex.name?.[l.k]||'')+'" placeholder="名称"><input data-exi="'+i+'" data-exf="sub" data-exl="'+l.k+'" value="'+es(ex.sub?.[l.k]||'')+'" placeholder="一句话简介"></div>';
@@ -544,6 +545,35 @@ function delMir(i,mi){
   if(!confirm('删除此备用网址？'))return;
   D.exs[i].mirrors.splice(mi,1);
   sv();scheduleRender();tst('✓ 已删除');
+}
+function bulkAddMirs(i){
+  const example='# 格式（每行一条，支持以下三种）：\n# URL\n# URL,REGION\n# URL,REGION,LABEL\n#\n# 例子（请先删除上方注释行）：\nhttps://www.okx.com,GLOBAL,OKX 全球\nhttps://www.ouyi.cn,CN,欧易国内备用';
+  const txt=prompt('粘贴备用网址（每行一条，可选 URL,REGION,LABEL 格式）：',example);
+  if(!txt||txt===example)return;
+  if(!D.exs[i].mirrors)D.exs[i].mirrors=[];
+  let added=0;
+  txt.split(/\r?\n/).forEach(line=>{
+    line=line.trim();
+    if(!line||line.startsWith('#'))return;
+    const parts=line.split(',').map(s=>s.trim());
+    const url=parts[0];
+    if(!url||!/^https?:\/\//.test(url)){console.warn('Skip invalid URL:',url);return}
+    const region=(parts[1]||'GLOBAL').toUpperCase();
+    const validRegions=['GLOBAL','CN','HK','TW','JP','KR','SG','EU','US'];
+    const finalRegion=validRegions.includes(region)?region:'GLOBAL';
+    const label=parts[2]||'';
+    D.exs[i].mirrors.push({
+      url,region:finalRegion,
+      label:{zh:label,'zh-TW':label,en:label,ko:label},
+      note:{zh:'','zh-TW':'',en:'',ko:''}
+    });
+    added++;
+  });
+  if(added>0){
+    sv();scheduleRender();tst('✓ 批量添加 '+added+' 个备用网址');
+  }else{
+    tst('未识别到有效的 URL（必须以 http:// 或 https:// 开头）',1);
+  }
 }
 function moveEx(i,d){const t=i+d;if(t<0||t>=D.exs.length)return;[D.exs[i],D.exs[t]]=[D.exs[t],D.exs[i]];sv();scheduleRender()}
 function addEx(){const id='exchange'+(D.exs.length+1);D.exs.push({id,url:'',ft:0,logo:'EX',color:'#5fb1ff',rebate:'',name:{zh:'新交易所','zh-TW':'',en:'New Exchange',ko:''},sub:{zh:'','zh-TW':'',en:'',ko:''},features:{zh:[],'zh-TW':[],en:[],ko:[]}});sv();scheduleRender();tst('✓ 已添加，请完善信息')}

@@ -433,6 +433,7 @@ a{color:var(--tx);text-decoration:none}
 <li><a onclick="go('')" data-t="nav_home"></a></li>
 <li><a onclick="go('markets')" data-t="nav_market"></a></li>
 <li><a onclick="go('exchanges')" data-t="nav_ex"></a></li>
+<li><a onclick="go('access-urls')" data-t="nav_access" style="position:relative"></a></li>
 <li><a onclick="go('guides')" data-t="nav_guides"></a></li>
 <li><a onclick="go('articles')" data-t="nav_art"></a></li>
 <li><a onclick="go('disclosure')" data-t="nav_disc"></a></li>
@@ -558,7 +559,30 @@ coin_seo_k:'{coin},{name},{coin} 价格,{coin} 行情,{coin} K 线,{coin} 实时
 hs_exchanges:"交易所对比",hs_articles:"教程文章",hs_languages:"语言支持",hs_savings:"最高节省",view_live_markets:"查看实时行情",read_min:"分钟阅读",related_articles:"相关文章",share:"分享",copy_link:"复制链接",copied:"已复制",popular_articles:"热门文章",popular_t:"最受欢迎",popular_d:"根据浏览量排序的最热门内容",art_search_placeholder:"搜索文章标题、内容、标签...",cat_general:"通用",all:"全部",no_results:"没有找到匹配的文章",art_fallback_notice:"本文目前仅有中文版本，正在翻译中。以下为中文原文。",
 ind_banner:'CryptoRebateHub 是独立第三方信息站，与 OKX、Binance、Bybit 等交易平台无任何隶属关系。',
 learn_more:'了解透明度 →',
-nav_home:'首页',nav_market:'行情',nav_ex:'交易所',nav_guides:'指南',nav_art:'文章',nav_disc:'透明度',nav_about:'关于',
+nav_home:'首页',nav_market:'行情',nav_ex:'交易所',nav_access:'🌐 备用入口',nav_guides:'指南',nav_art:'文章',nav_disc:'透明度',nav_about:'关于',
+access_urls_t:'交易所访问入口大全',
+access_urls_intro:'当主域名无法访问时，本页提供经过交易所官方公告确认的多区域备用入口。请仅通过本页链接访问，避免钓鱼网站风险。',
+access_empty_t:'暂无备用网址',
+access_empty_d:'管理员尚未配置备用网址。请通过下方按钮直接访问交易所官网注册。',
+access_stat_ex:'交易所',
+access_stat_urls:'备用入口',
+access_stat_regions:'覆盖区域',
+access_warn_t:'重要提示',
+access_warn_d:'本页所有备用域名均经过交易所官方公告核实。但加密货币交易在某些司法管辖区受限制，请用户自行评估合规性。访问前请：核对域名拼写、确认 HTTPS 加锁、不要从其他来源复制粘贴域名。',
+view_exchanges:'查看交易所',
+safe_guide_t:'安全访问指南',
+safe_1:'所有备用域名均来自交易所官方公告，本站不提供未经核实的"翻墙"链接。',
+safe_2:'通过本页链接打开后，请检查浏览器地址栏域名拼写，确认 HTTPS 锁标志。',
+safe_3:'登录后请立即开启二次验证（Google Authenticator 或交易所 APP 内置）。',
+safe_4:'切勿在其他网站、聊天群、邮件中复制粘贴的"备用网址"输入账号密码。',
+safe_5:'本站不会主动通过私信、邮件向您索要账号、密码或验证码。',
+view_articles:'查看教程文章',
+access_seo_t:'交易所备用网址 / 官方多区域入口 - OKX 欧易 Binance 币安 Bybit | CryptoRebateHub',
+access_seo_d:'当主域名无法访问时，本页提供 OKX（欧易）、Binance（币安）、Bybit 等交易所经过官方公告确认的多区域备用入口。请仅通过本页链接访问，避免钓鱼网站。',
+access_seo_k:'OKX 备用网址,欧易备用网址,币安备用网址,Binance 备用域名,Bybit 备用网址,OKX 防屏蔽,欧易防屏蔽,币安防屏蔽,加密交易所备用入口,加密交易所官方域名,OKX 国内访问,欧易国内访问,币安国内访问,Bybit 国内访问,加密货币交易所多区域',
+cant_access_t:'无法访问主域名？',
+cant_access_d:'查看官方备用入口（多区域可用）',
+cant_access_btn:'查看备用入口 →',
 invite_code:'邀请码',copy:'复制',visit_official:'访问官方网站',ex_features:'平台特色',mkts_d_tv:'专业级数据由 TradingView 提供 · 实时更新',tv_overview:'概览',tv_screener:'筛选器',tv_heatmap:'热图',tv_ticker:'滚动条',mkts_quick_view:'快速查看',view_details:'查看详情',cp_disclaimer_tv:'24h 数据来自 OKX 公开 API；图表由 TradingView 提供。所有数据仅供参考，实际交易价格以你登录交易所时为准。CryptoRebateHub 不提供任何交易服务。',tv_ticker_hint:'滚动条展示主流币种实时价格。点击其他标签查看详细图表和数据。',
 mkts_sl:'实时行情',mkts_t:'实时加密货币行情',mkts_d:'数据来自 OKX 公开 API，每 30 秒自动刷新',mkts_note:'CryptoRebateHub 不提供交易服务。这些价格仅供参考。请通过下方推荐的交易所进行实际交易。',
 mk_coin:'币种',mk_price:'价格',mk_change:'24h 变化',mk_high:'24h 高',mk_low:'24h 低',
@@ -659,7 +683,30 @@ coin_seo_k:'{coin},{name},{coin} 價格,{coin} 行情,{coin} K 線,{coin} 即時
 hs_exchanges:"交易所對比",hs_articles:"教程文章",hs_languages:"語言支持",hs_savings:"最高節省",view_live_markets:"查看即時行情",read_min:"分鐘閱讀",related_articles:"相關文章",share:"分享",copy_link:"複製連結",copied:"已複製",popular_articles:"熱門文章",popular_t:"最受歡迎",popular_d:"根據瀏覽量排序的最熱門內容",art_search_placeholder:"搜尋文章標題、內容、標籤...",cat_general:"通用",all:"全部",no_results:"沒有找到符合的文章",art_fallback_notice:"本文目前僅有中文版本，正在翻譯中。以下為中文原文。",
 ind_banner:'CryptoRebateHub 是獨立第三方資訊站，與 OKX、Binance、Bybit 等交易平台無任何隸屬關係。',
 learn_more:'了解透明度 →',
-nav_home:'首頁',nav_market:'行情',nav_ex:'交易所',nav_guides:'指南',nav_art:'文章',nav_disc:'透明度',nav_about:'關於',
+nav_home:'首頁',nav_market:'行情',nav_ex:'交易所',nav_access:'🌐 備用入口',nav_guides:'指南',nav_art:'文章',nav_disc:'透明度',nav_about:'關於',
+access_urls_t:'交易所訪問入口大全',
+access_urls_intro:'當主網域無法訪問時，本頁提供經過交易所官方公告確認的多區域備用入口。請僅透過本頁連結訪問，避免釣魚網站風險。',
+access_empty_t:'暫無備用網址',
+access_empty_d:'管理員尚未配置備用網址。請透過下方按鈕直接訪問交易所官網註冊。',
+access_stat_ex:'交易所',
+access_stat_urls:'備用入口',
+access_stat_regions:'覆蓋區域',
+access_warn_t:'重要提示',
+access_warn_d:'本頁所有備用網域均經過交易所官方公告核實。但加密貨幣交易在某些司法管轄區受限制，請用戶自行評估合規性。訪問前請：核對網域拼寫、確認 HTTPS 加鎖、不要從其他來源複製貼上網域。',
+view_exchanges:'查看交易所',
+safe_guide_t:'安全訪問指南',
+safe_1:'所有備用網域均來自交易所官方公告，本站不提供未經核實的"翻牆"連結。',
+safe_2:'透過本頁連結打開後，請檢查瀏覽器地址欄網域拼寫，確認 HTTPS 鎖標誌。',
+safe_3:'登入後請立即開啟二次驗證（Google Authenticator 或交易所 APP 內建）。',
+safe_4:'切勿在其他網站、聊天群、郵件中複製貼上的"備用網址"輸入帳號密碼。',
+safe_5:'本站不會主動透過私訊、郵件向您索要帳號、密碼或驗證碼。',
+view_articles:'查看教程文章',
+access_seo_t:'交易所備用網址 / 官方多區域入口 - OKX 欧易 Binance 幣安 Bybit | CryptoRebateHub',
+access_seo_d:'當主網域無法訪問時，本頁提供 OKX、Binance、Bybit 等交易所經過官方公告確認的多區域備用入口。請僅透過本頁連結訪問，避免釣魚網站。',
+access_seo_k:'OKX 備用網址,Binance 備用網址,Bybit 備用網址,加密交易所備用入口,加密交易所官方網域,OKX 台灣,Binance 台灣,Bybit 台灣',
+cant_access_t:'無法訪問主網域？',
+cant_access_d:'查看官方備用入口（多區域可用）',
+cant_access_btn:'查看備用入口 →',
 invite_code:'邀請碼',copy:'複製',visit_official:'訪問官方網站',ex_features:'平台特色',mkts_d_tv:'專業級資料由 TradingView 提供 · 即時更新',tv_overview:'概覽',tv_screener:'篩選器',tv_heatmap:'熱圖',tv_ticker:'滾動條',mkts_quick_view:'快速查看',view_details:'查看詳情',cp_disclaimer_tv:'24h 資料來自 OKX 公開 API；圖表由 TradingView 提供。所有資料僅供參考，實際交易價格以你登入交易所時為準。CryptoRebateHub 不提供任何交易服務。',tv_ticker_hint:'滾動條展示主流幣種即時價格。點擊其他標籤查看詳細圖表和資料。',
 mkts_sl:'即時行情',mkts_t:'即時加密貨幣行情',mkts_d:'資料來自 OKX 公開 API，每 30 秒自動刷新',mkts_note:'CryptoRebateHub 不提供交易服務。這些價格僅供參考。請透過下方推薦的交易所進行實際交易。',
 mk_coin:'幣種',mk_price:'價格',mk_change:'24h 變化',mk_high:'24h 高',mk_low:'24h 低',
@@ -760,7 +807,30 @@ coin_seo_k:'{coin}, {name}, {coin} price, {coin} chart, {coin} live price, {coin
 hs_exchanges:"Exchanges",hs_articles:"Tutorials",hs_languages:"Languages",hs_savings:"Max Savings",view_live_markets:"View Live Markets",read_min:"min read",related_articles:"Related Articles",share:"Share",copy_link:"Copy Link",copied:"Copied",popular_articles:"Popular",popular_t:"Most Read",popular_d:"Top articles ranked by view count",art_search_placeholder:"Search article title, content, tags...",cat_general:"General",all:"All",no_results:"No matching articles found",art_fallback_notice:"This article is currently available in Chinese only. Translation is in progress. Original Chinese version below.",
 ind_banner:'CryptoRebateHub is an independent third-party information site, NOT affiliated with OKX, Binance, Bybit, or any exchange.',
 learn_more:'Read transparency →',
-nav_home:'Home',nav_market:'Markets',nav_ex:'Exchanges',nav_guides:'Guides',nav_art:'Articles',nav_disc:'Disclosure',nav_about:'About',
+nav_home:'Home',nav_market:'Markets',nav_ex:'Exchanges',nav_access:'🌐 Access',nav_guides:'Guides',nav_art:'Articles',nav_disc:'Disclosure',nav_about:'About',
+access_urls_t:'Exchange Access URLs Hub',
+access_urls_intro:'When the main domain is inaccessible, this page provides multi-region official entry points confirmed by exchange announcements. Please only use links from this page to avoid phishing sites.',
+access_empty_t:'No backup URLs configured',
+access_empty_d:'Administrator has not configured backup URLs yet. Please use the button below to register directly at the exchange.',
+access_stat_ex:'Exchanges',
+access_stat_urls:'Backup URLs',
+access_stat_regions:'Regions',
+access_warn_t:'Important Notice',
+access_warn_d:'All backup domains on this page are verified through official exchange announcements. However, crypto trading is restricted in some jurisdictions; users should self-evaluate compliance. Before accessing: verify spelling, confirm HTTPS lock, never copy domains from other sources.',
+view_exchanges:'View Exchanges',
+safe_guide_t:'Safe Access Guide',
+safe_1:'All backup domains come from official exchange announcements. We do not provide unverified "circumvention" links.',
+safe_2:'After opening via links here, check the browser address bar spelling and confirm HTTPS lock icon.',
+safe_3:'Enable 2FA immediately after login (Google Authenticator or exchange app built-in).',
+safe_4:'Never enter credentials on "backup URLs" copied from other websites, chat groups, or emails.',
+safe_5:'We will never proactively ask for your account, password, or verification code via DM or email.',
+view_articles:'View Tutorials',
+access_seo_t:'Exchange Backup URLs / Multi-Region Access Points - OKX Binance Bybit | CryptoRebateHub',
+access_seo_d:'When the main domain is inaccessible, this page provides multi-region official access points for OKX, Binance, Bybit and others, verified through official announcements. Use only links from this page to avoid phishing.',
+access_seo_k:'OKX backup URL, Binance backup domain, Bybit alternate URL, OKX mirror, Binance mirror, Bybit mirror, OKX cant access, OKX blocked, Binance blocked solution, crypto exchange access points, crypto exchange official domains',
+cant_access_t:'Cannot access main domain?',
+cant_access_d:'View official backup entry points (multi-region available)',
+cant_access_btn:'View Access URLs →',
 invite_code:'Invite Code',copy:'Copy',visit_official:'Visit Official Site',ex_features:'Platform Features',mkts_d_tv:'Professional data powered by TradingView · Live updates',tv_overview:'Overview',tv_screener:'Screener',tv_heatmap:'Heatmap',tv_ticker:'Ticker',mkts_quick_view:'Quick View',view_details:'View details',cp_disclaimer_tv:'24h stats from OKX public API; charts powered by TradingView. All data is for reference only — actual trading prices are what you see logged in to an exchange. CryptoRebateHub provides no trading services.',tv_ticker_hint:'The ticker tape shows live prices for major coins. Click other tabs above for detailed charts and data.',
 mkts_sl:'LIVE MARKETS',mkts_t:'Live Cryptocurrency Markets',mkts_d:'Data from OKX public API, refreshed every 30 seconds',mkts_note:'CryptoRebateHub does not provide trading services. These prices are for reference only. Please trade via the recommended exchanges below.',
 mk_coin:'Coin',mk_price:'Price',mk_change:'24h Change',mk_high:'24h High',mk_low:'24h Low',
@@ -861,7 +931,30 @@ coin_seo_k:'{coin},{name},{coin} 가격,{coin} 시세,{coin} 차트,{coin} 실�
 hs_exchanges:"거래소",hs_articles:"가이드",hs_languages:"지원 언어",hs_savings:"최대 절약",view_live_markets:"실시간 시세 보기",read_min:"분 읽기",related_articles:"관련 아티클",share:"공유",copy_link:"링크 복사",copied:"복사됨",popular_articles:"인기 글",popular_t:"가장 많이 읽힌",popular_d:"조회수 기준 인기 콘텐츠",art_search_placeholder:"제목, 내용, 태그 검색...",cat_general:"일반",all:"전체",no_results:"일치하는 아티클이 없습니다",art_fallback_notice:"이 문서는 현재 중국어로만 제공됩니다. 번역이 진행 중입니다. 아래는 중국어 원문입니다.",
 ind_banner:'CryptoRebateHub는 독립적인 제3자 정보 사이트이며 OKX, Binance, Bybit 또는 어떠한 거래소와도 제휴 관계 없음.',
 learn_more:'투명성 자세히 →',
-nav_home:'홈',nav_market:'시세',nav_ex:'거래소',nav_guides:'가이드',nav_art:'아티클',nav_disc:'투명성',nav_about:'소개',
+nav_home:'홈',nav_market:'시세',nav_ex:'거래소',nav_access:'🌐 접속',nav_guides:'가이드',nav_art:'아티클',nav_disc:'투명성',nav_about:'소개',
+access_urls_t:'거래소 접속 URL 모음',
+access_urls_intro:'메인 도메인 접속이 불가능할 때, 이 페이지는 거래소 공식 발표로 확인된 다지역 공식 접속점을 제공합니다. 피싱 사이트 위험을 피하기 위해 반드시 이 페이지의 링크만 사용하세요.',
+access_empty_t:'설정된 백업 URL 없음',
+access_empty_d:'관리자가 백업 URL을 아직 설정하지 않았습니다. 아래 버튼으로 거래소에 직접 가입하세요.',
+access_stat_ex:'거래소',
+access_stat_urls:'백업 URL',
+access_stat_regions:'지역',
+access_warn_t:'중요 안내',
+access_warn_d:'이 페이지의 모든 백업 도메인은 거래소 공식 발표를 통해 확인되었습니다. 단, 암호화폐 거래는 일부 관할 구역에서 제한되므로 사용자가 자체 규정 준수 평가를 해야 합니다. 접속 전: 도메인 철자 확인, HTTPS 잠금 확인, 다른 출처에서 도메인 복사 금지.',
+view_exchanges:'거래소 보기',
+safe_guide_t:'안전 접속 가이드',
+safe_1:'모든 백업 도메인은 거래소 공식 발표에서 가져옵니다. 검증되지 않은 "우회" 링크를 제공하지 않습니다.',
+safe_2:'이 페이지의 링크로 연 후, 브라우저 주소창의 철자와 HTTPS 자물쇠 아이콘을 확인하세요.',
+safe_3:'로그인 후 즉시 2단계 인증(Google Authenticator 또는 거래소 앱 내장)을 활성화하세요.',
+safe_4:'다른 웹사이트, 채팅, 이메일에서 복사된 "백업 URL"에 절대 자격 증명을 입력하지 마세요.',
+safe_5:'당사는 DM 또는 이메일을 통해 계정, 비밀번호 또는 인증 코드를 요청하지 않습니다.',
+view_articles:'튜토리얼 보기',
+access_seo_t:'거래소 백업 URL / 다지역 공식 접속점 - OKX Binance Bybit | CryptoRebateHub',
+access_seo_d:'메인 도메인 접속이 불가능할 때, 이 페이지는 OKX, Binance, Bybit 등 거래소의 공식 발표로 확인된 다지역 접속점을 제공합니다.',
+access_seo_k:'OKX 백업 URL, Binance 백업 도메인, Bybit 미러, OKX 한국, Binance 한국, Bybit 한국, 암호화폐 거래소 접속점',
+cant_access_t:'메인 도메인 접속 불가?',
+cant_access_d:'공식 백업 접속점 보기 (다지역 사용 가능)',
+cant_access_btn:'접속 URL 보기 →',
 invite_code:'초대 코드',copy:'복사',visit_official:'공식 사이트 방문',ex_features:'플랫폼 특징',mkts_d_tv:'TradingView 제공 전문 데이터 · 실시간 업데이트',tv_overview:'개요',tv_screener:'스크리너',tv_heatmap:'히트맵',tv_ticker:'시세 표시기',mkts_quick_view:'빠른 보기',view_details:'상세 보기',cp_disclaimer_tv:'24h 통계는 OKX 공개 API; 차트는 TradingView 제공. 모든 데이터는 참고용이며 실제 거래가는 거래소 로그인 시 확인하세요. CryptoRebateHub는 거래 서비스를 제공하지 않습니다.',tv_ticker_hint:'시세 표시기는 주요 코인의 실시간 가격을 보여줍니다. 다른 탭에서 상세 차트와 데이터를 확인하세요.',
 mkts_sl:'실시간 시세',mkts_t:'실시간 암호화폐 시세',mkts_d:'OKX 공개 API 데이터, 30초마다 자동 갱신',mkts_note:'CryptoRebateHub는 거래 서비스를 제공하지 않습니다. 이 시세는 참고용이며, 아래 추천 거래소를 통해 실제 거래하시기 바랍니다.',
 mk_coin:'코인',mk_price:'가격',mk_change:'24h 변동',mk_high:'24h 고가',mk_low:'24h 저가',
@@ -1085,6 +1178,7 @@ function gr(){
   if(s[0]==='disclosure')return{p:'disc'};
   if(s[0]==='about')return{p:'about'};
   if(s[0]==='register-bonus'||s[0]==='bonus')return{p:'bonus'};
+  if(s[0]==='access-urls'||s[0]==='access'||s[0]==='mirrors')return{p:'access'};
   return{p:'home'};
 }
 // Resolve article by id OR slug (public access — uses isVisible filter)
@@ -1125,7 +1219,9 @@ function rr(){
       guides:{t:'guides_seo_t',d:'guides_seo_d',k:'guides_seo_k'},
       arts:{t:'arts_seo_t',d:'arts_seo_d',k:'arts_seo_k'},
       about:{t:'about_seo_t',d:'about_seo_d',k:'about_seo_k'},
-      disc:{t:'disc_seo_t',d:'disc_seo_d',k:'disc_seo_k'}
+      disc:{t:'disc_seo_t',d:'disc_seo_d',k:'disc_seo_k'},
+      access:{t:'access_seo_t',d:'access_seo_d',k:'access_seo_k'},
+      bonus:{t:'exs_seo_t',d:'exs_seo_d',k:'exs_seo_k'}
     };
     let ti,de,kw='';
     if(r.p==='exch'&&r.id){
@@ -1185,6 +1281,8 @@ function rr(){
       case'coin':a.innerHTML=rCoin(r.id);iCoin(r.id);break;
       case'mkts':a.innerHTML=rMarkets();iMarkets();break;
       case'guides':a.innerHTML=rGuides();break;
+      case'access':a.innerHTML=rAccessUrls();break;
+      case'bonus':a.innerHTML=rExchanges();break;
       case'disc':a.innerHTML=rDisclosure();break;
       case'about':a.innerHTML=rAbout();break;
       case'art':a.innerHTML=rArt(r);break;
@@ -1203,7 +1301,7 @@ function rr(){
 // Update <link rel=canonical> dynamically per page (helps SEO)
 function updCanonical(r){
   let url='https://cryptorebatehub.com/';
-  const map={exs:'exchanges',guides:'guides',disc:'disclosure',about:'about',arts:'articles',mkts:'markets',bonus:'register-bonus'};
+  const map={exs:'exchanges',guides:'guides',disc:'disclosure',about:'about',arts:'articles',mkts:'markets',bonus:'register-bonus',access:'access-urls'};
   if(r.p==='exch'&&r.id)url+='exchange/'+r.id;
   else if(r.p==='coin'&&r.id)url+='coin/'+r.id;
   else if(r.p==='art'){
@@ -1307,7 +1405,8 @@ function injectRouteSchema(r,url){
   // BreadcrumbList for all other static pages
   const staticPageMap={
     mkts:{n:'nav_market'},guides:{n:'nav_guides'},
-    arts:{n:'nav_art'},about:{n:'nav_about'},disc:{n:'nav_disc'},bonus:{n:'nav_bonus'}
+    arts:{n:'nav_art'},about:{n:'nav_about'},disc:{n:'nav_disc'},bonus:{n:'nav_bonus'},
+    access:{n:'nav_access'}
   };
   if(staticPageMap[r.p]){
     const home='https://cryptorebatehub.com/';
@@ -1774,6 +1873,7 @@ ${ex.code?`<div style="text-align:center"><div style="font-size:12px;color:var(-
 <button class="bt bt-g" onclick="go('go/${ex.id}')" style="background:linear-gradient(135deg,${c},${c}cc);color:var(--bg);font-size:16px;padding:14px 32px;font-weight:700">🚀 ${tr('register_now')||'立即注册'} → ${es(pL(ex.name))}</button>
 </div>
 <div style="font-size:12.5px;color:var(--tx3);margin-top:14px">${tr('ex_safe_note')||'✓ 直达官方域名 ✓ 邀请码自动绑定 ✓ 永久返佣'}</div>
+${ex.mirrors&&ex.mirrors.length?`<a onclick="go('access-urls')" style="display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-size:12.5px;color:var(--blu);cursor:pointer;text-decoration:none;padding:6px 12px;border:1px dashed rgba(122,192,255,.3);border-radius:99px;transition:.2s" onmouseover="this.style.background='rgba(122,192,255,.08)'" onmouseout="this.style.background='transparent'">🌐 ${tr('cant_access_t')||'无法访问主域名？'} ${tr('cant_access_btn')||'查看备用入口 →'}</a>`:''}
 </div>
 </div>
 
@@ -1857,6 +1957,107 @@ function rGuides(){
 </div>
 <div class="eg" style="margin-bottom:48px">${exs.map(ex=>{const c=ex.color||'#10d8a0';return`<article class="ec" onclick="go('exchange/${ex.id}')"><div class="eic" style="background:${c}22;color:${c}">${es(ex.logo)}</div><h3 class="en">${es(pL(ex.name))}</h3><p class="esu">${es(pL(ex.sub))}</p><div style="margin-top:12px;font-size:13px;color:${c};font-weight:600">${tr('ex_detail')} →</div></article>`}).join('')}</div>
 ${D.arts.filter(isVisible).length?`<h2 style="font-size:24px;font-weight:800;margin-bottom:20px;text-align:center">📖 ${tr('art_t')}</h2><div class="ag">${D.arts.filter(isVisible).slice(0,9).map(a=>`<div class="ac" onclick="go('${es(artUrl(a))}')"><div class="adt">${a.date}</div><h3 class="att">${es(pL(a.title))}</h3><p class="aex">${es(pL(a.exc))}</p>${pL(a.tag)?`<span class="atg">${es(pL(a.tag))}</span>`:''}</div>`).join('')}</div>${D.arts.filter(isVisible).length>9?`<div style="text-align:center;margin-top:24px"><button class="bt bt-o" onclick="go('articles')">${tr('art_all')}</button></div>`:''}`:''}
+</div>${rFoot()}`;
+}
+
+function rAccessUrls(){
+  // Aggregated backup URLs page — all exchanges with mirror URLs in one place
+  const exsWithMirrors=D.exs.filter(e=>!e.hidden&&e.mirrors&&e.mirrors.length);
+  const totalMirrors=exsWithMirrors.reduce((acc,e)=>acc+e.mirrors.length,0);
+  const flagOf=r=>r==='CN'?'🇨🇳':r==='HK'?'🇭🇰':r==='TW'?'🇹🇼':r==='JP'?'🇯🇵':r==='KR'?'🇰🇷':r==='EU'?'🇪🇺':r==='US'?'🇺🇸':r==='SG'?'🇸🇬':'🌍';
+  const regionLbl=r=>({CN:'国内 / Mainland China',HK:'香港 / Hong Kong',TW:'台湾 / Taiwan',JP:'日本 / Japan',KR:'韩国 / Korea',SG:'新加坡 / Singapore',EU:'欧洲 / Europe',US:'美国 / US',GLOBAL:'全球 / Global'}[r]||r);
+  return`<div class="ap" style="max-width:960px"><a class="bk" onclick="go('')">← ${tr('art_back')||'返回'}</a>
+
+<!-- Header -->
+<div style="text-align:center;margin-bottom:36px">
+<div style="font-size:42px;margin-bottom:12px">🌐</div>
+<h1 class="aph" style="margin-bottom:10px">${tr('access_urls_t')||'交易所访问入口大全'}</h1>
+<p style="color:var(--tx2);font-size:15.5px;max-width:620px;margin:0 auto;line-height:1.7">${tr('access_urls_intro')||'当主域名无法访问时，本页提供经过交易所官方公告确认的多区域备用入口。请仅通过本页链接访问，避免钓鱼网站风险。'}</p>
+</div>
+
+${totalMirrors===0?`
+<!-- Empty state -->
+<div style="background:var(--bg2);border:1px dashed var(--bd2);border-radius:var(--r2);padding:48px 32px;text-align:center">
+<div style="font-size:42px;margin-bottom:14px;opacity:.5">📭</div>
+<h2 style="font-size:18px;margin-bottom:8px;color:var(--tx2)">${tr('access_empty_t')||'暂无备用网址'}</h2>
+<p style="color:var(--tx3);font-size:13.5px;margin-bottom:18px">${tr('access_empty_d')||'管理员尚未配置备用网址。请通过下方按钮直接访问交易所官网注册。'}</p>
+<button class="bt bt-g" onclick="go('exchanges')">${tr('view_exchanges')||'查看交易所'} →</button>
+</div>
+`:`
+<!-- Warning + Quick stats -->
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:24px">
+<div style="background:var(--bg2);border:1px solid var(--bd);border-radius:12px;padding:18px;text-align:center">
+<div style="font-size:24px;font-weight:800;color:var(--grn);font-family:'JetBrains Mono',monospace">${exsWithMirrors.length}</div>
+<div style="font-size:12.5px;color:var(--tx3);margin-top:4px">${tr('access_stat_ex')||'交易所'}</div>
+</div>
+<div style="background:var(--bg2);border:1px solid var(--bd);border-radius:12px;padding:18px;text-align:center">
+<div style="font-size:24px;font-weight:800;color:var(--blu);font-family:'JetBrains Mono',monospace">${totalMirrors}</div>
+<div style="font-size:12.5px;color:var(--tx3);margin-top:4px">${tr('access_stat_urls')||'备用入口'}</div>
+</div>
+<div style="background:var(--bg2);border:1px solid var(--bd);border-radius:12px;padding:18px;text-align:center">
+<div style="font-size:24px;font-weight:800;color:var(--yel);font-family:'JetBrains Mono',monospace">${[...new Set(exsWithMirrors.flatMap(e=>e.mirrors.map(m=>m.region)))].length}</div>
+<div style="font-size:12.5px;color:var(--tx3);margin-top:4px">${tr('access_stat_regions')||'覆盖区域'}</div>
+</div>
+</div>
+
+<!-- Important warning -->
+<div style="background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.25);border-radius:12px;padding:18px 22px;margin-bottom:28px;display:flex;gap:14px;align-items:flex-start">
+<div style="font-size:24px;flex-shrink:0">⚠️</div>
+<div>
+<div style="font-weight:700;color:var(--yel);margin-bottom:6px;font-size:15px">${tr('access_warn_t')||'重要提示'}</div>
+<div style="color:var(--tx2);font-size:13.5px;line-height:1.7">${tr('access_warn_d')||'本页所有备用域名均经过交易所官方公告核实。但加密货币交易在某些司法管辖区受限制，请用户自行评估合规性。访问前请：核对域名拼写、确认 HTTPS 加锁、不要从其他来源复制粘贴域名。'}</div>
+</div>
+</div>
+
+<!-- Per-exchange listings -->
+${exsWithMirrors.map(ex=>{const c=ex.color||'#10d8a0';const exName=pL(ex.name)||ex.id;return`
+<div style="background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r2);margin-bottom:18px;overflow:hidden">
+<div style="display:flex;align-items:center;gap:14px;padding:20px 24px;background:linear-gradient(135deg,${c}10,transparent);border-bottom:1px solid var(--bd)">
+<div style="width:48px;height:48px;border-radius:11px;background:${c}25;color:${c};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0">${es(ex.logo)}</div>
+<div style="flex:1;min-width:0">
+<h2 style="margin:0;font-size:20px;font-weight:800">${es(exName)}</h2>
+<div style="font-size:12.5px;color:var(--tx3);margin-top:2px">${es(pL(ex.sub)||'')}</div>
+</div>
+<button class="bt bt-g" style="background:${c};color:var(--bg);font-size:13px;padding:8px 16px" onclick="go('exchange/${ex.id}')">${tr('view_detail')||'详情'} →</button>
+</div>
+<div style="padding:18px 24px">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px">
+${ex.mirrors.map((m,mi)=>{const lbl=pL(m.label)||m.url;const nt=pL(m.note)||'';return`
+<a href="${es(m.url)}" target="_blank" rel="noopener noreferrer nofollow sponsored" class="mir-card" style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--bg3);border:1px solid var(--bd);border-radius:10px;text-decoration:none;color:var(--tx);transition:.2s">
+<span style="font-size:22px;flex-shrink:0;line-height:1">${flagOf(m.region)}</span>
+<div style="flex:1;min-width:0">
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+<span style="font-weight:700;font-size:13.5px">${es(lbl)}</span>
+<span style="font-size:10.5px;padding:2px 7px;background:${c}22;color:${c};border-radius:99px;font-weight:600;letter-spacing:.3px">${es(regionLbl(m.region||'GLOBAL'))}</span>
+</div>
+<div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--tx3);word-break:break-all;line-height:1.5">${es(m.url)}</div>
+${nt?`<div style="font-size:11.5px;color:var(--tx2);margin-top:4px">${es(nt)}</div>`:''}
+</div>
+<button onclick="event.preventDefault();event.stopPropagation();copyTxt('${es(m.url)}',this)" title="${tr('copy')||'复制'}" style="background:transparent;border:none;cursor:pointer;font-size:14px;color:var(--tx3);padding:4px 6px;flex-shrink:0;border-radius:4px" onmouseover="this.style.background='var(--bd)'" onmouseout="this.style.background='transparent'">📋</button>
+</a>`}).join('')}
+</div>
+</div>
+</div>`}).join('')}
+`}
+
+<!-- Safety guide -->
+<div style="background:linear-gradient(135deg,rgba(122,192,255,.06),rgba(16,216,160,.04));border:1px solid var(--bd);border-radius:var(--r2);padding:24px 28px;margin-top:28px">
+<h2 style="margin:0 0 14px;font-size:18px;color:var(--blu)">🛡️ ${tr('safe_guide_t')||'安全访问指南'}</h2>
+<ul style="list-style:none;margin:0;padding:0">
+<li style="padding:7px 0;font-size:13.5px;color:var(--tx2);display:flex;gap:10px"><span style="color:var(--grn);flex-shrink:0">✓</span>${tr('safe_1')||'所有备用域名均来自交易所官方公告，本站不提供未经核实的"翻墙"链接。'}</li>
+<li style="padding:7px 0;font-size:13.5px;color:var(--tx2);display:flex;gap:10px"><span style="color:var(--grn);flex-shrink:0">✓</span>${tr('safe_2')||'通过本页链接打开后，请检查浏览器地址栏域名拼写，确认 HTTPS 锁标志。'}</li>
+<li style="padding:7px 0;font-size:13.5px;color:var(--tx2);display:flex;gap:10px"><span style="color:var(--grn);flex-shrink:0">✓</span>${tr('safe_3')||'登录后请立即开启二次验证（Google Authenticator 或交易所 APP 内置）。'}</li>
+<li style="padding:7px 0;font-size:13.5px;color:var(--tx2);display:flex;gap:10px"><span style="color:var(--red);flex-shrink:0">✗</span>${tr('safe_4')||'切勿在其他网站、聊天群、邮件中复制粘贴的"备用网址"输入账号密码。'}</li>
+<li style="padding:7px 0;font-size:13.5px;color:var(--tx2);display:flex;gap:10px"><span style="color:var(--red);flex-shrink:0">✗</span>${tr('safe_5')||'本站不会主动通过私信、邮件向您索要账号、密码或验证码。'}</li>
+</ul>
+</div>
+
+<!-- Bottom CTA -->
+<div style="text-align:center;margin-top:32px">
+<button class="bt bt-g" onclick="go('exchanges')" style="margin-right:10px">📊 ${tr('view_full_compare')||'查看完整交易所对比'}</button>
+<button class="bt bt-o" onclick="go('articles')">${tr('view_articles')||'查看教程文章'}</button>
+</div>
+
 </div>${rFoot()}`;
 }
 
@@ -2095,6 +2296,7 @@ ${social.length?`<div style="display:flex;gap:8px;margin-top:14px">${social.map(
 <div class="fcl"><h4>${tr('foot_links')}</h4><ul>
 <li><a onclick="go('')">${tr('nav_home')}</a></li>
 <li><a onclick="go('exchanges')">${tr('nav_ex')}</a></li>
+<li><a onclick="go('access-urls')">🌐 ${tr('nav_access')||'备用入口'}</a></li>
 <li><a onclick="go('guides')">${tr('nav_guides')}</a></li>
 <li><a onclick="go('articles')">${tr('nav_art')}</a></li>
 </ul></div>
