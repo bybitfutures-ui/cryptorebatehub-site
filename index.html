@@ -79,23 +79,48 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#070b13;--bg2:#0d131f;--bg3:#141c2b;
-  --tx:#f0f3f8;--tx2:#c2cad8;--tx3:#8a93a4;
-  --bd:rgba(255,255,255,.10);--bd2:rgba(255,255,255,.18);
-  --grn:#10d8a0;--grn2:#0fb88a;--grnA:rgba(16,216,160,.10);
-  --blu:#7ac0ff;--bluA:rgba(122,192,255,.10);
-  --gld:#f0b41e;--org:#ff8a3a;--red:#ff5060;--yel:#fbbf24;
-  --r:10px;--r2:14px
+  /* Backgrounds — refined hierarchy */
+  --bg:#0a0e1a;--bg2:#111827;--bg3:#1a2236;--bg4:#232c44;
+  /* Text — improved contrast (WCAG AA+) */
+  --tx:#f5f7fb;--tx2:#bcc5db;--tx3:#7c8499;
+  /* Borders — slightly more visible */
+  --bd:rgba(255,255,255,.08);--bd2:rgba(255,255,255,.14);
+  /* Brand colors — more vivid, harmonized */
+  --grn:#14e0a8;--grn2:#0ec495;--grnA:rgba(20,224,168,.11);
+  --blu:#6db4ff;--bluA:rgba(109,180,255,.11);
+  --gld:#ffc940;--org:#ff9648;--red:#ff5872;--yel:#ffd147;
+  /* Shadows */
+  --sh:0 1px 3px rgba(0,0,0,.32),0 1px 2px rgba(0,0,0,.24);
+  --sh-md:0 4px 12px rgba(0,0,0,.36),0 2px 4px rgba(0,0,0,.18);
+  --sh-lg:0 12px 32px rgba(0,0,0,.42),0 4px 8px rgba(0,0,0,.22);
+  /* Radii */
+  --r:10px;--r2:14px;--r3:18px
 }
 [data-theme="light"]{
-  --bg:#fafbfc;--bg2:#ffffff;--bg3:#eef1f6;
-  --tx:#0f1420;--tx2:#3a4358;--tx3:#697086;
-  --bd:rgba(0,0,0,.10);--bd2:rgba(0,0,0,.18);
-  --grn:#008f64;--grn2:#007852;--grnA:rgba(0,143,100,.08);
-  --blu:#0064c4;--bluA:rgba(0,100,196,.08);
-  --gld:#a07a1a;--org:#c0651a;--red:#c92a3a;--yel:#a07a1a
+  /* Light backgrounds — softer, warmer */
+  --bg:#fafbfd;--bg2:#ffffff;--bg3:#f1f4f9;--bg4:#e6eaf2;
+  /* Text — high contrast */
+  --tx:#0d1220;--tx2:#3d465a;--tx3:#6a7385;
+  /* Borders — clearer in light mode */
+  --bd:rgba(15,20,32,.09);--bd2:rgba(15,20,32,.16);
+  /* Brand — color-corrected for light bg accessibility */
+  --grn:#00a378;--grn2:#008764;--grnA:rgba(0,163,120,.09);
+  --blu:#0070d4;--bluA:rgba(0,112,212,.09);
+  --gld:#9a6f10;--org:#c25a14;--red:#d12a44;--yel:#9a6f10;
+  --sh:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+  --sh-md:0 4px 12px rgba(0,0,0,.08),0 2px 4px rgba(0,0,0,.04);
+  --sh-lg:0 12px 32px rgba(0,0,0,.10),0 4px 8px rgba(0,0,0,.06)
 }
-[data-theme="light"] body::before{background:radial-gradient(ellipse at 50% 0%,rgba(0,168,120,.04),transparent 60%)}
+[data-theme="light"] 
+/* Focus-visible for accessibility */
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--grn);outline-offset:2px;border-radius:6px}
+/* Better link hover */
+a{transition:color .15s ease}
+/* Code refined */
+code,kbd{font-family:'JetBrains Mono','SF Mono',Menlo,Consolas,monospace;font-size:.92em;background:var(--bg3);color:var(--grn);padding:2px 7px;border-radius:5px;border:1px solid var(--bd);font-feature-settings:"tnum"}
+kbd{box-shadow:0 1px 0 var(--bd2);font-weight:600}
+
+body::before{background:radial-gradient(ellipse at 50% 0%,rgba(0,168,120,.04),transparent 60%)}
 [data-theme="light"] .nv{background:rgba(255,255,255,.92) !important}
 [data-theme="light"] .nv.sc{background:rgba(255,255,255,.97) !important}
 [data-theme="light"] .ind-bn{background:rgba(251,191,36,.12)}
@@ -105,7 +130,39 @@
 .theme-tg{background:none;border:1px solid var(--bd);color:var(--tx2);cursor:pointer;font-size:14px;padding:6px 10px;border-radius:8px;transition:.2s;display:inline-flex;align-items:center;gap:5px}
 .theme-tg:hover{border-color:var(--bd2);color:var(--tx)}
 html{scroll-behavior:smooth}
-body{font-family:'Inter','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC','Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',system-ui,-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--tx);line-height:1.7;font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;overflow-x:hidden;font-feature-settings:"cv02","cv03","cv04","cv11"}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'SF Pro Text','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC','Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',system-ui,'Helvetica Neue',Arial,sans-serif;
+  background:var(--bg);color:var(--tx);
+  line-height:1.65;font-size:16px;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;overflow-x:hidden;
+  font-feature-settings:"cv02","cv03","cv04","cv11","ss01","tnum";
+  letter-spacing:-.005em;
+}
+/* Bigger headings — slightly tighter tracking, bolder weight */
+h1,h2,h3,h4,h5,h6{letter-spacing:-.018em;font-weight:700;line-height:1.25;color:var(--tx)}
+h1{font-weight:800;letter-spacing:-.025em}
+/* Body text — comfortable reading */
+p{color:var(--tx);line-height:1.7}
+p+p{margin-top:0.8em}
+/* Smaller text — boost contrast */
+small,.sm{color:var(--tx2);font-size:.875em}
+/* Selection */
+::selection{background:var(--grnA);color:var(--tx)}
+/* Scrollbar */
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:8px;border:2px solid var(--bg)}
+::-webkit-scrollbar-thumb:hover{background:var(--tx3)}
+
+/* Focus-visible for accessibility */
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--grn);outline-offset:2px;border-radius:6px}
+/* Better link hover */
+a{transition:color .15s ease}
+/* Code refined */
+code,kbd{font-family:'JetBrains Mono','SF Mono',Menlo,Consolas,monospace;font-size:.92em;background:var(--bg3);color:var(--grn);padding:2px 7px;border-radius:5px;border:1px solid var(--bd);font-feature-settings:"tnum"}
+kbd{box-shadow:0 1px 0 var(--bd2);font-weight:600}
+
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(16,216,160,.04),transparent 60%);pointer-events:none;z-index:0}
 a{color:var(--tx);text-decoration:none}
 .w{max-width:1180px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
@@ -170,6 +227,8 @@ a{color:var(--tx);text-decoration:none}
 .hr-bdg::before{content:'';width:6px;height:6px;background:var(--grn);border-radius:50%;animation:pl 1.5s infinite}
 @keyframes pl{0%,100%{opacity:1}50%{opacity:.4}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes mirPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.85)}}
+@keyframes mirGlow{0%,100%{box-shadow:0 0 0 0 var(--grnA)}50%{box-shadow:0 0 0 8px transparent}}
 .hr h1{font-size:clamp(32px,5.5vw,58px);font-weight:900;line-height:1.12;letter-spacing:-.7px;margin-bottom:20px;max-width:820px;margin-left:auto;margin-right:auto;animation:fadeUp 1s ease-out .1s both}
 .hr h1 em{font-style:normal;background:linear-gradient(135deg,var(--grn),var(--blu));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .hr>.w>p{font-size:17.5px;color:var(--tx2);max-width:660px;margin:0 auto 32px;line-height:1.7;animation:fadeUp 1s ease-out .2s both}
@@ -249,7 +308,7 @@ a{color:var(--tx);text-decoration:none}
 .ef{list-style:none;margin-bottom:18px}
 .ef li{font-size:14px;color:var(--tx2);padding:7px 0;border-bottom:1px solid var(--bd);display:flex;align-items:flex-start;gap:8px;line-height:1.55}
 .ef li:last-child{border:none}
-.ck{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;margin-top:2px}
+.ck{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12.5px;flex-shrink:0;margin-top:2px}
 .eb{display:flex;align-items:center;justify-content:center;gap:6px;padding:11px;border-radius:9px;font-weight:600;font-size:14px;text-align:center}
 .rebate-tag{display:inline-block;padding:3px 10px;font-size:12px;font-weight:700;border-radius:99px;margin-top:8px;font-family:'JetBrains Mono',monospace}
 .mir-card:hover{border-color:var(--bd2)!important;background:var(--bg2)!important;transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,0,0,.15)}
@@ -433,7 +492,7 @@ a{color:var(--tx);text-decoration:none}
 <li><a onclick="go('')" data-t="nav_home"></a></li>
 <li><a onclick="go('markets')" data-t="nav_market"></a></li>
 <li><a onclick="go('exchanges')" data-t="nav_ex"></a></li>
-<li><a onclick="go('access-urls')" data-t="nav_access" style="position:relative"></a></li>
+<li><a onclick="go('access-urls')" data-t="nav_access" style="position:relative;color:var(--grn);font-weight:700"><span style="display:inline-block;width:6px;height:6px;background:var(--grn);border-radius:50%;margin-right:5px;vertical-align:middle;animation:mirPulse 1.5s ease-in-out infinite"></span></a></li>
 <li><a onclick="go('guides')" data-t="nav_guides"></a></li>
 <li><a onclick="go('articles')" data-t="nav_art"></a></li>
 <li><a onclick="go('disclosure')" data-t="nav_disc"></a></li>
@@ -543,14 +602,14 @@ exch_seo_d:'{name} 永久手续费返佣，含注册教程、邀请码、安全�
 // Per-exchange long-tail SEO (中文)
 exch_seo_t_okx:'OKX欧易注册教程 邀请码WLFI47永久享20%返佣 | OKX/欧易官方安全交易所 2026',
 exch_seo_d_okx:'OKX（欧易）交易所2026年完整注册教程：使用邀请码WLFI47永久享受20%手续费返佣，立省交易成本。涵盖OKX注册、KYC实名认证、入金提币、现货/合约/杠杆交易、API设置全流程。OKX是全球前三大加密货币交易所，支持BTC、ETH、SOL等350+币种。',
-exch_seo_k_okx:'OKX,欧易,OKX注册教程,欧易注册教程,OKX邀请码WLFI47,欧易邀请码,OKX返佣20%,欧易返佣,OKX手续费返佣,欧易手续费,OKX合约交易,欧易合约教程,OKX现货交易,欧易现货,OKX杠杆交易,OKX永续合约,OKX KYC实名认证,欧易实名,OKX入金教程,欧易入金,OKX提现教程,欧易提现,OKX安全吗,欧易安全吗,OKX合法吗,欧易合法吗,OKX是什么交易所,欧易是什么,OKX怎么用,欧易怎么用,OKX中国用户,欧易中国,OKX国内访问,欧易国内访问,OKX APP下载,欧易APP安卓下载,OKX苹果下载,欧易苹果下载,OKX官网地址,欧易官网,OKX备用网址,欧易备用域名,OKX防屏蔽,WLFI47,OKX出金,欧易出金,OKX U本位,欧易U本位,OKX买币,欧易买币',
+exch_seo_k_okx:'OKX,欧易,OKX注册教程,欧易注册教程,OKX邀请码WLFI47,欧易邀请码,OKX返佣20%,欧易返佣,OKX手续费返佣,欧易手续费,OKX合约交易,欧易合约教程,OKX现货交易,欧易现货,OKX杠杆交易,OKX永续合约,OKX KYC实名认证,欧易实名,OKX入金教程,欧易入金,OKX提现教程,欧易提现,OKX安全吗,欧易安全吗,OKX合法吗,欧易合法吗,OKX是什么交易所,欧易是什么,OKX怎么用,欧易怎么用,OKX中国用户,欧易中国,OKX国内访问,欧易国内访问,OKX APP下载,欧易APP安卓下载,OKX苹果下载,欧易苹果下载,OKX官网地址,欧易官网,OKX备用网址,欧易备用域名,WLFI47,OKX出金,欧易出金,OKX U本位,欧易U本位,OKX买币,欧易买币',
 exch_seo_t_binance:'Binance币安注册教程 邀请码WLFI47永久享20%返佣 | 全球最大加密货币交易所 2026',
 exch_seo_d_binance:'Binance（币安）2026年完整注册教程：使用邀请码WLFI47永久享受20%手续费返佣。币安是全球第一大加密货币交易所，日均交易量超600亿美元。支持现货、合约、杠杆、Earn、Launchpad、Launchpool等。涵盖币安注册、KYC实名认证、入金提币、API设置全流程。',
 exch_seo_k_binance:'Binance,币安,Binance注册教程,币安注册教程,Binance邀请码WLFI47,币安邀请码,Binance返佣20%,币安手续费返佣,Binance合约交易,币安合约教程,Binance现货交易,币安现货,Binance杠杆交易,币安杠杆,Binance KYC实名认证,币安实名,Binance入金教程,币安入金,Binance提现教程,币安提现,Binance安全吗,币安安全吗,Binance合法吗,币安合法吗,币安是什么,Binance是什么,币安怎么用,Binance怎么用,币安中国用户,Binance国内访问,币安APP下载,Binance安卓下载,币安苹果下载,Binance官网地址,币安官网,Binance Earn,币安Earn,Binance Launchpad,币安Launchpad,Binance Launchpool,币安质押,WLFI47,币安出金,币安U本位,币安买币,Binance Web3钱包',
 exch_seo_t_bybit:'Bybit注册教程 邀请码8DXZXGZ永久享33%返佣(行业最高) | 合约跟单首选交易所 2026',
 exch_seo_d_bybit:'Bybit交易所2026年完整注册教程：使用邀请码8DXZXGZ永久享受33%手续费返佣（行业最高比例）。Bybit是全球顶级合约交易所，也是跟单交易(Copy Trading)首选平台。支持BTC/ETH永续合约、现货、期权、Web3钱包。涵盖KYC认证、入金提币、跟单设置全流程。',
 exch_seo_k_bybit:'Bybit,Bybit注册教程,Bybit邀请码8DXZXGZ,Bybit返佣33%,Bybit手续费返佣,Bybit合约交易,Bybit永续合约教程,Bybit现货交易,Bybit跟单交易,Bybit copy trading跟单,Bybit杠杆交易,Bybit期权交易,Bybit KYC实名认证,Bybit入金教程,Bybit提现教程,Bybit安全吗,Bybit合法吗,Bybit是什么,Bybit怎么用,Bybit中国用户,Bybit国内访问,Bybit APP下载,Bybit安卓下载,Bybit苹果下载,Bybit官网地址,Bybit Web3钱包,Bybit质押,8DXZXGZ,Bybit行业最高返佣,Bybit出金,Bybit买币,Bybit备用域名',
-access_urls:'访问入口',
+access_urls:'访问入口',mir_recommended:'重点推荐',mir_top:'首选',
 access_urls_d:'多个官方入口，根据所在地区选择最稳定的访问方式。',
 mirror_warn:'本站仅列出官方公告确认的入口。请通过本页链接访问，避免钓鱼网站。',
 coin_seo_t:'{name}（{coin}）实时价格 K 线 行情 - CryptoRebateHub',
@@ -571,7 +630,7 @@ access_warn_t:'重要提示',
 access_warn_d:'本页所有备用域名均经过交易所官方公告核实。但加密货币交易在某些司法管辖区受限制，请用户自行评估合规性。访问前请：核对域名拼写、确认 HTTPS 加锁、不要从其他来源复制粘贴域名。',
 view_exchanges:'查看交易所',
 safe_guide_t:'安全访问指南',
-safe_1:'所有备用域名均来自交易所官方公告，本站不提供未经核实的"翻墙"链接。',
+safe_1:'所有备用域名均来自交易所官方公告，本站只展示交易所官方公告确认的入口。',
 safe_2:'通过本页链接打开后，请检查浏览器地址栏域名拼写，确认 HTTPS 锁标志。',
 safe_3:'登录后请立即开启二次验证（Google Authenticator 或交易所 APP 内置）。',
 safe_4:'切勿在其他网站、聊天群、邮件中复制粘贴的"备用网址"输入账号密码。',
@@ -579,7 +638,7 @@ safe_5:'本站不会主动通过私信、邮件向您索要账号、密码或验
 view_articles:'查看教程文章',
 access_seo_t:'交易所备用网址 / 官方多区域入口 - OKX 欧易 Binance 币安 Bybit | CryptoRebateHub',
 access_seo_d:'当主域名无法访问时，本页提供 OKX（欧易）、Binance（币安）、Bybit 等交易所经过官方公告确认的多区域备用入口。请仅通过本页链接访问，避免钓鱼网站。',
-access_seo_k:'OKX 备用网址,欧易备用网址,币安备用网址,Binance 备用域名,Bybit 备用网址,OKX 防屏蔽,欧易防屏蔽,币安防屏蔽,加密交易所备用入口,加密交易所官方域名,OKX 国内访问,欧易国内访问,币安国内访问,Bybit 国内访问,加密货币交易所多区域',
+access_seo_k:'OKX 备用网址,欧易备用网址,币安备用网址,Binance 备用域名,Bybit 备用网址,加密交易所备用入口,加密交易所官方域名,OKX 国内访问,欧易国内访问,币安国内访问,Bybit 国内访问,加密货币交易所多区域',
 cant_access_t:'无法访问主域名？',
 cant_access_d:'查看官方备用入口（多区域可用）',
 cant_access_btn:'查看备用入口 →',
@@ -590,7 +649,7 @@ cp_high:'24h 高',cp_low:'24h 低',cp_vol:'24h 成交量',cp_open:'24h 开盘',c
 hr_badge:'独立第三方 · 返佣对比中心',
 hr_t:'通过返佣链接，<em>节省高达 60%</em><br>的加密交易费用',
 hr_d:'通过本站邀请码注册 OKX（欧易）享20%永久返佣，注册 Binance（币安）享20%返佣，注册 Bybit 享33%返佣（行业最高）。独立对比三大主流交易所手续费，提供注册教程和实时行情。',
-hr_b1:'查看交易所对比',hr_b2:'查看实时行情',hr_b_main:'立即注册享返佣',
+hr_b1:'查看交易所对比',hr_b2:'查看实时行情',hr_b_main:'立即注册享返佣',hr_access_t:'无法访问交易所主域名？',hr_access_btn:'查看官方备用入口',
 top_sl:'本站推荐',top_t:'三大交易所一键注册',top_d:'通过本站邀请码注册，永久享受手续费返佣。无需复杂操作，点击直达官方。',best_pick:'首选',valid:'有效期',register_now:'立即注册',view_detail:'详情',copy:'复制',permanent:'永久',
 why_sl:'为什么选择本站',why_t:'独立 · 透明 · 永久返佣',
 why_1_t:'永久 20-33% 返佣',why_1_d:'通过本站邀请码注册的账户，每笔交易自动返还手续费，永不过期，无需任何手动申请。',
@@ -667,14 +726,14 @@ exch_seo_t:'{name} 註冊返佣 · 邀請碼 + 永久手續費返佣 - CryptoReb
 exch_seo_d:'{name} 永久手續費返佣，含註冊教程、邀請碼、安全設定、入金提幣全流程。一鍵直達官方註冊。',
 exch_seo_t_okx:'OKX 註冊教學 2026 | 邀請碼 WLFI47 = 永久 20% 手續費返佣 | OKX/欧易 台灣可用',
 exch_seo_d_okx:'OKX（欧易）交易所 2026 年完整註冊教學：使用邀請碼 WLFI47 永久享受 20% 手續費返佣。涵蓋 OKX 註冊、KYC 實名認證、入金提幣、現貨/合約/槓桿交易、API 設定全流程。OKX 是全球前三大加密貨幣交易所，支援 BTC、ETH、SOL 等 350+ 幣種。',
-exch_seo_k_okx:'OKX,欧易,OKX 註冊教學,欧易註冊教學,OKX 邀請碼 WLFI47,欧易邀請碼,OKX 返佣 20%,OKX 手續費,OKX 合約交易,OKX 現貨交易,OKX 槓桿,OKX 永續合約,OKX KYC 實名,OKX 入金教學,OKX 提幣教學,OKX 安全嗎,OKX 是什麼,OKX 怎麼用,OKX 台灣,OKX 香港,OKX 國內訪問,OKX APP 下載,OKX iOS 下載,OKX 安卓下載,OKX 官網,OKX 備用網址,OKX 防屏蔽,WLFI47,OKX 出金,OKX U 本位,OKX 買幣',
+exch_seo_k_okx:'OKX,欧易,OKX 註冊教學,欧易註冊教學,OKX 邀請碼 WLFI47,欧易邀請碼,OKX 返佣 20%,OKX 手續費,OKX 合約交易,OKX 現貨交易,OKX 槓桿,OKX 永續合約,OKX KYC 實名,OKX 入金教學,OKX 提幣教學,OKX 安全嗎,OKX 是什麼,OKX 怎麼用,OKX 台灣,OKX 香港,OKX 國內訪問,OKX APP 下載,OKX iOS 下載,OKX 安卓下載,OKX 官網,OKX 備用網址,WLFI47,OKX 出金,OKX U 本位,OKX 買幣',
 exch_seo_t_binance:'Binance 幣安註冊教學 + 邀請碼 WLFI47 永久 20% 返佣 | 全球最大交易所',
 exch_seo_d_binance:'Binance 幣安交易所完整註冊指南：邀請碼 WLFI47 永久享受 20% 手續費返佣。幣安是全球第一大加密貨幣交易所。支援現貨、合約、槓桿、Earn 等。含 KYC、入金提幣、API 全流程。',
 exch_seo_k_binance:'Binance,幣安,Binance 註冊,幣安註冊,Binance 邀請碼,幣安邀請碼,Binance 返佣,Binance 教學,幣安教學,Binance 手續費,Binance 合約,Binance 現貨,Binance KYC,Binance 安全,幣安台灣,幣安香港,Binance APP,幣安 APP 下載,幣安槓桿,幣安永續合約,幣安 Launchpad,WLFI47',
 exch_seo_t_bybit:'Bybit 註冊教學 + 邀請碼 8DXZXGZ 永久 33% 返佣 | 合約 + 跟單首選交易所',
 exch_seo_d_bybit:'Bybit 交易所完整註冊指南：邀請碼 8DXZXGZ 永久享受 33% 手續費返佣（業界最高）。Bybit 是合約交易和跟單交易首選平台。',
 exch_seo_k_bybit:'Bybit,Bybit 註冊,Bybit 邀請碼,Bybit 返佣,Bybit 教學,Bybit 手續費,Bybit 合約,Bybit 現貨,Bybit KYC,Bybit 安全,Bybit 台灣,Bybit 香港,Bybit APP,Bybit 槓桿,Bybit 永續合約,Bybit 跟單,Bybit 期權,Bybit 33% 返佣,8DXZXGZ',
-access_urls:'訪問入口',
+access_urls:'訪問入口',mir_recommended:'重點推薦',mir_top:'首選',
 access_urls_d:'多個官方入口，根據所在地區選擇最穩定的訪問方式。',
 mirror_warn:'本站僅列出官方公告確認的入口。請透過本頁連結訪問，避免釣魚網站。',
 coin_seo_t:'{name}（{coin}）即時價格 K 線 行情 - CryptoRebateHub',
@@ -695,7 +754,7 @@ access_warn_t:'重要提示',
 access_warn_d:'本頁所有備用網域均經過交易所官方公告核實。但加密貨幣交易在某些司法管轄區受限制，請用戶自行評估合規性。訪問前請：核對網域拼寫、確認 HTTPS 加鎖、不要從其他來源複製貼上網域。',
 view_exchanges:'查看交易所',
 safe_guide_t:'安全訪問指南',
-safe_1:'所有備用網域均來自交易所官方公告，本站不提供未經核實的"翻牆"連結。',
+safe_1:'所有備用網域均來自交易所官方公告，本站只展示交易所官方公告確認的入口。',
 safe_2:'透過本頁連結打開後，請檢查瀏覽器地址欄網域拼寫，確認 HTTPS 鎖標誌。',
 safe_3:'登入後請立即開啟二次驗證（Google Authenticator 或交易所 APP 內建）。',
 safe_4:'切勿在其他網站、聊天群、郵件中複製貼上的"備用網址"輸入帳號密碼。',
@@ -714,7 +773,7 @@ cp_high:'24h 高',cp_low:'24h 低',cp_vol:'24h 成交量',cp_open:'24h 開盤',c
 hr_badge:'獨立第三方 · 返佣對比中心',
 hr_t:'透過返佣連結，<em>節省高達 60%</em><br>的加密交易費用',
 hr_d:'透過本站邀請碼註冊 OKX（欧易）享20%永久返佣，註冊 Binance（幣安）享20%返佣，註冊 Bybit 享33%返佣（業界最高）。獨立比對三大主流交易所手續費，提供註冊教程和即時行情。',
-hr_b1:'查看交易所對比',hr_b2:'查看即時行情',hr_b_main:'立即註冊享返佣',
+hr_b1:'查看交易所對比',hr_b2:'查看即時行情',hr_b_main:'立即註冊享返佣',hr_access_t:'無法訪問交易所主網域？',hr_access_btn:'查看官方備用入口',
 top_sl:'本站推薦',top_t:'三大交易所一鍵註冊',top_d:'透過本站邀請碼註冊，永久享受手續費返佣。無需複雜操作，點擊直達官方。',best_pick:'首選',valid:'有效期',register_now:'立即註冊',view_detail:'詳情',copy:'複製',permanent:'永久',
 why_sl:'為什麼選擇本站',why_t:'獨立 · 透明 · 永久返佣',
 why_1_t:'永久 20-33% 返佣',why_1_d:'透過本站邀請碼註冊的帳戶，每筆交易自動返還手續費，永不過期，無需任何手動申請。',
@@ -798,7 +857,7 @@ exch_seo_k_binance:'Binance, Binance registration, Binance sign up, Binance invi
 exch_seo_t_bybit:'Bybit Registration Guide 2026 | Code 8DXZXGZ = 33% Lifetime Rebate (Industry Best) | Futures + Copy Trading',
 exch_seo_d_bybit:'Complete Bybit registration guide: invite code 8DXZXGZ unlocks 33% lifetime fee rebate (industry highest). Bybit is the top platform for futures and copy trading. Perpetuals, spot, options, Web3 wallet, KYC, deposit/withdrawal.',
 exch_seo_k_bybit:'Bybit, Bybit registration, Bybit sign up, Bybit invite code 8DXZXGZ, Bybit referral code, Bybit rebate 33%, Bybit fees, Bybit tutorial, Bybit KYC, Bybit futures, Bybit perpetual contracts, Bybit spot trading, Bybit copy trading, Bybit copy trade, Bybit options, Bybit Web3 wallet, Bybit deposit, Bybit withdrawal, Bybit review 2026, Bybit vs OKX, Bybit vs Binance, Bybit safe or not, Bybit app download, Bybit staking, Bybit earn, 8DXZXGZ code, Bybit 33% rebate best, Bybit Launchpool',
-access_urls:'Access URLs',
+access_urls:'Access URLs',mir_recommended:'Recommended',mir_top:'Top Pick',
 access_urls_d:'Multiple official entry points. Choose the most stable for your region.',
 mirror_warn:'Only entries confirmed by official announcements are listed. Always access via this page to avoid phishing.',
 coin_seo_t:'{name} ({coin}) Live Price Chart - CryptoRebateHub',
@@ -838,7 +897,7 @@ cp_high:'24h High',cp_low:'24h Low',cp_vol:'24h Volume',cp_open:'24h Open',cp_ch
 hr_badge:'INDEPENDENT · REBATE COMPARISON',
 hr_t:'Save up to <em>60% on trading fees</em><br>with rebate links',
 hr_d:'Register OKX with invite code WLFI47 = 20% permanent rebate. Register Binance with WLFI47 = 20% rebate. Register Bybit with 8DXZXGZ = 33% rebate (industry best). Independent OKX vs Binance vs Bybit comparison, tutorials and live prices.',
-hr_b1:'Compare Exchanges',hr_b2:'Live Prices',hr_b_main:'Get Rebate Now',
+hr_b1:'Compare Exchanges',hr_b2:'Live Prices',hr_b_main:'Get Rebate Now',hr_access_t:'Cannot access main exchange domain?',hr_access_btn:'See Official Mirrors',
 top_sl:'Our Picks',top_t:'One-Click Sign Up · Top 3 Exchanges',top_d:'Register with our invite codes for permanent fee rebates. Direct links to official exchange pages — no hassle.',best_pick:'Top Pick',valid:'Validity',register_now:'Register Now',view_detail:'Details',copy:'Copy',permanent:'Permanent',
 why_sl:'Why Choose Us',why_t:'Independent · Transparent · Permanent Rebates',
 why_1_t:'Permanent 20-33% Rebate',why_1_d:'Accounts registered via our invite codes get automatic fee rebates on every trade. Never expires, no manual claiming.',
@@ -922,7 +981,7 @@ exch_seo_k_binance:'Binance,바이낸스,바이낸스 가입,바이낸스 등록
 exch_seo_t_bybit:'Bybit 가입 가이드 2026 | 코드 8DXZXGZ = 영구 33% 리베이트 (업계 최고) | 선물 + 카피 트레이딩',
 exch_seo_d_bybit:'Bybit 거래소 완벽 가입 가이드: 초대코드 8DXZXGZ 영구 33% 수수료 리베이트(업계 최고). Bybit는 선물 거래와 카피 트레이딩 최고 플랫폼. 무기한, 현물, 옵션, Web3 지갑, KYC, 입출금.',
 exch_seo_k_bybit:'Bybit,Bybit 가입,Bybit 등록,Bybit 초대코드 8DXZXGZ,Bybit 추천인,Bybit 리베이트 33%,Bybit 수수료,Bybit 튜토리얼,Bybit KYC,Bybit 선물,Bybit 무기한,Bybit 현물,Bybit 카피 트레이딩,Bybit 옵션,Bybit Web3 지갑,Bybit 입금,Bybit 출금,Bybit 한국,Bybit vs OKX,Bybit vs Binance,Bybit 앱 다운로드,Bybit 스테이킹,Bybit 어닝,8DXZXGZ 코드,Bybit 33% 업계 최고,Bybit 안전한가',
-access_urls:'접속 입구',
+access_urls:'접속 입구',mir_recommended:'추천',mir_top:'최고',
 access_urls_d:'여러 공식 접속 입구. 지역에 가장 안정적인 것을 선택하세요.',
 mirror_warn:'공식 발표로 확인된 입구만 표시. 이 페이지 링크로 접속하여 피싱 사이트를 피하세요.',
 coin_seo_t:'{name} ({coin}) 실시간 가격 차트 - CryptoRebateHub',
@@ -962,7 +1021,7 @@ cp_high:'24h 고가',cp_low:'24h 저가',cp_vol:'24h 거래량',cp_open:'24h 시
 hr_badge:'독립적 · 리베이트 비교',
 hr_t:'리베이트 링크로 거래 수수료를<br><em>최대 60% 절약</em>',
 hr_d:'OKX 초대코드 WLFI47 = 영구 20% 리베이트. Binance 초대코드 WLFI47 = 20% 리베이트. Bybit 초대코드 8DXZXGZ = 33% 리베이트(업계 최고). OKX vs Binance vs Bybit 독립 비교 및 가입 가이드.',
-hr_b1:'거래소 비교 보기',hr_b2:'실시간 시세',hr_b_main:'지금 리베이트 받기',
+hr_b1:'거래소 비교 보기',hr_b2:'실시간 시세',hr_b_main:'지금 리베이트 받기',hr_access_t:'거래소 메인 도메인 접속 불가?',hr_access_btn:'공식 미러 보기',
 top_sl:'추천',top_t:'3대 거래소 원클릭 가입',top_d:'본 사이트 초대 코드로 가입하여 영구 수수료 리베이트를 받으세요. 거래소 공식 페이지 직접 링크.',best_pick:'최선택',valid:'유효 기간',register_now:'지금 가입',view_detail:'상세',copy:'복사',permanent:'영구',
 why_sl:'왜 본 사이트인가',why_t:'독립 · 투명 · 영구 리베이트',
 why_1_t:'영구 20-33% 리베이트',why_1_d:'본 사이트 초대 코드로 가입한 계정은 모든 거래에서 자동 리베이트. 만료 없음, 수동 신청 불필요.',
@@ -1511,6 +1570,10 @@ return`<header class="hr"><div class="w">
 <button class="bt bt-g" onclick="go('go/${topEx?topEx.id:'okx'}')" style="font-size:15px;padding:14px 26px">🚀 ${tr('hr_b_main')||'立即注册享返佣'} →</button>
 <button class="bt bt-o" onclick="go('exchanges')" data-t="hr_b1"></button>
 </div>
+<div onclick="go('access-urls')" style="display:inline-flex;align-items:center;gap:10px;margin-top:18px;padding:11px 22px;background:linear-gradient(135deg,var(--grnA),rgba(122,192,255,.12));border:1.5px solid var(--grn);border-radius:99px;cursor:pointer;font-size:14px;font-weight:700;color:var(--grn);transition:all .25s;box-shadow:0 4px 16px rgba(20,224,168,.18);animation:mirGlow 2.5s ease-in-out infinite" onmouseover="this.style.transform='translateY(-2px) scale(1.02)';this.style.boxShadow='0 6px 22px rgba(20,224,168,.32)'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 16px rgba(20,224,168,.18)'">
+<span style="display:inline-block;width:8px;height:8px;background:var(--grn);border-radius:50%;animation:mirPulse 1.5s ease-in-out infinite;box-shadow:0 0 12px var(--grn)"></span>
+🌐 ${tr('hr_access_t')||'无法访问交易所主域名？'} ${tr('hr_access_btn')||'查看官方备用入口'} →
+</div>
 <div class="hr-stats">
 <div class="hs-card">
 <div class="hs-num">${exs.length}</div>
@@ -1873,7 +1936,7 @@ ${ex.code?`<div style="text-align:center"><div style="font-size:12px;color:var(-
 <button class="bt bt-g" onclick="go('go/${ex.id}')" style="background:linear-gradient(135deg,${c},${c}cc);color:var(--bg);font-size:16px;padding:14px 32px;font-weight:700">🚀 ${tr('register_now')||'立即注册'} → ${es(pL(ex.name))}</button>
 </div>
 <div style="font-size:12.5px;color:var(--tx3);margin-top:14px">${tr('ex_safe_note')||'✓ 直达官方域名 ✓ 邀请码自动绑定 ✓ 永久返佣'}</div>
-${ex.mirrors&&ex.mirrors.length?`<a onclick="go('access-urls')" style="display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-size:12.5px;color:var(--blu);cursor:pointer;text-decoration:none;padding:6px 12px;border:1px dashed rgba(122,192,255,.3);border-radius:99px;transition:.2s" onmouseover="this.style.background='rgba(122,192,255,.08)'" onmouseout="this.style.background='transparent'">🌐 ${tr('cant_access_t')||'无法访问主域名？'} ${tr('cant_access_btn')||'查看备用入口 →'}</a>`:''}
+${ex.mirrors&&ex.mirrors.length?`<button onclick="document.querySelector('.mir-block')?.scrollIntoView({behavior:'smooth',block:'start'})" style="display:inline-flex;align-items:center;gap:8px;margin-top:14px;font-size:14px;color:var(--bg);background:linear-gradient(135deg,${c},${c}dd);font-weight:700;cursor:pointer;border:none;padding:10px 20px;border-radius:99px;transition:all .2s;box-shadow:0 4px 14px ${c}55;animation:mirGlow 2s ease-in-out infinite" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px ${c}70'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 14px ${c}55'">🌐 <span>${tr('cant_access_t')||'无法访问主域名？'} ${tr('cant_access_btn')||'查看备用入口'}</span></button>`:''}
 </div>
 </div>
 
@@ -1882,21 +1945,27 @@ ${feats.length?`<div style="background:var(--bg2);border:1px solid var(--bd);bor
 <ul style="list-style:none;margin:0">${feats.map(f=>`<li style="padding:11px 0;border-bottom:1px solid var(--bd);display:flex;align-items:flex-start;gap:11px;line-height:1.6"><span style="width:22px;height:22px;border-radius:50%;background:${c}22;color:${c};display:inline-flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;margin-top:2px">✓</span><span>${es(f)}</span></li>`).join('')}</ul>
 </div>`:''}
 
-${ex.mirrors&&ex.mirrors.length?`<div style="background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r2);padding:28px 32px;margin-bottom:22px">
-<h2 style="margin-top:0;font-size:21px;color:${c};margin-bottom:6px;display:flex;align-items:center;gap:10px">🌐 ${tr('access_urls')||'访问入口'}</h2>
-<p style="color:var(--tx3);font-size:13.5px;margin-bottom:18px;line-height:1.6">${tr('access_urls_d')||'多个官方入口，根据所在地区选择最稳定的访问方式。'}</p>
-<div style="display:flex;flex-direction:column;gap:10px">
-${ex.mirrors.map(m=>{const lbl=pL(m.label)||m.url;const nt=pL(m.note)||'';const rg=m.region==='CN'?'🇨🇳':m.region==='HK'?'🇭🇰':m.region==='TW'?'🇹🇼':m.region==='JP'?'🇯🇵':m.region==='KR'?'🇰🇷':m.region==='EU'?'🇪🇺':m.region==='US'?'🇺🇸':m.region==='SG'?'🇸🇬':'🌍';return`<a href="${es(m.url)}" target="_blank" rel="noopener noreferrer nofollow sponsored" class="mir-card" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--bg3);border:1px solid var(--bd);border-radius:10px;text-decoration:none;color:var(--tx);transition:.2s">
-<span style="font-size:22px;flex-shrink:0">${rg}</span>
-<div style="flex:1;min-width:0">
-<div style="font-weight:700;font-size:14.5px;margin-bottom:3px">${es(lbl)}</div>
-<div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--tx3);word-break:break-all">${es(m.url)}</div>
-${nt?`<div style="font-size:12px;color:var(--tx2);margin-top:4px">${es(nt)}</div>`:''}
+${ex.mirrors&&ex.mirrors.length?`<div class="mir-block" style="background:linear-gradient(135deg,${c}18,${c}08);border:2px solid ${c};border-radius:var(--r2);padding:28px 30px;margin-bottom:22px;position:relative;overflow:hidden;box-shadow:0 4px 32px ${c}30">
+<div style="position:absolute;top:-30px;right:-30px;width:160px;height:160px;background:radial-gradient(circle,${c}25 0%,transparent 70%);pointer-events:none"></div>
+<div class="mir-pulse-tag" style="display:inline-flex;align-items:center;gap:6px;background:${c};color:var(--bg);padding:5px 13px;border-radius:99px;font-size:11.5px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;margin-bottom:14px;box-shadow:0 2px 12px ${c}60">
+<span class="mir-pulse-dot" style="display:inline-block;width:7px;height:7px;background:var(--bg);border-radius:50%;animation:mirPulse 1.5s ease-in-out infinite"></span>
+${tr('mir_recommended')||'重点推荐'}
 </div>
-<span style="font-size:18px;color:var(--tx3);flex-shrink:0">→</span>
+<h2 style="margin:0 0 6px;font-size:24px;font-weight:800;color:${c};display:flex;align-items:center;gap:10px;letter-spacing:-.02em">🌐 ${tr('access_urls')||'访问入口'}</h2>
+<p style="color:var(--tx);font-size:14.5px;margin-bottom:20px;line-height:1.65;font-weight:500">${tr('access_urls_d')||'多个官方入口，根据所在地区选择最稳定的访问方式。'}</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px">
+${ex.mirrors.map((m,mi)=>{const lbl=pL(m.label)||m.url;const nt=pL(m.note)||'';const rg=m.region==='CN'?'🇨🇳':m.region==='HK'?'🇭🇰':m.region==='TW'?'🇹🇼':m.region==='JP'?'🇯🇵':m.region==='KR'?'🇰🇷':m.region==='EU'?'🇪🇺':m.region==='US'?'🇺🇸':m.region==='SG'?'🇸🇬':'🌍';const isFirst=mi===0;return`<a href="${es(m.url)}" target="_blank" rel="noopener noreferrer nofollow sponsored" class="mir-card-prominent" style="display:flex;align-items:center;gap:14px;padding:16px 18px;background:var(--bg2);border:2px solid ${isFirst?c:'var(--bd2)'};border-radius:11px;text-decoration:none;color:var(--tx);transition:all .25s ease;position:relative${isFirst?';box-shadow:0 4px 16px '+c+'25':''}" onmouseover="this.style.borderColor='${c}';this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px ${c}40'" onmouseout="this.style.borderColor='${isFirst?c:'var(--bd2)'}';this.style.transform='';this.style.boxShadow='${isFirst?'0 4px 16px '+c+'25':'none'}'">
+${isFirst?`<span style="position:absolute;top:-9px;right:14px;background:${c};color:var(--bg);padding:2px 8px;border-radius:99px;font-size:10.5px;font-weight:800;letter-spacing:.5px;box-shadow:0 2px 8px ${c}50">★ ${tr('mir_top')||'首选'}</span>`:''}
+<span style="font-size:28px;flex-shrink:0;line-height:1">${rg}</span>
+<div style="flex:1;min-width:0">
+<div style="font-weight:700;font-size:15px;margin-bottom:4px;color:var(--tx)">${es(lbl)}</div>
+<div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:${c};word-break:break-all;font-weight:600">${es(m.url)}</div>
+${nt?`<div style="font-size:12px;color:var(--tx2);margin-top:5px;font-weight:500">${es(nt)}</div>`:''}
+</div>
+<span style="font-size:20px;color:${c};flex-shrink:0;font-weight:700">→</span>
 </a>`}).join('')}
 </div>
-<div style="margin-top:14px;padding:11px 14px;background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.18);border-radius:8px;font-size:12.5px;color:var(--yel);line-height:1.6">⚠ ${tr('mirror_warn')||'本站仅列出官方公告确认的入口。请通过本页链接访问，避免钓鱼网站。'}</div>
+<div style="margin-top:16px;padding:12px 14px;background:rgba(251,191,36,.10);border:1px solid rgba(251,191,36,.25);border-radius:8px;font-size:12.5px;color:var(--yel);line-height:1.6;display:flex;gap:10px;align-items:flex-start"><span style="font-size:16px;line-height:1">⚠</span><span>${tr('mirror_warn')||'本站仅列出官方公告确认的入口。请通过本页链接访问，避免钓鱼网站。'}</span></div>
 </div>`:''}
 
 <!-- Step-by-step guide -->
@@ -1934,8 +2003,8 @@ function rGo(id){
 <div style="flex:1;min-width:0"><div style="font-weight:700;font-size:15.5px">${es(nm)}</div><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--tx3);word-break:break-all">${es(ex.url)}</div></div>
 </div>
 ${(ex.code||ex.rebate)?`<div style="display:flex;gap:8px;flex-wrap:wrap;padding:10px 12px;background:rgba(16,216,160,.06);border:1px solid rgba(16,216,160,.2);border-radius:9px;margin-bottom:14px">
-${ex.code?`<div style="flex:1;min-width:140px"><div style="font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:3px">${tr('invite_code')||'邀请码'}</div><div style="font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:var(--grn);display:flex;align-items:center;gap:8px">${es(ex.code)}<button onclick="navigator.clipboard.writeText('${es(ex.code)}').then(()=>this.textContent='✓')" style="background:none;border:1px solid var(--bd);color:var(--tx3);padding:1px 7px;border-radius:5px;cursor:pointer;font-size:10px;font-family:inherit">${tr('copy')||'复制'}</button></div></div>`:''}
-${ex.rebate?`<div style="flex:1;min-width:140px"><div style="font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:3px">${tr('rebate')}</div><div style="font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:${c}">${es(ex.rebate)}</div></div>`:''}
+${ex.code?`<div style="flex:1;min-width:140px"><div style="font-size:12.5px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:3px">${tr('invite_code')||'邀请码'}</div><div style="font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:var(--grn);display:flex;align-items:center;gap:8px">${es(ex.code)}<button onclick="navigator.clipboard.writeText('${es(ex.code)}').then(()=>this.textContent='✓')" style="background:none;border:1px solid var(--bd);color:var(--tx3);padding:1px 7px;border-radius:5px;cursor:pointer;font-size:12.5px;font-family:inherit">${tr('copy')||'复制'}</button></div></div>`:''}
+${ex.rebate?`<div style="flex:1;min-width:140px"><div style="font-size:12.5px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:3px">${tr('rebate')}</div><div style="font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:${c}">${es(ex.rebate)}</div></div>`:''}
 </div>`:''}
 <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
 <a href="${es(ex.url)}" target="_blank" rel="noopener noreferrer nofollow sponsored" class="bt bt-g" id="goCont">${tr('go_continue')} (<span id="goSec">3</span>s)</a>
@@ -2028,10 +2097,10 @@ ${ex.mirrors.map((m,mi)=>{const lbl=pL(m.label)||m.url;const nt=pL(m.note)||'';r
 <div style="flex:1;min-width:0">
 <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
 <span style="font-weight:700;font-size:13.5px">${es(lbl)}</span>
-<span style="font-size:10.5px;padding:2px 7px;background:${c}22;color:${c};border-radius:99px;font-weight:600;letter-spacing:.3px">${es(regionLbl(m.region||'GLOBAL'))}</span>
+<span style="font-size:12px;padding:2px 7px;background:${c}22;color:${c};border-radius:99px;font-weight:600;letter-spacing:.3px">${es(regionLbl(m.region||'GLOBAL'))}</span>
 </div>
-<div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--tx3);word-break:break-all;line-height:1.5">${es(m.url)}</div>
-${nt?`<div style="font-size:11.5px;color:var(--tx2);margin-top:4px">${es(nt)}</div>`:''}
+<div style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--tx3);word-break:break-all;line-height:1.5">${es(m.url)}</div>
+${nt?`<div style="font-size:12.5px;color:var(--tx2);margin-top:4px">${es(nt)}</div>`:''}
 </div>
 <button onclick="event.preventDefault();event.stopPropagation();copyTxt('${es(m.url)}',this)" title="${tr('copy')||'复制'}" style="background:transparent;border:none;cursor:pointer;font-size:14px;color:var(--tx3);padding:4px 6px;flex-shrink:0;border-radius:4px" onmouseover="this.style.background='var(--bd)'" onmouseout="this.style.background='transparent'">📋</button>
 </a>`}).join('')}
@@ -2044,7 +2113,7 @@ ${nt?`<div style="font-size:11.5px;color:var(--tx2);margin-top:4px">${es(nt)}</d
 <div style="background:linear-gradient(135deg,rgba(122,192,255,.06),rgba(16,216,160,.04));border:1px solid var(--bd);border-radius:var(--r2);padding:24px 28px;margin-top:28px">
 <h2 style="margin:0 0 14px;font-size:18px;color:var(--blu)">🛡️ ${tr('safe_guide_t')||'安全访问指南'}</h2>
 <ul style="list-style:none;margin:0;padding:0">
-<li style="padding:7px 0;font-size:13.5px;color:var(--tx2);display:flex;gap:10px"><span style="color:var(--grn);flex-shrink:0">✓</span>${tr('safe_1')||'所有备用域名均来自交易所官方公告，本站不提供未经核实的"翻墙"链接。'}</li>
+<li style="padding:7px 0;font-size:13.5px;color:var(--tx2);display:flex;gap:10px"><span style="color:var(--grn);flex-shrink:0">✓</span>${tr('safe_1')||'所有备用域名均来自交易所官方公告，本站只展示交易所官方公告确认的入口。'}</li>
 <li style="padding:7px 0;font-size:13.5px;color:var(--tx2);display:flex;gap:10px"><span style="color:var(--grn);flex-shrink:0">✓</span>${tr('safe_2')||'通过本页链接打开后，请检查浏览器地址栏域名拼写，确认 HTTPS 锁标志。'}</li>
 <li style="padding:7px 0;font-size:13.5px;color:var(--tx2);display:flex;gap:10px"><span style="color:var(--grn);flex-shrink:0">✓</span>${tr('safe_3')||'登录后请立即开启二次验证（Google Authenticator 或交易所 APP 内置）。'}</li>
 <li style="padding:7px 0;font-size:13.5px;color:var(--tx2);display:flex;gap:10px"><span style="color:var(--red);flex-shrink:0">✗</span>${tr('safe_4')||'切勿在其他网站、聊天群、邮件中复制粘贴的"备用网址"输入账号密码。'}</li>
