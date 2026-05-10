@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>IndexNow 一键提交工具 · CryptoRebateHub</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:#070b13;color:#e8ecf4;padding:24px 16px;min-height:100vh;line-height:1.6}
+.box{max-width:920px;margin:0 auto;background:#0d131f;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:28px}
+h1{font-size:24px;margin-bottom:8px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+h1 .ic{width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,#10d8a0,#0fb88a);display:flex;align-items:center;justify-content:center;font-weight:900;color:#070b13;font-size:20px}
+h1 small{font-size:12px;color:#6b7480;font-weight:400;text-transform:uppercase;letter-spacing:1px}
+.sub{color:#8893a7;font-size:14px;margin-bottom:24px;line-height:1.7}
+h2{font-size:16px;margin:24px 0 12px;color:#10d8a0;display:flex;align-items:center;gap:8px;font-weight:700}
+h2::before{content:"";width:3px;height:14px;background:#10d8a0;border-radius:2px}
+.steps{counter-reset:step;list-style:none;margin-bottom:18px}
+.steps li{counter-increment:step;padding:13px 14px 13px 50px;background:#141c2b;border-radius:10px;margin-bottom:8px;position:relative;font-size:13.5px;line-height:1.65}
+.steps li::before{content:counter(step);position:absolute;left:12px;top:11px;width:26px;height:26px;background:#10d8a0;color:#070b13;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
+.steps code,.tip code{font-family:'JetBrains Mono','Consolas',monospace;background:#070b13;padding:2px 6px;border-radius:4px;color:#10d8a0;font-size:.92em;border:1px solid rgba(16,216,160,.18)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+@media(max-width:640px){.row{grid-template-columns:1fr}}
+.fld{display:flex;flex-direction:column;gap:6px}
+label{font-size:12px;color:#8893a7;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+input[type=text],textarea{padding:10px 12px;border:1px solid rgba(255,255,255,.1);border-radius:8px;background:#070b13;color:#e8ecf4;font-family:'JetBrains Mono','Consolas',monospace;font-size:13px;outline:none;transition:.15s}
+input[type=text]:focus,textarea:focus{border-color:#10d8a0;box-shadow:0 0 0 3px rgba(16,216,160,.15)}
+textarea{resize:vertical;min-height:140px;line-height:1.6}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.b{padding:11px 18px;border:none;border-radius:8px;cursor:pointer;font-weight:600;font-family:inherit;font-size:13.5px;display:inline-flex;align-items:center;gap:6px;transition:.15s;text-decoration:none;color:#e8ecf4}
+.b-g{background:linear-gradient(135deg,#10d8a0,#0fb88a);color:#070b13}
+.b-g:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(16,216,160,.3)}
+.b-o{background:#141c2b;border:1px solid rgba(255,255,255,.1)}
+.b-o:hover{border-color:rgba(255,255,255,.18)}
+.b-blu{background:#1f3a5e;color:#cbe1ff}
+.b-blu:hover{background:#2a4a72}
+.b:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.tip{background:rgba(95,177,255,.07);border:1px solid rgba(95,177,255,.2);color:#a8c9eb;padding:11px 14px;border-radius:9px;font-size:13px;line-height:1.65;margin-bottom:14px}
+.tip.warn{background:rgba(251,191,36,.08);border-color:rgba(251,191,36,.25);color:#e0c069}
+.tip.suc{background:rgba(16,216,160,.07);border-color:rgba(16,216,160,.25);color:#7ddfba}
+.log{background:#070b13;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:14px;font-family:'JetBrains Mono','Consolas',monospace;font-size:12.5px;height:280px;overflow-y:auto;line-height:1.7;white-space:pre-wrap;word-break:break-word}
+.log .ok{color:#10d8a0}
+.log .warn{color:#fbbf24}
+.log .err{color:#ff5060}
+.log .hi{color:#5fb1ff}
+.log .gray{color:#6b7480}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.stat{background:#141c2b;border-radius:8px;padding:10px 12px;text-align:center}
+.stat .l{font-size:9.5px;text-transform:uppercase;letter-spacing:1px;color:#6b7480;font-weight:700;margin-bottom:3px}
+.stat .v{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:800}
+@media(max-width:600px){.stats{grid-template-columns:repeat(2,1fr)}}
+.key-display{font-family:'JetBrains Mono','Consolas',monospace;font-size:14px;background:#070b13;padding:10px 14px;border-radius:8px;border:1px solid rgba(16,216,160,.25);color:#10d8a0;word-break:break-all;margin-bottom:8px}
+.copy-btn{font-size:11.5px;padding:5px 10px;border-radius:6px;background:rgba(16,216,160,.15);color:#10d8a0;border:1px solid rgba(16,216,160,.3);cursor:pointer;font-family:inherit;margin-left:8px;transition:.15s}
+.copy-btn:hover{background:rgba(16,216,160,.25)}
+details{background:#141c2b;border-radius:10px;padding:14px 16px;margin-bottom:10px}
+details summary{cursor:pointer;font-weight:600;color:#5fb1ff;font-size:14px;list-style:none;display:flex;align-items:center;gap:8px}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"▶";font-size:10px;transition:.2s;color:#6b7480}
+details[open] summary::before{transform:rotate(90deg)}
+details > div{margin-top:12px;font-size:13px;color:#a8b1c2;line-height:1.7}
+.endpoint-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-bottom:14px}
+.ep-card{background:#141c2b;padding:11px 13px;border-radius:8px;display:flex;align-items:center;gap:10px;font-size:13px;cursor:pointer;border:1px solid transparent;transition:.15s}
+.ep-card.act{border-color:rgba(16,216,160,.4);background:rgba(16,216,160,.05)}
+.ep-card input{accent-color:#10d8a0}
+.ep-card .nm{font-weight:600;color:#e8ecf4}
+.ep-card .ds{font-size:11px;color:#6b7480;margin-top:1px}
+</style>
+</head>
+<body>
+<div class="box">
+
+<h1><div class="ic">⚡</div> IndexNow 一键提交 <small>v1.0</small></h1>
+<p class="sub">把你的网站 URL 一次性推送给 <strong>Bing、Yandex、Naver、Seznam</strong> 等支持 IndexNow 协议的搜索引擎，加速收录。<br>无需注册账号，无需 API Key 申请，5 分钟内可完成全部推送。</p>
+
+<!-- ════════════ 步骤说明 ════════════ -->
+<h2>使用步骤</h2>
+<ol class="steps">
+<li>填写下方「站点配置」（默认已填好 CryptoRebateHub 信息）</li>
+<li>点「📥 生成 Key 文件」下载文件，<strong>上传到 GitHub 根目录</strong>覆盖（与 index.html 同目录）</li>
+<li>等 1-3 分钟 GitHub Pages 部署完成，确认能访问 <code>https://你的域名/&lt;key&gt;.txt</code></li>
+<li>勾选要推送的搜索引擎，点「🚀 开始批量推送」</li>
+</ol>
+
+<!-- ════════════ 配置 ════════════ -->
+<h2>站点配置</h2>
+<div class="row">
+<div class="fld">
+<label>网站域名（不含 https://，不带末尾斜杠）</label>
+<input type="text" id="host" value="cryptorebatehub.com">
+</div>
+<div class="fld">
+<label>API Key（已自动生成，可保留）</label>
+<input type="text" id="apikey" value="">
+</div>
+</div>
+
+<div class="actions">
+<button class="b b-o" onclick="genKey()">🔄 重新生成 Key</button>
+<button class="b b-g" onclick="downloadKey()">📥 生成 Key 文件并下载</button>
+<a class="b b-blu" id="verifyLink" target="_blank" rel="noopener">🔍 验证 Key 文件可访问</a>
+</div>
+
+<div class="tip">
+<strong>Key 文件路径预览</strong><br>
+<span class="key-display" id="keyPath">https://cryptorebatehub.com/...</span>
+</div>
+
+<!-- ════════════ URL 列表 ════════════ -->
+<h2>要推送的 URL</h2>
+<div class="actions">
+<button class="b b-o" onclick="loadDefaults()">📋 加载 35 个默认 URL（首页+10 币种+10 静态页+15 文章）</button>
+<button class="b b-o" onclick="loadFromSitemap()">🗺 从 sitemap.xml 加载</button>
+<button class="b b-o" onclick="document.getElementById('urls').value=''">🗑 清空</button>
+</div>
+<div class="fld" style="margin-bottom:14px">
+<label>每行一个 URL（最多 10000 条，建议每次 ≤ 100 条）</label>
+<textarea id="urls" placeholder="https://cryptorebatehub.com/&#10;https://cryptorebatehub.com/exchange/okx&#10;..."></textarea>
+</div>
+
+<!-- ════════════ 搜索引擎 ════════════ -->
+<h2>选择搜索引擎</h2>
+<p class="sub" style="margin-bottom:10px;font-size:12.5px">所有 IndexNow 端点共享同一个推送结果，理论上勾任何一个都会同步到所有支持的搜索引擎。但实际选多个端点能提高成功率（避免某个端点临时故障）。</p>
+<div class="endpoint-grid" id="endpoints">
+<label class="ep-card act"><input type="checkbox" value="https://api.indexnow.org/indexnow" checked><div><div class="nm">IndexNow 通用</div><div class="ds">同步给所有支持引擎</div></div></label>
+<label class="ep-card act"><input type="checkbox" value="https://www.bing.com/indexnow" checked><div><div class="nm">Bing</div><div class="ds">微软搜索 + Yahoo</div></div></label>
+<label class="ep-card act"><input type="checkbox" value="https://yandex.com/indexnow" checked><div><div class="nm">Yandex</div><div class="ds">俄罗斯主流引擎</div></div></label>
+<label class="ep-card"><input type="checkbox" value="https://searchadvisor.naver.com/indexnow"><div><div class="nm">Naver</div><div class="ds">韩国主流引擎</div></div></label>
+<label class="ep-card"><input type="checkbox" value="https://search.seznam.cz/indexnow"><div><div class="nm">Seznam</div><div class="ds">捷克搜索</div></div></label>
+</div>
+
+<!-- ════════════ 提交 + 日志 ════════════ -->
+<h2>推送</h2>
+<div class="actions">
+<button class="b b-g" id="submitBtn" onclick="startSubmit()">🚀 开始批量推送</button>
+<button class="b b-o" onclick="document.getElementById('log').innerHTML=''">🧹 清空日志</button>
+</div>
+
+<div class="stats">
+<div class="stat"><div class="l">URL 数</div><div class="v" id="stTotal">0</div></div>
+<div class="stat"><div class="l">成功</div><div class="v" id="stOk" style="color:#10d8a0">0</div></div>
+<div class="stat"><div class="l">失败</div><div class="v" id="stFail" style="color:#ff5060">0</div></div>
+<div class="stat"><div class="l">进度</div><div class="v" id="stProg">0%</div></div>
+</div>
+
+<div class="log" id="log">等待操作...</div>
+
+<!-- ════════════ FAQ ════════════ -->
+<h2>常见问题</h2>
+
+<details>
+<summary>什么是 IndexNow？我为什么要用它？</summary>
+<div>IndexNow 是微软主导推出的开放协议，让网站可以**主动**通知搜索引擎「我有新内容/更新」，而不是等爬虫自己来发现。<br><br>
+<strong>对你的好处：</strong><br>
+• 新内容 24 小时内就能被 Bing 抓取（以前可能要等 1-2 周）<br>
+• 通过 Bing 同步给 Yandex、Naver 等主流引擎<br>
+• 完全免费，无需 API 申请<br>
+• 一次推送，多平台收录</div>
+</details>
+
+<details>
+<summary>为什么需要上传 Key 文件到我的网站根目录？</summary>
+<div>这是 IndexNow 协议要求的<strong>所有权验证</strong>。搜索引擎会访问 <code>https://你的域名/&lt;key&gt;.txt</code> 看里面是不是确实是你声明的 key。<br><br>
+这能防止恶意推送：别人不能随便推一堆链接说是你的网站。<br><br>
+<strong>一次上传永久有效</strong>，不用每次都上传。</div>
+</details>
+
+<details>
+<summary>提交后多久能在搜索结果里看到？</summary>
+<div>• <strong>抓取速度</strong>：通常 24-48 小时内 Bing 爬虫会到访<br>
+• <strong>出现在搜索结果</strong>：1-7 天<br>
+• <strong>稳定排名</strong>：1-4 周（取决于内容质量、外链）<br><br>
+查看是否被收录：在 Bing 搜索 <code>site:你的域名</code></div>
+</details>
+
+<details>
+<summary>这个工具会推送给 Google 吗？</summary>
+<div><strong>不会</strong>。Google 没有加入 IndexNow 协议。<br><br>
+要让 Google 快速收录，去 <a href="https://search.google.com/search-console" target="_blank" rel="noopener" style="color:#10d8a0">Google Search Console</a>：<br>
+• 提交 sitemap.xml<br>
+• 用「URL 检查 → 请求编入索引」逐个推送重要页面<br><br>
+组合使用 GSC + 这个工具 = 覆盖几乎所有主流搜索引擎。</div>
+</details>
+
+<details>
+<summary>我可以多久推送一次？</summary>
+<div>• <strong>每天最多 10000 个 URL</strong>（IndexNow 协议限额）<br>
+• 同一个 URL 24 小时内重复推送会被忽略<br>
+• <strong>建议</strong>：发布新内容后立刻推送一次，无新内容时不要重复推</div>
+</details>
+
+<details>
+<summary>HTTP 200 / 202 是什么意思？失败怎么办？</summary>
+<div><strong>200 / 202 都是成功</strong>，搜索引擎已经收到你的推送。<br><br>
+<strong>常见错误码</strong>：<br>
+• <code>400</code> - URL 格式有问题，检查是否完整 https://<br>
+• <code>403</code> - Key 文件验证失败，检查是否上传到根目录、内容是否就是 key 字符串本身<br>
+• <code>422</code> - 提交的 URL 不属于这个域名<br>
+• <code>429</code> - 推送太频繁，等几分钟再试<br><br>
+<strong>注意</strong>：浏览器的 CORS 政策会阻止前端直接调用某些端点，看到 <code>CORS error</code> 不代表搜索引擎没收到。建议同时勾多个端点提高成功率，或用日志中给出的 cURL 命令在终端跑。</div>
+</details>
+
+</div>
+
+<script>
+'use strict';
+
+// ════════════ Helpers ════════════
+const $=q=>document.querySelector(q);
+const log=(msg,cls)=>{const el=$('#log');const span=document.createElement('div');if(cls)span.className=cls;span.textContent=msg;el.appendChild(span);el.scrollTop=el.scrollHeight};
+
+function genKey(){
+  const chars='abcdefghijklmnopqrstuvwxyz0123456789';
+  let k='';
+  for(let i=0;i<32;i++)k+=chars[Math.floor(Math.random()*chars.length)];
+  $('#apikey').value=k;
+  updKeyPath();
+  // Persist for next session
+  try{localStorage.setItem('indexnow_key',k)}catch(e){}
+}
+
+function updKeyPath(){
+  const host=$('#host').value.trim().replace(/^https?:\/\//,'').replace(/\/$/,'');
+  const k=$('#apikey').value.trim();
+  const url=`https://${host}/${k}.txt`;
+  $('#keyPath').textContent=url;
+  $('#verifyLink').href=url;
+}
+
+function downloadKey(){
+  const k=$('#apikey').value.trim();
+  if(!k){alert('请先生成 Key');return}
+  const blob=new Blob([k],{type:'text/plain'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download=k+'.txt';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(url),2000);
+  log('✓ 已下载 '+k+'.txt — 请上传到 GitHub 仓库根目录','ok');
+  log('  上传路径：仓库根目录（与 index.html 同级）','gray');
+  log('  上传后访问：'+$('#keyPath').textContent+' 应该看到 key 字符串','gray');
+}
+
+function loadDefaults(){
+  const host=$('#host').value.trim().replace(/^https?:\/\//,'').replace(/\/$/,'');
+  if(!host){alert('请先填写域名');return}
+  const base=`https://${host}`;
+  
+  // 默认 35 个 URL = 首页 + 10 静态 + 10 币种 + 15 文章
+  const urls=[
+    base+'/',
+    base+'/exchanges',
+    base+'/markets',
+    base+'/guides',
+    base+'/articles',
+    base+'/about',
+    base+'/disclosure',
+    base+'/exchange/okx',
+    base+'/exchange/binance',
+    base+'/exchange/bybit',
+    // 10 大币种
+    base+'/coin/btc',
+    base+'/coin/eth',
+    base+'/coin/sol',
+    base+'/coin/bnb',
+    base+'/coin/xrp',
+    base+'/coin/doge',
+    base+'/coin/ada',
+    base+'/coin/avax',
+    base+'/coin/link',
+    base+'/coin/dot',
+    // 15 篇文章（与 articles.json 中的 slug 一致）
+    base+'/article/okx-account-registration-guide',
+    base+'/article/binance-spot-trading-fundamentals',
+    base+'/article/futures-leverage-risk-management',
+    base+'/article/crypto-account-security-essentials',
+    base+'/article/exchange-rebate-mechanism-explained',
+    base+'/article/okx-deposit-withdrawal-tutorial',
+    base+'/article/okx-spot-trading-step-by-step',
+    base+'/article/okx-leverage-trading-beginners',
+    base+'/article/binance-deposit-withdrawal-guide',
+    base+'/article/binance-futures-trading-101',
+    base+'/article/bybit-copy-trading-guide',
+    base+'/article/crypto-trading-fees-comparison',
+    base+'/article/crypto-dca-strategy-guide',
+    base+'/article/stablecoin-comparison-usdt-usdc-dai',
+    base+'/article/defi-basics-for-beginners'
+  ];
+  
+  $('#urls').value=urls.join('\n');
+  updStats();
+  log(`✓ 已加载 ${urls.length} 个默认 URL`,'ok');
+}
+
+async function loadFromSitemap(){
+  const host=$('#host').value.trim().replace(/^https?:\/\//,'').replace(/\/$/,'');
+  if(!host){alert('请先填写域名');return}
+  const url=`https://${host}/sitemap.xml`;
+  log('→ 从 '+url+' 加载...','hi');
+  try{
+    const r=await fetch(url,{cache:'no-store'});
+    if(!r.ok){
+      log('✗ HTTP '+r.status+'：可能是 CORS 限制或 sitemap 不存在','err');
+      log('  解决方法：直接访问 '+url+' 复制 URL 列表手动粘贴','gray');
+      return;
+    }
+    const txt=await r.text();
+    const urls=[...txt.matchAll(/<loc>(.+?)<\/loc>/g)].map(m=>m[1]);
+    if(!urls.length){
+      log('✗ sitemap.xml 没有找到任何 URL','err');
+      return;
+    }
+    $('#urls').value=urls.join('\n');
+    updStats();
+    log('✓ 从 sitemap 加载了 '+urls.length+' 个 URL','ok');
+  }catch(e){
+    log('✗ 加载失败：'+e.message,'err');
+    log('  这通常是 CORS 限制。可以在浏览器直接打开 '+url+' 复制粘贴','gray');
+  }
+}
+
+function getURLs(){
+  return $('#urls').value.split('\n').map(u=>u.trim()).filter(u=>u&&/^https?:\/\//.test(u));
+}
+
+function getEndpoints(){
+  return [...document.querySelectorAll('#endpoints input[type=checkbox]:checked')].map(c=>c.value);
+}
+
+function updStats(){
+  const urls=getURLs();
+  $('#stTotal').textContent=urls.length;
+}
+
+// ════════════ Main submit ════════════
+async function startSubmit(){
+  const host=$('#host').value.trim().replace(/^https?:\/\//,'').replace(/\/$/,'');
+  const key=$('#apikey').value.trim();
+  const urls=getURLs();
+  const endpoints=getEndpoints();
+  
+  if(!host){alert('请填写域名');return}
+  if(!key||key.length<8){alert('请生成 API Key');return}
+  if(!urls.length){alert('请填写要推送的 URL');return}
+  if(!endpoints.length){alert('请至少选择一个搜索引擎');return}
+  
+  // Validate URLs all match host
+  const badUrls=urls.filter(u=>!u.includes(host));
+  if(badUrls.length){
+    log('⚠ 发现 '+badUrls.length+' 个 URL 不属于域名 '+host+'，将跳过','warn');
+    badUrls.slice(0,3).forEach(u=>log('  · '+u,'gray'));
+  }
+  const validUrls=urls.filter(u=>u.includes(host));
+  
+  $('#submitBtn').disabled=true;
+  $('#stOk').textContent=0;
+  $('#stFail').textContent=0;
+  $('#stProg').textContent='0%';
+  
+  log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━','hi');
+  log('▶ 开始推送','hi');
+  log('  域名：'+host,'gray');
+  log('  Key：'+key,'gray');
+  log('  Key 文件：https://'+host+'/'+key+'.txt','gray');
+  log('  URL 数：'+validUrls.length,'gray');
+  log('  端点：'+endpoints.length+' 个','gray');
+  log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━','hi');
+  
+  // Verify key file accessible first (best-effort, may fail due to CORS)
+  log('\n→ 验证 Key 文件可访问性...','hi');
+  try{
+    const v=await fetch(`https://${host}/${key}.txt`,{cache:'no-store',mode:'cors'});
+    if(v.ok){
+      const t=(await v.text()).trim();
+      if(t===key)log('  ✓ Key 文件验证成功','ok');
+      else log('  ⚠ Key 文件内容不匹配，搜索引擎将拒绝推送（实际：'+t.slice(0,20)+'... 期望：'+key+'）','warn');
+    }else{
+      log('  ⚠ Key 文件 HTTP '+v.status+'，可能未上传或 GitHub Pages 还在部署中','warn');
+    }
+  }catch(e){
+    log('  ⚠ 无法直接验证（浏览器 CORS 限制），假设已上传','warn');
+    log('  请手动访问 https://'+host+'/'+key+'.txt 确认能看到 key 字符串','gray');
+  }
+  
+  // IndexNow API supports batch (up to 10000 URLs per request)
+  // We split into chunks of 100 to be safe and friendly
+  const chunkSize=100;
+  const chunks=[];
+  for(let i=0;i<validUrls.length;i+=chunkSize)chunks.push(validUrls.slice(i,i+chunkSize));
+  
+  let totalOps=endpoints.length*chunks.length;
+  let curOp=0,okCnt=0,failCnt=0;
+  
+  for(const ep of endpoints){
+    const epName=new URL(ep).host;
+    log('\n📡 推送到 '+epName,'hi');
+    
+    for(let i=0;i<chunks.length;i++){
+      const chunk=chunks[i];
+      curOp++;
+      
+      const payload={
+        host: host,
+        key: key,
+        keyLocation: `https://${host}/${key}.txt`,
+        urlList: chunk
+      };
+      
+      try{
+        const r=await fetch(ep,{
+          method:'POST',
+          headers:{'Content-Type':'application/json; charset=utf-8'},
+          body:JSON.stringify(payload),
+          mode:'cors'
+        });
+        
+        if(r.status===200||r.status===202){
+          log(`  ✓ 批次 ${i+1}/${chunks.length} 成功 (HTTP ${r.status}, ${chunk.length} URLs)`,'ok');
+          okCnt+=chunk.length;
+        }else{
+          let body='';
+          try{body=await r.text();}catch{}
+          log(`  ✗ 批次 ${i+1}/${chunks.length} HTTP ${r.status}${body?': '+body.slice(0,150):''}`,'err');
+          failCnt+=chunk.length;
+        }
+      }catch(e){
+        // CORS / network error
+        log(`  ⚠ 批次 ${i+1}/${chunks.length} 网络/CORS 错误: ${e.message}`,'warn');
+        log(`     ↳ 浏览器无法直接调用，但搜索引擎可能仍收到。建议同时用 cURL 命令验证`,'gray');
+        failCnt+=chunk.length;
+      }
+      
+      $('#stOk').textContent=okCnt;
+      $('#stFail').textContent=failCnt;
+      $('#stProg').textContent=Math.round(curOp/totalOps*100)+'%';
+      
+      // Small delay between requests
+      await new Promise(r=>setTimeout(r,200));
+    }
+  }
+  
+  log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━','hi');
+  log('✓ 推送完成','ok');
+  log(`  成功：${okCnt} / 失败：${failCnt}`, okCnt>0?'ok':'warn');
+  log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━','hi');
+  
+  if(failCnt>0){
+    log('\n💡 备用方案：复制下面的 cURL 命令在终端运行（不受 CORS 限制）','hi');
+    const sample={host,key,keyLocation:`https://${host}/${key}.txt`,urlList:validUrls.slice(0,5)};
+    const cmd=`curl -X POST "https://api.indexnow.org/indexnow" \\\n  -H "Content-Type: application/json" \\\n  -d '${JSON.stringify(sample)}'`;
+    log(cmd,'gray');
+  }
+  
+  log('\n📊 验证收录情况（24-48 小时后）：','hi');
+  log(`  Bing: https://www.bing.com/search?q=site:${host}`,'gray');
+  log(`  Yandex: https://yandex.com/search/?text=site:${host}`,'gray');
+  
+  $('#submitBtn').disabled=false;
+}
+
+// ════════════ Init ════════════
+$('#host').addEventListener('input',updKeyPath);
+$('#apikey').addEventListener('input',updKeyPath);
+$('#urls').addEventListener('input',updStats);
+document.querySelectorAll('#endpoints input').forEach(c=>{
+  c.addEventListener('change',e=>e.target.closest('.ep-card').classList.toggle('act',e.target.checked));
+});
+
+// Restore key from localStorage or generate new
+try{
+  const saved=localStorage.getItem('indexnow_key');
+  if(saved&&saved.length===32)$('#apikey').value=saved;
+  else genKey();
+}catch{genKey()}
+
+updKeyPath();
+log('💡 提示：先填写域名，生成 Key 文件并上传到 GitHub，再开始推送','hi');
+</script>
+
+</body>
+</html>

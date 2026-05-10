@@ -1,25 +1,44 @@
 # Cloudflare Pages headers
-# https://developers.cloudflare.com/pages/configuration/headers/
+# CRITICAL: HTML pages MUST NOT be cached so users always get the latest version.
+# Since CryptoRebateHub is a SPA where index.html is the main entry, caching it breaks updates.
 
-# JSON data — short cache (admin updates propagate quickly)
+# === HTML PAGES — NEVER CACHE ===
+# Force browsers to always re-fetch index.html and admin.
+/
+  Cache-Control: no-store, no-cache, must-revalidate, max-age=0
+  Pragma: no-cache
+  Expires: 0
+
+/index.html
+  Cache-Control: no-store, no-cache, must-revalidate, max-age=0
+  Pragma: no-cache
+  Expires: 0
+
+/mgr-7a9f3c2e.html
+  Cache-Control: no-store, no-cache, must-revalidate, max-age=0
+  Pragma: no-cache
+  Expires: 0
+
+/*.html
+  Cache-Control: no-store, no-cache, must-revalidate, max-age=0
+  Pragma: no-cache
+  Expires: 0
+
+# === JSON DATA — SHORT CACHE ===
+# Admin updates need to propagate fast
 /articles.json
-  Cache-Control: public, max-age=300, must-revalidate
+  Cache-Control: no-cache, must-revalidate, max-age=0
   Access-Control-Allow-Origin: *
 
-# Sitemap — 1 hour cache
+# === SITEMAP / ROBOTS — MODERATE CACHE ===
 /sitemap.xml
-  Cache-Control: public, max-age=3600
+  Cache-Control: public, max-age=600
   Content-Type: application/xml; charset=utf-8
 
-# robots.txt — 1 hour cache
 /robots.txt
-  Cache-Control: public, max-age=3600
+  Cache-Control: public, max-age=600
 
-# HTML pages — short cache so updates propagate quickly
-/*.html
-  Cache-Control: public, max-age=300, must-revalidate
-
-# Static assets (JS/CSS) — long cache
+# === STATIC ASSETS — LONG CACHE ===
 /*.js
   Cache-Control: public, max-age=31536000, immutable
 /*.css
@@ -30,10 +49,12 @@
   Cache-Control: public, max-age=2592000
 /*.svg
   Cache-Control: public, max-age=2592000
+/*.ico
+  Cache-Control: public, max-age=2592000
 /*.woff2
   Cache-Control: public, max-age=31536000, immutable
 
-# Security headers (everything)
+# === SECURITY HEADERS ===
 /*
   X-Frame-Options: SAMEORIGIN
   X-Content-Type-Options: nosniff
