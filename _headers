@@ -1,63 +1,142 @@
-# Cloudflare Pages headers
-# CRITICAL: HTML pages MUST NOT be cached so users always get the latest version.
-# Since CryptoRebateHub is a SPA where index.html is the main entry, caching it breaks updates.
+# CryptoRebateHub · _headers
+# Strategy: SEO-optimized caching for affiliate site
+#
+# Key principles:
+# 1. Search engines (Googlebot/Baiduspider/etc) must see FRESH content
+# 2. Users get fast CDN responses
+# 3. Admin is NEVER cached or indexed
+# 4. Affiliate redirects (/go/*) are NOT indexed
+# 5. Sitemap/robots short cache (search engines re-check)
+# ============================================================
 
-# === HTML PAGES — NEVER CACHE ===
-# Force browsers to always re-fetch index.html and admin.
-/
-  Cache-Control: no-store, no-cache, must-revalidate, max-age=0
+# ============================================================
+# === ADMIN — NEVER CACHED, NEVER INDEXED ===
+# ============================================================
+/mgr-7a9f3c2e.html
+  Cache-Control: no-store, no-cache, must-revalidate, max-age=0, private
   Pragma: no-cache
   Expires: 0
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet
+  X-Frame-Options: DENY
+  Referrer-Policy: no-referrer
+
+# Defensive: any /mgr-* path
+/mgr-*
+  Cache-Control: no-store, no-cache, must-revalidate, max-age=0, private
+  X-Robots-Tag: noindex, nofollow, noarchive
+
+# ============================================================
+# === AFFILIATE REDIRECTS — DON'T INDEX BUT CACHE BRIEFLY ===
+# ============================================================
+# /go/<exchange> goes through SPA. Search engines must NOT index these.
+/go/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+  Cache-Control: public, max-age=300, s-maxage=300
+  Referrer-Policy: no-referrer-when-downgrade
+
+# ============================================================
+# === FRONTEND HTML — SEO-FRIENDLY ISR CACHE ===
+# ============================================================
+# Why these values:
+# - max-age=0: browsers ALWAYS revalidate with conditional GET (304 Not Modified)
+#   This is critical for SEO: search engines see latest meta tags immediately
+# - s-maxage=120: CDN caches 2 minutes
+# - stale-while-revalidate=600: serve stale up to 10min while refreshing
+# - Vary: Accept-Encoding for proper compression handling
+# Result: Search engines see fresh content; users get instant CDN response
+
+/
+  Cache-Control: public, max-age=0, s-maxage=120, must-revalidate, stale-while-revalidate=600
+  CDN-Cache-Control: public, max-age=120, stale-while-revalidate=600
+  Vary: Accept-Encoding
+  X-Content-Language: zh-CN, zh-TW, en, ko
 
 /index.html
-  Cache-Control: no-store, no-cache, must-revalidate, max-age=0
-  Pragma: no-cache
-  Expires: 0
-
-/mgr-7a9f3c2e.html
-  Cache-Control: no-store, no-cache, must-revalidate, max-age=0
-  Pragma: no-cache
-  Expires: 0
+  Cache-Control: public, max-age=0, s-maxage=120, must-revalidate, stale-while-revalidate=600
+  CDN-Cache-Control: public, max-age=120, stale-while-revalidate=600
+  Vary: Accept-Encoding
 
 /*.html
-  Cache-Control: no-store, no-cache, must-revalidate, max-age=0
-  Pragma: no-cache
-  Expires: 0
+  Cache-Control: public, max-age=0, s-maxage=120, must-revalidate, stale-while-revalidate=600
+  CDN-Cache-Control: public, max-age=120, stale-while-revalidate=600
+  Vary: Accept-Encoding
 
-# === JSON DATA — SHORT CACHE ===
-# Admin updates need to propagate fast
-/articles.json
-  Cache-Control: no-cache, must-revalidate, max-age=0
-  Access-Control-Allow-Origin: *
-
-# === SITEMAP / ROBOTS — MODERATE CACHE ===
+# ============================================================
+# === SEO CRITICAL FILES — SHORT CACHE ===
+# ============================================================
+# Sitemap: search engines re-fetch frequently to find new content
+# 5 min cache balances server load vs indexing speed
 /sitemap.xml
-  Cache-Control: public, max-age=600
+  Cache-Control: public, max-age=300, s-maxage=300, must-revalidate
+  Content-Type: application/xml; charset=utf-8
+  X-Robots-Tag: noindex
+
+# Robots: same logic
+/robots.txt
+  Cache-Control: public, max-age=300, s-maxage=300, must-revalidate
+  Content-Type: text/plain; charset=utf-8
+
+# Optional sitemap variants (sitemap-news.xml, sitemap-articles.xml etc.)
+/sitemap-*.xml
+  Cache-Control: public, max-age=300, s-maxage=300, must-revalidate
   Content-Type: application/xml; charset=utf-8
 
-/robots.txt
-  Cache-Control: public, max-age=600
+# ============================================================
+# === DATA FILES — SHORT CACHE ===
+# ============================================================
+# Articles JSON: new posts must propagate within 1-2 minutes
+/articles.json
+  Cache-Control: public, max-age=60, s-maxage=120, must-revalidate, stale-while-revalidate=300
+  Access-Control-Allow-Origin: *
+  Vary: Accept-Encoding
 
+# ============================================================
 # === STATIC ASSETS — LONG CACHE ===
+# ============================================================
+# JS/CSS/Fonts: 1 year immutable (content-hashed)
 /*.js
   Cache-Control: public, max-age=31536000, immutable
+  X-Content-Type-Options: nosniff
+
 /*.css
   Cache-Control: public, max-age=31536000, immutable
-/*.png
-  Cache-Control: public, max-age=2592000
-/*.jpg
-  Cache-Control: public, max-age=2592000
-/*.svg
-  Cache-Control: public, max-age=2592000
-/*.ico
-  Cache-Control: public, max-age=2592000
+
 /*.woff2
   Cache-Control: public, max-age=31536000, immutable
 
-# === SECURITY HEADERS ===
+/*.woff
+  Cache-Control: public, max-age=31536000, immutable
+
+# Images: 7 days (shorter for OG image updates)
+/*.png
+  Cache-Control: public, max-age=604800, s-maxage=604800, stale-while-revalidate=86400
+
+/*.jpg
+  Cache-Control: public, max-age=604800, s-maxage=604800, stale-while-revalidate=86400
+
+/*.jpeg
+  Cache-Control: public, max-age=604800, s-maxage=604800, stale-while-revalidate=86400
+
+/*.webp
+  Cache-Control: public, max-age=604800, s-maxage=604800, stale-while-revalidate=86400
+
+/*.svg
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=86400
+
+/*.ico
+  Cache-Control: public, max-age=2592000
+
+# Manifest / Service worker / PWA files
+/manifest.json
+  Cache-Control: public, max-age=86400, s-maxage=86400
+  Content-Type: application/manifest+json
+
+# ============================================================
+# === SECURITY HEADERS (all paths) ===
+# ============================================================
 /*
   X-Frame-Options: SAMEORIGIN
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: geolocation=(), microphone=(), camera=()
-  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
