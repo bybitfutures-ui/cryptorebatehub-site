@@ -10,19 +10,21 @@
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--bg:#0a0e1a;--bg2:#111827;--bg3:#1a2236;--bg4:#232c44;--tx:#f5f7fb;--tx2:#bcc5db;--tx3:#7c8499;--bd:#1f2b42;--bd2:#2c3a55;--grn:#14e0a8;--grn2:#0ec495;--grnA:rgba(20,224,168,.13);--blu:#6db4ff;--bluA:rgba(109,180,255,.13);--red:#ff5872;--redA:rgba(255,88,114,.12);--yel:#ffd147;--yelA:rgba(255,209,71,.12);--org:#ff9648;--r:10px;--r2:14px;--sh:0 1px 3px rgba(0,0,0,.32),0 1px 2px rgba(0,0,0,.24);--sh-md:0 4px 12px rgba(0,0,0,.36)}
 body{
-  font-family:'Inter',-apple-system,BlinkMacSystemFont,'SF Pro Text','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC','Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;
+  font-family:'Inter','SF Pro Display','SF Pro Text',-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans SC','Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;
   background:var(--bg);color:var(--tx);
-  line-height:1.6;font-size:14px;
+  font-size:14px;line-height:1.6;font-weight:400;
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
   text-rendering:optimizeLegibility;
-  font-feature-settings:"cv02","cv03","cv04","cv11","ss01","tnum";
-  letter-spacing:-.005em;
+  font-feature-settings:"cv02","cv03","cv04","cv11","ss01","tnum","kern";
+  font-variant-numeric:tabular-nums;
+  letter-spacing:-.003em
 }
-::-webkit-scrollbar{width:10px;height:10px}
+h1,h2,h3,h4,h5,h6{color:var(--tx);font-weight:700;line-height:1.3;letter-spacing:-.012em;margin:0}
+::-webkit-scrollbar{width:12px;height:12px}
 ::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:8px;border:2px solid var(--bg)}
-::-webkit-scrollbar-thumb:hover{background:var(--tx3)}
-::selection{background:var(--grnA);color:var(--tx)}
+::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:6px;border:3px solid var(--bg)}
+::-webkit-scrollbar-thumb:hover{background:var(--bd3)}
+::selection{background:var(--grnB);color:var(--tx)}
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--grn);outline-offset:2px;border-radius:6px}
 a{color:inherit;text-decoration:none}
 code{font-family:'JetBrains Mono',monospace;background:var(--bg3);padding:1px 5px;border-radius:4px;font-size:.92em;color:var(--grn)}
@@ -137,7 +139,7 @@ code{font-family:'JetBrains Mono',monospace;background:var(--bg3);padding:1px 5p
 const $=q=>document.querySelector(q);
 const $$=q=>document.querySelectorAll(q);
 
-const DF={coins:[{inst:'BTC-USDT',sym:'BTC',color:'#f7931a',on:1,hidden:0},{inst:'ETH-USDT',sym:'ETH',color:'#627eea',on:1,hidden:0},{inst:'SOL-USDT',sym:'SOL',color:'#9945ff',on:1,hidden:0},{inst:'BNB-USDT',sym:'BNB',color:'#f0b41e',on:1,hidden:0},{inst:'XRP-USDT',sym:'XRP',color:'#00aae4',on:1,hidden:0},{inst:'DOGE-USDT',sym:'DOGE',color:'#c2a633',on:1,hidden:0},{inst:'ADA-USDT',sym:'ADA',color:'#0d3eaa',on:1,hidden:0},{inst:'AVAX-USDT',sym:'AVAX',color:'#e84142',on:1,hidden:0},{inst:'LINK-USDT',sym:'LINK',color:'#2a5ada',on:1,hidden:0},{inst:'DOT-USDT',sym:'DOT',color:'#e6007a',on:1,hidden:0}],exs:[{id:'okx',url:'https://www.okx.com/join/WLFI47',code:'WLFI47',ft:1,hidden:0,logo:'OK',color:'#10d8a0',rebate:'20%',name:{zh:'OKX 欧易','zh-TW':'OKX 歐易',en:'OKX',ko:'OKX'},sub:{zh:'综合实力领先 · 中文友好','zh-TW':'綜合實力領先 · 中文友好',en:'Leading global exchange',ko:'종합 선도 거래소'},features:{zh:['现货费率 0.08%（最低）','300+ 交易对','Web3 钱包功能完善','C2C 法币通道丰富','Proof of Reserves 公开'],'zh-TW':[],en:[],ko:[]}},{id:'binance',url:'https://www.binance.com/join?ref=WLFI47',code:'WLFI47',ft:1,hidden:0,logo:'BN',color:'#f0b41e',rebate:'20%',name:{zh:'Binance 币安','zh-TW':'Binance 幣安',en:'Binance',ko:'Binance'},sub:{zh:'全球交易量第一','zh-TW':'全球交易量第一',en:'Largest by volume',ko:'세계 최대 거래량'},features:{zh:['500+ 币种最多','全球流动性最佳','Launchpad 新币首发','BNB 抵扣手续费','Earn 理财产品最丰富'],'zh-TW':[],en:[],ko:[]}},{id:'bybit',url:'https://www.bybit.com/invite?ref=8DXZXGZ',code:'8DXZXGZ',ft:1,hidden:0,logo:'BY',color:'#ff8a3a',rebate:'33%',name:{zh:'Bybit','zh-TW':'Bybit',en:'Bybit',ko:'Bybit'},sub:{zh:'衍生品专业平台','zh-TW':'衍生品專業平台',en:'Pro derivatives platform',ko:'전문 파생상품 플랫폼'},features:{zh:['永续合约深度业内顶级','高达 100 倍杠杆','跟单交易生态成熟','API 稳定延迟低','返佣比例行业最高'],'zh-TW':[],en:[],ko:[]}}],links:{social:[{name:'Twitter',url:'',icon:'𝕏'},{name:'Telegram',url:'',icon:'✈'}],friends:[]},arts:[],autoTL:1};
+const DF={coins:[{inst:'BTC-USDT',sym:'BTC',color:'#f7931a',on:1,hidden:0},{inst:'ETH-USDT',sym:'ETH',color:'#627eea',on:1,hidden:0},{inst:'SOL-USDT',sym:'SOL',color:'#9945ff',on:1,hidden:0},{inst:'BNB-USDT',sym:'BNB',color:'#f0b41e',on:1,hidden:0},{inst:'XRP-USDT',sym:'XRP',color:'#00aae4',on:1,hidden:0},{inst:'DOGE-USDT',sym:'DOGE',color:'#c2a633',on:1,hidden:0},{inst:'ADA-USDT',sym:'ADA',color:'#0d3eaa',on:1,hidden:0},{inst:'AVAX-USDT',sym:'AVAX',color:'#e84142',on:1,hidden:0},{inst:'LINK-USDT',sym:'LINK',color:'#2a5ada',on:1,hidden:0},{inst:'DOT-USDT',sym:'DOT',color:'#e6007a',on:1,hidden:0}],exs:[{id:'okx',url:'https://www.okx.com/join/WLFI47',code:'WLFI47',ft:1,hidden:0,logo:'OK',color:'#34d399',rebate:'20%',name:{zh:'OKX 欧易','zh-TW':'OKX 歐易',en:'OKX',ko:'OKX'},sub:{zh:'综合实力领先 · 中文友好','zh-TW':'綜合實力領先 · 中文友好',en:'Leading global exchange',ko:'종합 선도 거래소'},features:{zh:['现货费率 0.08%（最低）','300+ 交易对','Web3 钱包功能完善','C2C 法币通道丰富','Proof of Reserves 公开'],'zh-TW':[],en:[],ko:[]}},{id:'binance',url:'https://www.binance.com/join?ref=WLFI47',code:'WLFI47',ft:1,hidden:0,logo:'BN',color:'#f0b41e',rebate:'20%',name:{zh:'Binance 币安','zh-TW':'Binance 幣安',en:'Binance',ko:'Binance'},sub:{zh:'全球交易量第一','zh-TW':'全球交易量第一',en:'Largest by volume',ko:'세계 최대 거래량'},features:{zh:['500+ 币种最多','全球流动性最佳','Launchpad 新币首发','BNB 抵扣手续费','Earn 理财产品最丰富'],'zh-TW':[],en:[],ko:[]}},{id:'bybit',url:'https://www.bybit.com/invite?ref=8DXZXGZ',code:'8DXZXGZ',ft:1,hidden:0,logo:'BY',color:'#ff8a3a',rebate:'33%',name:{zh:'Bybit','zh-TW':'Bybit',en:'Bybit',ko:'Bybit'},sub:{zh:'衍生品专业平台','zh-TW':'衍生品專業平台',en:'Pro derivatives platform',ko:'전문 파생상품 플랫폼'},features:{zh:['永续合约深度业内顶级','高达 100 倍杠杆','跟单交易生态成熟','API 稳定延迟低','返佣比例行业最高'],'zh-TW':[],en:[],ko:[]}}],links:{social:[{name:'Twitter',url:'',icon:'𝕏'},{name:'Telegram',url:'',icon:'✈'}],friends:[]},arts:[],autoTL:1};
 
 let D=ld(),AL=sessionStorage.getItem('crh_auth')==='1';
 
@@ -229,7 +231,7 @@ setInterval(checkScheduled,60*1000); // Check every 60s for scheduled publishing
 setInterval(()=>syncTime(1),30*60*1000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden){checkDayChange();checkScheduled();syncTime(1)}});
 
-const PAGES={dash:{ic:'📊',n:'仪表盘'},arts:{ic:'📝',n:'文章管理'},exs:{ic:'🏦',n:'交易所'},coins:{ic:'💰',n:'币种行情'},links:{ic:'🔗',n:'链接中心'},data:{ic:'💾',n:'数据备份'},settings:{ic:'⚙',n:'网站设置'}};
+const PAGES={dash:{ic:'📊',n:'仪表盘'},arts:{ic:'📝',n:'文章管理'},exs:{ic:'🏦',n:'交易所'},access:{ic:'🌐',n:'备用网址'},coins:{ic:'💰',n:'币种行情'},links:{ic:'🔗',n:'链接中心'},data:{ic:'💾',n:'数据备份'},settings:{ic:'⚙',n:'网站设置'}};
 
 function gr(){
   const h=location.hash.slice(1)||'';
@@ -518,7 +520,7 @@ async function tl(text,src,tgt){
 
 function rExs(){
   let html=rTopBar('交易所管理','返佣比例 · 4 语言资料 · 排序拖拽','<button class="b b-g" onclick="addEx()">+ 添加交易所</button> <button class="b b-g" onclick="saveExs()">💾 保存全部</button>');
-  html+='<div class="tip">💡 排序靠前的交易所在网站上优先展示。「⭐ 推荐」标签会显示在卡片右上角。「返佣比例」是用户最关心的数据，请保持准确。</div>';
+  html+='<div class="tip">💡 排序靠前的交易所在网站上优先展示。「⭐ 推荐」标签会显示在卡片右上角。「返佣比例」是用户最关心的数据，请保持准确。<br>🌐 <strong>备用网址</strong>已迁移到独立子页面 <a onclick="go(\'access\')" style="color:var(--grn);cursor:pointer;text-decoration:underline">「🌐 备用网址」</a> 进行管理。</div>';
   for(let i=0;i<D.exs.length;i++)html+=rExCard(D.exs[i],i);
   html+='<div style="margin-top:14px"><button class="b b-g" onclick="saveExs()">💾 保存全部交易所</button></div>';
   return html;
@@ -528,21 +530,13 @@ function rExCard(ex,i){
   const mirs=ex.mirrors||[];
   let html='<div class="ex-card"><div class="ex-head"><div class="ex-handle"><button class="b b-o" style="padding:4px 8px;font-size:12px"'+(i===0?' disabled':'')+' onclick="moveEx('+i+',-1)">↑</button><button class="b b-o" style="padding:4px 8px;font-size:12px"'+(i===D.exs.length-1?' disabled':'')+' onclick="moveEx('+i+',1)">↓</button></div><div class="ex-logo" style="background:'+ex.color+'22;color:'+ex.color+'">'+es(ex.logo||ex.id?.slice(0,2).toUpperCase()||'EX')+'</div><div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:700">'+es(ex.name?.zh||ex.id||'(新交易所)')+'</div><div style="font-size:12px;color:var(--tx3);font-family:\'JetBrains Mono\',monospace">id: '+es(ex.id||'?')+' · '+(ex.url?'✓ 链接已设':'⚠ 缺链接')+(mirs.length?' · 🌐 '+mirs.length+' 备用':'')+'</div></div><label class="cb"><input type="checkbox" data-ft-i="'+i+'"'+(ex.ft?' checked':'')+'> ⭐ 推荐</label><button class="b b-r" style="padding:5px 10px;font-size:12px" onclick="delEx('+i+')">🗑</button></div>';
   html+='<div class="row3"><div class="r"><label>ID（URL 用）</label><input data-exi="'+i+'" data-exf="id" value="'+es(ex.id)+'"></div><div class="r"><label>注册链接（含返佣码）</label><input data-exi="'+i+'" data-exf="url" value="'+es(ex.url)+'" placeholder="https://..."></div><div class="r"><label>返佣比例</label><input data-exi="'+i+'" data-exf="rebate" value="'+es(ex.rebate||'')+'" placeholder="30%"></div></div>';
-  html+='<div class="row3"><div class="r"><label>邀请码</label><input data-exi="'+i+'" data-exf="code" value="'+es(ex.code||'')+'" placeholder="WLFI47"></div><div class="r"><label>Logo 文字（2-4 字）</label><input data-exi="'+i+'" data-exf="logo" value="'+es(ex.logo)+'" maxlength="4"></div><div class="r"><label>品牌色</label><input type="color" data-exi="'+i+'" data-exf="color" value="'+es(ex.color||'#10d8a0')+'" style="height:38px"></div></div>';
-  // Mirror URLs editor
-  html+='<details class="ex-langs"'+(mirs.length?' open':'')+'><summary>🌐 备用网址（'+mirs.length+'）<span style="float:right;font-size:12px;color:var(--tx3);font-weight:400">官方多区域入口 · 留空时不显示</span></summary>';
-  html+='<div class="tip" style="margin:10px 0 12px;font-size:12.5px">用于在用户无法访问主域名时提供官方备用入口。请只填写交易所官方公告确认的域名（避免给用户添加钓鱼风险）。每个备用域名可设区域标签和 4 语言说明。</div>';
-  for(let mi=0;mi<mirs.length;mi++){
-    const m=mirs[mi];
-    html+='<div class="mir-edit" style="background:var(--bg);padding:12px 14px;border-radius:8px;border:1px solid var(--bd);margin-bottom:10px">';
-    html+='<div class="row3"><div class="r"><label>备用 URL</label><input data-exi="'+i+'" data-mi="'+mi+'" data-mf="url" value="'+es(m.url||'')+'" placeholder="https://..."></div><div class="r"><label>区域</label><select data-exi="'+i+'" data-mi="'+mi+'" data-mf="region"><option value="GLOBAL"'+(m.region==='GLOBAL'?' selected':'')+'>🌍 GLOBAL（全球）</option><option value="CN"'+(m.region==='CN'?' selected':'')+'>🇨🇳 CN（国内）</option><option value="HK"'+(m.region==='HK'?' selected':'')+'>🇭🇰 HK（香港）</option><option value="TW"'+(m.region==='TW'?' selected':'')+'>🇹🇼 TW（台湾）</option><option value="JP"'+(m.region==='JP'?' selected':'')+'>🇯🇵 JP（日本）</option><option value="KR"'+(m.region==='KR'?' selected':'')+'>🇰🇷 KR（韩国）</option><option value="SG"'+(m.region==='SG'?' selected':'')+'>🇸🇬 SG（新加坡）</option><option value="EU"'+(m.region==='EU'?' selected':'')+'>🇪🇺 EU（欧洲）</option><option value="US"'+(m.region==='US'?' selected':'')+'>🇺🇸 US（美国）</option></select></div><div class="r" style="display:flex;align-items:flex-end"><button class="b b-r" style="padding:7px 12px;font-size:12px;width:100%" onclick="delMir('+i+','+mi+')">🗑 删除此备用</button></div></div>';
-    html+='<div style="margin-top:6px"><label style="font-size:12px;color:var(--tx3);text-transform:uppercase;letter-spacing:.8px;font-weight:600">显示标签 / 备注（4 语言，可选）</label></div>';
-    for(const l of ls)html+='<div class="lang-r"><span class="lang-tag">'+l.n+'</span><input data-exi="'+i+'" data-mi="'+mi+'" data-mf="label" data-ml="'+l.k+'" value="'+es(m.label?.[l.k]||'')+'" placeholder="如：欧易官方备用"><input data-exi="'+i+'" data-mi="'+mi+'" data-mf="note" data-ml="'+l.k+'" value="'+es(m.note?.[l.k]||'')+'" placeholder="如：国内可访问"></div>';
-    html+='</div>';
+  html+='<div class="row3"><div class="r"><label>邀请码</label><input data-exi="'+i+'" data-exf="code" value="'+es(ex.code||'')+'" placeholder="WLFI47"></div><div class="r"><label>Logo 文字（2-4 字）</label><input data-exi="'+i+'" data-exf="logo" value="'+es(ex.logo)+'" maxlength="4"></div><div class="r"><label>品牌色</label><input type="color" data-exi="'+i+'" data-exf="color" value="'+es(ex.color||'#34d399')+'" style="height:38px"></div></div>';
+  // Mirror URLs are now managed in the dedicated /access page
+  if(mirs.length){
+    html+='<div style="padding:11px 14px;background:var(--bg3);border-radius:8px;font-size:12.5px;color:var(--tx2);margin-bottom:10px;display:flex;align-items:center;gap:10px;border:1px solid var(--bd)"><span style="color:var(--grn);font-size:16px">🌐</span><span style="flex:1">已配置 <strong style="color:var(--grn)">'+mirs.length+'</strong> 个备用网址</span><a onclick="go(\'access\')" class="b b-o" style="padding:5px 12px;font-size:12px;cursor:pointer;text-decoration:none">前往管理 →</a></div>';
+  }else{
+    html+='<div style="padding:11px 14px;background:var(--bg3);border-radius:8px;font-size:12.5px;color:var(--tx3);margin-bottom:10px;display:flex;align-items:center;gap:10px;border:1px dashed var(--bd2)"><span>🌐</span><span style="flex:1">未配置备用网址</span><a onclick="go(\'access\')" class="b b-o" style="padding:5px 12px;font-size:12px;cursor:pointer;text-decoration:none">+ 添加</a></div>';
   }
-  html+='<button class="b b-o" onclick="addMir('+i+')" style="margin-top:6px;margin-right:6px">➕ 添加备用网址</button>';
-  html+='<button class="b b-o" onclick="bulkAddMirs('+i+')" style="margin-top:6px;font-size:12px">📋 批量粘贴</button>';
-  html+='</details>';
   html+='<details class="ex-langs" open><summary>📝 4 语言名称和简介</summary>';
   for(const l of ls)html+='<div class="lang-r"><span class="lang-tag">'+l.n+'</span><input data-exi="'+i+'" data-exf="name" data-exl="'+l.k+'" value="'+es(ex.name?.[l.k]||'')+'" placeholder="名称"><input data-exi="'+i+'" data-exf="sub" data-exl="'+l.k+'" value="'+es(ex.sub?.[l.k]||'')+'" placeholder="一句话简介"></div>';
   html+='</details><details class="ex-langs"><summary>✨ 平台特性（每行一条，4 语言）</summary>';
@@ -590,6 +584,103 @@ function bulkAddMirs(i){
   }
 }
 function moveEx(i,d){const t=i+d;if(t<0||t>=D.exs.length)return;[D.exs[i],D.exs[t]]=[D.exs[t],D.exs[i]];sv();scheduleRender()}
+
+// === DEDICATED ACCESS URLS PAGE ===
+function rAccess(){
+  const exsAll=D.exs.filter(e=>!e.hidden);
+  const totalMirs=exsAll.reduce((acc,e)=>acc+(e.mirrors?.length||0),0);
+  const exsWithMir=exsAll.filter(e=>e.mirrors&&e.mirrors.length).length;
+  const ls=[{k:'zh',n:'简中'},{k:'zh-TW',n:'繁中'},{k:'en',n:'EN'},{k:'ko',n:'한'}];
+  const flagOf=r=>r==='CN'?'🇨🇳':r==='HK'?'🇭🇰':r==='TW'?'🇹🇼':r==='JP'?'🇯🇵':r==='KR'?'🇰🇷':r==='EU'?'🇪🇺':r==='US'?'🇺🇸':r==='SG'?'🇸🇬':'🌍';
+  let html=rTopBar('备用网址管理','为每个交易所配置官方备用入口（多区域）','<button class="b b-g" onclick="saveAccessUrls()">💾 保存全部</button>');
+  // Stats panel
+  html+='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:18px">';
+  html+='<div class="dc"><div class="dc-l">交易所总数</div><div class="dc-v" style="color:var(--blu)">'+exsAll.length+'</div><div class="dc-s">已配置备用 '+exsWithMir+'</div></div>';
+  html+='<div class="dc"><div class="dc-l">备用网址总数</div><div class="dc-v" style="color:var(--grn)">'+totalMirs+'</div><div class="dc-s">展示在前台</div></div>';
+  html+='<div class="dc"><div class="dc-l">覆盖区域</div><div class="dc-v" style="color:var(--gld);font-size:18px">'+([...new Set(exsAll.flatMap(e=>(e.mirrors||[]).map(m=>m.region)))].length||0)+'</div><div class="dc-s">不同地区入口</div></div>';
+  html+='</div>';
+  // Tip
+  html+='<div class="tip" style="margin-bottom:18px">💡 此页只填写交易所「官方公告确认」的多区域备用域名。前台「🌐 备用入口」页会自动汇总展示。每条备用支持区域标签和 4 语言显示文字。</div>';
+
+  if(!exsAll.length){
+    html+='<div class="tip warn">⚠ 还未添加任何交易所。请先去「交易所」页面添加。<a class="b b-g" onclick="go(\'exs\')" style="margin-left:8px;cursor:pointer;text-decoration:none">前往添加 →</a></div>';
+    return html;
+  }
+
+  // Per-exchange editor cards
+  for(let i=0;i<exsAll.length;i++){
+    const ex=exsAll[i];
+    // Find original index in D.exs (since we filtered)
+    const origIdx=D.exs.findIndex(e=>e.id===ex.id);
+    if(origIdx<0)continue;
+    const c=ex.color||'#34d399';
+    const exName=ex.name?.zh||ex.id;
+    const mirs=ex.mirrors||[];
+    html+='<div class="ex-card" style="margin-bottom:18px">';
+    // Header
+    html+='<div class="ex-head"><div class="ex-logo" style="background:'+c+'22;color:'+c+'">'+es(ex.logo||ex.id?.slice(0,2).toUpperCase()||'EX')+'</div>';
+    html+='<div style="flex:1;min-width:0"><div style="font-size:15px;font-weight:700">'+es(exName)+'</div><div style="font-size:12px;color:var(--tx3);font-family:\'JetBrains Mono\',monospace">id: '+es(ex.id)+(mirs.length?' · 🌐 已配置 '+mirs.length+' 个':' · 未配置')+'</div></div>';
+    html+='<a class="b b-o" style="padding:5px 12px;font-size:12px;cursor:pointer;text-decoration:none" onclick="go(\'exs\')">→ 编辑交易所基本信息</a>';
+    html+='</div>';
+    // Mirrors list
+    if(mirs.length){
+      for(let mi=0;mi<mirs.length;mi++){
+        const m=mirs[mi];
+        const fl=flagOf(m.region||'GLOBAL');
+        html+='<div class="mir-edit" style="background:var(--bg);padding:14px 16px;border-radius:10px;border:1px solid var(--bd);margin-bottom:10px">';
+        html+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">';
+        html+='<span style="font-size:22px;line-height:1">'+fl+'</span>';
+        html+='<div style="flex:1;min-width:0;font-size:11.5px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px;font-weight:700">备用 #'+(mi+1)+'</div>';
+        html+='<button class="b b-r" style="padding:5px 11px;font-size:12px" onclick="delMirByOrigIdx('+origIdx+','+mi+')">🗑 删除</button>';
+        html+='</div>';
+        html+='<div class="row3">';
+        html+='<div class="r"><label>备用 URL</label><input data-am-i="'+origIdx+'" data-am-mi="'+mi+'" data-am-f="url" value="'+es(m.url||'')+'" placeholder="https://..."></div>';
+        html+='<div class="r"><label>区域</label><select data-am-i="'+origIdx+'" data-am-mi="'+mi+'" data-am-f="region">';
+        const regions=[['GLOBAL','🌍 全球'],['CN','🇨🇳 国内'],['HK','🇭🇰 香港'],['TW','🇹🇼 台湾'],['JP','🇯🇵 日本'],['KR','🇰🇷 韩国'],['SG','🇸🇬 新加坡'],['EU','🇪🇺 欧洲'],['US','🇺🇸 美国']];
+        for(const [v,l] of regions){html+='<option value="'+v+'"'+(m.region===v?' selected':'')+'>'+l+'</option>'}
+        html+='</select></div>';
+        html+='</div>';
+        html+='<div style="margin-top:10px"><label style="font-size:11.5px;color:var(--tx3);text-transform:uppercase;letter-spacing:.8px;font-weight:600">显示标签 / 备注（4 语言，可选）</label></div>';
+        for(const l of ls){
+          html+='<div class="lang-r"><span class="lang-tag">'+l.n+'</span>';
+          html+='<input data-am-i="'+origIdx+'" data-am-mi="'+mi+'" data-am-f="label" data-am-l="'+l.k+'" value="'+es(m.label?.[l.k]||'')+'" placeholder="如：欧易官方备用">';
+          html+='<input data-am-i="'+origIdx+'" data-am-mi="'+mi+'" data-am-f="note" data-am-l="'+l.k+'" value="'+es(m.note?.[l.k]||'')+'" placeholder="如：国内可访问">';
+          html+='</div>';
+        }
+        html+='</div>';
+      }
+    }else{
+      html+='<div style="padding:24px;text-align:center;color:var(--tx3);font-size:13.5px;background:var(--bg);border-radius:10px;border:1px dashed var(--bd2);margin-bottom:10px">未配置备用网址</div>';
+    }
+    // Add button
+    html+='<div style="display:flex;gap:8px;flex-wrap:wrap">';
+    html+='<button class="b b-o" onclick="addMirByOrigIdx('+origIdx+')">➕ 添加备用网址</button>';
+    html+='<button class="b b-o" onclick="bulkAddMirsByOrigIdx('+origIdx+')" style="font-size:12.5px">📋 批量粘贴</button>';
+    html+='</div>';
+    html+='</div>';
+  }
+  html+='<div style="margin-top:20px"><button class="b b-g" onclick="saveAccessUrls()" style="padding:12px 28px">💾 保存全部备用网址</button></div>';
+  return html;
+}
+// Wrappers that work with original index
+function addMirByOrigIdx(i){addMir(i)}
+function delMirByOrigIdx(i,mi){delMir(i,mi)}
+function bulkAddMirsByOrigIdx(i){bulkAddMirs(i)}
+// Save just the access page edits
+function saveAccessUrls(){
+  $$('[data-am-f]').forEach(inp=>{
+    const i=+inp.dataset.amI,mi=+inp.dataset.amMi,f=inp.dataset.amF,l=inp.dataset.amL;
+    if(!D.exs[i]||!D.exs[i].mirrors||!D.exs[i].mirrors[mi])return;
+    const m=D.exs[i].mirrors[mi];
+    if(l){m[f]=m[f]||{};m[f][l]=inp.value.trim()}
+    else{m[f]=inp.value.trim()}
+  });
+  // Drop empty mirrors (no URL)
+  D.exs.forEach(e=>{if(e.mirrors)e.mirrors=e.mirrors.filter(m=>m.url)});
+  sv(true);
+  scheduleRender();
+  tst('✓ 备用网址已保存');
+}
 function addEx(){const id='exchange'+(D.exs.length+1);D.exs.push({id,url:'',ft:0,logo:'EX',color:'#5fb1ff',rebate:'',name:{zh:'新交易所','zh-TW':'',en:'New Exchange',ko:''},sub:{zh:'','zh-TW':'',en:'',ko:''},features:{zh:[],'zh-TW':[],en:[],ko:[]}});sv();scheduleRender();tst('✓ 已添加，请完善信息')}
 function delEx(i){if(!confirm('删除「'+(D.exs[i].name?.zh||D.exs[i].id)+'」？'))return;D.exs.splice(i,1);sv();scheduleRender();tst('✓ 已删除')}
 function saveExs(){
@@ -600,19 +691,9 @@ function saveExs(){
     else if(l){D.exs[i][f]=D.exs[i][f]||{};D.exs[i][f][l]=inp.value.trim()}
     else{D.exs[i][f]=inp.value.trim()}
   });
-  // Save mirrors
-  $$('[data-mf]').forEach(inp=>{
-    const i=+inp.dataset.exi,mi=+inp.dataset.mi,f=inp.dataset.mf,l=inp.dataset.ml;
-    if(!D.exs[i]||!D.exs[i].mirrors||!D.exs[i].mirrors[mi])return;
-    const m=D.exs[i].mirrors[mi];
-    if(l){m[f]=m[f]||{};m[f][l]=inp.value.trim()}
-    else{m[f]=inp.value.trim()}
-  });
-  // Drop empty mirrors (no URL)
-  D.exs.forEach(e=>{if(e.mirrors)e.mirrors=e.mirrors.filter(m=>m.url)});
   $$('[data-ft-i]').forEach(cb=>{D.exs[+cb.dataset.ftI].ft=cb.checked?1:0});
   D.exs=D.exs.filter(e=>e.id);
-  sv(true);tst('✓ 全部交易所已保存（含备用网址）');
+  sv(true);tst('✓ 全部交易所已保存（备用网址在「🌐 备用网址」页编辑）');
 }
 
 function rCoins(){
@@ -633,7 +714,7 @@ function rCoins(){
       html+='<div style="color:var(--tx3);font-family:\'JetBrains Mono\',monospace;font-size:12px">'+(i+1)+'</div>';
       html+='<input data-cf="inst" data-ci="'+i+'" value="'+es(c.inst)+'" placeholder="BTC-USDT" style="padding:7px 10px;background:var(--bg3);border:1px solid var(--bd);border-radius:6px;color:var(--tx);font-family:inherit;font-size:13px;outline:none;width:100%">';
       html+='<input data-cf="sym" data-ci="'+i+'" value="'+es(c.sym)+'" placeholder="BTC" style="padding:7px 10px;background:var(--bg3);border:1px solid var(--bd);border-radius:6px;color:var(--tx);font-family:inherit;font-size:13px;outline:none;width:100%">';
-      html+='<input type="color" data-cf="color" data-ci="'+i+'" value="'+es(c.color||'#10d8a0')+'" style="padding:0;height:34px;width:100%;background:var(--bg3);border:1px solid var(--bd);border-radius:6px;cursor:pointer">';
+      html+='<input type="color" data-cf="color" data-ci="'+i+'" value="'+es(c.color||'#34d399')+'" style="padding:0;height:34px;width:100%;background:var(--bg3);border:1px solid var(--bd);border-radius:6px;cursor:pointer">';
       html+='<label class="cb" style="display:flex;justify-content:center"><input type="checkbox" data-cf="on" data-ci="'+i+'"'+(c.on?' checked':'')+'> '+(c.on?'<span style="color:var(--grn)">启用</span>':'<span style="color:var(--tx3)">隐藏</span>')+'</label>';
       html+='<button class="rm" onclick="delCoin('+i+')" style="padding:7px 10px">🗑</button>';
       html+='</div>';
@@ -644,7 +725,7 @@ function rCoins(){
   return html;
 }
 function delCoin(i){if(!confirm('删除 '+D.coins[i].sym+'？'))return;D.coins.splice(i,1);sv();scheduleRender();tst('✓ 已删除')}
-function addCoin(){D.coins.push({inst:'NEW-USDT',sym:'NEW',color:'#10d8a0',on:1});sv();scheduleRender()}
+function addCoin(){D.coins.push({inst:'NEW-USDT',sym:'NEW',color:'#34d399',on:1});sv();scheduleRender()}
 function saveCoins(){
   $$('[data-cf]').forEach(inp=>{
     const i=+inp.dataset.ci,f=inp.dataset.cf;
@@ -916,6 +997,7 @@ function render(){
     case'dash':content=rDash();break;
     case'arts':content=rArticles();break;
     case'exs':content=rExs();break;
+    case'access':content=rAccess();break;
     case'coins':content=rCoins();break;
     case'links':content=rLinks();break;
     case'data':content=rDataPage();break;
