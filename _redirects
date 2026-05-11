@@ -1,2 +1,12 @@
-/index.html  200
-/*  /index.html  200!
+/markets         /index.html  200
+/exchanges       /index.html  200
+/exchange/*      /index.html  200
+/coin/*          /index.html  200
+/articles        /index.html  200
+/article/*       /index.html  200
+/guides          /index.html  200
+/about           /index.html  200
+/disclosure      /index.html  200
+/access-urls     /index.html  200
+/register-bonus  /index.html  200
+/go/*            /index.html  200
