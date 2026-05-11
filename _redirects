@@ -1,12 +1,27 @@
 /markets         /index.html  200
 /exchanges       /index.html  200
-/exchange/*      /index.html  200
-/coin/*          /index.html  200
 /articles        /index.html  200
-/article/*       /index.html  200
 /guides          /index.html  200
 /about           /index.html  200
 /disclosure      /index.html  200
 /access-urls     /index.html  200
 /register-bonus  /index.html  200
-/go/*            /index.html  200
+
+/exchange/okx       /index.html  200
+/exchange/binance   /index.html  200
+/exchange/bybit     /index.html  200
+
+/coin/btc   /index.html  200
+/coin/eth   /index.html  200
+/coin/sol   /index.html  200
+/coin/bnb   /index.html  200
+/coin/xrp   /index.html  200
+/coin/doge  /index.html  200
+/coin/ada   /index.html  200
+/coin/avax  /index.html  200
+/coin/link  /index.html  200
+/coin/dot   /index.html  200
+
+/go/okx      /index.html  200
+/go/binance  /index.html  200
+/go/bybit    /index.html  200
