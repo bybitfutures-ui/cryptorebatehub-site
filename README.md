@@ -1,4 +1,7 @@
-# CryptoRebateHub · v2026-05-10-seo-isr · SEO 友好 ISR 版
+# CryptoRebateHub · v2026-05-10-newbie-seo · 新手长尾词强化版
 
-Build ID: `20260510-2330`
+Build ID: `20260510-2345`
 
+## 🎯 本次重点：新手用户搜索意图全覆盖
+
+针对新手用户最常搜的关键词，深度优化 SEO，提升转化率。
