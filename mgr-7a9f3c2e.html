@@ -6,7 +6,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
-<meta name="build-id" content="20260510-2345">
+<meta name="build-id" content="20260511-deploy-fix">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>Management · CryptoRebateHub</title>
@@ -373,7 +373,7 @@ function rDash(){
   const seoColor=seoIssues===0?'var(--grn)':seoIssues<5?'var(--yel)':'var(--red)';
   const recentArts=D.arts.slice().sort((a,b)=>(b.date||'').localeCompare(a.date||'')).slice(0,5);
   const dataKB=(JSON.stringify(D).length/1024).toFixed(1);
-  return rTopBar('仪表盘','网站当前状态总览','<button class="b b-g" onclick="go(\'art/new\')">+ 新建文章</button> <button class="b b-o" onclick="xpD()">📤 备份</button>')+
+  return rTopBar('仪表盘','网站当前状态总览','<button class="b b-g" onclick="xpArticlesJson()">📥 下载 articles.json</button> <button class="b b-o" onclick="go(\'art/new\')">+ 新建文章</button> <button class="b b-o" onclick="xpD()">📤 完整备份</button>')+
     '<div class="dash">'+
       '<div class="dc"><div class="dc-l">当前年份</div><div class="dc-v" style="color:var(--grn)">'+Y+'</div><div class="dc-s">网站显示自动跟随</div></div>'+
       '<div class="dc"><div class="dc-l">文章总数</div><div class="dc-v">'+stats.total+'</div><div class="dc-s">已发布 '+stats.pub+' · 草稿 '+stats.draft+(stats.scheduled?' · ⏰ 定时 '+stats.scheduled:'')+'</div></div>'+
@@ -392,7 +392,7 @@ function rDash(){
       '<a class="dc" onclick="go(\'art/new\')" style="cursor:pointer;text-align:center;padding:20px"><div style="font-size:24px;margin-bottom:6px">+</div><div style="font-weight:700;color:var(--grn)">写新文章</div><div class="dc-s">支持 4 语言</div></a>'+
       '<a class="dc" onclick="go(\'exs\')" style="cursor:pointer;text-align:center;padding:20px"><div style="font-size:24px;margin-bottom:6px">🏦</div><div style="font-weight:700;color:var(--blu)">编辑交易所</div><div class="dc-s">返佣 · 链接 · 资料</div></a>'+
       '<a class="dc" onclick="go(\'links\')" style="cursor:pointer;text-align:center;padding:20px"><div style="font-size:24px;margin-bottom:6px">🔗</div><div style="font-weight:700;color:var(--yel)">链接中心</div><div class="dc-s">社交 · 友情链接</div></a>'+
-      '<a class="dc" onclick="xpD()" style="cursor:pointer;text-align:center;padding:20px"><div style="font-size:24px;margin-bottom:6px">📤</div><div style="font-weight:700;color:var(--org)">导出备份</div><div class="dc-s">下载 JSON</div></a>'+
+      '<a class="dc" onclick="xpArticlesJson()" style="cursor:pointer;text-align:center;padding:20px"><div style="font-size:24px;margin-bottom:6px">📥</div><div style="font-weight:700;color:var(--grn)">下载 articles.json</div><div class="dc-s">部署到网站</div></a>'+
     '</div></div>';
 }
 
@@ -824,7 +824,9 @@ function rDataPage(){
   const futureDated=D.arts.filter(a=>a.date&&a.date>netToday()).length;
   let html=rTopBar('数据备份','导入导出 · 翻译 · 年份审计 · 重置');
   html+='<div class="dash"><div class="dc"><div class="dc-l">数据大小</div><div class="dc-v" style="font-size:18px">'+(JSON.stringify(D).length/1024).toFixed(1)+'<small style="font-size:12px;color:var(--tx3)"> KB / 5 MB</small></div></div><div class="dc"><div class="dc-l">文章</div><div class="dc-v">'+D.arts.length+'</div></div><div class="dc"><div class="dc-l">交易所</div><div class="dc-v">'+D.exs.length+'</div></div><div class="dc"><div class="dc-l">币种</div><div class="dc-v">'+D.coins.length+'</div></div></div>';
-  html+='<div class="pn"><div class="pn-h"><h2>📦 备份与恢复</h2></div><div class="tip">💡 数据保存在浏览器 <code>localStorage</code>（key: <code>crh_d</code>）。建议每周导出一次 JSON 备份。换浏览器或清缓存会丢数据。</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="b b-g" onclick="xpD()">📤 导出 JSON 备份 (Ctrl+B)</button><input type="file" id="impFile" accept=".json" style="display:none" onchange="impD(this.files[0])"><button class="b b-o" onclick="$(\'#impFile\').click()">📥 导入备份</button><button class="b b-o" onclick="loadDefault()">🔄 从 articles.json 重新加载</button></div></div>';
+  html+='<div class="pn"><div class="pn-h"><h2>🚀 部署到网站（articles.json）</h2></div><div class="tip" style="background:rgba(46,207,144,.10);border-color:var(--grn)"><strong style="color:var(--grn)">💡 解决"推送 GitHub 后后台数据丢失"问题：</strong><br>后台数据存在你的浏览器，而前台读取的是 GitHub 上的 <code>articles.json</code>。每次后台改文章后，需要：<br>1. 点下方按钮下载 <code>articles.json</code><br>2. 覆盖到本地仓库 <code>cryptorebatehub-site/articles.json</code><br>3. <code>git add articles.json && git commit -m "update articles" && git push</code><br>4. 30 秒后前台看到更新</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="b b-g" onclick="xpArticlesJson()" style="font-size:14px;padding:11px 22px">📥 下载 articles.json（仅文章，用于部署）</button></div></div>';
+
+  html+='<div class="pn"><div class="pn-h"><h2>📦 完整备份与恢复</h2></div><div class="tip">💡 数据保存在浏览器 <code>localStorage</code>（key: <code>crh_d</code>）。建议每周导出一次 JSON 备份。换浏览器或清缓存会丢数据。完整备份含交易所、币种、文章等所有数据。</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="b b-g" onclick="xpD()">📤 导出完整备份 (Ctrl+B)</button><input type="file" id="impFile" accept=".json" style="display:none" onchange="impD(this.files[0])"><button class="b b-o" onclick="$(\'#impFile\').click()">📥 导入完整备份</button><button class="b b-o" onclick="loadDefault()">🔄 从 articles.json 重新加载</button></div></div>';
   // BULK TRANSLATION
   html+='<div class="pn"><div class="pn-h"><h2>🌐 批量翻译</h2><span style="font-size:12.5px;color:var(--tx3)">未翻译字段：<strong style="color:var(--yel)">'+missingTrans+'</strong></span></div>';
   if(missingTrans){
@@ -926,6 +928,19 @@ async function bulkTranslateForLangs(langs){
   setTimeout(()=>scheduleRender(),2000);
 }
 function xpD(){const b=new Blob([JSON.stringify(D,null,2)],{type:'application/json'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download='cryptorebatehub_'+netToday()+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),2000);tst('✓ 已导出备份')}
+
+// Export articles.json — for git deployment (only articles, not the full D backup)
+function xpArticlesJson(){
+  const arts = D.arts || [];
+  const b = new Blob([JSON.stringify(arts, null, 2)], {type:'application/json'});
+  const u = URL.createObjectURL(b);
+  const a = document.createElement('a');
+  a.href = u;
+  a.download = 'articles.json';
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(u), 2000);
+  tst('✓ articles.json 已下载 — 请覆盖到本地仓库后 git push');
+}
 function impD(f){if(!f)return;const r=new FileReader();r.onload=e=>{try{const j=JSON.parse(e.target.result);if(!j.exs||!j.coins){tst('文件格式不对',1);return}if(!confirm('确定导入？将覆盖当前数据。'))return;D=Object.assign(JSON.parse(JSON.stringify(DF)),j);sv();render();tst('✓ 导入成功')}catch(e){tst('JSON 解析失败：'+e.message,1)}};r.readAsText(f)}
 async function loadDefault(){
   if(!confirm('从 articles.json 重新加载文章？现有同 ID 文章会保留（不覆盖）。'))return;
