@@ -1,4 +1,7 @@
 // SPA fallback via Cloudflare Pages Functions
+// Catches all routes, serves index.html for unknown paths.
+// Static assets (.html, .json, .xml, .txt, .js, .css, images) pass through.
+// Admin paths serve the admin HTML directly.
 
 export async function onRequest({ request, env, next }) {
   const url = new URL(request.url);

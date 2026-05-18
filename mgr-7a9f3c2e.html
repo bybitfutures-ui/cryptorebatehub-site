@@ -6,7 +6,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
-<meta name="build-id" content="20260511-deploy-fix">
+<meta name="build-id" content="20260518-mobile-cta-rich">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>Management · CryptoRebateHub</title>
@@ -373,7 +373,7 @@ function rDash(){
   const seoColor=seoIssues===0?'var(--grn)':seoIssues<5?'var(--yel)':'var(--red)';
   const recentArts=D.arts.slice().sort((a,b)=>(b.date||'').localeCompare(a.date||'')).slice(0,5);
   const dataKB=(JSON.stringify(D).length/1024).toFixed(1);
-  return rTopBar('仪表盘','网站当前状态总览','<button class="b b-g" onclick="xpArticlesJson()">📥 下载 articles.json</button> <button class="b b-o" onclick="go(\'art/new\')">+ 新建文章</button> <button class="b b-o" onclick="xpD()">📤 完整备份</button>')+
+  return rTopBar('仪表盘','网站当前状态总览','<button class="b b-g" onclick="xpArticlesJson()">📥 articles.json</button> <button class="b b-g" onclick="xpSitemap()">🗺 sitemap.xml</button> <button class="b b-o" onclick="go(\'art/new\')">+ 新建文章</button> <button class="b b-o" onclick="xpD()">📤 完整备份</button>')+
     '<div class="dash">'+
       '<div class="dc"><div class="dc-l">当前年份</div><div class="dc-v" style="color:var(--grn)">'+Y+'</div><div class="dc-s">网站显示自动跟随</div></div>'+
       '<div class="dc"><div class="dc-l">文章总数</div><div class="dc-v">'+stats.total+'</div><div class="dc-s">已发布 '+stats.pub+' · 草稿 '+stats.draft+(stats.scheduled?' · ⏰ 定时 '+stats.scheduled:'')+'</div></div>'+
@@ -824,7 +824,7 @@ function rDataPage(){
   const futureDated=D.arts.filter(a=>a.date&&a.date>netToday()).length;
   let html=rTopBar('数据备份','导入导出 · 翻译 · 年份审计 · 重置');
   html+='<div class="dash"><div class="dc"><div class="dc-l">数据大小</div><div class="dc-v" style="font-size:18px">'+(JSON.stringify(D).length/1024).toFixed(1)+'<small style="font-size:12px;color:var(--tx3)"> KB / 5 MB</small></div></div><div class="dc"><div class="dc-l">文章</div><div class="dc-v">'+D.arts.length+'</div></div><div class="dc"><div class="dc-l">交易所</div><div class="dc-v">'+D.exs.length+'</div></div><div class="dc"><div class="dc-l">币种</div><div class="dc-v">'+D.coins.length+'</div></div></div>';
-  html+='<div class="pn"><div class="pn-h"><h2>🚀 部署到网站（articles.json）</h2></div><div class="tip" style="background:rgba(46,207,144,.10);border-color:var(--grn)"><strong style="color:var(--grn)">💡 解决"推送 GitHub 后后台数据丢失"问题：</strong><br>后台数据存在你的浏览器，而前台读取的是 GitHub 上的 <code>articles.json</code>。每次后台改文章后，需要：<br>1. 点下方按钮下载 <code>articles.json</code><br>2. 覆盖到本地仓库 <code>cryptorebatehub-site/articles.json</code><br>3. <code>git add articles.json && git commit -m "update articles" && git push</code><br>4. 30 秒后前台看到更新</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="b b-g" onclick="xpArticlesJson()" style="font-size:14px;padding:11px 22px">📥 下载 articles.json（仅文章，用于部署）</button></div></div>';
+  html+='<div class="pn"><div class="pn-h"><h2>🚀 部署到网站（articles.json + sitemap.xml）</h2></div><div class="tip" style="background:rgba(46,207,144,.10);border-color:var(--grn)"><strong style="color:var(--grn)">💡 解决"推送 GitHub 后后台数据丢失"问题：</strong><br>后台数据存在你的浏览器，而前台读取的是 GitHub 上的 <code>articles.json</code>。每次后台改文章后，需要：<br>1. 点下方按钮下载 <code>articles.json</code> + <code>sitemap.xml</code><br>2. 覆盖到本地仓库 <code>cryptorebatehub-site/</code><br>3. <code>git add articles.json sitemap.xml && git commit -m "update" && git push</code><br>4. 30 秒后前台看到更新<br>5. 运行 <code>~/indexnow-push.sh</code> 推送给 Bing/Yandex</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="b b-g" onclick="xpArticlesJson()" style="font-size:14px;padding:11px 22px">📥 下载 articles.json</button><button class="b b-g" onclick="xpSitemap()" style="font-size:14px;padding:11px 22px">🗺 下载 sitemap.xml</button></div></div>';
 
   html+='<div class="pn"><div class="pn-h"><h2>📦 完整备份与恢复</h2></div><div class="tip">💡 数据保存在浏览器 <code>localStorage</code>（key: <code>crh_d</code>）。建议每周导出一次 JSON 备份。换浏览器或清缓存会丢数据。完整备份含交易所、币种、文章等所有数据。</div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="b b-g" onclick="xpD()">📤 导出完整备份 (Ctrl+B)</button><input type="file" id="impFile" accept=".json" style="display:none" onchange="impD(this.files[0])"><button class="b b-o" onclick="$(\'#impFile\').click()">📥 导入完整备份</button><button class="b b-o" onclick="loadDefault()">🔄 从 articles.json 重新加载</button></div></div>';
   // BULK TRANSLATION
@@ -940,6 +940,66 @@ function xpArticlesJson(){
   a.click();
   setTimeout(()=>URL.revokeObjectURL(u), 2000);
   tst('✓ articles.json 已下载 — 请覆盖到本地仓库后 git push');
+}
+
+// Export sitemap.xml — auto-generated from current data (matches frontend)
+function xpSitemap(){
+  const DOMAIN = 'https://cryptorebatehub.com';
+  const today = netToday();
+  const langs = ['zh-CN','zh-TW','en','ko'];
+  // Static pages
+  const staticPages = [
+    {p:'', prio:'1.0', freq:'daily'},
+    {p:'exchanges', prio:'0.95', freq:'weekly'},
+    {p:'register-bonus', prio:'0.95', freq:'weekly'},
+    {p:'access-urls', prio:'0.95', freq:'weekly'},
+    {p:'markets', prio:'0.9', freq:'daily'},
+    {p:'guides', prio:'0.9', freq:'weekly'},
+    {p:'articles', prio:'0.9', freq:'daily'},
+    {p:'about', prio:'0.7', freq:'monthly'},
+    {p:'disclosure', prio:'0.7', freq:'monthly'},
+    {p:'compare', prio:'0.9', freq:'weekly'},
+    {p:'compare/okx-vs-binance', prio:'0.95', freq:'weekly'},
+    {p:'compare/binance-vs-bybit', prio:'0.95', freq:'weekly'},
+    {p:'compare/okx-vs-bybit', prio:'0.95', freq:'weekly'},
+  ];
+  // Exchange detail pages (auto from D.exs)
+  (D.exs||[]).filter(e=>!e.hidden).forEach(ex=>{
+    staticPages.push({p:'exchange/'+ex.id, prio:'0.95', freq:'weekly'});
+  });
+  // Coin pages (auto from D.coins)
+  (D.coins||[]).forEach(c=>{
+    const id = (c.inst||'').split('-')[0].toLowerCase();
+    if(id) staticPages.push({p:'coin/'+id, prio:'0.8', freq:'daily'});
+  });
+  // Article pages
+  const arts = (D.arts||[]).filter(a=>a.pub).map(a=>({
+    p: 'article/'+(a.slug||a.id),
+    date: a.date || today,
+    prio: a.featured ? '0.85' : '0.75'
+  }));
+
+  let xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n        xmlns:xhtml="http://www.w3.org/1999/xhtml">\n';
+  staticPages.forEach(sp=>{
+    const url = `${DOMAIN}/${sp.p}`;
+    xml += `  <url>\n    <loc>${url}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>${sp.freq}</changefreq>\n    <priority>${sp.prio}</priority>\n`;
+    langs.forEach(hl=>{ xml += `    <xhtml:link rel="alternate" hreflang="${hl}" href="${url}"/>\n` });
+    xml += `    <xhtml:link rel="alternate" hreflang="x-default" href="${url}"/>\n  </url>\n`;
+  });
+  arts.forEach(a=>{
+    const url = `${DOMAIN}/${a.p}`;
+    xml += `  <url>\n    <loc>${url}</loc>\n    <lastmod>${a.date}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>${a.prio}</priority>\n`;
+    langs.forEach(hl=>{ xml += `    <xhtml:link rel="alternate" hreflang="${hl}" href="${url}"/>\n` });
+    xml += `    <xhtml:link rel="alternate" hreflang="x-default" href="${url}"/>\n  </url>\n`;
+  });
+  xml += '</urlset>\n';
+
+  const b = new Blob([xml], {type:'application/xml'});
+  const u = URL.createObjectURL(b);
+  const a = document.createElement('a');
+  a.href = u; a.download = 'sitemap.xml'; a.click();
+  setTimeout(()=>URL.revokeObjectURL(u), 2000);
+  tst('✓ sitemap.xml 已下载 ('+(staticPages.length+arts.length)+' URLs)');
 }
 function impD(f){if(!f)return;const r=new FileReader();r.onload=e=>{try{const j=JSON.parse(e.target.result);if(!j.exs||!j.coins){tst('文件格式不对',1);return}if(!confirm('确定导入？将覆盖当前数据。'))return;D=Object.assign(JSON.parse(JSON.stringify(DF)),j);sv();render();tst('✓ 导入成功')}catch(e){tst('JSON 解析失败：'+e.message,1)}};r.readAsText(f)}
 async function loadDefault(){

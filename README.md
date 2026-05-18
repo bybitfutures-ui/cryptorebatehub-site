@@ -1,7 +1,7 @@
-# CryptoRebateHub · v2026-05-10-newbie-seo · 新手长尾词强化版
+# CryptoRebateHub · v2026-05-18-mobile-cta-rich · 移动转化 + 富搜索结果
 
-Build ID: `20260510-2345`
+Build ID: `20260518-mobile-cta-rich`
 
-## 🎯 本次重点：新手用户搜索意图全覆盖
+## 🎯 本次完成的 6 大改进
 
 针对新手用户最常搜的关键词，深度优化 SEO，提升转化率。
