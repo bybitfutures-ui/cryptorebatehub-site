@@ -24,6 +24,28 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cryptorebatehub.com/exchanges"/>
   </url>
   <url>
+    <loc>https://cryptorebatehub.com/dex</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.92</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cryptorebatehub.com/dex"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://cryptorebatehub.com/dex"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cryptorebatehub.com/dex"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cryptorebatehub.com/dex"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cryptorebatehub.com/dex"/>
+  </url>
+  <url>
+    <loc>https://cryptorebatehub.com/wallets</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.92</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cryptorebatehub.com/wallets"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://cryptorebatehub.com/wallets"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cryptorebatehub.com/wallets"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cryptorebatehub.com/wallets"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cryptorebatehub.com/wallets"/>
+  </url>
+  <url>
     <loc>https://cryptorebatehub.com/register-bonus</loc>
     <lastmod>2026-05-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -145,6 +167,50 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cryptorebatehub.com/compare/okx-vs-bybit"/>
   </url>
   <url>
+    <loc>https://cryptorebatehub.com/tools</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.92</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cryptorebatehub.com/tools"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://cryptorebatehub.com/tools"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cryptorebatehub.com/tools"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cryptorebatehub.com/tools"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cryptorebatehub.com/tools"/>
+  </url>
+  <url>
+    <loc>https://cryptorebatehub.com/tools/rebate-calculator</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cryptorebatehub.com/tools/rebate-calculator"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://cryptorebatehub.com/tools/rebate-calculator"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cryptorebatehub.com/tools/rebate-calculator"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cryptorebatehub.com/tools/rebate-calculator"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cryptorebatehub.com/tools/rebate-calculator"/>
+  </url>
+  <url>
+    <loc>https://cryptorebatehub.com/tools/exchange-wizard</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cryptorebatehub.com/tools/exchange-wizard"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://cryptorebatehub.com/tools/exchange-wizard"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cryptorebatehub.com/tools/exchange-wizard"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cryptorebatehub.com/tools/exchange-wizard"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cryptorebatehub.com/tools/exchange-wizard"/>
+  </url>
+  <url>
+    <loc>https://cryptorebatehub.com/tools/fee-comparison</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cryptorebatehub.com/tools/fee-comparison"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://cryptorebatehub.com/tools/fee-comparison"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cryptorebatehub.com/tools/fee-comparison"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cryptorebatehub.com/tools/fee-comparison"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cryptorebatehub.com/tools/fee-comparison"/>
+  </url>
+  <url>
     <loc>https://cryptorebatehub.com/exchange/okx</loc>
     <lastmod>2026-05-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -176,6 +242,39 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://cryptorebatehub.com/exchange/bybit"/>
     <xhtml:link rel="alternate" hreflang="ko" href="https://cryptorebatehub.com/exchange/bybit"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cryptorebatehub.com/exchange/bybit"/>
+  </url>
+  <url>
+    <loc>https://cryptorebatehub.com/exchange/hyperliquid</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.93</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cryptorebatehub.com/exchange/hyperliquid"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://cryptorebatehub.com/exchange/hyperliquid"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cryptorebatehub.com/exchange/hyperliquid"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cryptorebatehub.com/exchange/hyperliquid"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cryptorebatehub.com/exchange/hyperliquid"/>
+  </url>
+  <url>
+    <loc>https://cryptorebatehub.com/exchange/binance-wallet</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.88</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cryptorebatehub.com/exchange/binance-wallet"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://cryptorebatehub.com/exchange/binance-wallet"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cryptorebatehub.com/exchange/binance-wallet"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cryptorebatehub.com/exchange/binance-wallet"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cryptorebatehub.com/exchange/binance-wallet"/>
+  </url>
+  <url>
+    <loc>https://cryptorebatehub.com/exchange/okx-wallet</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.88</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cryptorebatehub.com/exchange/okx-wallet"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://cryptorebatehub.com/exchange/okx-wallet"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cryptorebatehub.com/exchange/okx-wallet"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cryptorebatehub.com/exchange/okx-wallet"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cryptorebatehub.com/exchange/okx-wallet"/>
   </url>
   <url>
     <loc>https://cryptorebatehub.com/coin/btc</loc>

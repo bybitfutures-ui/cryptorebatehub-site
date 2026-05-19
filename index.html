@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="Cache-Control" content="public, max-age=0, must-revalidate">
-<meta name="build-id" content="20260518-mobile-cta-rich">
+<meta name="build-id" content="20260518-tools-design-bugs">
 
 <!-- ============================================================
      ANALYTICS — Microsoft Clarity (free heatmaps + session recordings)
@@ -61,7 +61,7 @@
 <meta name="color-scheme" content="dark">
 
 <!-- PRIMARY META -->
-<title>CryptoRebateHub · OKX/Binance/Bybit 返佣对比 | 加密交易所邀请码 & 教程 2026</title>
+<title>CryptoRebateHub · OKX/Binance/Bybit 返佣对比 | 加密交易所邀请码 &amp; 教程</title>
 <meta name="description" content="CryptoRebateHub — 独立第三方加密交易所返佣对比与教程导航。比较 OKX、Binance、Bybit 等主流交易所的官方返佣比例，提供深度教程和实时行情。我们不是交易所，与任何交易平台无隶属关系。">
 <meta name="keywords" content="OKX返佣,Binance返佣,Bybit返佣,欧易返佣,币安返佣,OKX邀请码,币安邀请码,Bybit邀请码,WLFI47,8DXZXGZ,加密货币交易所对比,加密返佣平台,OKX注册,Binance注册,Bybit注册,欧易注册,币安注册,加密货币教程,比特币交易所,以太坊交易所,合约交易教程,现货交易教程,永久手续费返佣,加密货币入门">
 <meta name="author" content="CryptoRebateHub">
@@ -382,6 +382,23 @@ a{color:var(--tx);text-decoration:none}
 @media(max-width:640px){.hr-stats{grid-template-columns:repeat(2,1fr);gap:10px}.hs-card{padding:14px 12px}.hs-num{font-size:24px}}
 /* === BUTTONS === */
 .bt{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 26px;border-radius:var(--r);font-size:15px;font-weight:600;letter-spacing:-.01em;transition:transform var(--ts),box-shadow var(--ts),background var(--ts),border-color var(--ts);border:1px solid transparent;cursor:pointer;font-family:inherit;text-decoration:none;white-space:nowrap;line-height:1;position:relative;overflow:hidden}
+.bt:focus-visible{outline:2px solid var(--grn);outline-offset:2px}
+.bt:active{transform:translateY(0px)scale(.98)}
+/* Smooth scroll for in-page anchors */
+html{scroll-behavior:smooth}
+/* Better focus rings for all interactive elements */
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--grn);outline-offset:2px;border-radius:4px}
+/* Selection color */
+::selection{background:var(--grnA);color:var(--tx)}
+/* Scrollbar refinement */
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:5px;border:2px solid var(--bg2)}
+::-webkit-scrollbar-thumb:hover{background:var(--bd3)}
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
+}
 .bt:active{transform:translateY(0) scale(.98)}
 .bt-g{background:linear-gradient(135deg,var(--grn),var(--grn2));color:#06121d;box-shadow:0 4px 14px rgba(46,207,144,.25),inset 0 1px 0 rgba(255,255,255,.1);font-weight:700}
 .bt-g:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(46,207,144,.35),inset 0 1px 0 rgba(255,255,255,.15);filter:brightness(1.05)}
@@ -629,6 +646,27 @@ a{color:var(--tx);text-decoration:none}
 
 /* FOOTER */
 .fo{border-top:1px solid var(--bd);padding:48px 0 28px;margin-top:40px}
+
+/* === NEWSLETTER SIGNUP — high-conversion lead capture === */
+.news-sec{padding:48px 0 0;margin-top:32px}
+.news-card{background:linear-gradient(135deg,var(--bg2),var(--bg3));border:1.5px solid var(--bd2);border-radius:var(--r2);padding:36px 32px;text-align:center;max-width:780px;margin:0 auto;position:relative;overflow:hidden}
+.news-card::before{content:"";position:absolute;top:-50%;right:-20%;width:60%;height:200%;background:radial-gradient(circle, rgba(46,207,144,.08), transparent 60%);pointer-events:none}
+.news-content{position:relative;z-index:1}
+.news-bdg{display:inline-block;background:var(--grnA);color:var(--grn);padding:5px 14px;border-radius:99px;font-size:11px;font-weight:800;letter-spacing:1px;margin-bottom:14px}
+.news-h2{font-size:clamp(22px,3vw,28px);font-weight:800;margin:0 0 8px;letter-spacing:-.3px;color:var(--tx)}
+.news-d{font-size:14.5px;color:var(--tx2);max-width:480px;margin:0 auto 22px;line-height:1.65}
+.news-form{display:flex;gap:10px;max-width:480px;margin:0 auto;flex-wrap:wrap;position:relative;z-index:1}
+.news-input{flex:1;min-width:200px;background:var(--bg);border:1.5px solid var(--bd);border-radius:9px;padding:13px 16px;font-size:15px;color:var(--tx);font-family:inherit;outline:none;transition:.15s}
+.news-input:focus{border-color:var(--grn);box-shadow:0 0 0 3px var(--grnA)}
+.news-btn{padding:13px 26px;font-weight:700;white-space:nowrap}
+.news-msg{margin-top:14px;min-height:20px;font-size:13.5px;font-weight:600;text-align:center;position:relative;z-index:1}
+.news-msg.ok{color:var(--grn)}
+.news-msg.err{color:var(--red,#ff6b6b)}
+@media(max-width:520px){
+  .news-card{padding:28px 22px}
+  .news-form{flex-direction:column}
+  .news-btn{width:100%}
+}
 .fcols{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px;margin-bottom:32px}
 .fcl h4{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--tx2);margin-bottom:14px}
 .fcl ul{list-style:none}
@@ -797,7 +835,7 @@ if('caches' in window){
       <div class="mb-cta-nm" id="mbCtaNm">OKX 欧易</div>
       <div class="mb-cta-rb" id="mbCtaRb">🎁 20% 返佣</div>
     </div>
-    <button class="mb-cta-btn" id="mbCtaBtn" onclick="mbCtaTrigger()">立即注册 →</button>
+    <a class="mb-cta-btn" id="mbCtaBtn" href="#" target="_blank" rel="noopener noreferrer nofollow sponsored" onclick="mbCtaTrigger();return true" aria-label="Register at recommended exchange (sponsored link)">立即注册 →</a>
   </div>
 </div>
 
@@ -830,7 +868,7 @@ coins:[
 {inst:'DOT-USDT',sym:'DOT',color:'#e6007a',on:1,hidden:0}
 ],
 exs:[
-{id:'okx',url:'https://www.okx.com/join/WLFI47',code:'WLFI47',ft:1,hidden:0,logo:'OK',color:'#2ecf90',rebate:'20%',
+{id:'okx',url:'https://www.okx.com/join/WLFI47',code:'WLFI47',ft:1,hidden:0,logo:'OK',color:'#2ecf90',rebate:'20%',type:'cex',
  name:{zh:'OKX 欧易','zh-TW':'OKX 歐易',en:'OKX',ko:'OKX'},
  sub:{zh:'综合实力领先 · 中文友好','zh-TW':'綜合實力領先 · 中文友好',en:'Leading global exchange',ko:'종합 선도 거래소'},
  features:{zh:['现货费率 0.08%（最低）','300+ 交易对','Web3 钱包功能完善','C2C 法币通道丰富','Proof of Reserves 公开'],
@@ -838,7 +876,7 @@ exs:[
 en:['Spot fees from 0.08%','300+ trading pairs','Mature Web3 wallet','Rich P2P channels','Proof of Reserves audited'],
 ko:['현물 수수료 0.08%','300+ 거래쌍','성숙한 Web3 지갑','풍부한 P2P 채널','Proof of Reserves 공개']},
  mirrors:[{url:'https://www.okx.com/join/WLFI47',region:'GLOBAL',label:{zh:'OKX 全球官方入口','zh-TW':'OKX 全球官方入口',en:'OKX Global Official',ko:'OKX 글로벌 공식'},note:{zh:'OKX 主域名（含邀请码）','zh-TW':'OKX 主網域（含邀請碼）',en:'OKX main domain with invite',ko:'OKX 메인 도메인'}}]},
-{id:'binance',url:'https://www.binance.com/join?ref=WLFI47',code:'WLFI47',ft:1,hidden:0,logo:'BN',color:'#f0b41e',rebate:'20%',
+{id:'binance',url:'https://www.binance.com/join?ref=WLFI47',code:'WLFI47',ft:1,hidden:0,logo:'BN',color:'#f0b41e',rebate:'20%',type:'cex',
  name:{zh:'Binance 币安','zh-TW':'Binance 幣安',en:'Binance',ko:'Binance'},
  sub:{zh:'全球交易量第一 · 流动性最佳','zh-TW':'全球交易量第一 · 流動性最佳',en:'Largest by volume · Best liquidity',ko:'세계 최대 거래량'},
  features:{zh:['500+ 币种最多','全球流动性最佳','Launchpad 新币首发','BNB 抵扣手续费','Earn 理财产品最丰富'],
@@ -846,14 +884,38 @@ ko:['현물 수수료 0.08%','300+ 거래쌍','성숙한 Web3 지갑','풍부한
 en:['500+ coins (most)','Best global liquidity','Launchpad new tokens','BNB fee discount','Richest Earn products'],
 ko:['500+ 코인 (최다)','최고의 글로벌 유동성','Launchpad 신규 토큰','BNB 수수료 할인','풍부한 Earn 상품']},
  mirrors:[{url:'https://www.binance.com/join?ref=WLFI47',region:'GLOBAL',label:{zh:'Binance 全球官方入口','zh-TW':'Binance 全球官方入口',en:'Binance Global Official',ko:'Binance 글로벌 공식'},note:{zh:'Binance 主域名（含邀请码）','zh-TW':'Binance 主網域（含邀請碼）',en:'Binance main domain with invite',ko:'Binance 메인 도메인'}}]},
-{id:'bybit',url:'https://www.bybit.com/invite?ref=8DXZXGZ',code:'8DXZXGZ',ft:1,hidden:0,logo:'BY',color:'#ff8a3a',rebate:'33%',
+{id:'bybit',url:'https://www.bybit.com/invite?ref=8DXZXGZ',code:'8DXZXGZ',ft:1,hidden:0,logo:'BY',color:'#ff8a3a',rebate:'33%',type:'cex',
  name:{zh:'Bybit',"zh-TW":'Bybit',en:'Bybit',ko:'Bybit'},
  sub:{zh:'衍生品专业平台 · 返佣最高','zh-TW':'衍生品專業平台 · 返佣最高',en:'Pro derivatives · Highest rebate',ko:'전문 파생상품 · 최고 리베이트'},
  features:{zh:['永续合约深度业内顶级','高达 100 倍杠杆','跟单交易生态成熟','API 稳定延迟低','返佣比例行业最高'],
 'zh-TW':['永續合約深度業內頂級','高達 100 倍槓桿','跟單交易生態成熟','API 穩定延遲低','返佣比例行業最高'],
 en:['Top-tier perp depth','Up to 100x leverage','Mature copy trading','Stable low-latency API','Highest rebate %'],
 ko:['최고 수준 무기한 깊이','최대 100배 레버리지','성숙한 카피 트레이딩','안정적 저지연 API','업계 최고 리베이트']},
- mirrors:[{url:'https://www.bybit.com/invite?ref=8DXZXGZ',region:'GLOBAL',label:{zh:'Bybit 全球官方入口','zh-TW':'Bybit 全球官方入口',en:'Bybit Global Official',ko:'Bybit 글로벌 공식'},note:{zh:'Bybit 主域名（含邀请码）','zh-TW':'Bybit 主網域（含邀請碼）',en:'Bybit main domain with invite',ko:'Bybit 메인 도메인'}}]}
+ mirrors:[{url:'https://www.bybit.com/invite?ref=8DXZXGZ',region:'GLOBAL',label:{zh:'Bybit 全球官方入口','zh-TW':'Bybit 全球官方入口',en:'Bybit Global Official',ko:'Bybit 글로벌 공식'},note:{zh:'Bybit 主域名（含邀请码）','zh-TW':'Bybit 主網域（含邀請碼）',en:'Bybit main domain with invite',ko:'Bybit 메인 도메인'}}]},
+{id:'hyperliquid',url:'https://app.hyperliquid.xyz/join/HYPEKR',code:'HYPEKR',ft:1,hidden:0,logo:'HL',color:'#56c8d6',rebate:'4%',type:'dex',
+ name:{zh:'Hyperliquid','zh-TW':'Hyperliquid',en:'Hyperliquid',ko:'Hyperliquid'},
+ sub:{zh:'永续合约 DEX · 无 KYC · 完全链上','zh-TW':'永續合約 DEX · 無 KYC · 完全鏈上',en:'Perpetual DEX · No KYC · Fully on-chain',ko:'무기한 DEX · KYC 불필요 · 완전 온체인'},
+ features:{zh:['永续合约 DEX 龙头','无需 KYC 注册','高达 50× 杠杆','链上完全透明','HIP-2 点数计划（潜在空投）','Builder Codes 4% 返佣'],
+'zh-TW':['永續合約 DEX 龍頭','無需 KYC 註冊','高達 50× 槓桿','鏈上完全透明','HIP-2 點數計畫','Builder Codes 4% 返佣'],
+en:['Leading perpetual DEX','No KYC required','Up to 50x leverage','Fully on-chain transparency','HIP-2 points program','Builder Codes 4% rebate'],
+ko:['선도 무기한 DEX','KYC 불필요','최대 50× 레버리지','완전 온체인 투명성','HIP-2 포인트 프로그램','Builder Codes 4% 리베이트']},
+ mirrors:[{url:'https://app.hyperliquid.xyz/join/HYPEKR',region:'GLOBAL',label:{zh:'Hyperliquid 官方入口','zh-TW':'Hyperliquid 官方入口',en:'Hyperliquid Official',ko:'Hyperliquid 공식'},note:{zh:'链上 DEX，连接钱包即可使用','zh-TW':'鏈上 DEX，連接錢包即可使用',en:'On-chain DEX, connect wallet to use',ko:'온체인 DEX, 지갑 연결로 사용'}}]},
+{id:'binance-wallet',url:'https://web3.binance.com/referral?ref=WLFI47',code:'WLFI47',ft:0,hidden:0,logo:'BW',color:'#fcd535',rebate:'20%',type:'wallet',
+ name:{zh:'Binance 钱包','zh-TW':'Binance 錢包',en:'Binance Wallet',ko:'바이낸스 지갑'},
+ sub:{zh:'币安官方多链 Web3 钱包 · 内置 DEX/Bridge','zh-TW':'幣安官方多鏈 Web3 錢包 · 內建 DEX/Bridge',en:'Binance multi-chain Web3 wallet',ko:'바이낸스 멀티체인 Web3 지갑'},
+ features:{zh:['多链 Web3 钱包（90+ 链）','内置 DEX 聚合器','跨链 Bridge 一键操作','NFT 市场浏览','DeFi 一键质押/借贷','与 Binance 账户无缝衔接'],
+'zh-TW':['多鏈 Web3 錢包（90+ 鏈）','內建 DEX 聚合器','跨鏈 Bridge 一鍵操作','NFT 市場瀏覽','DeFi 一鍵質押/借貸','與 Binance 帳戶無縫銜接'],
+en:['Multi-chain wallet (90+ chains)','Built-in DEX aggregator','One-click cross-chain bridge','NFT marketplace','One-click DeFi staking/lending','Seamless with Binance account'],
+ko:['멀티체인 지갑 (90+ 체인)','내장 DEX 애그리게이터','원클릭 크로스체인','NFT 마켓플레이스','원클릭 DeFi 스테이킹','Binance 계정 통합']},
+ mirrors:[{url:'https://web3.binance.com/referral?ref=WLFI47',region:'GLOBAL',label:{zh:'Binance 钱包官方入口','zh-TW':'Binance 錢包官方入口',en:'Binance Wallet Official',ko:'Binance 지갑 공식'},note:{zh:'通过 Binance APP 或网页访问','zh-TW':'通過 Binance APP 或網頁訪問',en:'Access via Binance app or web',ko:'Binance 앱 또는 웹으로 접근'}}]},
+{id:'okx-wallet',url:'https://web3.okx.com/join/DOGECOIN',code:'DOGECOIN',ft:0,hidden:0,logo:'OW',color:'#1ba784',rebate:'20%',type:'wallet',
+ name:{zh:'OKX 钱包','zh-TW':'OKX 錢包',en:'OKX Wallet',ko:'OKX 지갑'},
+ sub:{zh:'OKX 官方多链 Web3 钱包 · DEX 聚合最强','zh-TW':'OKX 官方多鏈 Web3 錢包 · DEX 聚合最強',en:'OKX multi-chain wallet · Best DEX aggregator',ko:'OKX 멀티체인 지갑 · 최강 DEX 애그리게이터'},
+ features:{zh:['多链 Web3 钱包（100+ 链）','行业最强 DEX 聚合（500+ 流动性源）','一站式 DeFi（质押/借贷/收益）','跨链 Bridge / Swap','NFT 浏览器全网最全','支持 Solana/Sui/EVM 全生态'],
+'zh-TW':['多鏈 Web3 錢包（100+ 鏈）','行業最強 DEX 聚合','一站式 DeFi','跨鏈 Bridge / Swap','NFT 瀏覽器全網最全','支持 Solana/Sui/EVM 全生態'],
+en:['Multi-chain wallet (100+ chains)','Best-in-class DEX aggregator (500+ sources)','One-stop DeFi (stake/lend/yield)','Cross-chain bridge / swap','Most comprehensive NFT explorer','Supports Solana/Sui/EVM ecosystem'],
+ko:['멀티체인 지갑 (100+ 체인)','업계 최강 DEX 애그리게이터','원스톱 DeFi','크로스체인 브리지/스왑','최강 NFT 익스플로러','Solana/Sui/EVM 생태계 지원']},
+ mirrors:[{url:'https://web3.okx.com/join/DOGECOIN',region:'GLOBAL',label:{zh:'OKX 钱包官方入口','zh-TW':'OKX 錢包官方入口',en:'OKX Wallet Official',ko:'OKX 지갑 공식'},note:{zh:'通过 OKX APP 或网页访问','zh-TW':'通過 OKX APP 或網頁訪問',en:'Access via OKX app or web',ko:'OKX 앱 또는 웹으로 접근'}}]}
 ],
 links:{social:[],friends:[]},
 arts:[]
@@ -869,7 +931,7 @@ const T={
 zh:{
 seo_title:'CryptoRebateHub · OKX欧易/Binance币安/Bybit 邀请码 + 永久20-33%返佣 | 加密交易所返佣对比 {YEAR}',
 home_seo_k:'OKX邀请码,币安邀请码,Bybit邀请码,欧易邀请码,Binance邀请码,WLFI47,8DXZXGZ,OKX邀请码返佣,币安邀请码返佣,Bybit邀请码返佣,OKX怎么注册,币安怎么注册,Bybit怎么注册,欧易怎么注册,OKX新手注册,币安新手注册,Bybit新手注册,OKX官网,币安官网,Bybit官网,OKX官方备用,币安官方备用,Bybit官方备用,加密货币新手教程,加密货币入门,新手买币,比特币哪里买,以太坊怎么买,新手买比特币,加密交易所对比,OKX vs 币安,币安 vs Bybit,OKX vs Bybit,加密交易所返佣,加密交易所推荐,永久返佣,加密货币手续费返佣,加密货币合约交易,加密货币现货交易,合约交易教程,现货交易教程,跟单交易,加密货币安全,数字货币交易所,加密货币 KYC,加密货币入金,加密货币提现,新手如何买币,新手如何注册交易所,加密货币邀请码哪里来,交易所返佣比例,最高返佣交易所',
-exs_seo_k:'OKX vs Binance vs Bybit,欧易vs币安,加密交易所排名2026,最安全的加密货币交易所,最低手续费加密交易所,交易所手续费对比,OKX邀请码,Binance邀请码,Bybit邀请码,WLFI47,8DXZXGZ,加密货币交易所哪个好,OKX好用吗,币安好用吗,Bybit好用吗',
+exs_seo_k:'OKX vs Binance vs Bybit,欧易vs币安,加密交易所排名{YEAR},最安全的加密货币交易所,最低手续费加密交易所,交易所手续费对比,OKX邀请码,Binance邀请码,Bybit邀请码,WLFI47,8DXZXGZ,加密货币交易所哪个好,OKX好用吗,币安好用吗,Bybit好用吗',
 exs_seo_t:'交易所对比 · OKX vs Binance vs Bybit 返佣手续费 - CryptoRebateHub',
 exs_seo_d:'独立第三方对比 OKX、Binance、Bybit 等主流交易所的官方返佣、手续费、流动性、安全性。永久返佣最高 33%。',
 mkts_seo_t:'加密货币实时行情 · BTC ETH SOL 价格 K 线 - CryptoRebateHub',
@@ -885,13 +947,13 @@ disc_seo_d:'CryptoRebateHub 透明度披露：商业模式、affiliate 关系、
 exch_seo_t:'{name} 注册返佣 · 邀请码 + 永久手续费返佣 - CryptoRebateHub',
 exch_seo_d:'{name} 永久手续费返佣，含注册教程、邀请码、安全设置、入金提币全流程。一键直达官方注册。',
 // Per-exchange long-tail SEO (中文)
-exch_seo_t_okx:'OKX欧易注册教程2026 | 邀请码WLFI47新手注册享永久20%返佣 | OKX/欧易官网入口 安全合规',
+exch_seo_t_okx:'OKX欧易注册教程{YEAR} | 邀请码WLFI47新手注册享永久20%返佣 | OKX/欧易官网入口 安全合规',
 exch_seo_d_okx:'OKX欧易交易所新手注册全流程：邀请码 WLFI47 永久 20% 手续费返佣（含官方备用入口）。新手 5 步开户：注册→KYC实名→入金→买币→提现。支持 BTC/ETH/SOL 等 350+ 币种现货、合约、杠杆。OKX 是全球前三大加密交易所，安全合规，中文友好。',
 exch_seo_k_okx:'OKX,欧易,OKX怎么注册,欧易怎么注册,OKX新手注册,欧易新手注册,OKX注册教程,欧易注册教程,OKX注册流程,OKX如何注册,OKX邀请码,欧易邀请码,OKX邀请码是什么,OKX邀请码哪里来,OKX邀请码WLFI47,WLFI47,OKX邀请码返佣,欧易邀请码返佣,OKX返佣多少,OKX返佣怎么领,OKX永久返佣,OKX手续费返佣,OKX 20%返佣,OKX怎么开户,OKX开户教程,OKX KYC怎么做,OKX实名认证,OKX怎么入金,OKX入金教程,OKX充值教程,OKX怎么充值,OKX怎么提现,OKX出金,OKX怎么转账,OKX怎么买币,OKX买比特币,OKX买以太坊,OKX现货交易教程,OKX合约怎么玩,OKX合约新手,OKX杠杆怎么开,OKX 永续合约,OKX跟单交易,OKX 跟单,OKX 量化,OKX是什么,欧易是什么,OKX是哪个国家的,OKX 哪个国家,OKX 总部,OKX 中文版,OKX 中国能用吗,欧易 中国,OKX 国内,OKX 安全吗,OKX 合法吗,OKX 是骗局吗,OKX 监管,OKX 牌照,OKX vs Binance,OKX 和 币安哪个好,OKX 怎么样,OKX 评价,OKX APP下载,OKX 安卓下载,OKX iOS下载,OKX 苹果下载,OKX 官网,欧易 官网,OKX 官方网址,OKX 官方入口,OKX 备用网址,欧易 备用网址,OKX 多区域入口,OKX 官方备用域名,OKX 稳定访问',
-exch_seo_t_binance:'Binance币安注册教程2026 | 邀请码WLFI47新手注册享永久20%返佣 | 币安官网入口 全球最大交易所',
+exch_seo_t_binance:'Binance币安注册教程{YEAR} | 邀请码WLFI47新手注册享永久20%返佣 | 币安官网入口 全球最大交易所',
 exch_seo_d_binance:'Binance 币安交易所新手注册全流程：邀请码 WLFI47 永久 20% 手续费返佣（含官方备用入口）。新手 5 步开户：注册→KYC实名→入金→买币→提现。支持币安现货、合约、Earn 理财、Launchpad、BNB 抵扣等。币安是全球第一大加密交易所，日均交易量超 600 亿美元。',
 exch_seo_k_binance:'Binance,币安,币安怎么注册,Binance怎么注册,币安新手注册,Binance新手注册,币安注册教程,Binance注册教程,币安注册流程,币安如何注册,币安怎么开户,币安开户流程,币安邀请码,Binance邀请码,币安邀请码WLFI47,WLFI47,币安邀请码哪里来,币安邀请码返佣,币安返佣多少,币安返佣怎么领,币安永久返佣,币安20%返佣,币安手续费多少,币安KYC怎么做,币安实名认证,币安怎么入金,币安入金教程,币安充值教程,币安怎么充值,币安怎么提现,币安出金教程,币安转账,币安怎么买币,币安买比特币,币安买以太坊,币安现货交易教程,币安合约怎么玩,币安合约新手,币安杠杆怎么开,币安永续合约,币安跟单交易,币安 跟单,币安Earn理财,币安Launchpad新币,币安Launchpool质押,币安BNB抵扣手续费,币安是什么,Binance是什么,币安是哪国的,币安 老板,币安 总部,币安 中文版,币安中国能用吗,币安 国内,币安 安全吗,币安 合法吗,币安 是骗局吗,币安 监管,币安 牌照,币安 vs OKX,币安和欧易哪个好,币安 vs Bybit,币安怎么样,币安 评价,币安APP下载,币安 安卓下载,币安 iOS下载,币安 苹果下载,币安 官网,币安 官方网址,币安 官方入口,币安 备用网址,币安 多区域入口,币安 官方备用域名,币安 稳定访问,Binance Web3 钱包',
-exch_seo_t_bybit:'Bybit注册教程2026 | 邀请码8DXZXGZ新手注册享永久33%返佣(行业最高) | Bybit官网入口 合约跟单首选',
+exch_seo_t_bybit:'Bybit注册教程{YEAR} | 邀请码8DXZXGZ新手注册享永久33%返佣(行业最高) | Bybit官网入口 合约跟单首选',
 exch_seo_d_bybit:'Bybit 交易所新手注册全流程：邀请码 8DXZXGZ 永久 33% 手续费返佣（行业最高，含官方备用入口）。新手 5 步开户：注册→KYC实名→入金→买币/合约→跟单。Bybit 是全球顶级合约交易所，跟单交易首选，支持永续合约、现货、期权、Web3 钱包。',
 exch_seo_k_bybit:'Bybit,Bybit怎么注册,Bybit新手注册,Bybit注册教程,Bybit注册流程,Bybit如何注册,Bybit怎么开户,Bybit开户教程,Bybit邀请码,Bybit邀请码8DXZXGZ,8DXZXGZ,Bybit邀请码返佣,Bybit返佣多少,Bybit返佣怎么领,Bybit永久返佣,Bybit 33%返佣,Bybit手续费返佣,Bybit行业最高返佣,Bybit KYC怎么做,Bybit实名认证,Bybit怎么入金,Bybit入金教程,Bybit充值教程,Bybit怎么充值,Bybit怎么提现,Bybit出金教程,Bybit转账,Bybit怎么买币,Bybit买比特币,Bybit买以太坊,Bybit现货交易教程,Bybit合约怎么玩,Bybit合约新手,Bybit永续合约,Bybit U本位合约,Bybit杠杆怎么开,Bybit跟单交易,Bybit copy trading,Bybit跟单怎么玩,Bybit 跟单收益,Bybit期权交易,Bybit Web3钱包,Bybit 质押,Bybit 是什么,Bybit 是哪个国家,Bybit 总部,Bybit 中文版,Bybit 中国能用吗,Bybit 国内,Bybit 安全吗,Bybit 合法吗,Bybit 是骗局吗,Bybit 监管,Bybit vs OKX,Bybit vs Binance,Bybit 和币安哪个好,Bybit 怎么样,Bybit 评价,Bybit APP下载,Bybit 安卓下载,Bybit iOS下载,Bybit 苹果下载,Bybit 官网,Bybit 官方网址,Bybit 官方入口,Bybit 备用网址,Bybit 多区域入口,Bybit 官方备用域名,Bybit 稳定访问',
 access_urls:'访问入口',mir_recommended:'重点推荐',mir_top:'首选',
@@ -923,7 +985,7 @@ safe_5:'本站不会主动通过私信、邮件向您索要账号、密码或验
 view_articles:'查看教程文章',
 access_seo_t:'交易所备用网址 / 官方多区域入口 - OKX 欧易 Binance 币安 Bybit | CryptoRebateHub',
 access_seo_d:'当主域名无法访问时，本页提供 OKX（欧易）、Binance（币安）、Bybit 等交易所经过官方公告确认的多区域备用入口。请仅通过本页链接访问，避免钓鱼网站。',
-access_seo_k:'OKX 备用网址,欧易备用网址,币安备用网址,Binance 备用域名,Bybit 备用网址,加密交易所备用入口,加密交易所官方域名,OKX 国内访问,欧易国内访问,币安国内访问,Bybit 国内访问,加密货币交易所多区域',bonus_seo_t:'注册福利 · OKX/Binance/Bybit 邀请码 + 永久返佣 - CryptoRebateHub',bonus_seo_d:'通过本站邀请码注册 OKX (WLFI47) 享 20% 永久返佣，Binance (WLFI47) 享 20% 返佣，Bybit (8DXZXGZ) 享 33% 返佣（行业最高）。永久有效，每月自动到账。',bonus_seo_k:'OKX 邀请码,币安邀请码,Bybit 邀请码,WLFI47,8DXZXGZ,加密货币返佣,交易所返佣,永久返佣,OKX 注册福利,币安注册福利,Bybit 注册福利,加密货币邀请码,加密交易所返佣最高',mkts_seo_k:'比特币行情,以太坊价格,BTC价格,ETH价格,实时行情,加密货币价格,SOL价格,BNB价格,XRP价格,DOGE价格,加密货币市值,TradingView K线图,加密货币图表,主流币种,数字货币行情',guides_seo_k:'加密货币新手教程,加密货币入门,如何买比特币,加密货币安全,加密货币KYC,加密货币入金,加密货币提现,加密货币合约,加密货币杠杆,加密货币现货,新手买币,加密货币邀请码教程,WLFI47,8DXZXGZ',arts_seo_k:'加密货币教程,OKX教程,币安教程,Bybit教程,加密货币新手指南,加密货币入门文章,新手买币,合约交易教程,现货交易教程,跟单交易,加密货币安全,KYC教程,入金教程,WLFI47,8DXZXGZ',about_seo_k:'CryptoRebateHub,加密货币返佣站,第三方加密信息站,加密交易所对比,加密邀请码导航,加密货币教程站',disc_seo_k:'CryptoRebateHub 透明度,加密货币 affiliate,加密返佣声明,加密交易所联盟,Cookie 政策,隐私政策',cmp_seo_t:'加密交易所对比 · OKX vs Binance vs Bybit 完整对比 - CryptoRebateHub',cmp_seo_d:'OKX、Binance、Bybit 三家头部加密交易所完整对比：手续费、币种、合约杠杆、返佣、安全性。5 分钟选出最适合自己的交易所。',cmp_seo_k:'OKX vs Binance,OKX 和币安哪个好,币安 vs Bybit,OKX vs Bybit,加密交易所对比,加密交易所比较,加密交易所推荐,加密交易所排名,OKX 邀请码,币安邀请码,Bybit 邀请码,WLFI47,8DXZXGZ',
+access_seo_k:'OKX 备用网址,欧易备用网址,币安备用网址,Binance 备用域名,Bybit 备用网址,加密交易所备用入口,加密交易所官方域名,OKX 国内访问,欧易国内访问,币安国内访问,Bybit 国内访问,加密货币交易所多区域',bonus_seo_t:'注册福利 · OKX/Binance/Bybit 邀请码 + 永久返佣 - CryptoRebateHub',bonus_seo_d:'通过本站邀请码注册 OKX (WLFI47) 享 20% 永久返佣，Binance (WLFI47) 享 20% 返佣，Bybit (8DXZXGZ) 享 33% 返佣（行业最高）。永久有效，每月自动到账。',bonus_seo_k:'OKX 邀请码,币安邀请码,Bybit 邀请码,WLFI47,8DXZXGZ,加密货币返佣,交易所返佣,永久返佣,OKX 注册福利,币安注册福利,Bybit 注册福利,加密货币邀请码,加密交易所返佣最高',mkts_seo_k:'比特币行情,以太坊价格,BTC价格,ETH价格,实时行情,加密货币价格,SOL价格,BNB价格,XRP价格,DOGE价格,加密货币市值,TradingView K线图,加密货币图表,主流币种,数字货币行情',guides_seo_k:'加密货币新手教程,加密货币入门,如何买比特币,加密货币安全,加密货币KYC,加密货币入金,加密货币提现,加密货币合约,加密货币杠杆,加密货币现货,新手买币,加密货币邀请码教程,WLFI47,8DXZXGZ',arts_seo_k:'加密货币教程,OKX教程,币安教程,Bybit教程,加密货币新手指南,加密货币入门文章,新手买币,合约交易教程,现货交易教程,跟单交易,加密货币安全,KYC教程,入金教程,WLFI47,8DXZXGZ',about_seo_k:'CryptoRebateHub,加密货币返佣站,第三方加密信息站,加密交易所对比,加密邀请码导航,加密货币教程站',disc_seo_k:'CryptoRebateHub 透明度,加密货币 affiliate,加密返佣声明,加密交易所联盟,Cookie 政策,隐私政策',cmp_seo_t:'加密交易所对比 · OKX vs Binance vs Bybit 完整对比 - CryptoRebateHub',cmp_seo_d:'OKX、Binance、Bybit 三家头部加密交易所完整对比：手续费、币种、合约杠杆、返佣、安全性。5 分钟选出最适合自己的交易所。',cmp_seo_k:'OKX vs Binance,OKX 和币安哪个好,币安 vs Bybit,OKX vs Bybit,加密交易所对比,加密交易所比较,加密交易所推荐,加密交易所排名,OKX 邀请码,币安邀请码,Bybit 邀请码,WLFI47,8DXZXGZ',tools_seo_t:'加密货币实用工具 · 返佣计算器/交易所匹配/费率对比 - CryptoRebateHub',tools_seo_d:'免费在线工具：返佣计算器算出你每月能省多少手续费、交易所匹配向导 30 秒帮你选好平台、实时费率对比表。新手必备工具集。',tools_seo_k:'返佣计算器,加密交易所对比工具,交易所选择器,加密手续费计算,OKX 返佣,Binance 返佣,Bybit 返佣',tool_reb_seo_t:'返佣计算器 · 算出你每月能省多少手续费 - CryptoRebateHub',tool_reb_seo_d:'输入你的月交易量，5 秒算出在 OKX/Binance/Bybit 各能省多少手续费。永久 20-33% 返佣，账户大时一年能省数千美元。',tool_reb_seo_k:'返佣计算器,加密手续费计算器,OKX 返佣计算,Binance 返佣,Bybit 33%返佣,每月省多少手续费',tool_wiz_seo_t:'交易所匹配向导 · 30 秒帮你选出最适合的交易所 - CryptoRebateHub',tool_wiz_seo_d:'回答 5 个问题，立刻知道哪家交易所最适合你：新手 / 合约党 / 长线 / 中国用户 / 韩国用户。智能匹配 OKX/Binance/Bybit。',tool_wiz_seo_k:'交易所选择器,加密交易所推荐,哪家交易所最适合,新手交易所,合约交易所推荐',tool_fee_seo_t:'交易所费率实时对比表 · 现货/合约/返佣后实际费率 - CryptoRebateHub',tool_fee_seo_d:'OKX、Binance、Bybit 现货 + 合约手续费实时对比。含返佣后实际费率。可输入月交易量算出真实月成本。',tool_fee_seo_k:'交易所手续费对比,OKX 手续费,Binance 手续费,Bybit 手续费,加密手续费排行,最低手续费交易所',dex_seo_t:'Hyperliquid 永续合约 DEX 注册 · 4% 返佣 · 无 KYC - CryptoRebateHub',dex_seo_d:'Hyperliquid 是当下最热的永续合约 DEX，无 KYC、链上交易、HIP-2 点数计划潜在空投机会。Builder Codes 享 4% 手续费返还。',dex_seo_k:'Hyperliquid,Hyperliquid 邀请码,Hyperliquid 注册,Hyperliquid 返佣,永续合约 DEX,链上永续合约,无 KYC 交易所,Hyperliquid 空投,HIP-2 点数,Builder Codes',wal_seo_t:'Web3 钱包返佣 · Binance 钱包 + OKX 钱包邀请码 - CryptoRebateHub',wal_seo_d:'Binance 钱包和 OKX 钱包是交易所官方多链 Web3 钱包，支持 100+ 链 DeFi/NFT/Swap，使用邀请码可享 swap 手续费返佣。',wal_seo_k:'Binance 钱包,OKX 钱包,Web3 钱包推荐,加密 Web3 钱包,Binance Wallet 邀请码,OKX Wallet 邀请码,多链钱包,DeFi 钱包,DEX 聚合器',dex_t:'去中心化永续合约 DEX',dex_d:'无需 KYC、完全链上、连接钱包即可交易的永续合约 DEX。',dex_vs_t:'DEX vs CEX：什么区别？',dex_pro1:'无需 KYC，注册即用',dex_pro2:'资金存自己钱包，无被盗风险',dex_pro3:'链上完全透明',dex_pro4:'通常有点数/空投机会',cex_pro1:'界面友好，新手更易上手',cex_pro2:'流动性更好，滑点更低',cex_pro3:'法币入金（C2C/银行卡）',cex_pro4:'客服 + 法律保护',dex_empty:'暂无 DEX 数据',wal_label:'WEB3 WALLET',wal_t:'Web3 钱包',wal_d:'交易所官方多链 Web3 钱包，可玩 DeFi/NFT/链上 Swap。',wal_why_t:'为什么用交易所官方 Web3 钱包？',wal_why_1:'与交易所账户无缝衔接：链上资产 ↔ 交易所一键互转',wal_why_2:'内置 DEX 聚合器：链上 swap 也能获得返佣',wal_why_3:'多链支持（90+ 链），无需切换不同钱包',wal_why_4:'NFT/DeFi 一站式：减少跨平台风险',wal_empty:'暂无 Web3 钱包数据',nav_dex:'DEX',nav_wallets:'Web3 钱包',catnew_sl:'⛓ DEX + Web3 钱包',catnew_t:'除了 CEX，还有更多变现路径',catnew_d:'链上永续合约 DEX + 交易所官方多链钱包，部分支持手续费返佣。',catnew_dex_t:'永续合约 DEX',catnew_dex_d:'Hyperliquid · 无 KYC · 4% 返佣 · 潜在空投',catnew_wal_t:'Web3 钱包',catnew_wal_d:'Binance + OKX 多链钱包 · DeFi · Swap 返佣',catnew_cta_dex:'查看 DEX',catnew_cta_wal:'查看钱包',exchanges:'交易所',
 cant_access_t:'无法访问主域名？',
 cant_access_d:'查看官方备用入口（多区域可用）',
 cant_access_btn:'查看备用入口 →',
@@ -934,7 +996,7 @@ cp_high:'24h 高',cp_low:'24h 低',cp_vol:'24h 成交量',cp_open:'24h 开盘',c
 hr_badge:'独立第三方 · 返佣对比中心',
 hr_t:'通过返佣链接，<em>节省高达 60%</em><br>的加密交易费用',
 hr_d:'通过本站邀请码注册 OKX（欧易）享20%永久返佣，注册 Binance（币安）享20%返佣，注册 Bybit 享33%返佣（行业最高）。独立对比三大主流交易所手续费，提供注册教程和实时行情。',
-hr_b1:'查看交易所对比',hr_b2:'查看实时行情',hr_b_main:'立即注册享返佣',hr_access_t:'无法访问交易所主域名？',hr_access_btn:'查看官方备用入口',geo_rec_t:'根据你的地区，推荐使用',geo_rec_cta:'立即注册',
+hr_b1:'查看交易所对比',hr_b2:'查看实时行情',hr_b_main:'立即注册享返佣',hr_access_t:'无法访问交易所主域名？',hr_access_btn:'查看官方备用入口',geo_rec_t:'根据你的地区，推荐使用',geo_rec_cta:'立即注册',aff_note:'本站包含联盟邀请码，注册后无额外费用。',aff_note_link:'查看透明披露',news_bdg:'NEWSLETTER',news_t:'每周加密交易精选',news_d:'订阅每周精选教程 + 新交易所返佣机会。零垃圾邮件，随时退订。',news_placeholder:'your@email.com',news_btn:'订阅',news_ok:'订阅成功！我们将很快与你联系',news_err:'订阅失败，请稍后再试',news_invalid:'请输入有效的邮箱地址',tools_section_sl:'🛠 实用工具',tools_section_t:'帮你做更聪明的决策',tool_reb_cheapest:'实付最低',tool_reb_gross:'毛手续费/月',tool_reb_net:'实付手续费/月',tool_reb_rate_col:'费率 (Taker)',tool_reb_fee_paid_mo:'实付/月',tool_reb_fee_paid_yr:'实付/年',tool_reb_how_t:'计算公式（透明展示）',tool_reb_formula_gross:'毛手续费',tool_reb_formula_rebate:'返佣金额',tool_reb_formula_net:'实付手续费',per_month:'月',cheapest:'最低',tools_section_d:'3 个免费在线工具：返佣计算器、交易所匹配向导、实时费率对比。',open_tool:'打开工具',tool_idx_reb_t:'返佣计算器',tool_idx_reb_d:'输入月交易量 → 算出每月/每年能省多少',tool_idx_wiz_t:'交易所匹配向导',tool_idx_wiz_d:'回答 5 个问题 → 智能推荐最适合你的交易所',tool_idx_fee_t:'费率实时对比',tool_idx_fee_d:'完整费率表 + 按交易量算成本',nav_tools:'实用工具',nav_compare:'对比',tools_label:'TOOLS',tools_idx_t:'实用工具',tools_idx_d:'3 个免费在线工具帮你做更聪明的交易所决策。',spot:'现货',futures:'合约',mixed:'混合 (50/50)',exchange:'交易所',best:'最佳',
 top_sl:'本站推荐',top_t:'三大交易所一键注册',top_d:'通过本站邀请码注册，永久享受手续费返佣。无需复杂操作，点击直达官方。',best_pick:'首选',valid:'有效期',register_now:'立即注册',view_detail:'详情',copy:'复制',permanent:'永久',
 why_sl:'为什么选择本站',why_t:'独立 · 透明 · 永久返佣',
 why_1_t:'永久 20-33% 返佣',why_1_d:'通过本站邀请码注册的账户，每笔交易自动返还手续费，永不过期，无需任何手动申请。',
@@ -1012,8 +1074,8 @@ disc_seo_t:'透明度披露 · 風險聲明與合作披露 - CryptoRebateHub',
 disc_seo_d:'CryptoRebateHub 透明度披露：商業模式、affiliate 關係、風險聲明、合規承諾、資料隱私。',
 exch_seo_t:'{name} 註冊返佣 · 邀請碼 + 永久手續費返佣 - CryptoRebateHub',
 exch_seo_d:'{name} 永久手續費返佣，含註冊教程、邀請碼、安全設定、入金提幣全流程。一鍵直達官方註冊。',
-exch_seo_t_okx:'OKX 註冊教學 2026 | 邀請碼 WLFI47 = 永久 20% 手續費返佣 | OKX/欧易 台灣可用',
-exch_seo_d_okx:'OKX（欧易）交易所 2026 年完整註冊教學：使用邀請碼 WLFI47 永久享受 20% 手續費返佣。涵蓋 OKX 註冊、KYC 實名認證、入金提幣、現貨/合約/槓桿交易、API 設定全流程。OKX 是全球前三大加密貨幣交易所，支援 BTC、ETH、SOL 等 350+ 幣種。',
+exch_seo_t_okx:'OKX 註冊教學 {YEAR} | 邀請碼 WLFI47 = 永久 20% 手續費返佣 | OKX/欧易 台灣可用',
+exch_seo_d_okx:'OKX（欧易）交易所 {YEAR} 年完整註冊教學：使用邀請碼 WLFI47 永久享受 20% 手續費返佣。涵蓋 OKX 註冊、KYC 實名認證、入金提幣、現貨/合約/槓桿交易、API 設定全流程。OKX 是全球前三大加密貨幣交易所，支援 BTC、ETH、SOL 等 350+ 幣種。',
 exch_seo_k_okx:'OKX,欧易,OKX 註冊教學,欧易註冊教學,OKX 邀請碼 WLFI47,欧易邀請碼,OKX 返佣 20%,OKX 手續費,OKX 合約交易,OKX 現貨交易,OKX 槓桿,OKX 永續合約,OKX KYC 實名,OKX 入金教學,OKX 提幣教學,OKX 安全嗎,OKX 是什麼,OKX 怎麼用,OKX 台灣,OKX 香港,OKX 國內訪問,OKX APP 下載,OKX iOS 下載,OKX 安卓下載,OKX 官網,OKX 備用網址,WLFI47,OKX 出金,OKX U 本位,OKX 買幣',
 exch_seo_t_binance:'Binance 幣安註冊教學 + 邀請碼 WLFI47 永久 20% 返佣 | 全球最大交易所',
 exch_seo_d_binance:'Binance 幣安交易所完整註冊指南：邀請碼 WLFI47 永久享受 20% 手續費返佣。幣安是全球第一大加密貨幣交易所。支援現貨、合約、槓桿、Earn 等。含 KYC、入金提幣、API 全流程。',
@@ -1050,7 +1112,7 @@ safe_5:'本站不會主動透過私訊、郵件向您索要帳號、密碼或驗
 view_articles:'查看教程文章',
 access_seo_t:'交易所備用網址 / 官方多區域入口 - OKX 欧易 Binance 幣安 Bybit | CryptoRebateHub',
 access_seo_d:'當主網域無法訪問時，本頁提供 OKX、Binance、Bybit 等交易所經過官方公告確認的多區域備用入口。請僅透過本頁連結訪問，避免釣魚網站。',
-access_seo_k:'OKX 備用網址,Binance 備用網址,Bybit 備用網址,加密交易所備用入口,加密交易所官方網域,OKX 台灣,Binance 台灣,Bybit 台灣',bonus_seo_t:'註冊福利 · OKX/Binance/Bybit 邀請碼 + 永久返佣 - CryptoRebateHub',bonus_seo_d:'透過本站邀請碼註冊 OKX (WLFI47) 享 20% 永久返佣，Binance (WLFI47) 享 20% 返佣，Bybit (8DXZXGZ) 享 33% 返佣（業界最高）。',bonus_seo_k:'OKX 邀請碼,幣安邀請碼,Bybit 邀請碼,WLFI47,8DXZXGZ,加密貨幣返佣,交易所返佣,永久返佣,加密貨幣邀請碼',mkts_seo_k:'比特幣行情,以太坊價格,BTC 價格,ETH 價格,即時行情,加密貨幣價格,加密貨幣市值,TradingView K 線圖,主流幣種',guides_seo_k:'加密貨幣新手教程,加密貨幣入門,如何買比特幣,加密貨幣安全,加密貨幣 KYC,加密貨幣入金,新手買幣,WLFI47,8DXZXGZ',arts_seo_k:'加密貨幣教程,OKX 教學,幣安教學,Bybit 教學,加密貨幣新手指南,合約交易教程,WLFI47,8DXZXGZ',about_seo_k:'CryptoRebateHub,加密貨幣返佣站,第三方加密資訊站,加密交易所對比',disc_seo_k:'CryptoRebateHub 透明度,加密貨幣 affiliate,加密返佣聲明,Cookie 政策,隱私政策',cmp_seo_t:'加密交易所對比 · OKX vs Binance vs Bybit 完整對比 - CryptoRebateHub',cmp_seo_d:'OKX、Binance、Bybit 三家頭部加密交易所完整對比：手續費、幣種、合約槓桿、返佣、安全性。',cmp_seo_k:'OKX vs Binance,OKX 和幣安哪個好,幣安 vs Bybit,OKX vs Bybit,加密交易所對比,WLFI47,8DXZXGZ',
+access_seo_k:'OKX 備用網址,Binance 備用網址,Bybit 備用網址,加密交易所備用入口,加密交易所官方網域,OKX 台灣,Binance 台灣,Bybit 台灣',bonus_seo_t:'註冊福利 · OKX/Binance/Bybit 邀請碼 + 永久返佣 - CryptoRebateHub',bonus_seo_d:'透過本站邀請碼註冊 OKX (WLFI47) 享 20% 永久返佣，Binance (WLFI47) 享 20% 返佣，Bybit (8DXZXGZ) 享 33% 返佣（業界最高）。',bonus_seo_k:'OKX 邀請碼,幣安邀請碼,Bybit 邀請碼,WLFI47,8DXZXGZ,加密貨幣返佣,交易所返佣,永久返佣,加密貨幣邀請碼',mkts_seo_k:'比特幣行情,以太坊價格,BTC 價格,ETH 價格,即時行情,加密貨幣價格,加密貨幣市值,TradingView K 線圖,主流幣種',guides_seo_k:'加密貨幣新手教程,加密貨幣入門,如何買比特幣,加密貨幣安全,加密貨幣 KYC,加密貨幣入金,新手買幣,WLFI47,8DXZXGZ',arts_seo_k:'加密貨幣教程,OKX 教學,幣安教學,Bybit 教學,加密貨幣新手指南,合約交易教程,WLFI47,8DXZXGZ',about_seo_k:'CryptoRebateHub,加密貨幣返佣站,第三方加密資訊站,加密交易所對比',disc_seo_k:'CryptoRebateHub 透明度,加密貨幣 affiliate,加密返佣聲明,Cookie 政策,隱私政策',cmp_seo_t:'加密交易所對比 · OKX vs Binance vs Bybit 完整對比 - CryptoRebateHub',cmp_seo_d:'OKX、Binance、Bybit 三家頭部加密交易所完整對比：手續費、幣種、合約槓桿、返佣、安全性。',cmp_seo_k:'OKX vs Binance,OKX 和幣安哪個好,幣安 vs Bybit,OKX vs Bybit,加密交易所對比,WLFI47,8DXZXGZ',tools_seo_t:'加密貨幣實用工具 · 返佣計算器/交易所匹配/費率對比',tools_seo_d:'免費在線工具：返佣計算器、交易所匹配向導、實時費率對比表。',tools_seo_k:'返佣計算器,加密交易所對比工具,交易所選擇器',tool_reb_seo_t:'返佣計算器 · 算出你每月能省多少手續費',tool_reb_seo_d:'輸入你的月交易量，5 秒算出在 OKX/Binance/Bybit 各能省多少手續費。',tool_reb_seo_k:'返佣計算器,加密手續費計算器,OKX 返佣計算',tool_wiz_seo_t:'交易所匹配向導 · 30 秒幫你選出最適合的交易所',tool_wiz_seo_d:'回答 5 個問題，立刻知道哪家交易所最適合你。',tool_wiz_seo_k:'交易所選擇器,加密交易所推薦',tool_fee_seo_t:'交易所費率實時對比表',tool_fee_seo_d:'OKX、Binance、Bybit 現貨 + 合約手續費實時對比。',tool_fee_seo_k:'交易所手續費對比,OKX 手續費,Binance 手續費,Bybit 手續費',dex_seo_t:'Hyperliquid 永續合約 DEX 註冊 · 4% 返佣',dex_seo_d:'Hyperliquid 永續合約 DEX，無 KYC、鏈上交易、潛在空投。Builder Codes 享 4% 手續費返還。',dex_seo_k:'Hyperliquid,Hyperliquid 邀請碼,永續合約 DEX,鏈上永續合約,無 KYC 交易所,Hyperliquid 空投',wal_seo_t:'Web3 錢包返佣 · Binance 錢包 + OKX 錢包邀請碼',wal_seo_d:'Binance 錢包和 OKX 錢包是交易所官方多鏈 Web3 錢包。',wal_seo_k:'Binance 錢包,OKX 錢包,Web3 錢包推薦,多鏈錢包,DeFi 錢包',dex_t:'去中心化永續合約 DEX',dex_d:'無需 KYC、完全鏈上的永續合約 DEX。',dex_vs_t:'DEX vs CEX：什麼區別？',dex_pro1:'無需 KYC',dex_pro2:'資金存自己錢包',dex_pro3:'鏈上完全透明',dex_pro4:'點數/空投機會',cex_pro1:'界面友好',cex_pro2:'流動性更好',cex_pro3:'法幣入金',cex_pro4:'客服 + 法律保護',dex_empty:'暫無 DEX 數據',wal_label:'WEB3 WALLET',wal_t:'Web3 錢包',wal_d:'交易所官方多鏈 Web3 錢包。',wal_why_t:'為什麼用交易所官方 Web3 錢包？',wal_why_1:'與交易所帳戶無縫銜接',wal_why_2:'內建 DEX 聚合器',wal_why_3:'多鏈支持',wal_why_4:'NFT/DeFi 一站式',wal_empty:'暫無 Web3 錢包',nav_dex:'DEX',nav_wallets:'Web3 錢包',catnew_sl:'⛓ DEX + Web3 錢包',catnew_t:'除了 CEX，還有更多變現路徑',catnew_d:'鏈上永續合約 DEX + 交易所官方多鏈錢包。',catnew_dex_t:'永續合約 DEX',catnew_dex_d:'Hyperliquid · 無 KYC · 4% 返佣',catnew_wal_t:'Web3 錢包',catnew_wal_d:'Binance + OKX 多鏈錢包',catnew_cta_dex:'查看 DEX',catnew_cta_wal:'查看錢包',exchanges:'交易所',
 cant_access_t:'無法訪問主網域？',
 cant_access_d:'查看官方備用入口（多區域可用）',
 cant_access_btn:'查看備用入口 →',
@@ -1061,7 +1123,7 @@ cp_high:'24h 高',cp_low:'24h 低',cp_vol:'24h 成交量',cp_open:'24h 開盤',c
 hr_badge:'獨立第三方 · 返佣對比中心',
 hr_t:'透過返佣連結，<em>節省高達 60%</em><br>的加密交易費用',
 hr_d:'透過本站邀請碼註冊 OKX（欧易）享20%永久返佣，註冊 Binance（幣安）享20%返佣，註冊 Bybit 享33%返佣（業界最高）。獨立比對三大主流交易所手續費，提供註冊教程和即時行情。',
-hr_b1:'查看交易所對比',hr_b2:'查看即時行情',hr_b_main:'立即註冊享返佣',hr_access_t:'無法訪問交易所主網域？',hr_access_btn:'查看官方備用入口',geo_rec_t:'根據你的地區，推薦使用',geo_rec_cta:'立即註冊',
+hr_b1:'查看交易所對比',hr_b2:'查看即時行情',hr_b_main:'立即註冊享返佣',hr_access_t:'無法訪問交易所主網域？',hr_access_btn:'查看官方備用入口',geo_rec_t:'根據你的地區，推薦使用',geo_rec_cta:'立即註冊',aff_note:'本站包含聯盟邀請碼，註冊後無額外費用。',aff_note_link:'查看透明披露',news_bdg:'NEWSLETTER',news_t:'每週加密交易精選',news_d:'訂閱每週精選教程 + 新交易所返佣機會。零垃圾郵件，隨時退訂。',news_placeholder:'your@email.com',news_btn:'訂閱',news_ok:'訂閱成功！我們將很快與你聯繫',news_err:'訂閱失敗，請稍後再試',news_invalid:'請輸入有效的郵箱地址',tools_section_sl:'🛠 實用工具',tools_section_t:'幫你做更聰明的決策',tool_reb_cheapest:'實付最低',tool_reb_gross:'毛手續費/月',tool_reb_net:'實付手續費/月',tool_reb_rate_col:'費率 (Taker)',tool_reb_fee_paid_mo:'實付/月',tool_reb_fee_paid_yr:'實付/年',tool_reb_how_t:'計算公式（透明展示）',tool_reb_formula_gross:'毛手續費',tool_reb_formula_rebate:'返佣金額',tool_reb_formula_net:'實付手續費',per_month:'月',cheapest:'最低',tools_section_d:'3 個免費在線工具。',open_tool:'打開工具',tool_idx_reb_t:'返佣計算器',tool_idx_reb_d:'輸入月交易量 → 算出能省多少',tool_idx_wiz_t:'交易所匹配向導',tool_idx_wiz_d:'回答 5 個問題 → 智能推薦',tool_idx_fee_t:'費率實時對比',tool_idx_fee_d:'完整費率表 + 按交易量算成本',nav_tools:'實用工具',nav_compare:'對比',tools_label:'TOOLS',tools_idx_t:'實用工具',tools_idx_d:'3 個免費在線工具。',spot:'現貨',futures:'合約',mixed:'混合 (50/50)',exchange:'交易所',best:'最佳',
 top_sl:'本站推薦',top_t:'三大交易所一鍵註冊',top_d:'透過本站邀請碼註冊，永久享受手續費返佣。無需複雜操作，點擊直達官方。',best_pick:'首選',valid:'有效期',register_now:'立即註冊',view_detail:'詳情',copy:'複製',permanent:'永久',
 why_sl:'為什麼選擇本站',why_t:'獨立 · 透明 · 永久返佣',
 why_1_t:'永久 20-33% 返佣',why_1_d:'透過本站邀請碼註冊的帳戶，每筆交易自動返還手續費，永不過期，無需任何手動申請。',
@@ -1123,8 +1185,8 @@ art_view_ex:'查看交易所對比 →'
 },
 en:{
 seo_title:'OKX/Binance/Bybit Invite Codes + 20-33% Lifetime Rebate | Crypto Exchange Rebate Comparison {YEAR}',
-home_seo_k:'OKX invite code,Binance invite code,Bybit invite code,WLFI47,8DXZXGZ,OKX referral,Binance referral,Bybit referral,OKX sign up,Binance sign up,Bybit sign up,how to register OKX,how to register Binance,how to register Bybit,OKX beginner guide,Binance beginner guide,Bybit beginner guide,OKX official site,Binance official site,Bybit official site,OKX rebate,Binance rebate,Bybit rebate,lifetime rebate,crypto exchange comparison,OKX vs Binance,Binance vs Bybit,OKX vs Bybit,best crypto exchange 2026,how to buy bitcoin,where to buy crypto,how to buy ethereum,crypto KYC,crypto deposit,crypto withdrawal,crypto futures,crypto spot trading,crypto copy trading,highest rebate exchange,OKX official mirror,Binance official mirror,Bybit official mirror',
-exs_seo_k:'OKX vs Binance, Binance vs Bybit, crypto exchange ranking, best crypto exchange 2026, crypto exchange fees comparison, OKX invite code, Binance referral, Bybit invite, crypto rebate program, WLFI47, 8DXZXGZ',
+home_seo_k:'OKX invite code,Binance invite code,Bybit invite code,WLFI47,8DXZXGZ,OKX referral,Binance referral,Bybit referral,OKX sign up,Binance sign up,Bybit sign up,how to register OKX,how to register Binance,how to register Bybit,OKX beginner guide,Binance beginner guide,Bybit beginner guide,OKX official site,Binance official site,Bybit official site,OKX rebate,Binance rebate,Bybit rebate,lifetime rebate,crypto exchange comparison,OKX vs Binance,Binance vs Bybit,OKX vs Bybit,best crypto exchange {YEAR},how to buy bitcoin,where to buy crypto,how to buy ethereum,crypto KYC,crypto deposit,crypto withdrawal,crypto futures,crypto spot trading,crypto copy trading,highest rebate exchange,OKX official mirror,Binance official mirror,Bybit official mirror',
+exs_seo_k:'OKX vs Binance, Binance vs Bybit, crypto exchange ranking, best crypto exchange {YEAR}, crypto exchange fees comparison, OKX invite code, Binance referral, Bybit invite, crypto rebate program, WLFI47, 8DXZXGZ',
 exs_seo_t:'Crypto Exchange Comparison · OKX vs Binance vs Bybit Rebates - CryptoRebateHub',
 exs_seo_d:'Independent comparison of OKX, Binance, Bybit official rebates, fees, liquidity, security. Permanent rebates up to 33%.',
 mkts_seo_t:'Live Crypto Prices · BTC ETH SOL Charts - CryptoRebateHub',
@@ -1139,15 +1201,15 @@ disc_seo_t:'Transparency Disclosure · Risk & Affiliate Disclosure - CryptoRebat
 disc_seo_d:'CryptoRebateHub transparency disclosure: business model, affiliate relationships, risk statement, compliance, data privacy.',
 exch_seo_t:'{name} Registration Rebate · Invite Code + Permanent Fee Rebate - CryptoRebateHub',
 exch_seo_d:'{name} permanent fee rebate. Registration guide, invite code, security setup, deposit/withdrawal. One-click direct to official signup.',
-exch_seo_t_okx:'OKX Registration Guide 2026 | Invite Code WLFI47 = 20% Permanent Fee Rebate | OKX vs Binance',
-exch_seo_d_okx:'Complete OKX exchange sign-up guide 2026: use invite code WLFI47 for permanent 20% trading fee rebate. Step-by-step tutorial covering KYC verification, deposit, withdrawal, spot trading, futures, leverage, and API setup. OKX (formerly OKEX) is a top-3 global crypto exchange with 350+ trading pairs including BTC, ETH, SOL.',
-exch_seo_k_okx:'OKX, OKX registration, OKX sign up, OKX invite code WLFI47, OKX referral code, OKX rebate 20%, OKX fees, OKX tutorial, OKX KYC, OKX futures trading, OKX spot trading, OKX leverage, OKX perpetual contracts, OKX deposit, OKX withdrawal, OKX review 2026, OKX safe or not, OKX vs Binance, OKX vs Bybit, how to sign up for OKX, OKX app download, OKX Web3 wallet, OKX copy trading, WLFI47 code, OKX formerly OKEX, OKEX rebate, OKX staking, OKX earn',
-exch_seo_t_binance:'Binance Registration Guide 2026 | Invite Code WLFI47 = 20% Lifetime Fee Rebate | World #1 Exchange',
+exch_seo_t_okx:'OKX Registration Guide {YEAR} | Invite Code WLFI47 = 20% Permanent Fee Rebate | OKX vs Binance',
+exch_seo_d_okx:'Complete OKX exchange sign-up guide {YEAR}: use invite code WLFI47 for permanent 20% trading fee rebate. Step-by-step tutorial covering KYC verification, deposit, withdrawal, spot trading, futures, leverage, and API setup. OKX (formerly OKEX) is a top-3 global crypto exchange with 350+ trading pairs including BTC, ETH, SOL.',
+exch_seo_k_okx:'OKX, OKX registration, OKX sign up, OKX invite code WLFI47, OKX referral code, OKX rebate 20%, OKX fees, OKX tutorial, OKX KYC, OKX futures trading, OKX spot trading, OKX leverage, OKX perpetual contracts, OKX deposit, OKX withdrawal, OKX review {YEAR}, OKX safe or not, OKX vs Binance, OKX vs Bybit, how to sign up for OKX, OKX app download, OKX Web3 wallet, OKX copy trading, WLFI47 code, OKX formerly OKEX, OKEX rebate, OKX staking, OKX earn',
+exch_seo_t_binance:'Binance Registration Guide {YEAR} | Invite Code WLFI47 = 20% Lifetime Fee Rebate | World #1 Exchange',
 exch_seo_d_binance:'Complete Binance registration guide: invite code WLFI47 unlocks permanent 20% fee rebate. Binance is the world #1 crypto exchange by daily volume. Spot, futures, margin, Earn, Launchpad. Includes KYC, deposit/withdrawal, API setup.',
-exch_seo_k_binance:'Binance, Binance registration, Binance sign up, Binance invite code WLFI47, Binance referral code, Binance rebate 20%, Binance fees, Binance tutorial, Binance KYC, Binance futures, Binance spot, Binance margin trading, Binance Earn, Binance Launchpad, Binance Launchpool, Binance Simple Earn, Binance deposit, Binance withdrawal, Binance review 2026, Binance vs OKX, Binance vs Bybit, Binance vs Coinbase, how to use Binance, Binance app download, Binance Web3 wallet, Binance copy trading, Binance staking, WLFI47 code, Binance safe or not',
-exch_seo_t_bybit:'Bybit Registration Guide 2026 | Code 8DXZXGZ = 33% Lifetime Rebate (Industry Best) | Futures + Copy Trading',
+exch_seo_k_binance:'Binance, Binance registration, Binance sign up, Binance invite code WLFI47, Binance referral code, Binance rebate 20%, Binance fees, Binance tutorial, Binance KYC, Binance futures, Binance spot, Binance margin trading, Binance Earn, Binance Launchpad, Binance Launchpool, Binance Simple Earn, Binance deposit, Binance withdrawal, Binance review {YEAR}, Binance vs OKX, Binance vs Bybit, Binance vs Coinbase, how to use Binance, Binance app download, Binance Web3 wallet, Binance copy trading, Binance staking, WLFI47 code, Binance safe or not',
+exch_seo_t_bybit:'Bybit Registration Guide {YEAR} | Code 8DXZXGZ = 33% Lifetime Rebate (Industry Best) | Futures + Copy Trading',
 exch_seo_d_bybit:'Complete Bybit registration guide: invite code 8DXZXGZ unlocks 33% lifetime fee rebate (industry highest). Bybit is the top platform for futures and copy trading. Perpetuals, spot, options, Web3 wallet, KYC, deposit/withdrawal.',
-exch_seo_k_bybit:'Bybit, Bybit registration, Bybit sign up, Bybit invite code 8DXZXGZ, Bybit referral code, Bybit rebate 33%, Bybit fees, Bybit tutorial, Bybit KYC, Bybit futures, Bybit perpetual contracts, Bybit spot trading, Bybit copy trading, Bybit copy trade, Bybit options, Bybit Web3 wallet, Bybit deposit, Bybit withdrawal, Bybit review 2026, Bybit vs OKX, Bybit vs Binance, Bybit safe or not, Bybit app download, Bybit staking, Bybit earn, 8DXZXGZ code, Bybit 33% rebate best, Bybit Launchpool',
+exch_seo_k_bybit:'Bybit, Bybit registration, Bybit sign up, Bybit invite code 8DXZXGZ, Bybit referral code, Bybit rebate 33%, Bybit fees, Bybit tutorial, Bybit KYC, Bybit futures, Bybit perpetual contracts, Bybit spot trading, Bybit copy trading, Bybit copy trade, Bybit options, Bybit Web3 wallet, Bybit deposit, Bybit withdrawal, Bybit review {YEAR}, Bybit vs OKX, Bybit vs Binance, Bybit safe or not, Bybit app download, Bybit staking, Bybit earn, 8DXZXGZ code, Bybit 33% rebate best, Bybit Launchpool',
 access_urls:'Access URLs',mir_recommended:'Recommended',mir_top:'Top Pick',
 access_urls_d:'Multiple official entry points. Choose the most stable for your region.',
 mirror_warn:'Only entries confirmed by official announcements are listed. Always access via this page to avoid phishing.',
@@ -1177,7 +1239,7 @@ safe_5:'We will never proactively ask for your account, password, or verificatio
 view_articles:'View Tutorials',
 access_seo_t:'Exchange Backup URLs / Multi-Region Access Points - OKX Binance Bybit | CryptoRebateHub',
 access_seo_d:'When the main domain is inaccessible, this page provides multi-region official access points for OKX, Binance, Bybit and others, verified through official announcements. Use only links from this page to avoid phishing.',
-access_seo_k:'OKX backup URL, Binance backup domain, Bybit alternate URL, OKX mirror, Binance mirror, Bybit mirror, OKX cant access, OKX blocked, Binance blocked solution, crypto exchange access points, crypto exchange official domains',bonus_seo_t:'Register Bonus · OKX/Binance/Bybit Invite Codes + Lifetime Rebate - CryptoRebateHub',bonus_seo_d:'Register OKX with code WLFI47 = 20% lifetime rebate, Binance with WLFI47 = 20% rebate, Bybit with 8DXZXGZ = 33% rebate (industry highest). Permanent, auto-credited.',bonus_seo_k:'OKX invite code, Binance invite code, Bybit invite code, WLFI47, 8DXZXGZ, crypto rebate, exchange rebate, lifetime rebate, OKX bonus, Binance bonus, Bybit bonus, crypto exchange referral, highest rebate exchange',mkts_seo_k:'bitcoin price, ethereum price, BTC price, ETH price, live crypto prices, crypto market cap, TradingView chart, crypto chart, SOL price, BNB price, top crypto coins',guides_seo_k:'crypto beginner guide, how to buy bitcoin, crypto KYC, crypto deposit, crypto withdrawal, crypto futures, crypto leverage, crypto spot trading, crypto safety, WLFI47, 8DXZXGZ',arts_seo_k:'crypto tutorials, OKX tutorial, Binance tutorial, Bybit tutorial, crypto beginner guide, crypto KYC guide, deposit guide, futures trading guide, copy trading, WLFI47, 8DXZXGZ',about_seo_k:'CryptoRebateHub, crypto rebate site, third-party crypto info, crypto exchange comparison, affiliate disclosure',disc_seo_k:'CryptoRebateHub transparency, crypto affiliate disclosure, crypto rebate disclosure, cookie policy, privacy policy',cmp_seo_t:'Crypto Exchange Comparison · OKX vs Binance vs Bybit - CryptoRebateHub',cmp_seo_d:'Detailed comparison of top crypto exchanges: OKX, Binance, Bybit. Compare fees, coins, futures leverage, rebates, security. Choose the best exchange in 5 minutes.',cmp_seo_k:'OKX vs Binance, Binance vs Bybit, OKX vs Bybit, crypto exchange comparison, best crypto exchange 2026, OKX invite code, Binance referral, Bybit invite, WLFI47, 8DXZXGZ',
+access_seo_k:'OKX backup URL, Binance backup domain, Bybit alternate URL, OKX mirror, Binance mirror, Bybit mirror, OKX cant access, OKX blocked, Binance blocked solution, crypto exchange access points, crypto exchange official domains',bonus_seo_t:'Register Bonus · OKX/Binance/Bybit Invite Codes + Lifetime Rebate - CryptoRebateHub',bonus_seo_d:'Register OKX with code WLFI47 = 20% lifetime rebate, Binance with WLFI47 = 20% rebate, Bybit with 8DXZXGZ = 33% rebate (industry highest). Permanent, auto-credited.',bonus_seo_k:'OKX invite code, Binance invite code, Bybit invite code, WLFI47, 8DXZXGZ, crypto rebate, exchange rebate, lifetime rebate, OKX bonus, Binance bonus, Bybit bonus, crypto exchange referral, highest rebate exchange',mkts_seo_k:'bitcoin price, ethereum price, BTC price, ETH price, live crypto prices, crypto market cap, TradingView chart, crypto chart, SOL price, BNB price, top crypto coins',guides_seo_k:'crypto beginner guide, how to buy bitcoin, crypto KYC, crypto deposit, crypto withdrawal, crypto futures, crypto leverage, crypto spot trading, crypto safety, WLFI47, 8DXZXGZ',arts_seo_k:'crypto tutorials, OKX tutorial, Binance tutorial, Bybit tutorial, crypto beginner guide, crypto KYC guide, deposit guide, futures trading guide, copy trading, WLFI47, 8DXZXGZ',about_seo_k:'CryptoRebateHub, crypto rebate site, third-party crypto info, crypto exchange comparison, affiliate disclosure',disc_seo_k:'CryptoRebateHub transparency, crypto affiliate disclosure, crypto rebate disclosure, cookie policy, privacy policy',cmp_seo_t:'Crypto Exchange Comparison · OKX vs Binance vs Bybit - CryptoRebateHub',cmp_seo_d:'Detailed comparison of top crypto exchanges: OKX, Binance, Bybit. Compare fees, coins, futures leverage, rebates, security. Choose the best exchange in 5 minutes.',cmp_seo_k:'OKX vs Binance, Binance vs Bybit, OKX vs Bybit, crypto exchange comparison, best crypto exchange {YEAR}, OKX invite code, Binance referral, Bybit invite, WLFI47, 8DXZXGZ',tools_seo_t:'Crypto Tools · Rebate Calculator / Exchange Wizard / Fee Comparison - CryptoRebateHub',tools_seo_d:'Free online tools: calculate your monthly fee savings, match yourself to the best exchange in 30 seconds, and compare live fees side by side.',tools_seo_k:'crypto rebate calculator, crypto exchange comparison tool, exchange wizard, crypto fee calculator',tool_reb_seo_t:'Crypto Rebate Calculator · See how much you save monthly',tool_reb_seo_d:'Enter your monthly volume to see how much you save on OKX, Binance, and Bybit with permanent 20-33% rebates.',tool_reb_seo_k:'crypto rebate calculator, OKX rebate calc, Binance rebate, Bybit 33% rebate, monthly fee savings',tool_wiz_seo_t:'Exchange Matching Wizard · Find the best exchange in 30 seconds',tool_wiz_seo_d:'Answer 5 questions to find the best crypto exchange for you: beginner / futures trader / long-term investor / Chinese user / Korean user.',tool_wiz_seo_k:'crypto exchange selector, best exchange for beginners, futures exchange, exchange recommendation',tool_fee_seo_t:'Live Crypto Exchange Fee Comparison · Spot + Futures + Rebate',tool_fee_seo_d:'Real-time fee comparison: OKX, Binance, Bybit spot + futures fees plus actual fees after rebate. Enter monthly volume for cost estimate.',tool_fee_seo_k:'crypto exchange fee comparison, OKX fees, Binance fees, Bybit fees, lowest fee crypto exchange',dex_seo_t:'Hyperliquid Perpetual DEX · 4% Rebate · No KYC - CryptoRebateHub',dex_seo_d:'Hyperliquid is the leading perpetual DEX. No KYC, on-chain, HIP-2 points program with airdrop potential. Builder Codes earn 4% fee rebate.',dex_seo_k:'Hyperliquid, Hyperliquid referral, Hyperliquid signup, Hyperliquid rebate, perpetual DEX, on-chain perps, no-KYC exchange, Hyperliquid airdrop, HIP-2 points',wal_seo_t:'Web3 Wallet Rebates · Binance Wallet + OKX Wallet - CryptoRebateHub',wal_seo_d:'Binance Wallet and OKX Wallet are exchange-native multi-chain Web3 wallets supporting 100+ chains for DeFi/NFT/Swap with rebate-eligible swaps.',wal_seo_k:'Binance Wallet, OKX Wallet, best Web3 wallet, crypto Web3 wallet, multi-chain wallet, DeFi wallet, DEX aggregator',dex_t:'Decentralized Perpetual DEX',dex_d:'On-chain perpetual DEX with no KYC, connect wallet to trade.',dex_vs_t:'DEX vs CEX: What is the difference?',dex_pro1:'No KYC, instant use',dex_pro2:'Self-custody, no exchange-hack risk',dex_pro3:'Fully on-chain transparency',dex_pro4:'Points/airdrop opportunities',cex_pro1:'Beginner-friendly UI',cex_pro2:'Better liquidity, lower slippage',cex_pro3:'Fiat onramps (C2C/cards)',cex_pro4:'Customer support + legal',dex_empty:'No DEX data',wal_label:'WEB3 WALLET',wal_t:'Web3 Wallets',wal_d:'Exchange-native multi-chain Web3 wallets for DeFi/NFT/on-chain swaps.',wal_why_t:'Why use an exchange-native Web3 wallet?',wal_why_1:'Seamless with exchange account: on-chain ↔ exchange in 1 click',wal_why_2:'Built-in DEX aggregator: swap rebates apply',wal_why_3:'Multi-chain (90+ chains), no need for multiple wallets',wal_why_4:'NFT/DeFi all-in-one: less cross-platform risk',wal_empty:'No wallet data',nav_dex:'DEX',nav_wallets:'Web3 Wallets',catnew_sl:'⛓ DEX + Web3 Wallets',catnew_t:'Beyond CEX: more monetization paths',catnew_d:'On-chain perpetual DEX + exchange-native multi-chain wallets, some with rebates.',catnew_dex_t:'Perpetual DEX',catnew_dex_d:'Hyperliquid · No KYC · 4% rebate · Airdrop potential',catnew_wal_t:'Web3 Wallets',catnew_wal_d:'Binance + OKX multi-chain · DeFi · Swap rebates',catnew_cta_dex:'View DEX',catnew_cta_wal:'View Wallets',exchanges:'Exchanges',
 cant_access_t:'Cannot access main domain?',
 cant_access_d:'View official backup entry points (multi-region available)',
 cant_access_btn:'View Access URLs →',
@@ -1188,7 +1250,7 @@ cp_high:'24h High',cp_low:'24h Low',cp_vol:'24h Volume',cp_open:'24h Open',cp_ch
 hr_badge:'INDEPENDENT · REBATE COMPARISON',
 hr_t:'Save up to <em>60% on trading fees</em><br>with rebate links',
 hr_d:'Register OKX with invite code WLFI47 = 20% permanent rebate. Register Binance with WLFI47 = 20% rebate. Register Bybit with 8DXZXGZ = 33% rebate (industry best). Independent OKX vs Binance vs Bybit comparison, tutorials and live prices.',
-hr_b1:'Compare Exchanges',hr_b2:'Live Prices',hr_b_main:'Get Rebate Now',hr_access_t:'Cannot access main exchange domain?',hr_access_btn:'See Official Mirrors',geo_rec_t:'Based on your region, we recommend',geo_rec_cta:'Sign up',
+hr_b1:'Compare Exchanges',hr_b2:'Live Prices',hr_b_main:'Get Rebate Now',hr_access_t:'Cannot access main exchange domain?',hr_access_btn:'See Official Mirrors',geo_rec_t:'Based on your region, we recommend',geo_rec_cta:'Sign up',aff_note:'This site contains affiliate invite codes. No extra cost to you.',aff_note_link:'See full disclosure',news_bdg:'NEWSLETTER',news_t:'Weekly Crypto Trading Picks',news_d:'Subscribe for weekly tutorials and new exchange rebate offers. No spam, unsubscribe anytime.',news_placeholder:'your@email.com',news_btn:'Subscribe',news_ok:'Subscribed! We will be in touch shortly',news_err:'Subscription failed, please try again',news_invalid:'Please enter a valid email',tools_section_sl:'🛠 USEFUL TOOLS',tools_section_t:'Make smarter trading decisions',tool_reb_cheapest:'Lowest cost',tool_reb_gross:'Gross fee/mo',tool_reb_net:'Net fee/mo',tool_reb_rate_col:'Rate (Taker)',tool_reb_fee_paid_mo:'Paid/mo',tool_reb_fee_paid_yr:'Paid/yr',tool_reb_how_t:'Calculation formula (transparent)',tool_reb_formula_gross:'Gross fee',tool_reb_formula_rebate:'Rebate amount',tool_reb_formula_net:'Net fee paid',per_month:'mo',cheapest:'lowest',tools_section_d:'3 free online tools: rebate calculator, exchange wizard, live fee comparison.',open_tool:'Open Tool',tool_idx_reb_t:'Rebate Calculator',tool_idx_reb_d:'Monthly volume → see monthly & yearly savings',tool_idx_wiz_t:'Exchange Wizard',tool_idx_wiz_d:'Answer 5 questions → smart recommendation',tool_idx_fee_t:'Fee Comparison',tool_idx_fee_d:'Live fee table + monthly cost calculator',nav_tools:'Tools',nav_compare:'Compare',tools_label:'TOOLS',tools_idx_t:'Useful Tools',tools_idx_d:'3 free online tools to help you make smarter exchange decisions.',spot:'Spot',futures:'Futures',mixed:'Mixed (50/50)',exchange:'Exchange',best:'Best',
 top_sl:'Our Picks',top_t:'One-Click Sign Up · Top 3 Exchanges',top_d:'Register with our invite codes for permanent fee rebates. Direct links to official exchange pages — no hassle.',best_pick:'Top Pick',valid:'Validity',register_now:'Register Now',view_detail:'Details',copy:'Copy',permanent:'Permanent',
 why_sl:'Why Choose Us',why_t:'Independent · Transparent · Permanent Rebates',
 why_1_t:'Permanent 20-33% Rebate',why_1_d:'Accounts registered via our invite codes get automatic fee rebates on every trade. Never expires, no manual claiming.',
@@ -1251,7 +1313,7 @@ art_view_ex:'View exchange comparison →'
 ko:{
 seo_title:'OKX/Binance/Bybit 초대코드 + 영구 20-33% 리베이트 | 암호화폐 거래소 리베이트 비교 {YEAR}',
 home_seo_k:'OKX 초대코드,바이낸스 초대코드,Bybit 초대코드,WLFI47,8DXZXGZ,OKX 추천인 코드,바이낸스 추천인,Bybit 추천인,OKX 가입,바이낸스 가입,Bybit 가입,OKX 가입 방법,바이낸스 가입 방법,Bybit 가입 방법,OKX 초보 가이드,바이낸스 초보,Bybit 초보,OKX 공식 사이트,바이낸스 공식,Bybit 공식,OKX 리베이트,바이낸스 리베이트,Bybit 리베이트,영구 리베이트,암호화폐 거래소 비교,OKX vs 바이낸스,바이낸스 vs Bybit,초보자 비트코인 구매,암호화폐 입금,암호화폐 출금,암호화폐 KYC,선물 거래,현물 거래,카피 트레이딩,최고 리베이트 거래소',
-exs_seo_k:'OKX vs 바이낸스, 바이낸스 vs Bybit, 거래소 순위, 최고 거래소 2026, 거래소 수수료 비교, OKX 초대코드, 바이낸스 추천, Bybit 초대, 암호화폐 리베이트, WLFI47, 8DXZXGZ',
+exs_seo_k:'OKX vs 바이낸스, 바이낸스 vs Bybit, 거래소 순위, 최고 거래소 {YEAR}, 거래소 수수료 비교, OKX 초대코드, 바이낸스 추천, Bybit 초대, 암호화폐 리베이트, WLFI47, 8DXZXGZ',
 exs_seo_t:'암호화폐 거래소 비교 · OKX vs Binance vs Bybit 리베이트 - CryptoRebateHub',
 exs_seo_d:'독립적인 OKX, Binance, Bybit 공식 리베이트, 수수료, 유동성, 보안 비교. 영구 리베이트 최대 33%.',
 mkts_seo_t:'실시간 암호화폐 시세 · BTC ETH SOL 차트 - CryptoRebateHub',
@@ -1266,13 +1328,13 @@ disc_seo_t:'투명성 공시 · 위험 및 제휴 공시 - CryptoRebateHub',
 disc_seo_d:'CryptoRebateHub 투명성 공시: 비즈니스 모델, 제휴 관계, 위험 공지, 규정 준수, 데이터 프라이버시.',
 exch_seo_t:'{name} 가입 리베이트 · 초대 코드 + 영구 수수료 리베이트 - CryptoRebateHub',
 exch_seo_d:'{name} 영구 수수료 리베이트. 가입 가이드, 초대 코드, 보안 설정, 입출금. 원클릭 공식 가입 직행.',
-exch_seo_t_okx:'OKX 가입 가이드 2026 | 초대코드 WLFI47 = 영구 20% 수수료 리베이트 | OKX vs Binance',
-exch_seo_d_okx:'OKX 거래소 2026 완벽 가입 가이드: 초대코드 WLFI47 입력 시 영구 20% 수수료 리베이트. KYC 신원 인증, 입금, 출금, 현물 거래, 선물, 레버리지, API 설정 단계별 튜토리얼. OKX(전 OKEX)는 글로벌 Top 3 암호화폐 거래소로 BTC, ETH, SOL 등 350+ 종목 지원.',
+exch_seo_t_okx:'OKX 가입 가이드 {YEAR} | 초대코드 WLFI47 = 영구 20% 수수료 리베이트 | OKX vs Binance',
+exch_seo_d_okx:'OKX 거래소 {YEAR} 완벽 가입 가이드: 초대코드 WLFI47 입력 시 영구 20% 수수료 리베이트. KYC 신원 인증, 입금, 출금, 현물 거래, 선물, 레버리지, API 설정 단계별 튜토리얼. OKX(전 OKEX)는 글로벌 Top 3 암호화폐 거래소로 BTC, ETH, SOL 등 350+ 종목 지원.',
 exch_seo_k_okx:'OKX,OKX 가입,OKX 등록,OKX 초대코드 WLFI47,OKX 추천인 코드,OKX 리베이트 20%,OKX 수수료,OKX 튜토리얼,OKX KYC,OKX 신원인증,OKX 선물 거래,OKX 현물 거래,OKX 레버리지,OKX 무기한 계약,OKX 입금,OKX 출금,OKX 한국,OKX 안전한가,OKX 합법,OKX 앱 다운로드,OKX Web3 지갑,OKX 카피 트레이딩,WLFI47 코드,OKX 전 OKEX,OKEX 리베이트,OKX 스테이킹,OKX 어닝',
-exch_seo_t_binance:'Binance 바이낸스 가입 가이드 2026 | 초대코드 WLFI47 = 영구 20% 리베이트 | 세계 1위 거래소',
+exch_seo_t_binance:'Binance 바이낸스 가입 가이드 {YEAR} | 초대코드 WLFI47 = 영구 20% 리베이트 | 세계 1위 거래소',
 exch_seo_d_binance:'Binance 바이낸스 거래소 완벽 가입 가이드: 초대코드 WLFI47 영구 20% 수수료 리베이트. 바이낸스는 세계 1위 암호화폐 거래소. 현물, 선물, 마진, Earn, Launchpad. KYC, 입출금 포함.',
 exch_seo_k_binance:'Binance,바이낸스,바이낸스 가입,바이낸스 등록,Binance 초대코드 WLFI47,바이낸스 추천인,바이낸스 리베이트 20%,바이낸스 수수료,바이낸스 튜토리얼,바이낸스 KYC,바이낸스 선물,바이낸스 현물,바이낸스 마진,바이낸스 Earn,바이낸스 Launchpad,바이낸스 Launchpool,바이낸스 입금,바이낸스 출금,바이낸스 한국,바이낸스 vs OKX,바이낸스 vs Bybit,바이낸스 앱 다운로드,바이낸스 Web3 지갑,바이낸스 카피 트레이딩,바이낸스 스테이킹,WLFI47 코드,바이낸스 안전한가',
-exch_seo_t_bybit:'Bybit 가입 가이드 2026 | 코드 8DXZXGZ = 영구 33% 리베이트 (업계 최고) | 선물 + 카피 트레이딩',
+exch_seo_t_bybit:'Bybit 가입 가이드 {YEAR} | 코드 8DXZXGZ = 영구 33% 리베이트 (업계 최고) | 선물 + 카피 트레이딩',
 exch_seo_d_bybit:'Bybit 거래소 완벽 가입 가이드: 초대코드 8DXZXGZ 영구 33% 수수료 리베이트(업계 최고). Bybit는 선물 거래와 카피 트레이딩 최고 플랫폼. 무기한, 현물, 옵션, Web3 지갑, KYC, 입출금.',
 exch_seo_k_bybit:'Bybit,Bybit 가입,Bybit 등록,Bybit 초대코드 8DXZXGZ,Bybit 추천인,Bybit 리베이트 33%,Bybit 수수료,Bybit 튜토리얼,Bybit KYC,Bybit 선물,Bybit 무기한,Bybit 현물,Bybit 카피 트레이딩,Bybit 옵션,Bybit Web3 지갑,Bybit 입금,Bybit 출금,Bybit 한국,Bybit vs OKX,Bybit vs Binance,Bybit 앱 다운로드,Bybit 스테이킹,Bybit 어닝,8DXZXGZ 코드,Bybit 33% 업계 최고,Bybit 안전한가',
 access_urls:'접속 입구',mir_recommended:'추천',mir_top:'최고',
@@ -1304,7 +1366,7 @@ safe_5:'당사는 DM 또는 이메일을 통해 계정, 비밀번호 또는 인�
 view_articles:'튜토리얼 보기',
 access_seo_t:'거래소 백업 URL / 다지역 공식 접속점 - OKX Binance Bybit | CryptoRebateHub',
 access_seo_d:'메인 도메인 접속이 불가능할 때, 이 페이지는 OKX, Binance, Bybit 등 거래소의 공식 발표로 확인된 다지역 접속점을 제공합니다.',
-access_seo_k:'OKX 백업 URL, Binance 백업 도메인, Bybit 미러, OKX 한국, Binance 한국, Bybit 한국, 암호화폐 거래소 접속점',bonus_seo_t:'가입 보너스 · OKX/Binance/Bybit 초대코드 + 영구 리베이트 - CryptoRebateHub',bonus_seo_d:'OKX 초대코드 WLFI47 = 영구 20% 리베이트, Binance WLFI47 = 20% 리베이트, Bybit 8DXZXGZ = 33% 리베이트(업계 최고). 영구 유효.',bonus_seo_k:'OKX 초대코드,바이낸스 초대코드,Bybit 초대코드,WLFI47,8DXZXGZ,암호화폐 리베이트,거래소 리베이트,영구 리베이트',mkts_seo_k:'비트코인 가격, 이더리움 가격, BTC 가격, ETH 가격, 실시간 암호화폐 가격, 암호화폐 시가총액, TradingView 차트, 주요 알트코인',guides_seo_k:'암호화폐 초보 가이드, 비트코인 사는 법, 암호화폐 KYC, 입금, 출금, 선물 거래, 레버리지, 현물 거래, WLFI47, 8DXZXGZ',arts_seo_k:'암호화폐 튜토리얼, OKX 튜토리얼, 바이낸스 튜토리얼, Bybit 튜토리얼, 초보자 가이드, 카피 트레이딩, WLFI47, 8DXZXGZ',about_seo_k:'CryptoRebateHub, 암호화폐 리베이트 사이트, 제3자 암호화폐 정보, 거래소 비교',disc_seo_k:'CryptoRebateHub 투명성, 암호화폐 제휴 공개, 리베이트 공개, 쿠키 정책',cmp_seo_t:'암호화폐 거래소 비교 · OKX vs 바이낸스 vs Bybit - CryptoRebateHub',cmp_seo_d:'주요 거래소 비교: OKX, 바이낸스, Bybit. 수수료, 코인, 선물 레버리지, 리베이트, 보안 비교. 5 분 안에 최적 거래소 선택.',cmp_seo_k:'OKX vs 바이낸스, 바이낸스 vs Bybit, OKX vs Bybit, 거래소 비교, OKX 초대코드, WLFI47, 8DXZXGZ',
+access_seo_k:'OKX 백업 URL, Binance 백업 도메인, Bybit 미러, OKX 한국, Binance 한국, Bybit 한국, 암호화폐 거래소 접속점',bonus_seo_t:'가입 보너스 · OKX/Binance/Bybit 초대코드 + 영구 리베이트 - CryptoRebateHub',bonus_seo_d:'OKX 초대코드 WLFI47 = 영구 20% 리베이트, Binance WLFI47 = 20% 리베이트, Bybit 8DXZXGZ = 33% 리베이트(업계 최고). 영구 유효.',bonus_seo_k:'OKX 초대코드,바이낸스 초대코드,Bybit 초대코드,WLFI47,8DXZXGZ,암호화폐 리베이트,거래소 리베이트,영구 리베이트',mkts_seo_k:'비트코인 가격, 이더리움 가격, BTC 가격, ETH 가격, 실시간 암호화폐 가격, 암호화폐 시가총액, TradingView 차트, 주요 알트코인',guides_seo_k:'암호화폐 초보 가이드, 비트코인 사는 법, 암호화폐 KYC, 입금, 출금, 선물 거래, 레버리지, 현물 거래, WLFI47, 8DXZXGZ',arts_seo_k:'암호화폐 튜토리얼, OKX 튜토리얼, 바이낸스 튜토리얼, Bybit 튜토리얼, 초보자 가이드, 카피 트레이딩, WLFI47, 8DXZXGZ',about_seo_k:'CryptoRebateHub, 암호화폐 리베이트 사이트, 제3자 암호화폐 정보, 거래소 비교',disc_seo_k:'CryptoRebateHub 투명성, 암호화폐 제휴 공개, 리베이트 공개, 쿠키 정책',cmp_seo_t:'암호화폐 거래소 비교 · OKX vs 바이낸스 vs Bybit - CryptoRebateHub',cmp_seo_d:'주요 거래소 비교: OKX, 바이낸스, Bybit. 수수료, 코인, 선물 레버리지, 리베이트, 보안 비교. 5 분 안에 최적 거래소 선택.',cmp_seo_k:'OKX vs 바이낸스, 바이낸스 vs Bybit, OKX vs Bybit, 거래소 비교, OKX 초대코드, WLFI47, 8DXZXGZ',tools_seo_t:'암호화폐 유틸 · 리베이트 계산기 / 거래소 매칭 / 수수료 비교',tools_seo_d:'무료 온라인 도구: 월 수수료 절감액 계산, 30 초 만에 최적 거래소 찾기, 실시간 수수료 비교.',tools_seo_k:'암호화폐 리베이트 계산기, 거래소 비교 도구, 거래소 선택기',tool_reb_seo_t:'리베이트 계산기 · 월 절감액 확인',tool_reb_seo_d:'월 거래량을 입력하여 OKX, 바이낸스, Bybit에서 영구 20-33% 리베이트로 얼마나 절약하는지 확인하세요.',tool_reb_seo_k:'암호화폐 리베이트 계산기, OKX 리베이트, 바이낸스 리베이트, Bybit 33% 리베이트',tool_wiz_seo_t:'거래소 매칭 위저드 · 30 초 만에 최적 거래소 찾기',tool_wiz_seo_d:'5 가지 질문에 답하여 최적의 거래소를 찾으세요.',tool_wiz_seo_k:'거래소 선택기, 초보자 거래소, 선물 거래소, 거래소 추천',tool_fee_seo_t:'실시간 거래소 수수료 비교 · 현물 + 선물 + 리베이트',tool_fee_seo_d:'OKX, 바이낸스, Bybit 현물 + 선물 수수료 실시간 비교.',tool_fee_seo_k:'거래소 수수료 비교, OKX 수수료, 바이낸스 수수료, Bybit 수수료',dex_seo_t:'Hyperliquid 무기한 DEX · 4% 리베이트 · KYC 불필요',dex_seo_d:'Hyperliquid은 선도적인 무기한 DEX입니다. KYC 불필요, 온체인, HIP-2 포인트 프로그램.',dex_seo_k:'Hyperliquid, Hyperliquid 초대코드, 무기한 DEX, 온체인 무기한, KYC 없는 거래소',wal_seo_t:'Web3 지갑 리베이트 · 바이낸스 지갑 + OKX 지갑',wal_seo_d:'바이낸스 지갑과 OKX 지갑은 거래소 공식 멀티체인 Web3 지갑입니다.',wal_seo_k:'바이낸스 지갑, OKX 지갑, Web3 지갑, 멀티체인 지갑, DeFi 지갑',dex_t:'탈중앙화 무기한 DEX',dex_d:'KYC 불필요, 온체인 무기한 DEX.',dex_vs_t:'DEX vs CEX: 차이점은?',dex_pro1:'KYC 불필요',dex_pro2:'자기 지갑 보관',dex_pro3:'완전 온체인 투명성',dex_pro4:'포인트/에어드롭 기회',cex_pro1:'초보 친화적 UI',cex_pro2:'더 나은 유동성',cex_pro3:'법정통화 입금',cex_pro4:'고객 지원',dex_empty:'DEX 데이터 없음',wal_label:'WEB3 WALLET',wal_t:'Web3 지갑',wal_d:'거래소 공식 멀티체인 Web3 지갑.',wal_why_t:'왜 거래소 공식 Web3 지갑을 사용하나요?',wal_why_1:'거래소 계정과 원활한 연결',wal_why_2:'내장 DEX 애그리게이터',wal_why_3:'멀티체인 지원',wal_why_4:'NFT/DeFi 통합',wal_empty:'지갑 데이터 없음',nav_dex:'DEX',nav_wallets:'Web3 지갑',catnew_sl:'⛓ DEX + Web3 지갑',catnew_t:'CEX 외에도 더 많은 수익화 경로',catnew_d:'온체인 무기한 DEX + 거래소 멀티체인 지갑.',catnew_dex_t:'무기한 DEX',catnew_dex_d:'Hyperliquid · KYC 불필요 · 4% 리베이트',catnew_wal_t:'Web3 지갑',catnew_wal_d:'바이낸스 + OKX 멀티체인',catnew_cta_dex:'DEX 보기',catnew_cta_wal:'지갑 보기',exchanges:'거래소',
 cant_access_t:'메인 도메인 접속 불가?',
 cant_access_d:'공식 백업 접속점 보기 (다지역 사용 가능)',
 cant_access_btn:'접속 URL 보기 →',
@@ -1315,7 +1377,7 @@ cp_high:'24h 고가',cp_low:'24h 저가',cp_vol:'24h 거래량',cp_open:'24h 시
 hr_badge:'독립적 · 리베이트 비교',
 hr_t:'리베이트 링크로 거래 수수료를<br><em>최대 60% 절약</em>',
 hr_d:'OKX 초대코드 WLFI47 = 영구 20% 리베이트. Binance 초대코드 WLFI47 = 20% 리베이트. Bybit 초대코드 8DXZXGZ = 33% 리베이트(업계 최고). OKX vs Binance vs Bybit 독립 비교 및 가입 가이드.',
-hr_b1:'거래소 비교 보기',hr_b2:'실시간 시세',hr_b_main:'지금 리베이트 받기',hr_access_t:'거래소 메인 도메인 접속 불가?',hr_access_btn:'공식 미러 보기',geo_rec_t:'당신의 지역 기준 추천',geo_rec_cta:'가입',
+hr_b1:'거래소 비교 보기',hr_b2:'실시간 시세',hr_b_main:'지금 리베이트 받기',hr_access_t:'거래소 메인 도메인 접속 불가?',hr_access_btn:'공식 미러 보기',geo_rec_t:'당신의 지역 기준 추천',geo_rec_cta:'가입',aff_note:'본 사이트는 제휴 초대 코드를 포함합니다. 추가 비용 없음.',aff_note_link:'전체 공시 보기',news_bdg:'NEWSLETTER',news_t:'주간 암호화폐 거래 픽',news_d:'매주 정선된 가이드 + 새 거래소 리베이트 소식.',news_placeholder:'your@email.com',news_btn:'구독',news_ok:'구독 완료! 곧 연락드리겠습니다',news_err:'구독 실패. 다시 시도해주세요',news_invalid:'유효한 이메일을 입력하세요',tools_section_sl:'🛠 유틸리티',tools_section_t:'더 똑똑한 결정을 위해',tool_reb_cheapest:'최저 비용',tool_reb_gross:'총 수수료/월',tool_reb_net:'순 수수료/월',tool_reb_rate_col:'요율 (Taker)',tool_reb_fee_paid_mo:'월 지불',tool_reb_fee_paid_yr:'연 지불',tool_reb_how_t:'계산 공식 (투명)',tool_reb_formula_gross:'총 수수료',tool_reb_formula_rebate:'리베이트 금액',tool_reb_formula_net:'순 지불 수수료',per_month:'월',cheapest:'최저',tools_section_d:'3 가지 무료 온라인 도구.',open_tool:'도구 열기',tool_idx_reb_t:'리베이트 계산기',tool_idx_reb_d:'월 거래량 → 절감액 확인',tool_idx_wiz_t:'거래소 매칭 위저드',tool_idx_wiz_d:'5 가지 질문 → 스마트 추천',tool_idx_fee_t:'수수료 비교',tool_idx_fee_d:'실시간 수수료 + 월 비용 계산',nav_tools:'도구',nav_compare:'비교',tools_label:'TOOLS',tools_idx_t:'유틸리티',tools_idx_d:'3 가지 무료 온라인 도구.',spot:'현물',futures:'선물',mixed:'혼합 (50/50)',exchange:'거래소',best:'최고',
 top_sl:'추천',top_t:'3대 거래소 원클릭 가입',top_d:'본 사이트 초대 코드로 가입하여 영구 수수료 리베이트를 받으세요. 거래소 공식 페이지 직접 링크.',best_pick:'최선택',valid:'유효 기간',register_now:'지금 가입',view_detail:'상세',copy:'복사',permanent:'영구',
 why_sl:'왜 본 사이트인가',why_t:'독립 · 투명 · 영구 리베이트',
 why_1_t:'영구 20-33% 리베이트',why_1_d:'본 사이트 초대 코드로 가입한 계정은 모든 거래에서 자동 리베이트. 만료 없음, 수동 신청 불필요.',
@@ -1491,6 +1553,25 @@ function netDay(){const d=netNow();return d.getUTCFullYear()*10000+(d.getUTCMont
 function updYear(){
   const y=netYear();
   document.querySelectorAll('[data-year]').forEach(el=>el.textContent=y);
+  // Also update the static WebPage schema's dateModified to today
+  // (datePublished stays at site launch date)
+  try{
+    const wpSchema=document.querySelector('script[type="application/ld+json"]');
+    // Find the WebPage one
+    document.querySelectorAll('script[type="application/ld+json"]').forEach(s=>{
+      try{
+        const d=JSON.parse(s.textContent);
+        if(d['@type']==='WebPage'){
+          const today=netNow();
+          const isoToday=today.getUTCFullYear()+'-'+String(today.getUTCMonth()+1).padStart(2,'0')+'-'+String(today.getUTCDate()).padStart(2,'0');
+          if(d.dateModified!==isoToday){
+            d.dateModified=isoToday;
+            s.textContent=JSON.stringify(d);
+          }
+        }
+      }catch(e){}
+    });
+  }catch(e){}
   LAST_RENDERED_YEAR=y;
 }
 
@@ -1552,33 +1633,97 @@ function go(p){
 }
 
 // ============================================================
-// CTA CLICK — direct jump to affiliate URL (no intermediate /go/ page)
-// - Fires GA4 + Clarity tracking events
-// - Opens in new tab with rel="noopener nofollow sponsored" (Google-recommended)
-// - User stays on our site (current tab), affiliate opens in new tab
+// CTA TRACKING — fires GA4 + Clarity events when affiliate link is clicked
+// Used INLINE in <a onclick="..."> wrappers (link's href does the actual navigation)
+// Also serves as JS fallback for legacy buttons (rare)
 // ============================================================
 function ctaClick(exId, position){
   position = position || window.currentRoute || 'unknown';
   const ex = (D.exs||[]).find(e=>e.id===exId);
-  if(!ex || !ex.url){
-    console.warn('ctaClick: exchange not found or missing url:', exId);
-    return false;
+  if(!ex){
+    console.warn('ctaClick: exchange not found:', exId);
+    return true;
   }
   // Fire tracking (synchronous to ensure delivery before navigation)
   if(window.trackCTA){
     window.trackCTA(exId, 'cta_' + position, ex.code || '');
   }
-  // Open affiliate URL in new tab
-  // sponsored = Google official marker for paid/affiliate links (since 2019)
-  // nofollow = no SEO weight transfer (we're not vouching for them as our content)
-  // noopener = prevent new tab from accessing window.opener (security)
-  const win = window.open(ex.url, '_blank', 'noopener,noreferrer');
-  if(!win){
-    // Popup blocked — fall back to current tab navigation
-    location.href = ex.url;
+  // Fallback: if called as button onclick (no surrounding <a>), open URL
+  if(ex.url){
+    const win = window.open(ex.url, '_blank', 'noopener,noreferrer');
+    if(!win) location.href = ex.url;
   }
-  return false; // prevent default
+  return false;
 }
+
+// CTA TRACKING ONLY — for <a href> wrappers
+// Inline pattern: onclick="trackCtaClick('okx','hero','WLFI47')"
+// Returns undefined (truthy) so the <a> navigation proceeds normally
+function trackCtaClick(exId, position, code){
+  position = position || window.currentRoute || 'unknown';
+  if(window.trackCTA) window.trackCTA(exId, 'cta_' + position, code || '');
+}
+
+// ============================================================
+// NEWSLETTER EMAIL CAPTURE — graceful with or without backend
+// - If FORM_ENDPOINT is set (Formspree/formsubmit.co/Mailerlite), POST there
+// - Otherwise, save to localStorage and show success
+// - You can later batch-export from localStorage when setting up email service
+// ============================================================
+window.NEWSLETTER_ENDPOINT = ''; // TODO: paste your Formspree/etc endpoint here, e.g. 'https://formspree.io/f/xxxxxxxx'
+
+function subscribeEmail(e){
+  if(e) e.preventDefault();
+  const inputEl = document.getElementById('newsEmail');
+  const msgEl = document.getElementById('newsMsg');
+  if(!inputEl) return false;
+  const email = (inputEl.value||'').trim().toLowerCase();
+  if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    if(msgEl){msgEl.textContent=(tr('news_invalid')||'请输入有效的邮箱地址');msgEl.className='news-msg err'}
+    return false;
+  }
+  // Track for analytics
+  if(window.trackCTA) window.trackCTA('newsletter','subscribe',email.split('@')[1]||'');
+  if(typeof gtag === 'function'){
+    gtag('event','newsletter_subscribe',{email_domain: email.split('@')[1]||''});
+  }
+  const ep = window.NEWSLETTER_ENDPOINT;
+  if(ep){
+    // POST to configured backend
+    fetch(ep, {
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body: JSON.stringify({email, source:'crh-newsletter', lang, route:location.pathname})
+    }).then(r=>{
+      if(r.ok){
+        if(msgEl){msgEl.textContent='✓ '+(tr('news_ok')||'订阅成功！请检查你的邮箱确认');msgEl.className='news-msg ok'}
+        inputEl.value='';
+      }else{
+        throw new Error('HTTP '+r.status);
+      }
+    }).catch(()=>{
+      // Network failure or backend not configured — fall back to localStorage
+      _newsletterLocalSave(email, msgEl, inputEl);
+    });
+  }else{
+    // No backend configured — save locally for manual export later
+    _newsletterLocalSave(email, msgEl, inputEl);
+  }
+  return false;
+}
+function _newsletterLocalSave(email, msgEl, inputEl){
+  try{
+    const list = JSON.parse(localStorage.getItem('crh_news_emails')||'[]');
+    if(!list.includes(email)) list.push(email);
+    localStorage.setItem('crh_news_emails', JSON.stringify(list));
+    localStorage.setItem('crh_news_last', new Date().toISOString());
+    if(msgEl){msgEl.textContent='✓ '+(tr('news_ok')||'订阅成功！我们将很快与你联系');msgEl.className='news-msg ok'}
+    if(inputEl) inputEl.value='';
+  }catch(e){
+    if(msgEl){msgEl.textContent=tr('news_err')||'订阅失败，请稍后再试';msgEl.className='news-msg err'}
+  }
+}
+// ============================================================
 
 // ============================================================
 // MOBILE BOTTOM CTA BAR — appears after scroll, contextual to page
@@ -1592,8 +1737,9 @@ function ctaClick(exId, position){
 let _mbCtaShown = false;
 let _mbCtaCurrentEx = null;
 function mbCtaTrigger(){
+  // Just fire tracking — link's href + target="_blank" handle navigation
   if(!_mbCtaCurrentEx) return;
-  ctaClick(_mbCtaCurrentEx.id, 'mobile_bar');
+  if(window.trackCTA) window.trackCTA(_mbCtaCurrentEx.id, 'cta_mobile_bar', _mbCtaCurrentEx.code || '');
 }
 function mbCtaUpdate(){
   // Decide which exchange to show
@@ -1627,6 +1773,8 @@ function mbCtaUpdate(){
   if(btn){
     btn.style.background = 'linear-gradient(135deg,'+c+','+c+'cc)';
     btn.textContent = ((typeof tr==='function'?tr('register_now'):'立即注册') || '立即注册') + ' →';
+    // SET HREF to exchange URL (or fallback to ex detail page if no URL set)
+    btn.href = ex.url || '/exchange/' + ex.id;
   }
 }
 function mbCtaShow(){
@@ -1676,7 +1824,20 @@ function gr(){
   if(s[0]==='go'&&s[1])return{p:'go',id:s[1]};
   if(s[0]==='exchange'&&s[1])return{p:'exch',id:s[1]};
   if(s[0]==='exchanges'||s[0]==='exchange')return{p:'exs'};
+  if(s[0]==='dex'&&s[1])return{p:'exch',id:s[1]};
+  if(s[0]==='dex')return{p:'dex'};
+  if(s[0]==='wallets'||s[0]==='wallet'){
+    if(s[1])return{p:'exch',id:s[1]};
+    return{p:'wallets'};
+  }
   if(s[0]==='compare'&&s[1])return{p:'compare',id:s[1]};
+  if(s[0]==='compare')return{p:'compare'};
+  if(s[0]==='tools'){
+    if(s[1]==='rebate-calculator'||s[1]==='rebate')return{p:'tool_rebate'};
+    if(s[1]==='exchange-wizard'||s[1]==='wizard')return{p:'tool_wizard'};
+    if(s[1]==='fee-comparison'||s[1]==='fees')return{p:'tool_fees'};
+    return{p:'tools'};
+  }
   if(s[0]==='article'&&s[1]){
     const v=s[1];
     if(/^\d+$/.test(v))return{p:'art',id:+v};
@@ -1734,7 +1895,13 @@ function rr(){
       disc:{t:'disc_seo_t',d:'disc_seo_d',k:'disc_seo_k'},
       access:{t:'access_seo_t',d:'access_seo_d',k:'access_seo_k'},
       bonus:{t:'bonus_seo_t',d:'bonus_seo_d',k:'bonus_seo_k'},
-      compare:{t:'cmp_seo_t',d:'cmp_seo_d',k:'cmp_seo_k'}
+      compare:{t:'cmp_seo_t',d:'cmp_seo_d',k:'cmp_seo_k'},
+      tools:{t:'tools_seo_t',d:'tools_seo_d',k:'tools_seo_k'},
+      tool_rebate:{t:'tool_reb_seo_t',d:'tool_reb_seo_d',k:'tool_reb_seo_k'},
+      tool_wizard:{t:'tool_wiz_seo_t',d:'tool_wiz_seo_d',k:'tool_wiz_seo_k'},
+      tool_fees:{t:'tool_fee_seo_t',d:'tool_fee_seo_d',k:'tool_fee_seo_k'},
+      dex:{t:'dex_seo_t',d:'dex_seo_d',k:'dex_seo_k'},
+      wallets:{t:'wal_seo_t',d:'wal_seo_d',k:'wal_seo_k'}
     };
     let ti,de,kw='';
     if(r.p==='exch'&&r.id){
@@ -1784,6 +1951,11 @@ function rr(){
     if(ol)ol.content=localeMap[lang]||'zh_CN';
     const old=document.getElementById('artSchema');if(old)old.remove();
     const oldBc=document.getElementById('artBcSchema');if(oldBc)oldBc.remove();
+    const oldHt=document.getElementById('artHowToSchema');if(oldHt)oldHt.remove();
+  }
+  // Clean compare schema on non-compare routes
+  if(r.p!=='compare'){
+    const oldCmp=document.getElementById('cmpSchema');if(oldCmp)oldCmp.remove();
   }
   // Update canonical URL based on route
   updCanonical(r);
@@ -1793,8 +1965,14 @@ function rr(){
     switch(r.p){
       case'home':a.innerHTML=rHome();iHome();break;
       case'exs':a.innerHTML=rExchanges();break;
+      case'dex':a.innerHTML=rDexList();break;
+      case'wallets':a.innerHTML=rWalletsList();break;
       case'exch':a.innerHTML=rExchange(r.id);break;
       case'compare':a.innerHTML=rCompare(r.id);break;
+      case'tools':a.innerHTML=rToolsIndex();break;
+      case'tool_rebate':a.innerHTML=rToolRebate();iToolRebate();break;
+      case'tool_wizard':a.innerHTML=rToolWizard();iToolWizard();break;
+      case'tool_fees':a.innerHTML=rToolFees();iToolFees();break;
       case'go':a.innerHTML=rGo(r.id);iGo();break;
       case'coin':a.innerHTML=rCoin(r.id);iCoin(r.id);break;
       case'mkts':a.innerHTML=rMarkets();iMarkets();break;
@@ -1825,6 +2003,12 @@ function updCanonical(r){
   else if(r.p==='compare'){
     url += r.id ? 'compare/'+r.id : 'compare';
   }
+  else if(r.p==='tools'){url+='tools'}
+  else if(r.p==='tool_rebate'){url+='tools/rebate-calculator'}
+  else if(r.p==='tool_wizard'){url+='tools/exchange-wizard'}
+  else if(r.p==='tool_fees'){url+='tools/fee-comparison'}
+  else if(r.p==='dex'){url+='dex'}
+  else if(r.p==='wallets'){url+='wallets'}
   else if(r.p==='art'){
     const a=findArt(r);if(a)url+=artUrl(a);
   }
@@ -1944,8 +2128,25 @@ function injectRouteSchema(r,url){
   const staticPageMap={
     mkts:{n:'nav_market'},guides:{n:'nav_guides'},
     arts:{n:'nav_art'},about:{n:'nav_about'},disc:{n:'nav_disc'},bonus:{n:'nav_bonus'},
-    access:{n:'nav_access'}
+    access:{n:'nav_access'},
+    dex:{n:'nav_dex'},wallets:{n:'nav_wallets'},
+    tools:{n:'nav_tools'},tool_rebate:{n:'tool_idx_reb_t'},
+    tool_wizard:{n:'tool_idx_wiz_t'},tool_fees:{n:'tool_idx_fee_t'}
   };
+  // Special: list pages get ItemList schema in addition to breadcrumb
+  if(r.p==='dex' || r.p==='wallets'){
+    const filterType = r.p==='dex' ? 'dex' : 'wallet';
+    const home='https://cryptorebatehub.com/';
+    const items = D.exs.filter(e=>!e.hidden && e.type===filterType).slice(0,10).map((e,i)=>({
+      "@type":"ListItem","position":i+1,
+      "name":pL(e.name)||e.id,
+      "url":home+'exchange/'+e.id,
+      "description":(e.rebate?e.rebate+' rebate · ':'')+(pL(e.sub)||'')
+    }));
+    if(items.length){
+      addSchema({"@context":"https://schema.org","@type":"ItemList","name":r.p==='dex'?(tr('dex_t')||'DEX'):(tr('wal_t')||'Web3 Wallets'),"description":r.p==='dex'?(tr('dex_d')||''):(tr('wal_d')||''),"url":url,"itemListElement":items,"inLanguage":langCode});
+    }
+  }
   if(staticPageMap[r.p]){
     const home='https://cryptorebatehub.com/';
     const nm=tr(staticPageMap[r.p].n)||r.p;
@@ -2070,15 +2271,18 @@ return`<header class="hr"><div class="w">
 <h1 data-t-html="hr_t"></h1>
 <p data-t="hr_d"></p>
 <div class="hb">
-<button class="bt bt-g" onclick="ctaClick(topEx?topEx.id:'okx')" style="font-size:15px;padding:14px 26px">🚀 ${tr('hr_b_main')||'立即注册享返佣'} →</button>
+<a class="bt bt-g" href="${es((topEx&&topEx.url)||'/exchange/okx')}" target="_blank" rel="noopener noreferrer nofollow sponsored" onclick="trackCtaClick((topEx&&topEx.id)||'okx','hero','${es((topEx&&topEx.code)||'WLFI47')}')" aria-label="Register at recommended exchange (sponsored, opens in new tab)" style="font-size:15px;padding:14px 26px">🚀 ${tr('hr_b_main')||'立即注册享返佣'} →</a>
 <button class="bt bt-o" onclick="go('exchanges')" data-t="hr_b1"></button>
 </div>
-${recEx?`<div class="geo-rec" style="display:inline-flex;align-items:center;gap:12px;margin-top:18px;padding:11px 22px;background:linear-gradient(135deg,${recEx.color||'#2ecf90'}18,${recEx.color||'#2ecf90'}08);border:1.5px solid ${recEx.color||'#2ecf90'}55;border-radius:99px;cursor:pointer;font-size:13.5px;font-weight:600;color:var(--tx);max-width:560px" onclick="ctaClick('${recEx.id}','geo_rec')">
+<div style="margin-top:10px;font-size:12px;color:var(--tx3);opacity:.85">
+  <span aria-hidden="true">ℹ️</span> ${tr('aff_note')||'本站包含联盟邀请码，注册后无额外费用，详见'} <a onclick="go('disclosure')" style="color:var(--grn);cursor:pointer;text-decoration:underline">${tr('aff_note_link')||'透明披露'}</a>
+</div>
+${recEx?`<a class="geo-rec" href="${es(recEx.url||'#')}" target="_blank" rel="noopener noreferrer nofollow sponsored" onclick="trackCtaClick('${recEx.id}','geo_rec','${es(recEx.code||'')}')" aria-label="Register at ${es(pL(recEx.name)||recEx.id)} (geo-recommended, sponsored, opens in new tab)" style="display:inline-flex;align-items:center;gap:12px;margin-top:18px;padding:11px 22px;background:linear-gradient(135deg,${recEx.color||'#2ecf90'}18,${recEx.color||'#2ecf90'}08);border:1.5px solid ${recEx.color||'#2ecf90'}55;border-radius:99px;cursor:pointer;font-size:13.5px;font-weight:600;color:var(--tx);max-width:560px;text-decoration:none">
 <span style="font-size:18px">${es(regionLabel)}</span>
 <span>${tr('geo_rec_t')||'根据你的地区，推荐使用'}</span>
 <strong style="color:${recEx.color||'#2ecf90'}">${es(pL(recEx.name))}</strong>
 <span style="background:${recEx.color||'#2ecf90'};color:var(--bg);padding:3px 10px;border-radius:99px;font-size:11px;font-weight:800">${tr('geo_rec_cta')||'立即注册'} →</span>
-</div>`:''}
+</a>`:''}
 <div onclick="go('access-urls')" style="display:inline-flex;align-items:center;gap:10px;margin-top:18px;padding:11px 22px;background:linear-gradient(135deg,var(--grnA),rgba(93,160,255,.12));border:1.5px solid var(--grn);border-radius:99px;cursor:pointer;font-size:14px;font-weight:700;color:var(--grn);transition:all .25s;box-shadow:0 4px 16px rgba(46,207,144,.22);animation:mirGlow 2.5s ease-in-out infinite" onmouseover="this.style.transform='translateY(-2px) scale(1.02)';this.style.boxShadow='0 6px 22px rgba(46,207,144,.32)'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 16px rgba(46,207,144,.22)'">
 <span style="display:inline-block;width:8px;height:8px;background:var(--grn);border-radius:50%;animation:mirPulse 1.5s ease-in-out infinite;box-shadow:0 0 12px var(--grn)"></span>
 🌐 ${tr('hr_access_t')||'无法访问交易所主域名？'} ${tr('hr_access_btn')||'查看官方备用入口'} →
@@ -2126,7 +2330,7 @@ ${ex.code?`<div class="top-ex-code-row">
 <button class="top-ex-code-cp" onclick="event.stopPropagation();copyTxt('${es(ex.code)}',this)" title="${tr('copy')||'复制'}">📋</button>
 </div>`:''}
 <div class="top-ex-actions">
-<button class="bt bt-g top-ex-go" style="background:${c};color:var(--bg)" onclick="ctaClick(ex.id)">🎁 ${tr('register_now')||'立即注册'} →</button>
+<a class="bt bt-g top-ex-go" href="${es(ex.url||'/exchange/'+ex.id)}" target="_blank" rel="noopener noreferrer nofollow sponsored" onclick="trackCtaClick('${ex.id}','top_card','${es(ex.code||'')}')" aria-label="Register at ${es(pL(ex.name))} (sponsored link, opens in new tab)" style="background:${c};color:var(--bg)">🎁 ${tr('register_now')||'立即注册'} →</a>
 <button class="bt bt-o top-ex-detail" onclick="go('exchange/${ex.id}')">${tr('view_detail')||'详情'}</button>
 </div>
 </article>`}).join('')}
@@ -2151,12 +2355,12 @@ ${ex.code?`<div class="top-ex-code-row">
 <table class="cmp-table">
 <thead><tr><th>${tr('cmp_th_ex')||'交易所'}</th><th>${tr('cmp_th_rebate')||'本站返佣'}</th><th>${tr('cmp_th_fee')||'实际费率'}</th><th>${tr('cmp_th_best')||'最适合'}</th><th></th></tr></thead>
 <tbody>
-${exs.slice(0,3).map(ex=>{const c=ex.color||'#2ecf90';const bestFor=ex.id==='okx'?(tr('cmp_okx_best')||'综合用户'):ex.id==='binance'?(tr('cmp_bn_best')||'现货 + 大资金'):ex.id==='bybit'?(tr('cmp_by_best')||'合约 + 跟单'):(tr('cmp_other_best')||'多元化');const realFee=ex.id==='okx'?'0.06%':ex.id==='binance'?'0.06%':ex.id==='bybit'?'0.04%':'~0.08%';return`<tr onclick="ctaClick(ex.id)" style="cursor:pointer">
+${exs.slice(0,3).map(ex=>{const c=ex.color||'#2ecf90';const bestFor=ex.id==='okx'?(tr('cmp_okx_best')||'综合用户'):ex.id==='binance'?(tr('cmp_bn_best')||'现货 + 大资金'):ex.id==='bybit'?(tr('cmp_by_best')||'合约 + 跟单'):(tr('cmp_other_best')||'多元化');const realFee=ex.id==='okx'?'0.06%':ex.id==='binance'?'0.06%':ex.id==='bybit'?'0.04%':'~0.08%';return`<tr onclick="ctaClick(ex.id)" style="cursor:pointer" data-cta-url="${es(ex.url||'')}">
 <td><div style="display:flex;align-items:center;gap:10px"><div style="width:34px;height:34px;border-radius:8px;background:${c}22;color:${c};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0">${es(ex.logo)}</div><div><div style="font-weight:700">${es(pL(ex.name))}</div><div style="font-size:12px;color:var(--tx3);font-family:'JetBrains Mono',monospace">${es(ex.code||'')}</div></div></div></td>
 <td><span style="color:${c};font-weight:700;font-size:16px">${es(ex.rebate||'-')}</span></td>
 <td><span style="font-family:'JetBrains Mono',monospace">${realFee}</span></td>
 <td><span style="font-size:13px">${bestFor}</span></td>
-<td style="text-align:right"><button class="bt bt-g" style="background:${c};color:var(--bg);font-size:12px;padding:7px 14px" onclick="event.stopPropagation();ctaClick(ex.id)">→ ${tr('register_now')||'注册'}</button></td>
+<td style="text-align:right"><a class="bt bt-g" href="${es(ex.url||'/exchange/'+ex.id)}" target="_blank" rel="noopener noreferrer nofollow sponsored" onclick="event.stopPropagation();trackCtaClick('${ex.id}','compare_row','${es(ex.code||'')}')" style="background:${c};color:var(--bg);font-size:12px;padding:7px 14px">→ ${tr('register_now')||'注册'}</a></td>
 </tr>`}).join('')}
 </tbody>
 </table>
@@ -2182,15 +2386,59 @@ ${D.arts.filter(isVisible).length>6?`<div style="text-align:center;margin-top:24
 <h2>${tr('fin_cta_t')||'5 分钟，开始永久省手续费'}</h2>
 <p>${tr('fin_cta_d')||'点击下方按钮直达交易所官方注册页，邀请码自动绑定。每月自动到账返佣，永不过期。'}</p>
 <div class="fin-cta-btns">
-${exs.slice(0,3).map(ex=>{const c=ex.color||'#2ecf90';return`<button class="fin-cta-btn" style="--c:${c}" onclick="ctaClick(ex.id)">
+${exs.slice(0,3).map(ex=>{const c=ex.color||'#2ecf90';return`<a class="fin-cta-btn" href="${es(ex.url||'/exchange/'+ex.id)}" target="_blank" rel="noopener noreferrer nofollow sponsored" onclick="trackCtaClick('${ex.id}','fin_cta','${es(ex.code||'')}')" style="--c:${c};text-decoration:none">
 <span class="fin-cta-logo" style="background:${c}22;color:${c}">${es(ex.logo)}</span>
 <span class="fin-cta-text">
 <span class="fin-cta-name">${es(pL(ex.name))}</span>
 <span class="fin-cta-rebate" style="color:${c}">${es(ex.rebate||'返佣')} ${tr('permanent')||'永久'}</span>
 </span>
 <span class="fin-cta-arrow">→</span>
-</button>`}).join('')}
+</a>`}).join('')}
 </div>
+</div>
+</div></section>
+
+<!-- DEX + WEB3 WALLETS SECTION — new product categories -->
+<section class="sc" id="dexWalS"><div class="w">
+<div class="sh"><div class="sl">⛓ ${tr('catnew_sl')||'DEX + Web3 钱包'}</div><h2>${tr('catnew_t')||'除了 CEX，还有更多变现路径'}</h2><p class="sd">${tr('catnew_d')||'链上永续合约 DEX + 交易所官方多链钱包，部分支持手续费返佣。'}</p></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
+<a onclick="go('dex')" style="display:block;padding:24px 26px;background:linear-gradient(135deg,#56c8d615,#56c8d605);border:1.5px solid var(--bd2);border-radius:var(--r2);cursor:pointer;text-decoration:none;transition:.25s" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='var(--sh-md)';this.style.borderColor='#56c8d655'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='var(--bd2)'">
+<div style="font-size:30px;margin-bottom:10px">⛓</div>
+<div style="font-size:17px;font-weight:800;margin-bottom:6px;color:var(--tx)">${tr('catnew_dex_t')||'永续合约 DEX'}</div>
+<div style="font-size:13px;color:var(--tx2);line-height:1.6;margin-bottom:10px">${tr('catnew_dex_d')||'Hyperliquid · 无 KYC · 4% 返佣 · 潜在空投'}</div>
+<div style="font-size:12.5px;color:#56c8d6;font-weight:700">${tr('catnew_cta_dex')||'查看 DEX'} →</div>
+</a>
+<a onclick="go('wallets')" style="display:block;padding:24px 26px;background:linear-gradient(135deg,#fcd53515,#fcd53505);border:1.5px solid var(--bd2);border-radius:var(--r2);cursor:pointer;text-decoration:none;transition:.25s" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='var(--sh-md)';this.style.borderColor='#fcd53555'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='var(--bd2)'">
+<div style="font-size:30px;margin-bottom:10px">💼</div>
+<div style="font-size:17px;font-weight:800;margin-bottom:6px;color:var(--tx)">${tr('catnew_wal_t')||'Web3 钱包'}</div>
+<div style="font-size:13px;color:var(--tx2);line-height:1.6;margin-bottom:10px">${tr('catnew_wal_d')||'Binance + OKX 多链钱包 · DeFi · Swap 返佣'}</div>
+<div style="font-size:12.5px;color:#fcd535;font-weight:700">${tr('catnew_cta_wal')||'查看钱包'} →</div>
+</a>
+</div>
+</div></section>
+
+<!-- TOOLS SECTION — interactive widgets, high-engagement -->
+<section class="sc" id="toolsS"><div class="w">
+<div class="sh"><div class="sl">🛠 ${tr('tools_section_sl')||'实用工具'}</div><h2>${tr('tools_section_t')||'帮你做更聪明的决策'}</h2><p class="sd">${tr('tools_section_d')||'3 个免费在线工具：返佣计算器、交易所匹配向导、实时费率对比。'}</p></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
+<a onclick="go('tools/rebate-calculator')" style="display:block;padding:24px 26px;background:linear-gradient(135deg,#2ecf9015,#2ecf9005);border:1.5px solid var(--bd2);border-radius:var(--r2);cursor:pointer;text-decoration:none;transition:.25s" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='var(--sh-md)';this.style.borderColor='#2ecf9055'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='var(--bd2)'">
+<div style="font-size:30px;margin-bottom:10px">🧮</div>
+<div style="font-size:17px;font-weight:800;margin-bottom:6px;color:var(--tx)">${tr('tool_idx_reb_t')||'返佣计算器'}</div>
+<div style="font-size:13px;color:var(--tx2);line-height:1.6;margin-bottom:10px">${tr('tool_idx_reb_d')||'输入月交易量 → 算出每月/每年能省多少'}</div>
+<div style="font-size:12.5px;color:var(--grn);font-weight:700">${tr('open_tool')||'打开工具'} →</div>
+</a>
+<a onclick="go('tools/exchange-wizard')" style="display:block;padding:24px 26px;background:linear-gradient(135deg,#5da0ff15,#5da0ff05);border:1.5px solid var(--bd2);border-radius:var(--r2);cursor:pointer;text-decoration:none;transition:.25s" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='var(--sh-md)';this.style.borderColor='#5da0ff55'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='var(--bd2)'">
+<div style="font-size:30px;margin-bottom:10px">🎯</div>
+<div style="font-size:17px;font-weight:800;margin-bottom:6px;color:var(--tx)">${tr('tool_idx_wiz_t')||'交易所匹配向导'}</div>
+<div style="font-size:13px;color:var(--tx2);line-height:1.6;margin-bottom:10px">${tr('tool_idx_wiz_d')||'回答 5 个问题 → 智能推荐'}</div>
+<div style="font-size:12.5px;color:#5da0ff;font-weight:700">${tr('open_tool')||'打开工具'} →</div>
+</a>
+<a onclick="go('tools/fee-comparison')" style="display:block;padding:24px 26px;background:linear-gradient(135deg,#ff8a3a15,#ff8a3a05);border:1.5px solid var(--bd2);border-radius:var(--r2);cursor:pointer;text-decoration:none;transition:.25s" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='var(--sh-md)';this.style.borderColor='#ff8a3a55'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='var(--bd2)'">
+<div style="font-size:30px;margin-bottom:10px">📊</div>
+<div style="font-size:17px;font-weight:800;margin-bottom:6px;color:var(--tx)">${tr('tool_idx_fee_t')||'费率实时对比'}</div>
+<div style="font-size:13px;color:var(--tx2);line-height:1.6;margin-bottom:10px">${tr('tool_idx_fee_d')||'完整费率表 + 按交易量算成本'}</div>
+<div style="font-size:12.5px;color:#ff8a3a;font-weight:700">${tr('open_tool')||'打开工具'} →</div>
+</a>
 </div>
 </div></section>
 
@@ -2267,11 +2515,11 @@ function rCoin(inst){
 <div style="background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r2);padding:18px 22px;margin-top:18px">
 <h2 style="font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px">🏦 ${tr('cp_buy_at')||'去这些交易所购买'} ${cn(c.sym)}</h2>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px">
-${D.exs.filter(e=>!e.hidden).map(ex=>{const cl=ex.color||'#2ecf90';return`<div onclick="ctaClick(ex.id)" style="cursor:pointer;background:var(--bg);border:1px solid var(--bd);border-radius:9px;padding:14px;display:flex;align-items:center;gap:11px;transition:.15s" onmouseover="this.style.borderColor='${cl}40';this.style.transform='translateY(-1px)'" onmouseout="this.style.borderColor='var(--bd)';this.style.transform='translateY(0)'">
+${D.exs.filter(e=>!e.hidden).map(ex=>{const cl=ex.color||'#2ecf90';return`<a href="${es(ex.url||'/exchange/'+ex.id)}" target="_blank" rel="noopener noreferrer nofollow sponsored" onclick="trackCtaClick('${ex.id}','small_card','${es(ex.code||'')}')" style="cursor:pointer;background:var(--bg);border:1px solid var(--bd);border-radius:9px;padding:14px;display:flex;align-items:center;gap:11px;transition:.15s;text-decoration:none;color:inherit" onmouseover="this.style.borderColor='${cl}40';this.style.transform='translateY(-1px)'" onmouseout="this.style.borderColor='var(--bd)';this.style.transform='translateY(0)'">
 <div style="width:36px;height:36px;border-radius:9px;background:${cl}22;color:${cl};display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0">${es(ex.logo)}</div>
 <div style="flex:1;min-width:0"><div style="font-size:13.5px;font-weight:700">${es(pL(ex.name))}</div>${ex.rebate?`<div style="font-size:12.5px;color:${cl};font-weight:600">${tr('rebate')} ${es(ex.rebate)}${ex.code?' · '+ex.code:''}</div>`:''}</div>
 <div style="color:var(--tx3);font-size:14px">→</div>
-</div>`}).join('')}
+</a>`}).join('')}
 </div>
 </div>
 
@@ -2429,12 +2677,19 @@ function switchTV(type){
 }
 
 function rExchanges(){
-const exs=D.exs.filter(e=>!e.hidden).slice().sort((a,b)=>(b.ft||0)-(a.ft||0));
+// Show CEX exchanges (default type or 'cex'); DEX and Wallets get their own pages
+const exs=D.exs.filter(e=>!e.hidden && (!e.type || e.type==='cex')).slice().sort((a,b)=>(b.ft||0)-(a.ft||0));
 return`<div class="ap" style="max-width:1080px"><a class="bk" onclick="go('')">← ${tr('art_back')}</a>
 <div style="text-align:center;margin-bottom:36px">
 <div class="sl" style="margin-bottom:12px">${tr('ex_sl')}</div>
 <h1 class="aph" style="margin-bottom:14px">${tr('exchanges_t')}</h1>
 <p style="color:var(--tx2);font-size:16px;max-width:600px;margin:0 auto">${tr('exchanges_d')}</p>
+</div>
+<!-- Category tabs -->
+<div style="display:flex;gap:8px;justify-content:center;margin-bottom:28px;flex-wrap:wrap">
+<a onclick="go('exchanges')" style="display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:99px;background:var(--grn);color:var(--bg);font-size:13.5px;font-weight:700;cursor:pointer;text-decoration:none">🏛 CEX ${tr('exchanges')||'交易所'}</a>
+<a onclick="go('dex')" style="display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:99px;background:var(--bg3);color:var(--tx);border:1px solid var(--bd);font-size:13.5px;font-weight:600;cursor:pointer;text-decoration:none">⛓ DEX</a>
+<a onclick="go('wallets')" style="display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:99px;background:var(--bg3);color:var(--tx);border:1px solid var(--bd);font-size:13.5px;font-weight:600;cursor:pointer;text-decoration:none">💼 ${tr('nav_wallets')||'Web3 钱包'}</a>
 </div>
 <div class="eg">${exs.map(ex=>{const c=ex.color||'#2ecf90';return`<article class="ec" onclick="go('exchange/${ex.id}')" style="border-color:${ex.ft?c+'40':'var(--bd)'}">${ex.ft?`<div class="etg" style="background:${c};color:var(--bg)">${tr('rec')}</div>`:''}
 <div class="eic" style="background:${c}22;color:${c}">${es(ex.logo)}</div>
@@ -2444,6 +2699,82 @@ ${ex.rebate?`<span class="rebate-tag" style="background:${c}22;color:${c}">${tr(
 <ul class="ef" style="margin-top:14px">${(pL(ex.features)||[]).map(f=>`<li><span class="ck" style="background:${c}22;color:${c}">✓</span>${es(f)}</li>`).join('')}</ul>
 <div class="eb" style="background:${c}18;color:${c}">${tr('ex_detail')} →</div>
 </article>`}).join('')}</div>
+</div>${rFoot()}`;
+}
+
+// ────────────────────────────────────────────────────────────
+// rDexList — Decentralized exchanges (Hyperliquid etc.)
+// ────────────────────────────────────────────────────────────
+function rDexList(){
+  const exs = D.exs.filter(e=>!e.hidden && e.type==='dex').slice().sort((a,b)=>(b.ft||0)-(a.ft||0));
+  return `<div class="ap" style="max-width:1080px"><a class="bk" onclick="go('')">← ${tr('art_back')}</a>
+<div style="text-align:center;margin-bottom:36px">
+<div class="sl" style="margin-bottom:12px">⛓ DEX</div>
+<h1 class="aph" style="margin-bottom:14px">${tr('dex_t')||'去中心化永续合约 DEX'}</h1>
+<p style="color:var(--tx2);font-size:16px;max-width:600px;margin:0 auto">${tr('dex_d')||'无需 KYC、完全链上、连接钱包即可交易的永续合约 DEX。'}</p>
+</div>
+<!-- Category tabs -->
+<div style="display:flex;gap:8px;justify-content:center;margin-bottom:28px;flex-wrap:wrap">
+<a onclick="go('exchanges')" style="display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:99px;background:var(--bg3);color:var(--tx);border:1px solid var(--bd);font-size:13.5px;font-weight:600;cursor:pointer;text-decoration:none">🏛 CEX ${tr('exchanges')||'交易所'}</a>
+<a onclick="go('dex')" style="display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:99px;background:#56c8d6;color:var(--bg);font-size:13.5px;font-weight:700;cursor:pointer;text-decoration:none">⛓ DEX</a>
+<a onclick="go('wallets')" style="display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:99px;background:var(--bg3);color:var(--tx);border:1px solid var(--bd);font-size:13.5px;font-weight:600;cursor:pointer;text-decoration:none">💼 ${tr('nav_wallets')||'Web3 钱包'}</a>
+</div>
+${exs.length===0?`<div style="text-align:center;padding:60px 20px;color:var(--tx3)">${tr('dex_empty')||'暂无 DEX 数据'}</div>`:`
+<!-- DEX vs CEX explainer -->
+<div style="background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r2);padding:22px 26px;margin-bottom:24px">
+<h2 style="font-size:17px;margin:0 0 12px;display:flex;align-items:center;gap:8px">📚 ${tr('dex_vs_t')||'DEX vs CEX：什么区别？'}</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;font-size:13.5px;line-height:1.7;color:var(--tx2)">
+<div><strong style="color:var(--grn)">⛓ DEX 优势</strong><br>• ${tr('dex_pro1')||'无需 KYC，注册即用'}<br>• ${tr('dex_pro2')||'资金存自己钱包，无被盗风险'}<br>• ${tr('dex_pro3')||'链上完全透明'}<br>• ${tr('dex_pro4')||'通常有点数/空投机会'}</div>
+<div><strong style="color:var(--blu)">🏛 CEX 优势</strong><br>• ${tr('cex_pro1')||'界面友好，新手更易上手'}<br>• ${tr('cex_pro2')||'流动性更好，滑点更低'}<br>• ${tr('cex_pro3')||'法币入金（C2C/银行卡）'}<br>• ${tr('cex_pro4')||'客服 + 法律保护'}</div>
+</div>
+</div>
+<div class="eg">${exs.map(ex=>{const c=ex.color||'#56c8d6';return`<article class="ec" onclick="go('exchange/${ex.id}')" style="border-color:${ex.ft?c+'40':'var(--bd)'}">${ex.ft?`<div class="etg" style="background:${c};color:var(--bg)">${tr('rec')}</div>`:''}
+<div class="eic" style="background:${c}22;color:${c}">${es(ex.logo)}</div>
+<h3 class="en">${es(pL(ex.name))}</h3>
+<p class="esu">${es(pL(ex.sub))}</p>
+${ex.rebate?`<span class="rebate-tag" style="background:${c}22;color:${c}">${tr('rebate')} ${es(ex.rebate)}</span>`:''}
+<ul class="ef" style="margin-top:14px">${(pL(ex.features)||[]).map(f=>`<li><span class="ck" style="background:${c}22;color:${c}">✓</span>${es(f)}</li>`).join('')}</ul>
+<div class="eb" style="background:${c}18;color:${c}">${tr('ex_detail')} →</div>
+</article>`}).join('')}</div>`}
+</div>${rFoot()}`;
+}
+
+// ────────────────────────────────────────────────────────────
+// rWalletsList — Web3 wallets (Binance Wallet, OKX Wallet)
+// ────────────────────────────────────────────────────────────
+function rWalletsList(){
+  const exs = D.exs.filter(e=>!e.hidden && e.type==='wallet').slice().sort((a,b)=>(b.ft||0)-(a.ft||0));
+  return `<div class="ap" style="max-width:1080px"><a class="bk" onclick="go('')">← ${tr('art_back')}</a>
+<div style="text-align:center;margin-bottom:36px">
+<div class="sl" style="margin-bottom:12px">💼 ${tr('wal_label')||'WEB3 WALLET'}</div>
+<h1 class="aph" style="margin-bottom:14px">${tr('wal_t')||'Web3 钱包'}</h1>
+<p style="color:var(--tx2);font-size:16px;max-width:600px;margin:0 auto">${tr('wal_d')||'交易所官方多链 Web3 钱包，可玩 DeFi/NFT/链上 Swap，部分支持手续费返佣。'}</p>
+</div>
+<!-- Category tabs -->
+<div style="display:flex;gap:8px;justify-content:center;margin-bottom:28px;flex-wrap:wrap">
+<a onclick="go('exchanges')" style="display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:99px;background:var(--bg3);color:var(--tx);border:1px solid var(--bd);font-size:13.5px;font-weight:600;cursor:pointer;text-decoration:none">🏛 CEX ${tr('exchanges')||'交易所'}</a>
+<a onclick="go('dex')" style="display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:99px;background:var(--bg3);color:var(--tx);border:1px solid var(--bd);font-size:13.5px;font-weight:600;cursor:pointer;text-decoration:none">⛓ DEX</a>
+<a onclick="go('wallets')" style="display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:99px;background:#fcd535;color:var(--bg);font-size:13.5px;font-weight:700;cursor:pointer;text-decoration:none">💼 ${tr('nav_wallets')||'Web3 钱包'}</a>
+</div>
+${exs.length===0?`<div style="text-align:center;padding:60px 20px;color:var(--tx3)">${tr('wal_empty')||'暂无 Web3 钱包数据'}</div>`:`
+<!-- Wallet explainer -->
+<div style="background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r2);padding:22px 26px;margin-bottom:24px">
+<h2 style="font-size:17px;margin:0 0 10px;display:flex;align-items:center;gap:8px">💡 ${tr('wal_why_t')||'为什么用交易所官方 Web3 钱包？'}</h2>
+<ul style="margin:0;padding-left:20px;color:var(--tx2);font-size:13.5px;line-height:1.85">
+<li>${tr('wal_why_1')||'与交易所账户无缝衔接：链上资产 ↔ 交易所一键互转'}</li>
+<li>${tr('wal_why_2')||'内置 DEX 聚合器：链上 swap 也能获得返佣'}</li>
+<li>${tr('wal_why_3')||'多链支持（90+ 链），无需切换不同钱包'}</li>
+<li>${tr('wal_why_4')||'NFT/DeFi 一站式：减少跨平台风险'}</li>
+</ul>
+</div>
+<div class="eg">${exs.map(ex=>{const c=ex.color||'#fcd535';return`<article class="ec" onclick="go('exchange/${ex.id}')" style="border-color:${ex.ft?c+'40':'var(--bd)'}">${ex.ft?`<div class="etg" style="background:${c};color:var(--bg)">${tr('rec')}</div>`:''}
+<div class="eic" style="background:${c}22;color:${c}">${es(ex.logo)}</div>
+<h3 class="en">${es(pL(ex.name))}</h3>
+<p class="esu">${es(pL(ex.sub))}</p>
+${ex.rebate?`<span class="rebate-tag" style="background:${c}22;color:${c}">${tr('rebate')} ${es(ex.rebate)}</span>`:''}
+<ul class="ef" style="margin-top:14px">${(pL(ex.features)||[]).map(f=>`<li><span class="ck" style="background:${c}22;color:${c}">✓</span>${es(f)}</li>`).join('')}</ul>
+<div class="eb" style="background:${c}18;color:${c}">${tr('ex_detail')} →</div>
+</article>`}).join('')}</div>`}
 </div>${rFoot()}`;
 }
 
@@ -2516,24 +2847,52 @@ function rCompare(slug){
   const rec = recommendations[slug] || {summary: '两家都是顶级交易所，根据自己需求选择'};
   // SET SEO meta tags dynamically (overrides default)
   setTimeout(()=>{
-    const seoTitle = `${aName} vs ${bName} 对比 2026 | 手续费/币种/合约/返佣 哪个更好？— CryptoRebateHub`;
+    const seoTitle = `${aName} vs ${bName} 对比 ${netYear()} | 手续费/币种/合约/返佣 哪个更好？— CryptoRebateHub`;
     document.title = seoTitle;
     const seoDesc = `${aName} 对比 ${bName}：手续费、币种数、合约杠杆、返佣比例、安全性全面对比。新手 5 分钟选出适合自己的交易所。含独家邀请码（${a.code||'WLFI47'} / ${b.code||'WLFI47'}）。`;
     setMeta('description', seoDesc);
     setMeta('og:title', seoTitle, 'property');
     setMeta('og:description', seoDesc, 'property');
+    setMeta('og:type', 'article', 'property');
+    setMeta('twitter:title', seoTitle);
+    setMeta('twitter:description', seoDesc);
     const seoKw = `${aName} vs ${bName},${aName}和${bName}哪个好,${aName}对比${bName},${aName}还是${bName},${aName}和${bName}哪个手续费低,${aName} ${bName}邀请码,加密交易所对比,加密交易所推荐,${a.id}邀请码,${b.id}邀请码`;
     setMeta('keywords', seoKw);
+    // Inject ComparisonReview structured data for this comparison
+    const oldCmp = document.getElementById('cmpSchema');
+    if(oldCmp) oldCmp.remove();
+    const cmpSchema = {
+      "@context":"https://schema.org",
+      "@type":"Article",
+      "@id":`https://cryptorebatehub.com/compare/${slug}#article`,
+      "headline":seoTitle,
+      "description":seoDesc,
+      "datePublished":netYear()+'-01-01T00:00:00+08:00',
+      "dateModified":(new Date()).toISOString(),
+      "inLanguage":lang==='zh'?'zh-CN':lang,
+      "author":{"@type":"Organization","@id":"https://cryptorebatehub.com/#organization"},
+      "publisher":{"@id":"https://cryptorebatehub.com/#organization"},
+      "mainEntityOfPage":`https://cryptorebatehub.com/compare/${slug}`,
+      "about":[
+        {"@type":"FinancialProduct","name":aName,"url":a.url||""},
+        {"@type":"FinancialProduct","name":bName,"url":b.url||""}
+      ]
+    };
+    const s = document.createElement('script');
+    s.type = 'application/ld+json';
+    s.id = 'cmpSchema';
+    s.textContent = JSON.stringify(cmpSchema);
+    document.head.appendChild(s);
   }, 0);
   return `<div class="ap" style="max-width:980px"><a class="bk" onclick="go('exchanges')">← ${tr('nav_ex')}</a>
 
 <!-- HERO -->
 <div style="text-align:center;padding:40px 0 24px">
-<div style="display:inline-flex;gap:8px;background:var(--bg3);padding:5px 14px;border-radius:99px;font-size:12px;font-weight:700;color:var(--tx2);letter-spacing:.6px;text-transform:uppercase;margin-bottom:18px">📊 ${tr('cmp_label')||'对比'} 2026</div>
+<div style="display:inline-flex;gap:8px;background:var(--bg3);padding:5px 14px;border-radius:99px;font-size:12px;font-weight:700;color:var(--tx2);letter-spacing:.6px;text-transform:uppercase;margin-bottom:18px">📊 ${tr('cmp_label')||'对比'} ${netYear()}</div>
 <h1 style="font-size:clamp(28px,4.5vw,42px);font-weight:800;letter-spacing:-.5px;margin-bottom:14px;line-height:1.15">
 <span style="color:${ca}">${es(aName)}</span> <span style="color:var(--tx3);font-weight:400">vs</span> <span style="color:${cb}">${es(bName)}</span>
 </h1>
-<p style="font-size:16px;color:var(--tx2);max-width:640px;margin:0 auto;line-height:1.7">${tr('cmp_intro')||'2026 最新对比：手续费、币种、合约、返佣、安全性。新手 5 分钟选出适合自己的交易所。'}</p>
+<p style="font-size:16px;color:var(--tx2);max-width:640px;margin:0 auto;line-height:1.7">${tr('cmp_intro')||(netYear()+' 最新对比：手续费、币种、合约、返佣、安全性。新手 5 分钟选出适合自己的交易所。')}</p>
 </div>
 
 <!-- SUMMARY -->
@@ -2548,13 +2907,13 @@ function rCompare(slug){
 <div style="font-size:13px;color:var(--tx3);margin-bottom:6px">${tr('rebate')||'返佣'}</div>
 <div style="font-size:30px;font-weight:800;color:${ca};font-family:'JetBrains Mono',monospace;line-height:1;margin-bottom:4px">${es(a.rebate||'20%')}</div>
 <div style="font-size:12.5px;color:var(--tx2);margin-bottom:14px">${tr('invite_code')||'邀请码'}: <code style="color:${ca};background:none;border:none;padding:0;font-weight:700">${es(a.code||'WLFI47')}</code></div>
-<button class="bt bt-g" onclick="ctaClick(a.id)" style="background:${ca};color:var(--bg);font-size:14px;padding:10px 22px;width:100%">🚀 ${tr('register_now')||'注册'} ${es(aName)} →</button>
+<a class="bt bt-g" href="${es(a.url||'/exchange/'+a.id)}" target="_blank" rel="noopener noreferrer nofollow sponsored" onclick="trackCtaClick('${a.id}','compare_hero','${es(a.code||'')}')" style="background:${ca};color:var(--bg);font-size:14px;padding:10px 22px;width:100%">🚀 ${tr('register_now')||'注册'} ${es(aName)} →</a>
 </div>
 <div style="background:linear-gradient(135deg,${cb}18,${cb}06);border:2px solid ${cb}40;border-radius:var(--r2);padding:22px 20px;text-align:center">
 <div style="font-size:13px;color:var(--tx3);margin-bottom:6px">${tr('rebate')||'返佣'}</div>
 <div style="font-size:30px;font-weight:800;color:${cb};font-family:'JetBrains Mono',monospace;line-height:1;margin-bottom:4px">${es(b.rebate||'20%')}</div>
 <div style="font-size:12.5px;color:var(--tx2);margin-bottom:14px">${tr('invite_code')||'邀请码'}: <code style="color:${cb};background:none;border:none;padding:0;font-weight:700">${es(b.code||'WLFI47')}</code></div>
-<button class="bt bt-g" onclick="ctaClick(b.id)" style="background:${cb};color:var(--bg);font-size:14px;padding:10px 22px;width:100%">🚀 ${tr('register_now')||'注册'} ${es(bName)} →</button>
+<a class="bt bt-g" href="${es(b.url||'/exchange/'+b.id)}" target="_blank" rel="noopener noreferrer nofollow sponsored" onclick="trackCtaClick('${b.id}','compare_hero','${es(b.code||'')}')" style="background:${cb};color:var(--bg);font-size:14px;padding:10px 22px;width:100%">🚀 ${tr('register_now')||'注册'} ${es(bName)} →</a>
 </div>
 </div>
 
@@ -2612,8 +2971,8 @@ ${getProsFor(b.id,a.id)}
 <h2 style="font-size:22px;margin-bottom:10px">🚀 ${tr('cmp_final_t')||'选好了？立即注册'}</h2>
 <p style="color:var(--tx2);margin-bottom:22px;font-size:15px;line-height:1.7">${tr('cmp_final_d')||'通过本站邀请码注册，永久享受手续费返佣，每月自动到账。'}</p>
 <div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center">
-<button class="bt bt-g" onclick="ctaClick(a.id)" style="background:${ca};color:var(--bg)">${es(aName)} (${tr('invite_code')||'邀请码'}: ${es(a.code||'WLFI47')}) →</button>
-<button class="bt bt-g" onclick="ctaClick(b.id)" style="background:${cb};color:var(--bg)">${es(bName)} (${tr('invite_code')||'邀请码'}: ${es(b.code||'WLFI47')}) →</button>
+<a class="bt bt-g" href="${es(a.url||'/exchange/'+a.id)}" target="_blank" rel="noopener noreferrer nofollow sponsored" onclick="trackCtaClick('${a.id}','compare_bottom','${es(a.code||'')}')" style="background:${ca};color:var(--bg)">${es(aName)} (${tr('invite_code')||'邀请码'}: ${es(a.code||'WLFI47')}) →</a>
+<a class="bt bt-g" href="${es(b.url||'/exchange/'+b.id)}" target="_blank" rel="noopener noreferrer nofollow sponsored" onclick="trackCtaClick('${b.id}','compare_bottom','${es(b.code||'')}')" style="background:${cb};color:var(--bg)">${es(bName)} (${tr('invite_code')||'邀请码'}: ${es(b.code||'WLFI47')}) →</a>
 </div>
 </div>
 
@@ -2674,7 +3033,7 @@ function rCompareIndex(){
   return `<div class="ap" style="max-width:880px">
 <div style="text-align:center;padding:40px 0 28px">
 <h1 style="font-size:clamp(28px,4vw,40px);font-weight:800;margin-bottom:14px;letter-spacing:-.5px">📊 加密交易所对比</h1>
-<p style="font-size:16px;color:var(--tx2);max-width:580px;margin:0 auto;line-height:1.7">2026 最新对比：OKX vs Binance vs Bybit 三家头部加密交易所的手续费、币种、合约、返佣、安全性。</p>
+<p style="font-size:16px;color:var(--tx2);max-width:580px;margin:0 auto;line-height:1.7">${netYear()} 最新对比：OKX vs Binance vs Bybit 三家头部加密交易所的手续费、币种、合约、返佣、安全性。</p>
 </div>
 <div style="display:grid;grid-template-columns:1fr;gap:14px">
 ${compares.map(c=>`<a onclick="go('compare/${c.slug}')" style="display:block;padding:24px 26px;background:linear-gradient(135deg,${c.cl}15,${c.cr}15);border:1.5px solid var(--bd2);border-radius:var(--r2);cursor:pointer;text-decoration:none;transition:.25s" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='var(--sh-md)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
@@ -2690,6 +3049,451 @@ ${compares.map(c=>`<a onclick="go('compare/${c.slug}')" style="display:block;pad
 </div>${rFoot()}`;
 }
 
+// ============================================================
+// TOOLS — Interactive calculators and wizards (high-engagement, SEO magnets)
+// ============================================================
+
+// Static fee + rebate data per exchange (used by all 3 tools)
+// Source: each exchange's published Taker fees + our rebate percentages
+const TOOL_DATA = {
+  okx:    {spotTaker:0.08, spotMaker:0.08, futTaker:0.05, futMaker:0.02, rebate:20, code:'WLFI47', color:'#2ecf90'},
+  binance:{spotTaker:0.10, spotMaker:0.10, futTaker:0.05, futMaker:0.02, rebate:20, code:'WLFI47', color:'#f0b41e'},
+  bybit:  {spotTaker:0.10, spotMaker:0.10, futTaker:0.055,futMaker:0.02, rebate:33, code:'8DXZXGZ', color:'#ff8a3a'}
+};
+function _toolEx(id){return (D.exs||[]).find(e=>e.id===id) || {id:id, name:{zh:id.toUpperCase()}, url:'/exchange/'+id, color:'#2ecf90', logo:id[0].toUpperCase()}}
+function _toolURL(id){const ex=_toolEx(id); return es(ex.url||'/exchange/'+id)}
+
+// ────────────────────────────────────────────────────────────
+// TOOL INDEX PAGE — /tools
+// ────────────────────────────────────────────────────────────
+function rToolsIndex(){
+  const tools=[
+    {slug:'rebate-calculator', icon:'🧮', t:tr('tool_idx_reb_t')||'返佣计算器', d:tr('tool_idx_reb_d')||'输入月交易量 → 算出每月/每年能省多少手续费', cl:'#2ecf90'},
+    {slug:'exchange-wizard',  icon:'🎯', t:tr('tool_idx_wiz_t')||'交易所匹配向导', d:tr('tool_idx_wiz_d')||'回答 5 个问题 → 智能推荐最适合你的交易所', cl:'#5da0ff'},
+    {slug:'fee-comparison',   icon:'📊', t:tr('tool_idx_fee_t')||'费率实时对比', d:tr('tool_idx_fee_d')||'OKX/Binance/Bybit 完整费率表 + 按交易量算月成本', cl:'#ff8a3a'}
+  ];
+  return `<div class="ap" style="max-width:1000px">
+<div style="text-align:center;padding:32px 0 28px">
+<div style="display:inline-block;background:var(--bg3);padding:5px 14px;border-radius:99px;font-size:12px;font-weight:700;color:var(--tx2);letter-spacing:.6px;text-transform:uppercase;margin-bottom:18px">🛠 ${tr('tools_label')||'TOOLS'}</div>
+<h1 style="font-size:clamp(28px,4.5vw,40px);font-weight:800;margin-bottom:14px;letter-spacing:-.5px">${tr('tools_idx_t')||'实用工具'}</h1>
+<p style="font-size:16px;color:var(--tx2);max-width:580px;margin:0 auto;line-height:1.7">${tr('tools_idx_d')||'3 个免费在线工具帮你做更聪明的交易所决策。'}</p>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:8px">
+${tools.map(t=>`<a onclick="go('tools/${t.slug}')" style="display:block;padding:28px 24px;background:linear-gradient(135deg,${t.cl}10,${t.cl}03);border:1.5px solid var(--bd2);border-radius:var(--r2);cursor:pointer;text-decoration:none;transition:.25s" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='var(--sh-md)';this.style.borderColor='${t.cl}55'" onmouseout="this.style.transform='';this.style.boxShadow='';this.style.borderColor='var(--bd2)'">
+<div style="font-size:32px;margin-bottom:10px">${t.icon}</div>
+<h2 style="font-size:19px;font-weight:800;margin-bottom:8px;color:var(--tx)">${es(t.t)}</h2>
+<p style="font-size:14px;color:var(--tx2);line-height:1.6;margin:0 0 14px">${es(t.d)}</p>
+<div style="font-size:13px;color:${t.cl};font-weight:700">${tr('open_tool')||'打开工具'} →</div>
+</a>`).join('')}
+</div>
+</div>${rFoot()}`;
+}
+
+// ────────────────────────────────────────────────────────────
+// TOOL 1: REBATE CALCULATOR — /tools/rebate-calculator
+// ────────────────────────────────────────────────────────────
+function rToolRebate(){
+  return `<div class="ap" style="max-width:920px">
+<a class="bk" onclick="go('tools')">← ${tr('tools_idx_t')||'工具'}</a>
+<div style="text-align:center;padding:8px 0 28px">
+<div style="font-size:42px;margin-bottom:10px">🧮</div>
+<h1 style="font-size:clamp(26px,4vw,38px);font-weight:800;margin-bottom:12px;letter-spacing:-.4px">${tr('tool_reb_h1')||'返佣计算器'}</h1>
+<p style="font-size:15.5px;color:var(--tx2);max-width:580px;margin:0 auto;line-height:1.7">${tr('tool_reb_intro')||'输入你每月预计的交易量，立刻看到在 OKX、Binance、Bybit 各能省多少手续费。'}</p>
+</div>
+
+<!-- INPUT PANEL -->
+<div style="background:var(--bg2);border:1px solid var(--bd2);border-radius:var(--r2);padding:24px 26px;margin-bottom:24px">
+<div style="display:grid;grid-template-columns:1fr;gap:18px">
+<div>
+<label style="display:block;font-size:13px;font-weight:700;color:var(--tx2);text-transform:uppercase;letter-spacing:.7px;margin-bottom:10px">${tr('tool_reb_vol_label')||'月交易量 (USDT)'}</label>
+<input id="rbVol" type="number" min="0" step="100" value="10000" style="width:100%;background:var(--bg);border:1.5px solid var(--bd);border-radius:9px;padding:14px 16px;font-size:17px;font-weight:700;color:var(--tx);font-family:'JetBrains Mono',monospace;letter-spacing:.5px;outline:none;transition:.15s" onfocus="this.style.borderColor='var(--grn)'" onblur="this.style.borderColor='var(--bd)'">
+<div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap">
+${[1000,5000,10000,50000,100000,500000].map(v=>`<button onclick="document.getElementById('rbVol').value=${v};iToolRebate()" style="background:var(--bg3);border:1px solid var(--bd);color:var(--tx2);padding:6px 12px;border-radius:6px;font-size:12px;cursor:pointer;font-family:inherit;font-weight:600;transition:.15s" onmouseover="this.style.borderColor='var(--grn)';this.style.color='var(--grn)'" onmouseout="this.style.borderColor='var(--bd)';this.style.color='var(--tx2)'">${v>=1000?(v/1000)+'K':v}</button>`).join('')}
+</div>
+</div>
+<div>
+<label style="display:block;font-size:13px;font-weight:700;color:var(--tx2);text-transform:uppercase;letter-spacing:.7px;margin-bottom:10px">${tr('tool_reb_type_label')||'交易类型'}</label>
+<div id="rbType" style="display:flex;gap:8px;flex-wrap:wrap">
+<button data-type="spot" onclick="rbSetType('spot')" class="rb-type-btn rb-type-active" style="background:var(--grn);color:var(--bg);border:1.5px solid var(--grn);padding:10px 18px;border-radius:8px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit;flex:1;min-width:90px">📈 ${tr('spot')||'现货'}</button>
+<button data-type="futures" onclick="rbSetType('futures')" class="rb-type-btn" style="background:var(--bg3);color:var(--tx);border:1.5px solid var(--bd);padding:10px 18px;border-radius:8px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit;flex:1;min-width:90px">⚡ ${tr('futures')||'合约'}</button>
+<button data-type="mix" onclick="rbSetType('mix')" class="rb-type-btn" style="background:var(--bg3);color:var(--tx);border:1.5px solid var(--bd);padding:10px 18px;border-radius:8px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit;flex:1;min-width:90px">🔀 ${tr('mixed')||'混合 (50/50)'}</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- RESULTS -->
+<div id="rbResults"></div>
+
+<!-- DISCLAIMER -->
+<div style="margin-top:20px;padding:14px 18px;background:var(--bg3);border-left:3px solid var(--grn);border-radius:8px;font-size:13px;color:var(--tx3);line-height:1.7">
+ℹ️ ${tr('tool_reb_note')||'计算基于各交易所公开的 Taker 费率（OKX 0.08% / Binance 0.10% / Bybit 0.10% 现货，OKX/Binance 0.05%、Bybit 0.055% 合约）。实际费率可能因 VIP 等级、平台币抵扣而更低。'}
+</div>
+
+</div>${rFoot()}`;
+}
+
+let _rbType='spot';
+function rbSetType(t){
+  _rbType=t;
+  document.querySelectorAll('.rb-type-btn').forEach(b=>{
+    const active=b.dataset.type===t;
+    b.style.background=active?'var(--grn)':'var(--bg3)';
+    b.style.color=active?'var(--bg)':'var(--tx)';
+    b.style.borderColor=active?'var(--grn)':'var(--bd)';
+    b.classList.toggle('rb-type-active',active);
+  });
+  iToolRebate();
+}
+function iToolRebate(){
+  const volEl=document.getElementById('rbVol');
+  if(!volEl)return;
+  volEl.removeEventListener('input',iToolRebate);
+  volEl.addEventListener('input',iToolRebate);
+  const vol=Math.max(0, parseFloat(volEl.value)||0);
+  const res=document.getElementById('rbResults');
+  if(!res)return;
+  // Calculate per exchange
+  const rows=Object.keys(TOOL_DATA).map(id=>{
+    const d=TOOL_DATA[id];
+    let feeRate, makerRate;
+    if(_rbType==='spot'){feeRate=d.spotTaker;makerRate=d.spotMaker}
+    else if(_rbType==='futures'){feeRate=d.futTaker;makerRate=d.futMaker}
+    else{feeRate=(d.spotTaker+d.futTaker)/2;makerRate=(d.spotMaker+d.futMaker)/2}
+    const monthlyGrossFee=vol*(feeRate/100);
+    const monthlyRebate=monthlyGrossFee*(d.rebate/100);
+    const monthlyNetFee=monthlyGrossFee-monthlyRebate;
+    const yearlyGrossFee=monthlyGrossFee*12;
+    const yearlyRebate=monthlyRebate*12;
+    const yearlyNetFee=monthlyNetFee*12;
+    const effectiveRate=feeRate*(1-d.rebate/100);
+    return {id, d, feeRate, makerRate, monthlyGrossFee, monthlyRebate, monthlyNetFee, yearlyGrossFee, yearlyRebate, yearlyNetFee, effectiveRate};
+  });
+  // Sort by yearly NET FEE ascending (cheapest first = best for user)
+  rows.sort((a,b)=>a.yearlyNetFee-b.yearlyNetFee);
+  const best=rows[0];
+  const bestName=es((_toolEx(best.id).name && pL(_toolEx(best.id).name))||best.id.toUpperCase());
+  // Build summary card — emphasize what you PAY, not just savings
+  let html=`<div style="background:linear-gradient(135deg,${best.d.color}18,${best.d.color}05);border:2px solid ${best.d.color}50;border-radius:var(--r2);padding:28px 28px;margin-bottom:16px">
+<div style="text-align:center;margin-bottom:20px">
+<div style="display:inline-block;background:${best.d.color};color:var(--bg);padding:5px 14px;border-radius:99px;font-size:11.5px;font-weight:800;letter-spacing:.8px;margin-bottom:10px">🏆 ${tr('tool_reb_cheapest')||'最低成本'}</div>
+<div style="font-size:26px;font-weight:800;color:${best.d.color};letter-spacing:-.3px">${bestName}</div>
+</div>
+<!-- 4 stat grid -->
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:14px;margin-bottom:22px">
+<div style="background:var(--bg);border-radius:10px;padding:14px 12px;text-align:center"><div style="font-size:11px;color:var(--tx3);margin-bottom:6px;text-transform:uppercase;letter-spacing:.6px;font-weight:700">${tr('tool_reb_gross')||'毛手续费/月'}</div><div style="font-size:18px;font-weight:800;font-family:'JetBrains Mono',monospace;color:var(--tx3);text-decoration:line-through">$${best.monthlyGrossFee.toFixed(2)}</div></div>
+<div style="background:var(--bg);border-radius:10px;padding:14px 12px;text-align:center;border:1.5px solid ${best.d.color}30"><div style="font-size:11px;color:${best.d.color};margin-bottom:6px;text-transform:uppercase;letter-spacing:.6px;font-weight:700">💸 ${tr('tool_reb_net')||'实付手续费/月'}</div><div style="font-size:20px;font-weight:800;font-family:'JetBrains Mono',monospace;color:${best.d.color}">$${best.monthlyNetFee.toFixed(2)}</div></div>
+<div style="background:var(--bg);border-radius:10px;padding:14px 12px;text-align:center"><div style="font-size:11px;color:var(--grn);margin-bottom:6px;text-transform:uppercase;letter-spacing:.6px;font-weight:700">🎁 ${tr('tool_reb_monthly')||'月返佣'}</div><div style="font-size:18px;font-weight:800;font-family:'JetBrains Mono',monospace;color:var(--grn)">$${best.monthlyRebate.toFixed(2)}</div></div>
+<div style="background:var(--bg);border-radius:10px;padding:14px 12px;text-align:center"><div style="font-size:11px;color:var(--grn);margin-bottom:6px;text-transform:uppercase;letter-spacing:.6px;font-weight:700">${tr('tool_reb_yearly')||'年返佣'}</div><div style="font-size:18px;font-weight:800;font-family:'JetBrains Mono',monospace;color:var(--grn)">$${best.yearlyRebate.toFixed(2)}</div></div>
+</div>
+<!-- Effective rate badge -->
+<div style="text-align:center;margin-bottom:18px"><div style="display:inline-flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--bd);padding:8px 16px;border-radius:99px;font-size:13px"><span style="color:var(--tx3)">${tr('tool_reb_rate')||'实际费率'}</span><span style="color:${best.d.color};font-weight:800;font-family:'JetBrains Mono',monospace">${best.effectiveRate.toFixed(4)}%</span></div></div>
+<!-- CTA -->
+<div style="text-align:center"><a class="bt bt-g" href="${_toolURL(best.id)}" target="_blank" rel="noopener noreferrer nofollow sponsored" onclick="trackCtaClick('${best.id}','tool_rebate','${best.d.code}')" aria-label="Register at ${bestName} (sponsored)" style="background:${best.d.color};color:var(--bg);font-size:14.5px;padding:12px 26px">🚀 ${tr('register_now')||'立即注册'} ${bestName} (${tr('invite_code')||'邀请码'}: ${best.d.code}) →</a></div>
+</div>
+
+<!-- Detailed comparison table — now includes fee paid columns -->
+<div style="background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r2);overflow:hidden;margin-bottom:16px">
+<div style="padding:16px 22px;background:var(--bg3);border-bottom:1px solid var(--bd);font-size:13px;font-weight:700;color:var(--tx2);text-transform:uppercase;letter-spacing:.7px">📊 ${tr('tool_reb_detail')||'完整对比'} · ${vol.toLocaleString()} USDT/${tr('per_month')||'月'}</div>
+<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:13.5px;min-width:680px">
+<thead><tr style="background:var(--bg3);border-bottom:1px solid var(--bd)">
+<th style="text-align:left;padding:12px 16px;font-size:11.5px;color:var(--tx3);text-transform:uppercase;letter-spacing:.6px;font-weight:700">${tr('exchange')||'交易所'}</th>
+<th style="text-align:right;padding:12px 14px;font-size:11.5px;color:var(--tx3);text-transform:uppercase;letter-spacing:.6px;font-weight:700">${tr('tool_reb_rate_col')||'费率 (Taker)'}</th>
+<th style="text-align:right;padding:12px 14px;font-size:11.5px;color:var(--tx3);text-transform:uppercase;letter-spacing:.6px;font-weight:700">${tr('rebate')||'返佣'}</th>
+<th style="text-align:right;padding:12px 14px;font-size:11.5px;color:var(--tx3);text-transform:uppercase;letter-spacing:.6px;font-weight:700">${tr('tool_reb_fee_paid_mo')||'实付/月'}</th>
+<th style="text-align:right;padding:12px 14px;font-size:11.5px;color:var(--tx3);text-transform:uppercase;letter-spacing:.6px;font-weight:700">${tr('tool_reb_fee_paid_yr')||'实付/年'}</th>
+<th style="text-align:right;padding:12px 14px;font-size:11.5px;color:var(--grn);text-transform:uppercase;letter-spacing:.6px;font-weight:700">${tr('tool_reb_save_yr')||'年省'}</th>
+<th style="text-align:right;padding:12px 14px;font-size:11.5px;color:var(--tx3);text-transform:uppercase;letter-spacing:.6px;font-weight:700"></th>
+</tr></thead><tbody>
+${rows.map((r,i)=>`<tr style="border-bottom:${i<rows.length-1?'1px solid var(--bd)':'none'};${i===0?'background:'+r.d.color+'08':''}">
+<td style="padding:14px 16px"><div style="display:flex;align-items:center;gap:10px"><div style="width:30px;height:30px;border-radius:7px;background:${r.d.color}25;color:${r.d.color};display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800">${_toolEx(r.id).logo||r.id[0].toUpperCase()}</div><div><div style="font-weight:700;font-size:14px">${es((_toolEx(r.id).name && pL(_toolEx(r.id).name))||r.id.toUpperCase())}</div>${i===0?`<div style="font-size:10.5px;color:${r.d.color};font-weight:700;text-transform:uppercase;letter-spacing:.5px">🏆 ${tr('cheapest')||'最低'}</div>`:''}</div></div></td>
+<td style="padding:14px 14px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:12.5px"><div style="color:var(--tx3);text-decoration:line-through">${r.feeRate}%</div><div style="color:${r.d.color};font-weight:700">${r.effectiveRate.toFixed(3)}%</div></td>
+<td style="padding:14px 14px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:${r.d.color}">${r.d.rebate}%</td>
+<td style="padding:14px 14px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:800;color:var(--tx)">$${r.monthlyNetFee.toFixed(2)}</td>
+<td style="padding:14px 14px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:800;color:var(--tx)">$${r.yearlyNetFee.toFixed(0)}</td>
+<td style="padding:14px 14px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:800;color:var(--grn)">$${r.yearlyRebate.toFixed(0)}</td>
+<td style="padding:14px 14px;text-align:right"><a class="bt bt-g" href="${_toolURL(r.id)}" target="_blank" rel="noopener noreferrer nofollow sponsored" onclick="trackCtaClick('${r.id}','tool_rebate_row','${r.d.code}')" style="background:${r.d.color};color:var(--bg);font-size:12px;padding:7px 12px">→</a></td>
+</tr>`).join('')}
+</tbody></table></div>
+</div>
+
+<!-- Quick fee breakdown for transparency -->
+<div style="background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r2);padding:18px 22px;margin-bottom:16px">
+<div style="font-size:12.5px;color:var(--tx3);text-transform:uppercase;letter-spacing:.7px;font-weight:700;margin-bottom:10px">💡 ${tr('tool_reb_how_t')||'计算公式（透明展示）'}</div>
+<div style="font-size:13px;color:var(--tx2);line-height:1.85;font-family:'JetBrains Mono',monospace">
+  <div>📈 ${tr('tool_reb_formula_gross')||'毛手续费'}  = ${vol.toLocaleString()} × ${best.feeRate}%  = $${best.monthlyGrossFee.toFixed(2)}/${tr('per_month')||'月'}</div>
+  <div>🎁 ${tr('tool_reb_formula_rebate')||'返佣金额'}  = $${best.monthlyGrossFee.toFixed(2)} × ${best.d.rebate}%  = $${best.monthlyRebate.toFixed(2)}/${tr('per_month')||'月'}</div>
+  <div style="color:${best.d.color};font-weight:700">💸 ${tr('tool_reb_formula_net')||'实付手续费'}  = $${best.monthlyGrossFee.toFixed(2)} - $${best.monthlyRebate.toFixed(2)}  = $${best.monthlyNetFee.toFixed(2)}/${tr('per_month')||'月'}</div>
+</div>
+</div>`;
+  res.innerHTML=html;
+}
+
+// ────────────────────────────────────────────────────────────
+// TOOL 2: EXCHANGE WIZARD — /tools/exchange-wizard
+// ────────────────────────────────────────────────────────────
+function rToolWizard(){
+  const Q=[
+    {id:'exp',title:tr('tool_wiz_q1')||'1️⃣ 你的加密交易经验？',opts:[
+      {v:'newbie',label:tr('tool_wiz_q1_a')||'🐣 新手 (< 6 个月)',desc:tr('tool_wiz_q1_a_d')||'刚入门，需要好用的界面'},
+      {v:'intermediate',label:tr('tool_wiz_q1_b')||'🚀 中级 (6 个月 - 2 年)',desc:tr('tool_wiz_q1_b_d')||'熟悉基础，想做合约或长期持有'},
+      {v:'pro',label:tr('tool_wiz_q1_c')||'⚡ 高级 (2 年+)',desc:tr('tool_wiz_q1_c_d')||'高频/API/复杂策略'}
+    ]},
+    {id:'region',title:tr('tool_wiz_q2')||'2️⃣ 你在哪个地区？',opts:[
+      {v:'cn',label:tr('tool_wiz_q2_a')||'🇨🇳 中国 / 港澳台',desc:tr('tool_wiz_q2_a_d')||'需要中文支持和稳定访问'},
+      {v:'kr',label:tr('tool_wiz_q2_b')||'🇰🇷 韩国 / 🇯🇵 日本 / 🇸🇬 新加坡',desc:''},
+      {v:'sea',label:tr('tool_wiz_q2_c')||'🇹🇭 东南亚 (越南/泰国/印尼/菲律宾)',desc:''},
+      {v:'west',label:tr('tool_wiz_q2_d')||'🇪🇺 欧美 / 🇦🇺 澳洲',desc:''}
+    ]},
+    {id:'use',title:tr('tool_wiz_q3')||'3️⃣ 你主要要做什么？',opts:[
+      {v:'spot',label:tr('tool_wiz_q3_a')||'📈 现货交易 / 长期持有',desc:tr('tool_wiz_q3_a_d')||'买入并持有，DCA'},
+      {v:'futures',label:tr('tool_wiz_q3_b')||'⚡ 合约 / 杠杆交易',desc:tr('tool_wiz_q3_b_d')||'永续合约、做多做空'},
+      {v:'copy',label:tr('tool_wiz_q3_c')||'🔁 跟单交易 (Copy Trading)',desc:tr('tool_wiz_q3_c_d')||'复制顶级交易员策略'},
+      {v:'all',label:tr('tool_wiz_q3_d')||'🌟 综合 (都想试试)',desc:''}
+    ]},
+    {id:'budget',title:tr('tool_wiz_q4')||'4️⃣ 你的初始资金？',opts:[
+      {v:'small',label:tr('tool_wiz_q4_a')||'< $1,000',desc:''},
+      {v:'medium',label:tr('tool_wiz_q4_b')||'$1,000 - $10,000',desc:''},
+      {v:'large',label:tr('tool_wiz_q4_c')||'$10,000+',desc:''}
+    ]},
+    {id:'priority',title:tr('tool_wiz_q5')||'5️⃣ 你最看重什么？',opts:[
+      {v:'fees',label:tr('tool_wiz_q5_a')||'💰 最低手续费 / 最高返佣',desc:''},
+      {v:'coins',label:tr('tool_wiz_q5_b')||'🪙 最多币种 / 最高流动性',desc:''},
+      {v:'copy',label:tr('tool_wiz_q5_c')||'🎯 跟单生态最完整',desc:''},
+      {v:'lang',label:tr('tool_wiz_q5_d')||'🇨🇳 中文支持 / 易用性',desc:''}
+    ]}
+  ];
+  return `<div class="ap" style="max-width:760px">
+<a class="bk" onclick="go('tools')">← ${tr('tools_idx_t')||'工具'}</a>
+<div style="text-align:center;padding:8px 0 28px">
+<div style="font-size:42px;margin-bottom:10px">🎯</div>
+<h1 style="font-size:clamp(26px,4vw,38px);font-weight:800;margin-bottom:12px;letter-spacing:-.4px">${tr('tool_wiz_h1')||'交易所匹配向导'}</h1>
+<p style="font-size:15.5px;color:var(--tx2);max-width:520px;margin:0 auto;line-height:1.7">${tr('tool_wiz_intro')||'回答 5 个问题，30 秒内得到最适合你的交易所推荐。'}</p>
+</div>
+<!-- PROGRESS BAR -->
+<div style="background:var(--bg2);border:1px solid var(--bd);border-radius:99px;height:8px;overflow:hidden;margin-bottom:24px"><div id="wzProg" style="background:linear-gradient(90deg,var(--grn),var(--blu));height:100%;width:0%;transition:width .35s ease"></div></div>
+<div id="wzQ"></div>
+<div id="wzResult"></div>
+</div>${rFoot()}`;
+}
+
+let _wzAns={};let _wzStep=0;let _wzQuestions=null;
+function iToolWizard(){
+  _wzAns={};_wzStep=0;
+  _wzQuestions=[
+    {id:'exp',title:tr('tool_wiz_q1')||'1️⃣ 你的加密交易经验？',opts:[
+      {v:'newbie',label:tr('tool_wiz_q1_a')||'🐣 新手 (< 6 个月)',desc:tr('tool_wiz_q1_a_d')||'刚入门，需要好用的界面'},
+      {v:'intermediate',label:tr('tool_wiz_q1_b')||'🚀 中级 (6 个月 - 2 年)',desc:tr('tool_wiz_q1_b_d')||'熟悉基础，想做合约或长期持有'},
+      {v:'pro',label:tr('tool_wiz_q1_c')||'⚡ 高级 (2 年+)',desc:tr('tool_wiz_q1_c_d')||'高频/API/复杂策略'}
+    ]},
+    {id:'region',title:tr('tool_wiz_q2')||'2️⃣ 你在哪个地区？',opts:[
+      {v:'cn',label:tr('tool_wiz_q2_a')||'🇨🇳 中国 / 港澳台',desc:tr('tool_wiz_q2_a_d')||'需要中文支持和稳定访问'},
+      {v:'kr',label:tr('tool_wiz_q2_b')||'🇰🇷 韩国 / 🇯🇵 日本 / 🇸🇬 新加坡',desc:''},
+      {v:'sea',label:tr('tool_wiz_q2_c')||'🇹🇭 东南亚 (越南/泰国/印尼/菲律宾)',desc:''},
+      {v:'west',label:tr('tool_wiz_q2_d')||'🇪🇺 欧美 / 🇦🇺 澳洲',desc:''}
+    ]},
+    {id:'use',title:tr('tool_wiz_q3')||'3️⃣ 你主要要做什么？',opts:[
+      {v:'spot',label:tr('tool_wiz_q3_a')||'📈 现货 / 长期持有',desc:tr('tool_wiz_q3_a_d')||'买入并持有'},
+      {v:'futures',label:tr('tool_wiz_q3_b')||'⚡ 合约 / 杠杆',desc:tr('tool_wiz_q3_b_d')||'永续合约'},
+      {v:'copy',label:tr('tool_wiz_q3_c')||'🔁 跟单交易',desc:tr('tool_wiz_q3_c_d')||'复制策略'},
+      {v:'all',label:tr('tool_wiz_q3_d')||'🌟 综合',desc:''}
+    ]},
+    {id:'budget',title:tr('tool_wiz_q4')||'4️⃣ 初始资金？',opts:[
+      {v:'small',label:'< $1,000',desc:''},
+      {v:'medium',label:'$1,000 - $10,000',desc:''},
+      {v:'large',label:'$10,000+',desc:''}
+    ]},
+    {id:'priority',title:tr('tool_wiz_q5')||'5️⃣ 最看重什么？',opts:[
+      {v:'fees',label:tr('tool_wiz_q5_a')||'💰 最低手续费/最高返佣',desc:''},
+      {v:'coins',label:tr('tool_wiz_q5_b')||'🪙 最多币种/最高流动性',desc:''},
+      {v:'copy',label:tr('tool_wiz_q5_c')||'🎯 跟单生态',desc:''},
+      {v:'lang',label:tr('tool_wiz_q5_d')||'🇨🇳 中文支持/易用',desc:''}
+    ]}
+  ];
+  wzRenderStep();
+}
+function wzRenderStep(){
+  const q=_wzQuestions[_wzStep];
+  if(!q)return wzShowResult();
+  const prog=document.getElementById('wzProg');
+  if(prog)prog.style.width=((_wzStep/_wzQuestions.length)*100)+'%';
+  const html=`<div style="background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r2);padding:24px 26px">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+<h2 style="font-size:19px;font-weight:700;margin:0;color:var(--tx)">${es(q.title)}</h2>
+<span style="font-size:12px;color:var(--tx3);font-weight:700">${_wzStep+1} / ${_wzQuestions.length}</span>
+</div>
+<div style="display:grid;grid-template-columns:1fr;gap:10px">
+${q.opts.map(o=>`<button onclick="wzAnswer('${q.id}','${es(o.v)}')" style="text-align:left;background:var(--bg);border:1.5px solid var(--bd);color:var(--tx);padding:14px 18px;border-radius:10px;cursor:pointer;font-family:inherit;transition:.15s" onmouseover="this.style.borderColor='var(--grn)';this.style.background='var(--grnA)'" onmouseout="this.style.borderColor='var(--bd)';this.style.background='var(--bg)'">
+<div style="font-size:15px;font-weight:700;margin-bottom:${o.desc?'3px':'0'}">${es(o.label)}</div>
+${o.desc?`<div style="font-size:12.5px;color:var(--tx3)">${es(o.desc)}</div>`:''}
+</button>`).join('')}
+</div>
+${_wzStep>0?`<button onclick="_wzStep--;wzRenderStep()" style="margin-top:16px;background:transparent;border:none;color:var(--tx3);cursor:pointer;font-size:13px;font-family:inherit">← ${tr('tool_wiz_back')||'上一题'}</button>`:''}
+</div>`;
+  const c=document.getElementById('wzQ');
+  if(c)c.innerHTML=html;
+  document.getElementById('wzResult').innerHTML='';
+}
+function wzAnswer(qid, val){
+  _wzAns[qid]=val;
+  _wzStep++;
+  if(_wzStep>=_wzQuestions.length)wzShowResult();
+  else wzRenderStep();
+}
+function wzShowResult(){
+  const prog=document.getElementById('wzProg');if(prog)prog.style.width='100%';
+  // Scoring system
+  const scores={okx:0, binance:0, bybit:0};
+  const reasons={okx:[], binance:[], bybit:[]};
+  // exp
+  if(_wzAns.exp==='newbie'){scores.okx+=3;reasons.okx.push(tr('wz_r_okx_new')||'OKX 中文界面友好，最适合新手');scores.binance+=2;reasons.binance.push(tr('wz_r_bin_new')||'Binance 全球用户最多，APP 流畅');scores.bybit+=1}
+  if(_wzAns.exp==='intermediate'){scores.okx+=2;scores.binance+=2;scores.bybit+=2;reasons.bybit.push(tr('wz_r_byb_int')||'Bybit 中级用户合约入门首选')}
+  if(_wzAns.exp==='pro'){scores.bybit+=3;reasons.bybit.push(tr('wz_r_byb_pro')||'Bybit API 延迟最低，适合高频');scores.okx+=2;scores.binance+=2}
+  // region
+  if(_wzAns.region==='cn'){scores.okx+=4;reasons.okx.push(tr('wz_r_okx_cn')||'OKX 中文支持最完善，有多个区域域名');scores.bybit+=1}
+  if(_wzAns.region==='kr'){scores.bybit+=3;reasons.bybit.push(tr('wz_r_byb_kr')||'Bybit 在韩日新地区流行度高');scores.binance+=2}
+  if(_wzAns.region==='sea'){scores.binance+=3;reasons.binance.push(tr('wz_r_bin_sea')||'Binance 在东南亚 P2P 渠道最强');scores.bybit+=2}
+  if(_wzAns.region==='west'){scores.binance+=3;reasons.binance.push(tr('wz_r_bin_west')||'Binance 全球流动性最高');scores.bybit+=2}
+  // use
+  if(_wzAns.use==='spot'){scores.binance+=3;reasons.binance.push(tr('wz_r_bin_spot')||'Binance 现货币种 500+，流动性最佳');scores.okx+=2}
+  if(_wzAns.use==='futures'){scores.bybit+=4;reasons.bybit.push(tr('wz_r_byb_fut')||'Bybit 永续合约深度业内顶级，费率最低');scores.okx+=2;scores.binance+=2}
+  if(_wzAns.use==='copy'){scores.bybit+=5;reasons.bybit.push(tr('wz_r_byb_copy')||'Bybit Copy Trading 是行业标杆，最多策略师');scores.okx+=1;scores.binance+=1}
+  if(_wzAns.use==='all'){scores.okx+=3;reasons.okx.push(tr('wz_r_okx_all')||'OKX 是最均衡的全功能交易所');scores.binance+=2;scores.bybit+=2}
+  // budget
+  if(_wzAns.budget==='large'){scores.binance+=2;reasons.binance.push(tr('wz_r_bin_large')||'Binance 大资金深度好，滑点最低');scores.okx+=2}
+  if(_wzAns.budget==='medium'){scores.okx+=2;scores.bybit+=2;scores.binance+=1}
+  if(_wzAns.budget==='small'){scores.okx+=2;scores.bybit+=2;reasons.bybit.push(tr('wz_r_byb_small')||'Bybit 跟单最少 10 USDT 起，小资金也能玩')}
+  // priority
+  if(_wzAns.priority==='fees'){scores.bybit+=4;reasons.bybit.push(tr('wz_r_byb_fee')||'Bybit 33% 返佣业内最高');scores.okx+=2;scores.binance+=2}
+  if(_wzAns.priority==='coins'){scores.binance+=4;reasons.binance.push(tr('wz_r_bin_coins')||'Binance 500+ 币种，新币上线最快');scores.okx+=1}
+  if(_wzAns.priority==='copy'){scores.bybit+=5;reasons.bybit.push(tr('wz_r_byb_eco')||'Bybit 跟单生态成熟度最高')}
+  if(_wzAns.priority==='lang'){scores.okx+=4;reasons.okx.push(tr('wz_r_okx_lang')||'OKX 中文界面+客服支持最完善')}
+  // Pick winner
+  const ranked=Object.entries(scores).sort((a,b)=>b[1]-a[1]);
+  const winnerId=ranked[0][0];
+  const winner=_toolEx(winnerId);
+  const wd=TOOL_DATA[winnerId];
+  const second=_toolEx(ranked[1][0]);
+  const secondD=TOOL_DATA[ranked[1][0]];
+  // Render
+  const c=document.getElementById('wzResult');
+  if(!c)return;
+  c.innerHTML=`<div style="margin-top:20px;background:linear-gradient(135deg,${wd.color}15,${wd.color}05);border:2px solid ${wd.color}50;border-radius:var(--r2);padding:28px 26px">
+<div style="text-align:center;margin-bottom:20px">
+<div style="font-size:13px;color:var(--tx3);text-transform:uppercase;letter-spacing:.8px;font-weight:700;margin-bottom:8px">🎯 ${tr('tool_wiz_rec')||'根据你的回答，最推荐'}</div>
+<div style="font-size:32px;font-weight:800;color:${wd.color};margin-bottom:6px;letter-spacing:-.5px">${es(pL(winner.name)||winnerId.toUpperCase())}</div>
+<div style="display:inline-block;background:${wd.color};color:var(--bg);padding:4px 14px;border-radius:99px;font-size:12.5px;font-weight:800">🎁 ${wd.rebate}% ${tr('rebate')||'返佣'} · ${tr('invite_code')||'邀请码'}: ${wd.code}</div>
+</div>
+<div style="background:var(--bg);border-radius:10px;padding:18px 20px;margin-bottom:20px">
+<div style="font-size:12.5px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px">✓ ${tr('tool_wiz_why')||'为什么推荐它'}</div>
+<ul style="margin:0;padding-left:20px;color:var(--tx2);font-size:14px;line-height:1.85">
+${(reasons[winnerId]||[]).slice(0,5).map(r=>`<li>${es(r)}</li>`).join('')}
+</ul>
+</div>
+<div style="text-align:center;margin-bottom:16px">
+<a class="bt bt-g" href="${_toolURL(winnerId)}" target="_blank" rel="noopener noreferrer nofollow sponsored" onclick="trackCtaClick('${winnerId}','tool_wizard','${wd.code}')" aria-label="Register at ${es(pL(winner.name)||winnerId)} (sponsored)" style="background:${wd.color};color:var(--bg);font-size:15px;padding:13px 26px">🚀 ${tr('register_now')||'立即注册'} ${es(pL(winner.name)||winnerId.toUpperCase())} →</a>
+</div>
+${reasons[ranked[1][0]].length?`<div style="border-top:1px solid var(--bd);padding-top:18px;margin-top:8px">
+<div style="font-size:12.5px;color:var(--tx3);font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px">🥈 ${tr('tool_wiz_2nd')||'第二选择'}</div>
+<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+<div><div style="font-size:16px;font-weight:700;color:${secondD.color}">${es(pL(second.name)||ranked[1][0].toUpperCase())}</div><div style="font-size:13px;color:var(--tx3)">${es(reasons[ranked[1][0]][0]||'')}</div></div>
+<a class="bt bt-o" href="${_toolURL(ranked[1][0])}" target="_blank" rel="noopener noreferrer nofollow sponsored" onclick="trackCtaClick('${ranked[1][0]}','tool_wizard_2nd','${secondD.code}')" style="font-size:13px;padding:8px 16px">${tr('register_now')||'注册'} →</a>
+</div>
+</div>`:''}
+<div style="text-align:center;margin-top:18px">
+<button onclick="iToolWizard()" style="background:transparent;border:1px solid var(--bd);color:var(--tx2);padding:8px 18px;border-radius:8px;font-size:13px;cursor:pointer;font-family:inherit">${tr('tool_wiz_retry')||'🔄 重新测试'}</button>
+</div>
+</div>`;
+  // Hide questions
+  const q=document.getElementById('wzQ');if(q)q.innerHTML='';
+}
+
+// ────────────────────────────────────────────────────────────
+// TOOL 3: FEE COMPARISON — /tools/fee-comparison
+// ────────────────────────────────────────────────────────────
+function rToolFees(){
+  return `<div class="ap" style="max-width:980px">
+<a class="bk" onclick="go('tools')">← ${tr('tools_idx_t')||'工具'}</a>
+<div style="text-align:center;padding:8px 0 28px">
+<div style="font-size:42px;margin-bottom:10px">📊</div>
+<h1 style="font-size:clamp(26px,4vw,38px);font-weight:800;margin-bottom:12px;letter-spacing:-.4px">${tr('tool_fee_h1')||'费率实时对比'}</h1>
+<p style="font-size:15.5px;color:var(--tx2);max-width:580px;margin:0 auto;line-height:1.7">${tr('tool_fee_intro')||'OKX、Binance、Bybit 完整费率对比 + 返佣后实际费率 + 按你的交易量算月成本。'}</p>
+</div>
+
+<!-- VOLUME INPUT (optional) -->
+<div style="background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r2);padding:18px 22px;margin-bottom:20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+<label style="font-size:13px;font-weight:700;color:var(--tx2);white-space:nowrap">${tr('tool_fee_vol_label')||'你的月交易量 (USDT)'}：</label>
+<input id="feVol" type="number" min="0" step="100" value="10000" style="flex:1;min-width:140px;background:var(--bg);border:1.5px solid var(--bd);border-radius:8px;padding:10px 14px;font-size:15px;font-weight:700;color:var(--tx);font-family:'JetBrains Mono',monospace;outline:none" oninput="iToolFees()">
+<span style="font-size:12px;color:var(--tx3)">${tr('tool_fee_vol_hint')||'用于计算月成本估算'}</span>
+</div>
+
+<!-- TABLE -->
+<div id="feeTable"></div>
+
+<!-- KEY -->
+<div style="margin-top:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px">
+<div style="background:var(--bg3);border:1px solid var(--bd);border-radius:9px;padding:10px 14px;font-size:12.5px"><strong style="color:var(--tx)">${tr('tool_fee_maker')||'Maker'}</strong> <span style="color:var(--tx3)">${tr('tool_fee_maker_d')||'挂单（限价）'}</span></div>
+<div style="background:var(--bg3);border:1px solid var(--bd);border-radius:9px;padding:10px 14px;font-size:12.5px"><strong style="color:var(--tx)">${tr('tool_fee_taker')||'Taker'}</strong> <span style="color:var(--tx3)">${tr('tool_fee_taker_d')||'吃单（市价）'}</span></div>
+</div>
+
+<div style="margin-top:20px;padding:14px 18px;background:var(--bg3);border-left:3px solid var(--grn);border-radius:8px;font-size:13px;color:var(--tx3);line-height:1.7">
+ℹ️ ${tr('tool_fee_note')||'费率为各交易所公开 Tier 0 基础费率（无 VIP/无平台币抵扣）。注册时使用本站邀请码自动绑定永久返佣，月成本会进一步降低。'}
+</div>
+
+</div>${rFoot()}`;
+}
+
+function iToolFees(){
+  const volEl=document.getElementById('feVol');
+  const vol=Math.max(0, parseFloat(volEl?volEl.value:10000)||10000);
+  const wrap=document.getElementById('feeTable');
+  if(!wrap)return;
+  const rows=Object.keys(TOOL_DATA).map(id=>{
+    const d=TOOL_DATA[id];
+    const ex=_toolEx(id);
+    const spotMonthly=vol*(d.spotTaker/100);
+    const spotEff=d.spotTaker*(1-d.rebate/100);
+    const futMonthly=vol*(d.futTaker/100);
+    const futEff=d.futTaker*(1-d.rebate/100);
+    return {id, d, ex, spotMonthly, spotEff, futMonthly, futEff};
+  });
+  // Find best in each column for highlighting
+  const bestSpot=rows.slice().sort((a,b)=>a.spotEff-b.spotEff)[0];
+  const bestFut=rows.slice().sort((a,b)=>a.futEff-b.futEff)[0];
+
+  wrap.innerHTML=`<div style="background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r2);overflow:hidden">
+<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:14px;min-width:680px">
+<thead><tr style="background:var(--bg3);border-bottom:2px solid var(--bd2)">
+<th rowspan="2" style="padding:14px 16px;text-align:left;font-size:12px;color:var(--tx3);text-transform:uppercase;letter-spacing:.6px;font-weight:700;vertical-align:middle">${tr('exchange')||'交易所'}</th>
+<th colspan="3" style="padding:10px 16px;text-align:center;font-size:12px;color:var(--tx3);text-transform:uppercase;letter-spacing:.6px;font-weight:700;border-left:1px solid var(--bd)">📈 ${tr('spot')||'现货'}</th>
+<th colspan="3" style="padding:10px 16px;text-align:center;font-size:12px;color:var(--tx3);text-transform:uppercase;letter-spacing:.6px;font-weight:700;border-left:1px solid var(--bd)">⚡ ${tr('futures')||'合约'}</th>
+<th rowspan="2" style="padding:14px 16px;text-align:right;font-size:12px;color:var(--tx3);text-transform:uppercase;letter-spacing:.6px;font-weight:700;vertical-align:middle;border-left:1px solid var(--bd)"></th>
+</tr><tr style="background:var(--bg3);border-bottom:1px solid var(--bd2)">
+<th style="padding:8px 14px;text-align:right;font-size:11px;color:var(--tx3);font-weight:600;border-left:1px solid var(--bd)">${tr('tool_fee_taker')||'Taker'}</th>
+<th style="padding:8px 14px;text-align:right;font-size:11px;color:var(--grn);font-weight:700">${tr('tool_fee_after_rb')||'返佣后'}</th>
+<th style="padding:8px 14px;text-align:right;font-size:11px;color:var(--tx3);font-weight:600">${tr('tool_fee_month_cost')||'月成本'}</th>
+<th style="padding:8px 14px;text-align:right;font-size:11px;color:var(--tx3);font-weight:600;border-left:1px solid var(--bd)">${tr('tool_fee_taker')||'Taker'}</th>
+<th style="padding:8px 14px;text-align:right;font-size:11px;color:var(--grn);font-weight:700">${tr('tool_fee_after_rb')||'返佣后'}</th>
+<th style="padding:8px 14px;text-align:right;font-size:11px;color:var(--tx3);font-weight:600">${tr('tool_fee_month_cost')||'月成本'}</th>
+</tr></thead>
+<tbody>${rows.map((r,i)=>{
+  const isBestSpot=r.id===bestSpot.id;
+  const isBestFut=r.id===bestFut.id;
+  return `<tr style="border-bottom:${i<rows.length-1?'1px solid var(--bd)':'none'}">
+<td style="padding:14px 16px"><div style="display:flex;align-items:center;gap:10px"><div style="width:30px;height:30px;border-radius:7px;background:${r.d.color}25;color:${r.d.color};display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800">${r.ex.logo||r.id[0].toUpperCase()}</div><div style="font-weight:700">${es(pL(r.ex.name)||r.id.toUpperCase())}</div></div></td>
+<td style="padding:14px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:13.5px;color:var(--tx3);text-decoration:line-through;border-left:1px solid var(--bd)">${r.d.spotTaker}%</td>
+<td style="padding:14px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:800;color:${r.d.color}${isBestSpot?';background:'+r.d.color+'10':''}">${r.spotEff.toFixed(3)}%${isBestSpot?' 🏆':''}</td>
+<td style="padding:14px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:13.5px;color:var(--tx)">$${r.spotMonthly.toFixed(2)}</td>
+<td style="padding:14px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:13.5px;color:var(--tx3);text-decoration:line-through;border-left:1px solid var(--bd)">${r.d.futTaker}%</td>
+<td style="padding:14px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:800;color:${r.d.color}${isBestFut?';background:'+r.d.color+'10':''}">${r.futEff.toFixed(3)}%${isBestFut?' 🏆':''}</td>
+<td style="padding:14px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:13.5px;color:var(--tx)">$${r.futMonthly.toFixed(2)}</td>
+<td style="padding:14px;text-align:right;border-left:1px solid var(--bd)"><a class="bt bt-g" href="${_toolURL(r.id)}" target="_blank" rel="noopener noreferrer nofollow sponsored" onclick="trackCtaClick('${r.id}','tool_fee_table','${r.d.code}')" aria-label="Register at ${es(pL(r.ex.name)||r.id)} (sponsored)" style="background:${r.d.color};color:var(--bg);font-size:12px;padding:7px 12px">${tr('register_now')||'注册'} →</a></td>
+</tr>`}).join('')}
+</tbody></table></div>
+</div>`;
+}
+
+
 function rExchange(id){
   const ex=D.exs.find(e=>e.id===id);
   if(!ex||ex.hidden)return`<div class="w" style="padding:80px 0;text-align:center"><h2>${tr('not_found')}</h2><button class="bt bt-o" onclick="go('exchanges')" style="margin-top:16px">${tr('art_back')}</button></div>${rFoot()}`;
@@ -2701,7 +3505,7 @@ function rExchange(id){
 <div class="esc-name">${es(pL(ex.name))}</div>
 ${ex.rebate?`<div class="esc-rebate"><span class="esc-rl">${tr('rebate')||'返佣'}</span><span class="esc-rv" style="color:${c}">${es(ex.rebate)}</span></div>`:''}
 ${ex.code?`<div class="esc-code"><span class="esc-cl">${tr('invite_code')||'邀请码'}</span><span class="esc-cv">${es(ex.code)}</span><button class="esc-cp" onclick="copyTxt('${es(ex.code)}',this)" title="${tr('copy')||'复制'}">📋</button></div>`:''}
-<button class="bt bt-g esc-btn" onclick="ctaClick(ex.id)" style="background:linear-gradient(135deg,${c},${c}cc);color:var(--bg)">🚀 ${tr('register_now')||'立即注册'} →</button>
+<a class="bt bt-g esc-btn" href="${es(ex.url||'#')}" target="_blank" rel="noopener noreferrer nofollow sponsored" onclick="trackCtaClick('${ex.id}','sticky','${es(ex.code||'')}')" aria-label="Register at ${es(pL(ex.name))} (sponsored link, opens in new tab)" style="background:linear-gradient(135deg,${c},${c}cc);color:var(--bg)">🚀 ${tr('register_now')||'立即注册'} →</a>
 <div class="esc-note">${tr('ex_safe_note')||'✓ 直达官方域名 ✓ 邀请码自动绑定 ✓ 永久返佣'}</div>
 ${ex.mirrors&&ex.mirrors.length?`<button class="esc-mir" onclick="document.querySelector('.mir-block')?.scrollIntoView({behavior:'smooth'})">🌐 ${tr('cant_access_t')||'无法访问？查看备用入口'} →</button>`:''}
 </div></aside>`;
@@ -2719,7 +3523,7 @@ ${ex.rebate?`<div style="text-align:center;padding-right:14px;border-right:1px s
 ${ex.code?`<div style="text-align:center"><div style="font-size:12px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:3px">${tr('invite_code')||'邀请码'}</div><div style="font-size:18px;font-weight:800;color:var(--blu);font-family:'JetBrains Mono',monospace;line-height:1;display:flex;align-items:center;gap:8px">${es(ex.code)}<button class="top-ex-code-cp" onclick="copyTxt('${es(ex.code)}',this)" title="${tr('copy')||'复制'}" style="font-size:13px">📋</button></div></div>`:''}
 </div>`:''}
 <div>
-<button class="bt bt-g" onclick="ctaClick(ex.id)" style="background:linear-gradient(135deg,${c},${c}cc);color:var(--bg);font-size:16px;padding:14px 32px;font-weight:700">🚀 ${tr('register_now')||'立即注册'} → ${es(pL(ex.name))}</button>
+<a class="bt bt-g" href="${es(ex.url||'#')}" target="_blank" rel="noopener noreferrer nofollow sponsored" onclick="trackCtaClick('${ex.id}','ex_hero','${es(ex.code||'')}')" aria-label="Register at ${es(pL(ex.name))} (sponsored)" style="background:linear-gradient(135deg,${c},${c}cc);color:var(--bg);font-size:16px;padding:14px 32px;font-weight:700">🚀 ${tr('register_now')||'立即注册'} → ${es(pL(ex.name))}</a>
 </div>
 <div style="font-size:12.5px;color:var(--tx3);margin-top:14px">${tr('ex_safe_note')||'✓ 直达官方域名 ✓ 邀请码自动绑定 ✓ 永久返佣'}</div>
 ${ex.mirrors&&ex.mirrors.length?`<button onclick="document.querySelector('.mir-block')?.scrollIntoView({behavior:'smooth',block:'start'})" style="display:inline-flex;align-items:center;gap:8px;margin-top:14px;font-size:14px;color:var(--bg);background:linear-gradient(135deg,${c},${c}dd);font-weight:700;cursor:pointer;border:none;padding:10px 20px;border-radius:99px;transition:all .2s;box-shadow:0 4px 14px ${c}55;animation:mirGlow 2s ease-in-out infinite" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px ${c}70'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 14px ${c}55'">🌐 <span>${tr('cant_access_t')||'无法访问主域名？'} ${tr('cant_access_btn')||'查看备用入口'}</span></button>`:''}
@@ -2768,7 +3572,7 @@ ${nt?`<div style="font-size:12px;color:var(--tx2);margin-top:5px;font-weight:500
 <div style="background:linear-gradient(135deg,${c}14,${c}06);border:1px solid ${c}40;padding:32px;border-radius:var(--r2);text-align:center">
 <h2 style="font-size:22px;margin-bottom:8px">🎁 ${tr('ex_cta_t')||'准备好开始了吗？'}</h2>
 <p style="font-size:15px;margin-bottom:20px;color:var(--tx2);line-height:1.7">${tr('ex_cta_d')||'通过本站注册立享'} <strong style="color:${c}">${es(ex.rebate||'最高返佣')}</strong> ${tr('permanent')||'永久'}${tr('rebate')||'返佣'}。</p>
-<button class="bt bt-g" onclick="ctaClick(ex.id)" style="background:linear-gradient(135deg,${c},${c}cc);color:var(--bg);font-size:16px;padding:14px 32px;font-weight:700">🚀 ${tr('register_now')||'立即注册'} ${es(pL(ex.name))} →</button>
+<a class="bt bt-g" href="${es(ex.url||'#')}" target="_blank" rel="noopener noreferrer nofollow sponsored" onclick="trackCtaClick('${ex.id}','ex_bottom','${es(ex.code||'')}')" style="background:linear-gradient(135deg,${c},${c}cc);color:var(--bg);font-size:16px;padding:14px 32px;font-weight:700">🚀 ${tr('register_now')||'立即注册'} ${es(pL(ex.name))} →</a>
 </div>
 </div>${stickyCTA}</div>${rFoot()}`;
 }
@@ -3034,7 +3838,7 @@ ${(()=>{
 </div>
 <p style="margin:0 0 14px;color:var(--tx2);font-size:14.5px;line-height:1.65">${tr('art_cta_apply')||'本文涉及'}<strong> ${es(nm)}</strong>。${tr('art_cta_apply2')||'通过本站邀请码注册享受'} <strong style="color:${c}">${es(ctaEx.rebate||'')}</strong> ${tr('art_cta_apply3')||'永久手续费返佣。'}</p>
 <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
-<button class="bt bt-g" style="background:${c};color:var(--bg)" onclick="ctaClick(ctaEx.id)">🚀 ${tr('register_now')||'立即注册'} ${es(nm)} →</button>
+<a class="bt bt-g" href="${es(ctaEx.url||'#')}" target="_blank" rel="noopener noreferrer nofollow sponsored" onclick="trackCtaClick('${ctaEx.id}','art_top','${es(ctaEx.code||'')}')" style="background:${c};color:var(--bg)">🚀 ${tr('register_now')||'立即注册'} ${es(nm)} →</a>
 ${ctaEx.code?`<div style="display:flex;align-items:center;gap:6px;padding:8px 12px;background:var(--bg2);border:1px dashed var(--bd2);border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:13px"><span style="color:var(--tx3);font-size:12px">CODE</span><strong style="color:${c}">${es(ctaEx.code)}</strong><button class="top-ex-code-cp" onclick="event.stopPropagation();copyTxt('${es(ctaEx.code)}',this)" style="font-size:12px">📋</button></div>`:''}
 </div>
 </div>
@@ -3065,13 +3869,13 @@ ${related.length?`<div style="margin-top:36px">
 ${(D.exs.filter(e=>!e.hidden).slice(0,3).map(ex=>{
   const c=ex.color||'#2ecf90';
   const name=pL(ex.name)||ex.id;
-  return `<div style="background:var(--bg);border:1.5px solid ${c}30;border-radius:12px;padding:18px 18px 16px;text-align:center;transition:.2s;cursor:pointer" onclick="ctaClick(ex.id)" onmouseover="this.style.borderColor='${c}';this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px ${c}20'" onmouseout="this.style.borderColor='${c}30';this.style.transform='';this.style.boxShadow=''">
+  return `<a href="${es(ex.url||'/exchange/'+ex.id)}" target="_blank" rel="noopener noreferrer nofollow sponsored" onclick="trackCtaClick('${ex.id}','art_bottom_card','${es(ex.code||'')}')" style="background:var(--bg);border:1.5px solid ${c}30;border-radius:12px;padding:18px 18px 16px;text-align:center;transition:.2s;cursor:pointer;text-decoration:none;color:inherit;display:block" onmouseover="this.style.borderColor='${c}';this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px ${c}20'" onmouseout="this.style.borderColor='${c}30';this.style.transform='';this.style.boxShadow=''">
 <div style="width:48px;height:48px;border-radius:11px;background:${c}20;color:${c};display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;margin:0 auto 10px">${es(ex.logo)}</div>
 <div style="font-weight:700;font-size:15.5px;margin-bottom:8px">${es(name)}</div>
 ${ex.rebate?`<div style="background:${c}15;color:${c};padding:5px 10px;border-radius:99px;font-size:12px;font-weight:700;display:inline-block;margin-bottom:10px;font-family:'JetBrains Mono',monospace">🎁 ${es(ex.rebate)} ${tr('rebate')||'返佣'}</div>`:''}
 ${ex.code?`<div style="font-size:12px;color:var(--tx3);margin-bottom:12px">${tr('invite_code')||'邀请码'}: <code style="color:${c};background:none;border:none;padding:0;font-size:12px;font-weight:700">${es(ex.code)}</code></div>`:''}
-<button class="bt bt-g" style="background:${c};color:var(--bg);font-size:13px;padding:9px 18px;width:100%;font-weight:700">${tr('register_now')||'立即注册'} →</button>
-</div>`;
+<span class="bt bt-g" style="background:${c};color:var(--bg);font-size:13px;padding:9px 18px;width:100%;font-weight:700;display:inline-block;box-sizing:border-box">${tr('register_now')||'立即注册'} →</span>
+</a>`;
 }).join(''))}
 </div>
 <div style="text-align:center;margin-top:18px"><a onclick="go('compare/okx-vs-binance')" style="font-size:13px;color:var(--blu);cursor:pointer;text-decoration:none;border-bottom:1px dotted var(--blu)">${tr('view_compare')||'还在犹豫？看完整对比'} →</a></div>
@@ -3217,7 +4021,24 @@ function filterPublicArts(){
 function rFoot(){
   const social=D.links?.social||[];
   const friends=D.links?.friends||[];
-  return`<footer class="fo"><div class="w">
+  return`
+<!-- NEWSLETTER SIGNUP — captures emails for retargeting (lead magnet) -->
+<section class="news-sec"><div class="w">
+<div class="news-card">
+<div class="news-content">
+<div class="news-bdg">📬 ${tr('news_bdg')||'NEWSLETTER'}</div>
+<h2 class="news-h2">${tr('news_t')||'每周加密交易精选'}</h2>
+<p class="news-d">${tr('news_d')||'订阅每周精选教程 + 新交易所返佣机会。零垃圾邮件，随时退订。'}</p>
+</div>
+<form class="news-form" onsubmit="return subscribeEmail(event)">
+<input type="email" id="newsEmail" class="news-input" placeholder="${tr('news_placeholder')||'your@email.com'}" required autocomplete="email">
+<button type="submit" class="bt bt-g news-btn">📧 ${tr('news_btn')||'订阅'}</button>
+</form>
+<div id="newsMsg" class="news-msg"></div>
+</div>
+</div></section>
+
+<footer class="fo"><div class="w">
 <div class="fcols">
 <div class="fcl">
 <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px"><div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--grn),var(--grn2));display:flex;align-items:center;justify-content:center;color:var(--bg);font-weight:900;font-size:17px">R</div><span style="font-size:16px;font-weight:700">CryptoRebateHub</span></div>
@@ -3227,9 +4048,13 @@ ${social.length?`<div style="display:flex;gap:8px;margin-top:14px">${social.map(
 <div class="fcl"><h4>${tr('foot_links')}</h4><ul>
 <li><a onclick="go('')">${tr('nav_home')}</a></li>
 <li><a onclick="go('exchanges')">${tr('nav_ex')}</a></li>
+<li><a onclick="go('dex')">⛓ ${tr('nav_dex')||'DEX'}</a></li>
+<li><a onclick="go('wallets')">💼 ${tr('nav_wallets')||'Web3 钱包'}</a></li>
 <li><a onclick="go('access-urls')">🌐 ${tr('nav_access')||'备用入口'}</a></li>
 <li><a onclick="go('guides')">${tr('nav_guides')}</a></li>
 <li><a onclick="go('articles')">${tr('nav_art')}</a></li>
+<li><a onclick="go('tools')">🛠 ${tr('nav_tools')||'实用工具'}</a></li>
+<li><a onclick="go('compare')">⚖️ ${tr('nav_compare')||'对比'}</a></li>
 </ul></div>
 <div class="fcl"><h4>${tr('foot_resources')}</h4><ul>
 <li><a onclick="go('about')">${tr('foot_about')}</a></li>
@@ -3243,7 +4068,7 @@ ${friends.map(f=>`<li><a href="${es(f.url)}" target="_blank" rel="noopener noref
 </ul></div>
 </div>
 <div class="fds">${tr('foot_disclaimer')}</div>
-<div class="fbt"><span>© <span data-year>2026</span> CryptoRebateHub · cryptorebatehub.com</span><span>${tr('foot_main')}</span></div>
+<div class="fbt"><span>© <span data-year>${netYear()}</span> CryptoRebateHub · cryptorebatehub.com</span><span>${tr('foot_main')}</span></div>
 </div></footer>`;
 }
 
@@ -3253,7 +4078,19 @@ ${friends.map(f=>`<li><a href="${es(f.url)}" target="_blank" rel="noopener noref
 function setLang(l){
   if(!T[l])return;
   lang=l;localStorage.setItem('crh_lang',l);
-  document.documentElement.lang=l;
+  // Update html lang attribute (SEO + accessibility)
+  // Map zh → zh-CN per BCP 47 standard
+  const htmlLang = l==='zh'?'zh-CN':l;
+  document.documentElement.lang=htmlLang;
+  document.documentElement.dir='ltr'; // future RTL support
+  // Update content-language meta (helps Bing/Yandex)
+  let cl=document.querySelector('meta[http-equiv="content-language"]');
+  if(!cl){
+    cl=document.createElement('meta');
+    cl.setAttribute('http-equiv','content-language');
+    document.head.appendChild(cl);
+  }
+  cl.setAttribute('content',htmlLang);
   // Don't set title/desc here — rr() handles it via updCanonical/render flow
   document.querySelectorAll('#lngS a').forEach(a=>a.classList.toggle('ac',a.dataset.l===l));
   rr();
