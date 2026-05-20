@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="Cache-Control" content="public, max-age=0, must-revalidate">
-<meta name="build-id" content="20260518-mega-dropdown">
+<meta name="build-id" content="20260518-html-articles-fix">
 
 <!-- ============================================================
      ANALYTICS — Microsoft Clarity (free heatmaps + session recordings)
@@ -2512,6 +2512,37 @@ async function fp(){
 // ═══════════════════════════════════════════════════════════════
 function md2h(m){
   if(!m)return'';
+  // ─── Smart detection: if input is already HTML, pass through (with safe sanitization) ───
+  // Heuristic: content starts with an HTML block-level tag OR has multiple block-level tags
+  const htmlBlockPattern = /<(h[1-6]|p|div|table|ul|ol|blockquote|pre|section|article|header|footer)\b/i;
+  const trimmed = m.trim();
+  if (trimmed.startsWith('<') && htmlBlockPattern.test(trimmed)) {
+    // Treat as HTML — sanitize dangerous tags/attrs and pass through
+    let h = m
+      // Strip script/style/iframe/object/embed tags entirely (XSS)
+      .replace(/<\s*(script|style|iframe|object|embed|form|input|button|svg)[\s\S]*?<\/\s*\1\s*>/gi, '')
+      .replace(/<\s*(script|style|iframe|object|embed|form|input|button|svg)\b[^>]*\/?>/gi, '')
+      // Strip event handlers (onclick=, onerror=, onload=, etc)
+      .replace(/\s+on[a-z]+\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi, '')
+      // Strip javascript: and data: in href/src
+      .replace(/(href|src)\s*=\s*("|')\s*(javascript|data|vbscript):/gi, '$1=$2#blocked-')
+      // Strip noscript content but keep tag
+      .replace(/<\/?noscript[^>]*>/gi, '');
+    // Add SPA navigation to internal links (href="/path") + sponsored target=_blank for external
+    h = h.replace(/<a\s+([^>]*?)href=["'](\/[^"']*)["']([^>]*?)>/gi, (full, pre, url, post) => {
+      // Internal link → SPA navigation
+      if (/onclick/i.test(pre + post)) return full; // already has handler, keep
+      const path = url.replace(/^\//, '').replace(/'/g, "\\'");
+      return `<a ${pre}href="${url}"${post} onclick="event.preventDefault();go('${path}')">`;
+    });
+    // External links: ensure target=_blank + rel
+    h = h.replace(/<a\s+([^>]*?)href=["'](https?:\/\/[^"']*)["']([^>]*?)>/gi, (full, pre, url, post) => {
+      if (/target=/i.test(pre + post)) return full;
+      return `<a ${pre}href="${url}" target="_blank" rel="noopener noreferrer nofollow"${post}>`;
+    });
+    return h;
+  }
+  // ─── Markdown processing (legacy path for markdown-formatted articles) ───
   m=es(m);
   const lines=m.split('\n');
   const out=[];let inUl=false,inOl=false,inPre=false,para=[],preBuf=[];
