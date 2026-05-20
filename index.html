@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="Cache-Control" content="public, max-age=0, must-revalidate">
-<meta name="build-id" content="20260518-access-hub-light-fix">
+<meta name="build-id" content="20260518-mega-dropdown">
 
 <!-- ============================================================
      ANALYTICS — Microsoft Clarity (free heatmaps + session recordings)
@@ -359,9 +359,84 @@ a{color:var(--tx);text-decoration:none}
 .lg-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--grn),var(--grn2));display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;color:var(--bg);font-family:'Inter',sans-serif}
 .lg-t{font-size:18px;font-weight:800;letter-spacing:-.3px;white-space:nowrap}
 .lg-t em{font-style:normal;color:var(--grn)}
-.nl{display:flex;list-style:none;gap:6px;font-size:14px;flex:1;justify-content:center}
-.nl a{padding:8px 14px;border-radius:8px;color:var(--tx2);transition:.2s;cursor:pointer;white-space:nowrap}
-.nl a:hover{background:rgba(255,255,255,.04);color:var(--tx)}
+.nl{display:flex;list-style:none;gap:2px;font-size:14px;flex:1;justify-content:center;align-items:center}
+.nl > li > a, .nl > li > .nl-dd-tg{padding:8px 14px;border-radius:8px;color:var(--tx2);transition:.2s;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;font-weight:500;line-height:1;height:36px;text-decoration:none}
+.nl > li > a:hover, .nl > li > .nl-dd-tg:hover{background:rgba(255,255,255,.04);color:var(--tx)}
+[data-theme="light"] .nl > li > a:hover, [data-theme="light"] .nl > li > .nl-dd-tg:hover{background:rgba(10,14,26,.04)}
+
+/* === DROPDOWN MENU SYSTEM === */
+.nl-dd{position:relative}
+.nl-dd-tg{user-select:none}
+.nl-dd-tg .nl-arr{transition:transform .25s;opacity:.7;margin-top:1px}
+.nl-dd.is-open .nl-dd-tg{background:rgba(255,255,255,.06);color:var(--tx)}
+[data-theme="light"] .nl-dd.is-open .nl-dd-tg{background:rgba(10,14,26,.06);color:var(--tx)}
+.nl-dd.is-open .nl-dd-tg .nl-arr{transform:rotate(180deg);opacity:1}
+
+/* Tools dropdown special highlight */
+.nl-dd-feat{color:var(--grn) !important;font-weight:700 !important}
+.nl-pulse{display:inline-block;width:6px;height:6px;background:var(--grn);border-radius:50%;flex-shrink:0;animation:mirPulse 1.5s ease-in-out infinite}
+
+/* Mega panel base */
+.nl-mega{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%) translateY(-6px);min-width:680px;background:var(--bg2);border:1px solid var(--bd2);border-radius:16px;box-shadow:var(--sh-xl),0 0 0 1px rgba(0,0,0,.02);padding:18px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s ease,transform .22s ease,visibility .22s;z-index:60;backdrop-filter:saturate(140%) blur(20px);-webkit-backdrop-filter:saturate(140%) blur(20px)}
+.nl-dd.is-open .nl-mega{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+
+/* Smaller mega for tools/learn */
+.nl-mega-sm{min-width:540px}
+
+/* Mega top arrow */
+.nl-mega::before{content:'';position:absolute;top:-6px;left:50%;transform:translateX(-50%) rotate(45deg);width:12px;height:12px;background:var(--bg2);border-left:1px solid var(--bd2);border-top:1px solid var(--bd2);border-radius:2px}
+
+.nl-mega-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+.nl-mega-grid-2{grid-template-columns:1fr 1fr}
+.nl-mega-col{display:flex;flex-direction:column;padding:6px 4px}
+.nl-mega-col + .nl-mega-col{border-left:1px solid var(--bd)}
+.nl-mega-feat{background:linear-gradient(135deg,var(--grnA),transparent 60%);border-radius:12px}
+
+.nl-mega-h{font-size:11px;color:var(--tx3);text-transform:uppercase;letter-spacing:1.2px;font-weight:800;padding:6px 12px 10px;display:flex;align-items:center;gap:6px}
+
+/* Mega item card */
+.nl-mega-item{display:flex !important;align-items:center;gap:11px;padding:10px 12px !important;border-radius:10px;cursor:pointer;text-decoration:none;color:var(--tx) !important;position:relative;transition:.15s;background:transparent !important;height:auto !important}
+.nl-mega-item:hover{background:var(--bg3) !important}
+[data-theme="light"] .nl-mega-item:hover{background:rgba(10,14,26,.04) !important}
+.nl-mi-ic{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;letter-spacing:-.3px}
+.nl-mi-body{flex:1;min-width:0;text-align:left}
+.nl-mi-name{font-size:13.5px;font-weight:700;color:var(--tx);display:flex;align-items:center;gap:4px;line-height:1.3}
+.nl-mi-d{font-size:11.5px;color:var(--tx3);line-height:1.4;margin-top:2px}
+.nl-mi-tag{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:800;padding:2px 7px;border-radius:99px;letter-spacing:.3px;flex-shrink:0}
+.nl-mi-star{font-size:10px;opacity:.9}
+.nl-mi-badge{font-size:9.5px;font-weight:800;padding:1px 6px;border-radius:4px;background:linear-gradient(135deg,#ff5f6d,#ffc371);color:#fff;letter-spacing:.7px;flex-shrink:0}
+
+/* Mega "view all" link */
+.nl-mega-link{display:block;padding:10px 12px;font-size:12.5px;font-weight:700;color:var(--grn);cursor:pointer;border-radius:8px;text-decoration:none;margin-top:4px}
+.nl-mega-link:hover{background:var(--grnA);color:var(--grn)}
+
+/* === AFFILIATE CTA BUTTON (RIGHT) === */
+.nv-cta{position:relative;flex-shrink:0;margin-left:6px}
+.nv-cta-btn{display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,var(--grn),var(--grn2));color:var(--on-brand);border:none;padding:9px 16px;border-radius:10px;font-size:13.5px;font-weight:800;font-family:inherit;cursor:pointer;white-space:nowrap;transition:.2s;box-shadow:0 4px 14px rgba(46,207,144,.28),inset 0 1px 0 rgba(255,255,255,.18);position:relative;overflow:hidden;line-height:1;height:36px;letter-spacing:-.01em}
+.nv-cta-btn:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(46,207,144,.40),inset 0 1px 0 rgba(255,255,255,.22);filter:brightness(1.04)}
+.nv-cta-btn:active{transform:translateY(0)}
+.nv-cta-spark{display:inline-block;animation:spark 2.5s ease-in-out infinite;font-size:14px}
+@keyframes spark{0%,100%{transform:rotate(-5deg) scale(1)}50%{transform:rotate(5deg) scale(1.12)}}
+.nv-cta-btn .nl-arr{stroke:var(--on-brand)}
+.nv-cta.is-open .nv-cta-btn .nl-arr{transform:rotate(180deg)}
+
+/* CTA dropdown panel */
+.nl-mega-cta{min-width:340px;left:auto;right:0;transform:translateX(0) translateY(-6px) !important;padding:0}
+.nl-dd.is-open .nl-mega-cta{transform:translateX(0) translateY(0) !important}
+.nl-mega-cta::before{left:auto;right:30px;transform:rotate(45deg)}
+.nl-mega-cta-h{padding:16px 18px 12px;border-bottom:1px solid var(--bd)}
+.nl-mega-cta-list{padding:8px}
+.cta-dd-item{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:10px;text-decoration:none;color:var(--tx) !important;transition:.15s;position:relative}
+.cta-dd-item:hover{background:var(--bg3)}
+[data-theme="light"] .cta-dd-item:hover{background:rgba(10,14,26,.04)}
+.cta-dd-ic{width:36px;height:36px;border-radius:10px;color:var(--on-brand);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13.5px;flex-shrink:0;box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}
+.cta-dd-body{flex:1;min-width:0}
+.cta-dd-name{font-size:14.5px;font-weight:700;color:var(--tx);display:flex;align-items:center;gap:5px}
+.cta-dd-star{font-size:11px}
+.cta-dd-d{font-size:12px;color:var(--tx3);margin-top:2px}
+.cta-dd-rebate{font-family:'JetBrains Mono',monospace;font-size:17px;font-weight:800;letter-spacing:-.3px;flex-shrink:0}
+
+/* === HIDE FLOATING LANG PICKER (no longer needed) === */
 .lng{display:flex;gap:4px;font-size:13px;flex-shrink:0}
 .lng a{padding:6px 10px;border-radius:6px;color:var(--tx2);cursor:pointer}
 .lng a:hover,.lng a.ac{background:var(--grnA);color:var(--grn)}
@@ -378,10 +453,11 @@ a{color:var(--tx);text-decoration:none}
 .nv-bd{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:.3s;z-index:47}
 .nv-bd.sh{opacity:1;pointer-events:auto}
 @media(max-width:900px){
-  .nl{position:fixed;top:0;right:-100%;height:100vh;width:84%;max-width:340px;background:var(--bg);flex-direction:column;justify-content:flex-start;padding:80px 18px 24px;transition:right .3s ease;border-left:1px solid var(--bd);z-index:48;box-shadow:-12px 0 40px rgba(0,0,0,.4);overflow-y:auto}
+  .nl{position:fixed;top:0;right:-100%;height:100vh;width:84%;max-width:340px;background:var(--bg);flex-direction:column;justify-content:flex-start;padding:80px 18px 24px;transition:right .3s ease;border-left:1px solid var(--bd);z-index:48;box-shadow:-12px 0 40px rgba(0,0,0,.4);overflow-y:auto;align-items:stretch}
   .nl.opn{right:0}
-  .nl a{display:block;padding:14px 18px;font-size:16px;border-radius:10px;margin-bottom:4px;font-weight:500}
-  .nl a:hover,.nl a.cur{background:var(--grnA);color:var(--grn)}
+  .nl > li{width:100%}
+  .nl > li > a, .nl > li > .nl-dd-tg{display:flex;padding:14px 18px;font-size:15.5px;border-radius:10px;margin-bottom:4px;font-weight:500;width:100%;height:auto;justify-content:flex-start}
+  .nl > li > a:hover,.nl > li > a.cur{background:var(--grnA);color:var(--grn)}
   .mb-tg{display:flex}
   .lng{position:fixed;top:-9999px;left:-9999px}
   .nl.opn ~ .lng-mobile-display{display:flex !important}
@@ -389,6 +465,23 @@ a{color:var(--tx);text-decoration:none}
   .lng-mobile-display a{padding:7px 13px;font-size:13px;border-radius:99px;color:var(--tx2);cursor:pointer;font-weight:500}
   .lng-mobile-display a.ac{background:var(--grnA);color:var(--grn)}
   .theme-tg{padding:6px 8px}
+  /* === Mobile: dropdowns become accordion === */
+  .nl-dd-tg{justify-content:space-between !important}
+  .nl-dd-tg .nl-arr{margin-left:auto}
+  .nl-mega{position:static;transform:none !important;min-width:0;width:100%;background:transparent;border:none;border-radius:0;box-shadow:none;padding:4px 0 4px 8px;visibility:visible;opacity:1;pointer-events:auto;max-height:0;overflow:hidden;transition:max-height .3s ease;backdrop-filter:none;-webkit-backdrop-filter:none}
+  .nl-mega::before{display:none}
+  .nl-mega-sm, .nl-mega-cta{min-width:0;width:100%}
+  .nl-dd.is-open .nl-mega{max-height:1200px;transform:none !important}
+  .nl-mega-grid, .nl-mega-grid-2{grid-template-columns:1fr;gap:0}
+  .nl-mega-col + .nl-mega-col{border-left:none;border-top:1px solid var(--bd);margin-top:6px;padding-top:8px}
+  .nl-mega-feat{background:none;border-radius:0}
+  .nl-mega-h{padding:10px 12px 6px;font-size:10.5px}
+  .nl-mega-item{padding:9px 12px !important}
+  .nl-mi-ic{width:28px;height:28px;font-size:12px}
+  .nl-mi-name{font-size:13px}
+  .nl-mi-d{font-size:11px}
+  /* CTA button hidden on mobile (mobile bottom CTA bar handles it) */
+  .nv-cta{display:none}
 }
 @media(min-width:901px){.lng-mobile-display{display:none}}
 
@@ -837,15 +930,164 @@ if('caches' in window){
 </a>
 <ul class="nl" id="nLinks">
 <li><a onclick="go('')" data-t="nav_home"></a></li>
-<li><a onclick="go('markets')" data-t="nav_market"></a></li>
-<li><a onclick="go('exchanges')" data-t="nav_ex"></a></li>
-<li><a onclick="go('tools/rebate-calculator')" data-t="nav_calc" style="position:relative;color:var(--grn);font-weight:700"><span style="display:inline-block;width:6px;height:6px;background:var(--grn);border-radius:50%;margin-right:5px;vertical-align:middle;animation:mirPulse 1.5s ease-in-out infinite"></span></a></li>
+
+<!-- EXCHANGES MEGA DROPDOWN -->
+<li class="nl-dd" data-dd="ex">
+  <a class="nl-dd-tg" tabindex="0" role="button" aria-haspopup="true" aria-expanded="false">
+    <span data-t="nav_ex"></span>
+    <svg class="nl-arr" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+  <div class="nl-mega" role="menu">
+    <div class="nl-mega-grid">
+      <!-- CEX Column -->
+      <div class="nl-mega-col">
+        <div class="nl-mega-h">🏛 <span data-t="dd_cex_t">中心化交易所</span></div>
+        <a class="nl-mega-item" onclick="go('exchange/okx')" role="menuitem">
+          <div class="nl-mi-ic" style="background:#2ecf9022;color:#2ecf90">OK</div>
+          <div class="nl-mi-body"><div class="nl-mi-name">OKX</div><div class="nl-mi-d" data-t="dd_okx_d">中文最完善 · 20% 返佣</div></div>
+          <span class="nl-mi-tag" style="background:#2ecf9018;color:#2ecf90">20%</span>
+        </a>
+        <a class="nl-mega-item" onclick="go('exchange/binance')" role="menuitem">
+          <div class="nl-mi-ic" style="background:#f0b41e22;color:#f0b41e">BN</div>
+          <div class="nl-mi-body"><div class="nl-mi-name">Binance</div><div class="nl-mi-d" data-t="dd_bn_d">全球最大 · 500+ 币种</div></div>
+          <span class="nl-mi-tag" style="background:#f0b41e18;color:#f0b41e">20%</span>
+        </a>
+        <a class="nl-mega-item" onclick="go('exchange/bybit')" role="menuitem">
+          <div class="nl-mi-ic" style="background:#ff8a3a22;color:#ff8a3a">BY</div>
+          <div class="nl-mi-body"><div class="nl-mi-name">Bybit <span class="nl-mi-star">⭐</span></div><div class="nl-mi-d" data-t="dd_by_d">合约最强 · 行业最高返佣</div></div>
+          <span class="nl-mi-tag" style="background:#ff8a3a18;color:#ff8a3a">33%</span>
+        </a>
+        <a class="nl-mega-link" onclick="go('exchanges')"><span data-t="dd_all_cex">查看全部 CEX</span> →</a>
+      </div>
+      <!-- DEX Column -->
+      <div class="nl-mega-col">
+        <div class="nl-mega-h">⛓ <span data-t="dd_dex_t">去中心化交易所</span></div>
+        <a class="nl-mega-item" onclick="go('exchange/hyperliquid')" role="menuitem">
+          <div class="nl-mi-ic" style="background:#56c8d622;color:#56c8d6">HL</div>
+          <div class="nl-mi-body"><div class="nl-mi-name">Hyperliquid</div><div class="nl-mi-d" data-t="dd_hl_d">永续合约 DEX · 无 KYC · 潜在空投</div></div>
+          <span class="nl-mi-tag" style="background:#56c8d618;color:#56c8d6">4%</span>
+        </a>
+        <a class="nl-mega-link" onclick="go('dex')"><span data-t="dd_all_dex">查看全部 DEX</span> →</a>
+        <!-- Web3 Wallets sub-section -->
+        <div class="nl-mega-h" style="margin-top:18px">💼 <span data-t="dd_wal_t">Web3 钱包</span></div>
+        <a class="nl-mega-item" onclick="go('exchange/binance-wallet')" role="menuitem">
+          <div class="nl-mi-ic" style="background:#fcd53522;color:#fcd535">BW</div>
+          <div class="nl-mi-body"><div class="nl-mi-name" data-t="dd_bw_n">Binance 钱包</div><div class="nl-mi-d" data-t="dd_bw_d">多链 · 内置 DEX</div></div>
+          <span class="nl-mi-tag" style="background:#fcd53518;color:#fcd535">20%</span>
+        </a>
+        <a class="nl-mega-item" onclick="go('exchange/okx-wallet')" role="menuitem">
+          <div class="nl-mi-ic" style="background:#1ba78422;color:#1ba784">OW</div>
+          <div class="nl-mi-body"><div class="nl-mi-name" data-t="dd_ow_n">OKX 钱包</div><div class="nl-mi-d" data-t="dd_ow_d">DEX 聚合最强</div></div>
+          <span class="nl-mi-tag" style="background:#1ba78418;color:#1ba784">20%</span>
+        </a>
+        <a class="nl-mega-link" onclick="go('wallets')"><span data-t="dd_all_wal">查看全部钱包</span> →</a>
+      </div>
+      <!-- Featured Column -->
+      <div class="nl-mega-col nl-mega-feat">
+        <div class="nl-mega-h">⚡ <span data-t="dd_quick_t">快速操作</span></div>
+        <a class="nl-mega-item nl-mi-cta" onclick="go('compare')" role="menuitem">
+          <div class="nl-mi-ic" style="background:var(--grnA);color:var(--grn)">📊</div>
+          <div class="nl-mi-body"><div class="nl-mi-name" data-t="dd_cmp">完整对比</div><div class="nl-mi-d" data-t="dd_cmp_d">5 分钟选出最适合的</div></div>
+        </a>
+        <a class="nl-mega-item nl-mi-cta" onclick="go('markets')" role="menuitem">
+          <div class="nl-mi-ic" style="background:var(--bluA);color:var(--blu)">📈</div>
+          <div class="nl-mi-body"><div class="nl-mi-name" data-t="nav_market">实时行情</div><div class="nl-mi-d" data-t="dd_mkts_d">BTC/ETH 实时价格</div></div>
+        </a>
+        <a class="nl-mega-item nl-mi-cta" onclick="go('access-urls')" role="menuitem">
+          <div class="nl-mi-ic" style="background:rgba(122,192,255,.12);color:#7ac0ff">🌐</div>
+          <div class="nl-mi-body"><div class="nl-mi-name" data-t="dd_hub">官方入口大全</div><div class="nl-mi-d" data-t="dd_hub_d">全部官方注册 + 备用域名</div></div>
+        </a>
+        <a class="nl-mega-item nl-mi-cta" onclick="go('register-bonus')" role="menuitem">
+          <div class="nl-mi-ic" style="background:rgba(255,138,58,.15);color:#ff8a3a">🎁</div>
+          <div class="nl-mi-body"><div class="nl-mi-name" data-t="nav_bonus">注册福利</div><div class="nl-mi-d" data-t="dd_bonus_d">永久返佣 20%-33%</div></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</li>
+
+<!-- TOOLS DROPDOWN -->
+<li class="nl-dd" data-dd="tools">
+  <a class="nl-dd-tg nl-dd-feat" tabindex="0" role="button" aria-haspopup="true" aria-expanded="false">
+    <span class="nl-pulse"></span>
+    <span data-t="dd_tools_label">🛠 实用工具</span>
+    <svg class="nl-arr" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+  <div class="nl-mega nl-mega-sm" role="menu">
+    <div class="nl-mega-grid nl-mega-grid-2">
+      <div class="nl-mega-col">
+        <div class="nl-mega-h">🛠 <span data-t="dd_tools_t">在线工具</span></div>
+        <a class="nl-mega-item nl-mi-cta" onclick="go('tools/rebate-calculator')" role="menuitem">
+          <div class="nl-mi-ic" style="background:var(--grnA);color:var(--grn)">🧮</div>
+          <div class="nl-mi-body"><div class="nl-mi-name" data-t="dd_calc_t">返佣计算器</div><div class="nl-mi-d" data-t="dd_calc_d">算出能省多少手续费</div></div>
+          <span class="nl-mi-badge" data-t="dd_hot">HOT</span>
+        </a>
+        <a class="nl-mega-item nl-mi-cta" onclick="go('tools/exchange-wizard')" role="menuitem">
+          <div class="nl-mi-ic" style="background:var(--bluA);color:var(--blu)">🎯</div>
+          <div class="nl-mi-body"><div class="nl-mi-name" data-t="dd_wiz_t">交易所向导</div><div class="nl-mi-d" data-t="dd_wiz_d">5 题选出最适合的</div></div>
+        </a>
+        <a class="nl-mega-item nl-mi-cta" onclick="go('tools/fee-comparison')" role="menuitem">
+          <div class="nl-mi-ic" style="background:rgba(255,138,58,.15);color:#ff8a3a">📊</div>
+          <div class="nl-mi-body"><div class="nl-mi-name" data-t="dd_fee_t">费率对比表</div><div class="nl-mi-d" data-t="dd_fee_d">现货/合约/返佣后实际</div></div>
+        </a>
+      </div>
+      <div class="nl-mega-col">
+        <div class="nl-mega-h">📋 <span data-t="dd_cmp_label">一对一对比</span></div>
+        <a class="nl-mega-item nl-mi-cta" onclick="go('compare/okx-vs-binance')" role="menuitem">
+          <div class="nl-mi-ic" style="background:var(--bg3);color:var(--tx2);font-size:11px">vs</div>
+          <div class="nl-mi-body"><div class="nl-mi-name">OKX vs Binance</div><div class="nl-mi-d" data-t="dd_cmp1_d">两大头部对决</div></div>
+        </a>
+        <a class="nl-mega-item nl-mi-cta" onclick="go('compare/binance-vs-bybit')" role="menuitem">
+          <div class="nl-mi-ic" style="background:var(--bg3);color:var(--tx2);font-size:11px">vs</div>
+          <div class="nl-mi-body"><div class="nl-mi-name">Binance vs Bybit</div><div class="nl-mi-d" data-t="dd_cmp2_d">流动性 vs 返佣</div></div>
+        </a>
+        <a class="nl-mega-item nl-mi-cta" onclick="go('compare/okx-vs-bybit')" role="menuitem">
+          <div class="nl-mi-ic" style="background:var(--bg3);color:var(--tx2);font-size:11px">vs</div>
+          <div class="nl-mi-body"><div class="nl-mi-name">OKX vs Bybit</div><div class="nl-mi-d" data-t="dd_cmp3_d">中文 vs 合约</div></div>
+        </a>
+        <a class="nl-mega-link" onclick="go('compare')"><span data-t="dd_all_cmp">查看全部对比</span> →</a>
+      </div>
+    </div>
+  </div>
+</li>
+
+<!-- LEARN DROPDOWN -->
+<li class="nl-dd" data-dd="learn">
+  <a class="nl-dd-tg" tabindex="0" role="button" aria-haspopup="true" aria-expanded="false">
+    <span data-t="dd_learn_label">学习中心</span>
+    <svg class="nl-arr" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+  <div class="nl-mega nl-mega-sm" role="menu">
+    <div class="nl-mega-grid nl-mega-grid-2">
+      <div class="nl-mega-col">
+        <div class="nl-mega-h">📚 <span data-t="dd_learn_t">教程与文章</span></div>
+        <a class="nl-mega-item nl-mi-cta" onclick="go('guides')" role="menuitem">
+          <div class="nl-mi-ic" style="background:var(--grnA);color:var(--grn)">📚</div>
+          <div class="nl-mi-body"><div class="nl-mi-name" data-t="nav_guides">新手指南</div><div class="nl-mi-d" data-t="dd_guides_d">入门 · KYC · 入金 · 安全</div></div>
+        </a>
+        <a class="nl-mega-item nl-mi-cta" onclick="go('articles')" role="menuitem">
+          <div class="nl-mi-ic" style="background:var(--bluA);color:var(--blu)">📝</div>
+          <div class="nl-mi-body"><div class="nl-mi-name" data-t="nav_art">文章库</div><div class="nl-mi-d" data-t="dd_arts_d">深度教程 · 4 语言</div></div>
+        </a>
+      </div>
+      <div class="nl-mega-col">
+        <div class="nl-mega-h">ℹ️ <span data-t="dd_about_t">关于本站</span></div>
+        <a class="nl-mega-item nl-mi-cta" onclick="go('about')" role="menuitem">
+          <div class="nl-mi-ic" style="background:var(--bg3);color:var(--tx2)">ℹ</div>
+          <div class="nl-mi-body"><div class="nl-mi-name" data-t="nav_about">关于我们</div><div class="nl-mi-d" data-t="dd_about_d">第三方独立信息站</div></div>
+        </a>
+        <a class="nl-mega-item nl-mi-cta" onclick="go('disclosure')" role="menuitem">
+          <div class="nl-mi-ic" style="background:var(--bg3);color:var(--tx2)">🛡</div>
+          <div class="nl-mi-body"><div class="nl-mi-name" data-t="nav_disc">透明度</div><div class="nl-mi-d" data-t="dd_disc_d">Affiliate 披露 · Cookie</div></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</li>
+
 <li><a onclick="go('access-urls')" data-t="nav_access"></a></li>
-<li><a onclick="go('guides')" data-t="nav_guides"></a></li>
-<li><a onclick="go('articles')" data-t="nav_art"></a></li>
-<li><a onclick="go('disclosure')" data-t="nav_disc"></a></li>
-<li><a onclick="go('about')" data-t="nav_about"></a></li>
 </ul>
+
 <div class="lng" id="lngS">
 <a onclick="setLang('zh')" data-l="zh">简</a>
 <a onclick="setLang('zh-TW')" data-l="zh-TW">繁</a>
@@ -853,6 +1095,49 @@ if('caches' in window){
 <a onclick="setLang('ko')" data-l="ko">한</a>
 </div>
 <button class="theme-tg" id="themeBtn" onclick="toggleTheme()" title="切换主题"><span id="themeIc">☀</span></button>
+
+<!-- AFFILIATE CTA DROPDOWN BUTTON -->
+<div class="nv-cta nl-dd" data-dd="cta">
+  <button class="nv-cta-btn nl-dd-tg" tabindex="0" aria-haspopup="true" aria-expanded="false">
+    <span class="nv-cta-spark">🎁</span>
+    <span data-t="nav_cta_btn">立即返佣</span>
+    <svg class="nl-arr" width="10" height="10" viewBox="0 0 10 10" fill="none" style="opacity:.9"><path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <div class="nl-mega nl-mega-cta" role="menu">
+    <div class="nl-mega-cta-h">
+      <div style="font-size:11px;color:var(--tx3);text-transform:uppercase;letter-spacing:1.2px;font-weight:800" data-t="cta_dd_t">推荐邀请码</div>
+      <div style="font-size:14px;color:var(--tx2);margin-top:4px" data-t="cta_dd_d">永久有效 · 每月自动到账 · 无附加条件</div>
+    </div>
+    <div class="nl-mega-cta-list">
+      <a href="https://www.bybit.com/invite?ref=8DXZXGZ" target="_blank" rel="noopener noreferrer nofollow sponsored" onclick="trackCtaClick('bybit','nav_cta_dd','8DXZXGZ')" class="cta-dd-item" aria-label="Register at Bybit (sponsored)">
+        <div class="cta-dd-ic" style="background:#ff8a3a">BY</div>
+        <div class="cta-dd-body">
+          <div class="cta-dd-name">Bybit <span class="cta-dd-star">⭐</span></div>
+          <div class="cta-dd-d" data-t="cta_dd_bb">合约最强 · 行业最高返佣</div>
+        </div>
+        <div class="cta-dd-rebate" style="color:#ff8a3a">33%</div>
+      </a>
+      <a href="https://www.okx.com/join/WLFI47" target="_blank" rel="noopener noreferrer nofollow sponsored" onclick="trackCtaClick('okx','nav_cta_dd','WLFI47')" class="cta-dd-item" aria-label="Register at OKX (sponsored)">
+        <div class="cta-dd-ic" style="background:#2ecf90">OK</div>
+        <div class="cta-dd-body">
+          <div class="cta-dd-name">OKX</div>
+          <div class="cta-dd-d" data-t="cta_dd_okx">中文最完善 · 新手首选</div>
+        </div>
+        <div class="cta-dd-rebate" style="color:#2ecf90">20%</div>
+      </a>
+      <a href="https://www.binance.com/join?ref=WLFI47" target="_blank" rel="noopener noreferrer nofollow sponsored" onclick="trackCtaClick('binance','nav_cta_dd','WLFI47')" class="cta-dd-item" aria-label="Register at Binance (sponsored)">
+        <div class="cta-dd-ic" style="background:#f0b41e">BN</div>
+        <div class="cta-dd-body">
+          <div class="cta-dd-name">Binance</div>
+          <div class="cta-dd-d" data-t="cta_dd_bn">全球最大 · 500+ 币种</div>
+        </div>
+        <div class="cta-dd-rebate" style="color:#f0b41e">20%</div>
+      </a>
+    </div>
+    <a onclick="go('register-bonus');closeAllDropdowns()" class="nl-mega-link" style="margin:14px 18px 18px"><span data-t="cta_dd_all">查看全部福利</span> →</a>
+  </div>
+</div>
+
 <button class="mb-tg" id="mbTg" onclick="toggleMobileMenu()" aria-label="Menu"><span class="hb-line"></span></button>
 </div>
 </nav>
@@ -1036,7 +1321,7 @@ cp_high:'24h 高',cp_low:'24h 低',cp_vol:'24h 成交量',cp_open:'24h 开盘',c
 hr_badge:'独立第三方 · 返佣对比中心',
 hr_t:'通过返佣链接，<em>节省高达 60%</em><br>的加密交易费用',
 hr_d:'通过本站邀请码注册 OKX（欧易）享20%永久返佣，注册 Binance（币安）享20%返佣，注册 Bybit 享33%返佣（行业最高）。独立对比三大主流交易所手续费，提供注册教程和实时行情。',
-hr_b1:'查看交易所对比',hr_b2:'查看实时行情',hr_b_main:'立即注册享返佣',hr_access_t:'无法访问交易所主域名？',hr_access_btn:'查看官方备用入口',geo_rec_t:'根据你的地区，推荐使用',geo_rec_cta:'立即注册',aff_note:'本站包含联盟邀请码，注册后无额外费用。',aff_note_link:'查看透明披露',news_bdg:'NEWSLETTER',news_t:'每周加密交易精选',news_d:'订阅每周精选教程 + 新交易所返佣机会。零垃圾邮件，随时退订。',news_placeholder:'your@email.com',news_btn:'订阅',news_ok:'订阅成功！我们将很快与你联系',news_err:'订阅失败，请稍后再试',news_invalid:'请输入有效的邮箱地址',tools_section_sl:'🛠 实用工具',tools_section_t:'帮你做更聪明的决策',cmp_section_sl:'⚖️ 一对一对比',cmp_section_t:'帮你 5 分钟选出交易所',cmp_section_d:'还在犹豫？看主流交易所的逐项对比，找到最适合自己的。',cmp_label:'对比',cmp_recommendation:'快速结论',cmp_table_t:'完整对比表',cmp_dimension:'对比项',cmp_founded:'成立年份',cmp_hq:'总部',cmp_spot_fee:'现货手续费',cmp_real_spot:'返佣后实际现货',cmp_fut_fee:'合约手续费 (Taker)',cmp_real_fut:'返佣后实际合约',cmp_max_leverage:'最高杠杆',cmp_coins:'币种数量',cmp_volume:'24h 交易量',cmp_users:'注册用户',cmp_kyc:'KYC 要求',cmp_copy_trade:'跟单交易',cmp_earn:'理财产品',cmp_launchpad:'Launchpad',cmp_languages:'语言支持',cmp_rebate:'本站返佣',cmp_who_t:'谁更适合谁？',cmp_final_t:'选好了？立即注册',cmp_final_d:'通过本站邀请码注册，永久享受手续费返佣，每月自动到账。',cmp_more_t:'其他对比',tool_reb_h1:'返佣计算器',tool_reb_intro:'输入你每月预计的交易量，立刻看到在 OKX、Binance、Bybit 各能省多少手续费。',tool_reb_vol_label:'月交易量 (USDT)',tool_reb_type_label:'交易类型',tool_reb_note:'计算基于各交易所公开的 Taker 费率。实际费率可能因 VIP 等级、平台币抵扣而更低。',tool_reb_monthly:'月返佣',tool_reb_yearly:'年返佣',tool_reb_rate:'实际费率',tool_reb_detail:'完整对比',tool_reb_save_yr:'年省',tool_wiz_q1:'1️⃣ 你的加密交易经验？',tool_wiz_q1_a:'🐣 新手 (< 6 个月)',tool_wiz_q1_a_d:'刚入门，需要好用的界面',tool_wiz_q1_b:'🚀 中级 (6 个月 - 2 年)',tool_wiz_q1_b_d:'熟悉基础，想做合约或长期持有',tool_wiz_q1_c:'⚡ 高级 (2 年+)',tool_wiz_q1_c_d:'高频/API/复杂策略',tool_wiz_q2:'2️⃣ 你在哪个地区？',tool_wiz_q2_a:'🇨🇳 中国 / 港澳台',tool_wiz_q2_a_d:'需要中文支持和稳定访问',tool_wiz_q2_b:'🇰🇷 韩国 / 🇯🇵 日本 / 🇸🇬 新加坡',tool_wiz_q2_c:'🇹🇭 东南亚 (越南/泰国/印尼/菲律宾)',tool_wiz_q2_d:'🇪🇺 欧美 / 🇦🇺 澳洲',tool_wiz_q3:'3️⃣ 你主要要做什么？',tool_wiz_q3_a:'📈 现货交易 / 长期持有',tool_wiz_q3_a_d:'买入并持有，DCA',tool_wiz_q3_b:'⚡ 合约 / 杠杆交易',tool_wiz_q3_b_d:'永续合约、做多做空',tool_wiz_q3_c:'🔁 跟单交易 (Copy Trading)',tool_wiz_q3_c_d:'复制顶级交易员策略',tool_wiz_q3_d:'🌟 综合 (都想试试)',tool_wiz_q4:'4️⃣ 你的初始资金？',tool_wiz_q4_a:'< $1,000',tool_wiz_q4_b:'$1,000 - $10,000',tool_wiz_q4_c:'$10,000+',tool_wiz_q5:'5️⃣ 你最看重什么？',tool_wiz_q5_a:'💰 最低手续费 / 最高返佣',tool_wiz_q5_b:'🪙 最多币种 / 最高流动性',tool_wiz_q5_c:'🎯 跟单生态最完整',tool_wiz_q5_d:'🇨🇳 中文支持 / 易用性',tool_wiz_h1:'交易所匹配向导',tool_wiz_intro:'回答 5 个问题，30 秒内得到最适合你的交易所推荐。',tool_wiz_back:'上一题',wz_r_okx_new:'OKX 中文界面友好，最适合新手',wz_r_bin_new:'Binance 全球用户最多，APP 流畅',wz_r_byb_int:'Bybit 中级用户合约入门首选',wz_r_byb_pro:'Bybit API 延迟最低，适合高频',wz_r_okx_cn:'OKX 中文支持最完善，有多个区域域名',wz_r_byb_kr:'Bybit 在韩日新地区流行度高',wz_r_bin_sea:'Binance 在东南亚 P2P 渠道最强',wz_r_bin_west:'Binance 全球流动性最高',wz_r_bin_spot:'Binance 现货币种 500+，流动性最佳',wz_r_byb_fut:'Bybit 永续合约深度业内顶级，费率最低',wz_r_byb_copy:'Bybit Copy Trading 是行业标杆，最多策略师',wz_r_okx_all:'OKX 是最均衡的全功能交易所',wz_r_bin_large:'Binance 大资金深度好，滑点最低',wz_r_byb_small:'Bybit 跟单最少 10 USDT 起，小资金也能玩',wz_r_byb_fee:'Bybit 33% 返佣业内最高',wz_r_bin_coins:'Binance 500+ 币种，新币上线最快',wz_r_byb_eco:'Bybit 跟单生态成熟度最高',wz_r_okx_lang:'OKX 中文界面+客服支持最完善',tool_wiz_rec:'根据你的回答，最推荐',tool_wiz_why:'为什么推荐它',tool_wiz_2nd:'第二选择',tool_wiz_retry:'🔄 重新测试',tool_fee_h1:'费率实时对比',tool_fee_intro:'OKX、Binance、Bybit 完整费率对比 + 返佣后实际费率 + 按你的交易量算月成本。',tool_fee_vol_label:'你的月交易量 (USDT)',tool_fee_vol_hint:'用于计算月成本估算',tool_fee_maker:'Maker',tool_fee_maker_d:'挂单（限价）',tool_fee_taker:'Taker',tool_fee_taker_d:'吃单（市价）',tool_fee_note:'费率为各交易所公开 Tier 0 基础费率（无 VIP/无平台币抵扣）。注册时使用本站邀请码自动绑定永久返佣。',tool_fee_after_rb:'返佣后',tool_fee_month_cost:'月成本',go_redirecting:'正在跳转到',go_if_not_redirected:'如果未自动跳转：',click_here:'点击这里',today:'今天',yesterday:'昨天',days_ago:' 天前',weeks_ago:' 周前',months_ago:' 个月前',years_ago:' 年前',art_cta_label:'⭐ 推荐交易所',view_compare:'还在犹豫？看完整对比',tool_reb_cheapest:'实付最低',tool_reb_gross:'毛手续费/月',tool_reb_net:'实付手续费/月',tool_reb_rate_col:'费率 (Taker)',tool_reb_fee_paid_mo:'实付/月',tool_reb_fee_paid_yr:'实付/年',tool_reb_how_t:'计算公式（透明展示）',tool_reb_formula_gross:'毛手续费',tool_reb_formula_rebate:'返佣金额',tool_reb_formula_net:'实付手续费',per_month:'月',cheapest:'最低',tools_section_d:'3 个免费在线工具：返佣计算器、交易所匹配向导、实时费率对比。',open_tool:'打开工具',tool_idx_reb_t:'返佣计算器',tool_idx_reb_d:'输入月交易量 → 算出每月/每年能省多少',tool_idx_wiz_t:'交易所匹配向导',tool_idx_wiz_d:'回答 5 个问题 → 智能推荐最适合你的交易所',tool_idx_fee_t:'费率实时对比',tool_idx_fee_d:'完整费率表 + 按交易量算成本',nav_tools:'实用工具',nav_compare:'对比',tools_label:'TOOLS',tools_idx_t:'实用工具',tools_idx_d:'3 个免费在线工具帮你做更聪明的交易所决策。',spot:'现货',futures:'合约',mixed:'混合 (50/50)',exchange:'交易所',best:'最佳',
+hr_b1:'查看交易所对比',hr_b2:'查看实时行情',hr_b_main:'立即注册享返佣',hr_access_t:'无法访问交易所主域名？',hr_access_btn:'查看官方备用入口',geo_rec_t:'根据你的地区，推荐使用',geo_rec_cta:'立即注册',aff_note:'本站包含联盟邀请码，注册后无额外费用。',aff_note_link:'查看透明披露',news_bdg:'NEWSLETTER',news_t:'每周加密交易精选',news_d:'订阅每周精选教程 + 新交易所返佣机会。零垃圾邮件，随时退订。',news_placeholder:'your@email.com',news_btn:'订阅',news_ok:'订阅成功！我们将很快与你联系',news_err:'订阅失败，请稍后再试',news_invalid:'请输入有效的邮箱地址',tools_section_sl:'🛠 实用工具',tools_section_t:'帮你做更聪明的决策',dd_tools_label:'🛠 实用工具',dd_learn_label:'学习中心',nav_cta_btn:'立即返佣',dd_cex_t:'中心化交易所',dd_dex_t:'去中心化交易所',dd_wal_t:'Web3 钱包',dd_okx_d:'中文最完善 · 20% 返佣',dd_bn_d:'全球最大 · 500+ 币种',dd_by_d:'合约最强 · 行业最高返佣',dd_hl_d:'永续合约 DEX · 无 KYC · 潜在空投',dd_bw_n:'Binance 钱包',dd_bw_d:'多链 · 内置 DEX',dd_ow_n:'OKX 钱包',dd_ow_d:'DEX 聚合最强',dd_all_cex:'查看全部 CEX',dd_all_dex:'查看全部 DEX',dd_all_wal:'查看全部钱包',dd_quick_t:'快速操作',dd_cmp:'完整对比',dd_cmp_d:'5 分钟选出最适合的',dd_mkts_d:'BTC/ETH 实时价格',dd_hub:'官方入口大全',dd_hub_d:'全部官方注册 + 备用域名',dd_bonus_d:'永久返佣 20%-33%',dd_tools_t:'在线工具',dd_calc_t:'返佣计算器',dd_calc_d:'算出能省多少手续费',dd_hot:'热门',dd_wiz_t:'交易所向导',dd_wiz_d:'5 题选出最适合的',dd_fee_t:'费率对比表',dd_fee_d:'现货/合约/返佣后实际',dd_cmp_label:'一对一对比',dd_cmp1_d:'两大头部对决',dd_cmp2_d:'流动性 vs 返佣',dd_cmp3_d:'中文 vs 合约',dd_all_cmp:'查看全部对比',dd_learn_t:'教程与文章',dd_guides_d:'入门 · KYC · 入金 · 安全',dd_arts_d:'深度教程 · 4 语言',dd_about_t:'关于本站',dd_about_d:'第三方独立信息站',dd_disc_d:'Affiliate 披露 · Cookie',cta_dd_t:'推荐邀请码',cta_dd_d:'永久有效 · 每月自动到账 · 无附加条件',cta_dd_bb:'合约最强 · 行业最高返佣',cta_dd_okx:'中文最完善 · 新手首选',cta_dd_bn:'全球最大 · 500+ 币种',cta_dd_all:'查看全部福利',cmp_section_sl:'⚖️ 一对一对比',cmp_section_t:'帮你 5 分钟选出交易所',cmp_section_d:'还在犹豫？看主流交易所的逐项对比，找到最适合自己的。',cmp_label:'对比',cmp_recommendation:'快速结论',cmp_table_t:'完整对比表',cmp_dimension:'对比项',cmp_founded:'成立年份',cmp_hq:'总部',cmp_spot_fee:'现货手续费',cmp_real_spot:'返佣后实际现货',cmp_fut_fee:'合约手续费 (Taker)',cmp_real_fut:'返佣后实际合约',cmp_max_leverage:'最高杠杆',cmp_coins:'币种数量',cmp_volume:'24h 交易量',cmp_users:'注册用户',cmp_kyc:'KYC 要求',cmp_copy_trade:'跟单交易',cmp_earn:'理财产品',cmp_launchpad:'Launchpad',cmp_languages:'语言支持',cmp_rebate:'本站返佣',cmp_who_t:'谁更适合谁？',cmp_final_t:'选好了？立即注册',cmp_final_d:'通过本站邀请码注册，永久享受手续费返佣，每月自动到账。',cmp_more_t:'其他对比',tool_reb_h1:'返佣计算器',tool_reb_intro:'输入你每月预计的交易量，立刻看到在 OKX、Binance、Bybit 各能省多少手续费。',tool_reb_vol_label:'月交易量 (USDT)',tool_reb_type_label:'交易类型',tool_reb_note:'计算基于各交易所公开的 Taker 费率。实际费率可能因 VIP 等级、平台币抵扣而更低。',tool_reb_monthly:'月返佣',tool_reb_yearly:'年返佣',tool_reb_rate:'实际费率',tool_reb_detail:'完整对比',tool_reb_save_yr:'年省',tool_wiz_q1:'1️⃣ 你的加密交易经验？',tool_wiz_q1_a:'🐣 新手 (< 6 个月)',tool_wiz_q1_a_d:'刚入门，需要好用的界面',tool_wiz_q1_b:'🚀 中级 (6 个月 - 2 年)',tool_wiz_q1_b_d:'熟悉基础，想做合约或长期持有',tool_wiz_q1_c:'⚡ 高级 (2 年+)',tool_wiz_q1_c_d:'高频/API/复杂策略',tool_wiz_q2:'2️⃣ 你在哪个地区？',tool_wiz_q2_a:'🇨🇳 中国 / 港澳台',tool_wiz_q2_a_d:'需要中文支持和稳定访问',tool_wiz_q2_b:'🇰🇷 韩国 / 🇯🇵 日本 / 🇸🇬 新加坡',tool_wiz_q2_c:'🇹🇭 东南亚 (越南/泰国/印尼/菲律宾)',tool_wiz_q2_d:'🇪🇺 欧美 / 🇦🇺 澳洲',tool_wiz_q3:'3️⃣ 你主要要做什么？',tool_wiz_q3_a:'📈 现货交易 / 长期持有',tool_wiz_q3_a_d:'买入并持有，DCA',tool_wiz_q3_b:'⚡ 合约 / 杠杆交易',tool_wiz_q3_b_d:'永续合约、做多做空',tool_wiz_q3_c:'🔁 跟单交易 (Copy Trading)',tool_wiz_q3_c_d:'复制顶级交易员策略',tool_wiz_q3_d:'🌟 综合 (都想试试)',tool_wiz_q4:'4️⃣ 你的初始资金？',tool_wiz_q4_a:'< $1,000',tool_wiz_q4_b:'$1,000 - $10,000',tool_wiz_q4_c:'$10,000+',tool_wiz_q5:'5️⃣ 你最看重什么？',tool_wiz_q5_a:'💰 最低手续费 / 最高返佣',tool_wiz_q5_b:'🪙 最多币种 / 最高流动性',tool_wiz_q5_c:'🎯 跟单生态最完整',tool_wiz_q5_d:'🇨🇳 中文支持 / 易用性',tool_wiz_h1:'交易所匹配向导',tool_wiz_intro:'回答 5 个问题，30 秒内得到最适合你的交易所推荐。',tool_wiz_back:'上一题',wz_r_okx_new:'OKX 中文界面友好，最适合新手',wz_r_bin_new:'Binance 全球用户最多，APP 流畅',wz_r_byb_int:'Bybit 中级用户合约入门首选',wz_r_byb_pro:'Bybit API 延迟最低，适合高频',wz_r_okx_cn:'OKX 中文支持最完善，有多个区域域名',wz_r_byb_kr:'Bybit 在韩日新地区流行度高',wz_r_bin_sea:'Binance 在东南亚 P2P 渠道最强',wz_r_bin_west:'Binance 全球流动性最高',wz_r_bin_spot:'Binance 现货币种 500+，流动性最佳',wz_r_byb_fut:'Bybit 永续合约深度业内顶级，费率最低',wz_r_byb_copy:'Bybit Copy Trading 是行业标杆，最多策略师',wz_r_okx_all:'OKX 是最均衡的全功能交易所',wz_r_bin_large:'Binance 大资金深度好，滑点最低',wz_r_byb_small:'Bybit 跟单最少 10 USDT 起，小资金也能玩',wz_r_byb_fee:'Bybit 33% 返佣业内最高',wz_r_bin_coins:'Binance 500+ 币种，新币上线最快',wz_r_byb_eco:'Bybit 跟单生态成熟度最高',wz_r_okx_lang:'OKX 中文界面+客服支持最完善',tool_wiz_rec:'根据你的回答，最推荐',tool_wiz_why:'为什么推荐它',tool_wiz_2nd:'第二选择',tool_wiz_retry:'🔄 重新测试',tool_fee_h1:'费率实时对比',tool_fee_intro:'OKX、Binance、Bybit 完整费率对比 + 返佣后实际费率 + 按你的交易量算月成本。',tool_fee_vol_label:'你的月交易量 (USDT)',tool_fee_vol_hint:'用于计算月成本估算',tool_fee_maker:'Maker',tool_fee_maker_d:'挂单（限价）',tool_fee_taker:'Taker',tool_fee_taker_d:'吃单（市价）',tool_fee_note:'费率为各交易所公开 Tier 0 基础费率（无 VIP/无平台币抵扣）。注册时使用本站邀请码自动绑定永久返佣。',tool_fee_after_rb:'返佣后',tool_fee_month_cost:'月成本',go_redirecting:'正在跳转到',go_if_not_redirected:'如果未自动跳转：',click_here:'点击这里',today:'今天',yesterday:'昨天',days_ago:' 天前',weeks_ago:' 周前',months_ago:' 个月前',years_ago:' 年前',art_cta_label:'⭐ 推荐交易所',view_compare:'还在犹豫？看完整对比',tool_reb_cheapest:'实付最低',tool_reb_gross:'毛手续费/月',tool_reb_net:'实付手续费/月',tool_reb_rate_col:'费率 (Taker)',tool_reb_fee_paid_mo:'实付/月',tool_reb_fee_paid_yr:'实付/年',tool_reb_how_t:'计算公式（透明展示）',tool_reb_formula_gross:'毛手续费',tool_reb_formula_rebate:'返佣金额',tool_reb_formula_net:'实付手续费',per_month:'月',cheapest:'最低',tools_section_d:'3 个免费在线工具：返佣计算器、交易所匹配向导、实时费率对比。',open_tool:'打开工具',tool_idx_reb_t:'返佣计算器',tool_idx_reb_d:'输入月交易量 → 算出每月/每年能省多少',tool_idx_wiz_t:'交易所匹配向导',tool_idx_wiz_d:'回答 5 个问题 → 智能推荐最适合你的交易所',tool_idx_fee_t:'费率实时对比',tool_idx_fee_d:'完整费率表 + 按交易量算成本',nav_tools:'实用工具',nav_compare:'对比',tools_label:'TOOLS',tools_idx_t:'实用工具',tools_idx_d:'3 个免费在线工具帮你做更聪明的交易所决策。',spot:'现货',futures:'合约',mixed:'混合 (50/50)',exchange:'交易所',best:'最佳',
 top_sl:'本站推荐',top_t:'三大交易所一键注册',top_d:'通过本站邀请码注册，永久享受手续费返佣。无需复杂操作，点击直达官方。',best_pick:'首选',valid:'有效期',register_now:'立即注册',view_detail:'详情',copy:'复制',permanent:'永久',
 why_sl:'为什么选择本站',why_t:'独立 · 透明 · 永久返佣',
 why_1_t:'永久 20-33% 返佣',why_1_d:'通过本站邀请码注册的账户，每笔交易自动返还手续费，永不过期，无需任何手动申请。',
@@ -1163,7 +1448,7 @@ cp_high:'24h 高',cp_low:'24h 低',cp_vol:'24h 成交量',cp_open:'24h 開盤',c
 hr_badge:'獨立第三方 · 返佣對比中心',
 hr_t:'透過返佣連結，<em>節省高達 60%</em><br>的加密交易費用',
 hr_d:'透過本站邀請碼註冊 OKX（欧易）享20%永久返佣，註冊 Binance（幣安）享20%返佣，註冊 Bybit 享33%返佣（業界最高）。獨立比對三大主流交易所手續費，提供註冊教程和即時行情。',
-hr_b1:'查看交易所對比',hr_b2:'查看即時行情',hr_b_main:'立即註冊享返佣',hr_access_t:'無法訪問交易所主網域？',hr_access_btn:'查看官方備用入口',geo_rec_t:'根據你的地區，推薦使用',geo_rec_cta:'立即註冊',aff_note:'本站包含聯盟邀請碼，註冊後無額外費用。',aff_note_link:'查看透明披露',news_bdg:'NEWSLETTER',news_t:'每週加密交易精選',news_d:'訂閱每週精選教程 + 新交易所返佣機會。零垃圾郵件，隨時退訂。',news_placeholder:'your@email.com',news_btn:'訂閱',news_ok:'訂閱成功！我們將很快與你聯繫',news_err:'訂閱失敗，請稍後再試',news_invalid:'請輸入有效的郵箱地址',tools_section_sl:'🛠 實用工具',tools_section_t:'幫你做更聰明的決策',cmp_section_sl:'⚖️ 一對一對比',cmp_section_t:'幫你 5 分鐘選出交易所',cmp_section_d:'還在猶豫？看主流交易所的逐項對比，找到最適合自己的。',cmp_label:'對比',cmp_recommendation:'快速結論',cmp_table_t:'完整對比表',cmp_dimension:'對比項',cmp_founded:'成立年份',cmp_hq:'總部',cmp_spot_fee:'現貨手續費',cmp_real_spot:'返佣後實際現貨',cmp_fut_fee:'合約手續費 (Taker)',cmp_real_fut:'返佣後實際合約',cmp_max_leverage:'最高槓桿',cmp_coins:'幣種數量',cmp_volume:'24h 交易量',cmp_users:'註冊用戶',cmp_kyc:'KYC 要求',cmp_copy_trade:'跟單交易',cmp_earn:'理財產品',cmp_launchpad:'Launchpad',cmp_languages:'語言支持',cmp_rebate:'本站返佣',cmp_who_t:'誰更適合誰？',cmp_final_t:'選好了？立即註冊',cmp_final_d:'通過本站邀請碼註冊，永久享受手續費返佣，每月自動到帳。',cmp_more_t:'其他對比',tool_reb_h1:'返佣計算器',tool_reb_intro:'輸入你每月預計的交易量，立刻看到在 OKX、Binance、Bybit 各能省多少手續費。',tool_reb_vol_label:'月交易量 (USDT)',tool_reb_type_label:'交易類型',tool_reb_note:'計算基於各交易所公開的 Taker 費率。實際費率可能因 VIP 等級而更低。',tool_reb_monthly:'月返佣',tool_reb_yearly:'年返佣',tool_reb_rate:'實際費率',tool_reb_detail:'完整對比',tool_reb_save_yr:'年省',tool_wiz_q1:'1️⃣ 你的加密交易經驗？',tool_wiz_q1_a:'🐣 新手 (< 6 個月)',tool_wiz_q1_a_d:'剛入門',tool_wiz_q1_b:'🚀 中級 (6 個月 - 2 年)',tool_wiz_q1_b_d:'熟悉基礎',tool_wiz_q1_c:'⚡ 高級 (2 年+)',tool_wiz_q1_c_d:'高頻/API/複雜策略',tool_wiz_q2:'2️⃣ 你在哪個地區？',tool_wiz_q2_a:'🇨🇳 中國 / 港澳台',tool_wiz_q2_a_d:'需要中文支持',tool_wiz_q2_b:'🇰🇷 韓國 / 🇯🇵 日本 / 🇸🇬 新加坡',tool_wiz_q2_c:'🇹🇭 東南亞',tool_wiz_q2_d:'🇪🇺 歐美 / 🇦🇺 澳洲',tool_wiz_q3:'3️⃣ 你主要要做什麼？',tool_wiz_q3_a:'📈 現貨 / 長期持有',tool_wiz_q3_a_d:'買入並持有',tool_wiz_q3_b:'⚡ 合約 / 槓桿',tool_wiz_q3_b_d:'永續合約',tool_wiz_q3_c:'🔁 跟單交易',tool_wiz_q3_c_d:'複製策略',tool_wiz_q3_d:'🌟 綜合',tool_wiz_q4:'4️⃣ 初始資金？',tool_wiz_q4_a:'< $1,000',tool_wiz_q4_b:'$1,000 - $10,000',tool_wiz_q4_c:'$10,000+',tool_wiz_q5:'5️⃣ 最看重什麼？',tool_wiz_q5_a:'💰 最低手續費/最高返佣',tool_wiz_q5_b:'🪙 最多幣種/最高流動性',tool_wiz_q5_c:'🎯 跟單生態',tool_wiz_q5_d:'🇨🇳 中文支持',tool_wiz_h1:'交易所匹配向導',tool_wiz_intro:'回答 5 個問題，30 秒內得到最適合你的交易所推薦。',tool_wiz_back:'上一題',wz_r_okx_new:'OKX 中文界面友好',wz_r_bin_new:'Binance 全球用戶最多',wz_r_byb_int:'Bybit 合約入門首選',wz_r_byb_pro:'Bybit API 延遲最低',wz_r_okx_cn:'OKX 中文支持最完善',wz_r_byb_kr:'Bybit 在韓日新地區流行度高',wz_r_bin_sea:'Binance 東南亞 P2P 最強',wz_r_bin_west:'Binance 全球流動性最高',wz_r_bin_spot:'Binance 現貨幣種 500+',wz_r_byb_fut:'Bybit 永續合約深度業內頂級',wz_r_byb_copy:'Bybit Copy Trading 業界標杆',wz_r_okx_all:'OKX 最均衡的全功能交易所',wz_r_bin_large:'Binance 大資金深度好',wz_r_byb_small:'Bybit 跟單最少 10 USDT 起',wz_r_byb_fee:'Bybit 33% 返佣業內最高',wz_r_bin_coins:'Binance 500+ 幣種',wz_r_byb_eco:'Bybit 跟單生態最成熟',wz_r_okx_lang:'OKX 中文界面+客服最完善',tool_wiz_rec:'根據你的回答，最推薦',tool_wiz_why:'為什麼推薦它',tool_wiz_2nd:'第二選擇',tool_wiz_retry:'🔄 重新測試',tool_fee_h1:'費率實時對比',tool_fee_intro:'OKX、Binance、Bybit 完整費率對比 + 返佣後實際費率。',tool_fee_vol_label:'你的月交易量 (USDT)',tool_fee_vol_hint:'用於計算月成本估算',tool_fee_maker:'Maker',tool_fee_maker_d:'掛單（限價）',tool_fee_taker:'Taker',tool_fee_taker_d:'吃單（市價）',tool_fee_note:'費率為公開 Tier 0 基礎費率。註冊時使用本站邀請碼自動綁定永久返佣。',tool_fee_after_rb:'返佣後',tool_fee_month_cost:'月成本',go_redirecting:'正在跳轉到',go_if_not_redirected:'如果未自動跳轉：',click_here:'點擊這裡',today:'今天',yesterday:'昨天',days_ago:' 天前',weeks_ago:' 週前',months_ago:' 個月前',years_ago:' 年前',art_cta_label:'⭐ 推薦交易所',view_compare:'還在猶豫？看完整對比',tool_reb_cheapest:'實付最低',tool_reb_gross:'毛手續費/月',tool_reb_net:'實付手續費/月',tool_reb_rate_col:'費率 (Taker)',tool_reb_fee_paid_mo:'實付/月',tool_reb_fee_paid_yr:'實付/年',tool_reb_how_t:'計算公式（透明展示）',tool_reb_formula_gross:'毛手續費',tool_reb_formula_rebate:'返佣金額',tool_reb_formula_net:'實付手續費',per_month:'月',cheapest:'最低',tools_section_d:'3 個免費在線工具。',open_tool:'打開工具',tool_idx_reb_t:'返佣計算器',tool_idx_reb_d:'輸入月交易量 → 算出能省多少',tool_idx_wiz_t:'交易所匹配向導',tool_idx_wiz_d:'回答 5 個問題 → 智能推薦',tool_idx_fee_t:'費率實時對比',tool_idx_fee_d:'完整費率表 + 按交易量算成本',nav_tools:'實用工具',nav_compare:'對比',tools_label:'TOOLS',tools_idx_t:'實用工具',tools_idx_d:'3 個免費在線工具。',spot:'現貨',futures:'合約',mixed:'混合 (50/50)',exchange:'交易所',best:'最佳',
+hr_b1:'查看交易所對比',hr_b2:'查看即時行情',hr_b_main:'立即註冊享返佣',hr_access_t:'無法訪問交易所主網域？',hr_access_btn:'查看官方備用入口',geo_rec_t:'根據你的地區，推薦使用',geo_rec_cta:'立即註冊',aff_note:'本站包含聯盟邀請碼，註冊後無額外費用。',aff_note_link:'查看透明披露',news_bdg:'NEWSLETTER',news_t:'每週加密交易精選',news_d:'訂閱每週精選教程 + 新交易所返佣機會。零垃圾郵件，隨時退訂。',news_placeholder:'your@email.com',news_btn:'訂閱',news_ok:'訂閱成功！我們將很快與你聯繫',news_err:'訂閱失敗，請稍後再試',news_invalid:'請輸入有效的郵箱地址',tools_section_sl:'🛠 實用工具',tools_section_t:'幫你做更聰明的決策',dd_tools_label:'🛠 實用工具',dd_learn_label:'學習中心',nav_cta_btn:'立即返佣',dd_cex_t:'中心化交易所',dd_dex_t:'去中心化交易所',dd_wal_t:'Web3 錢包',dd_okx_d:'中文最完善 · 20% 返佣',dd_bn_d:'全球最大 · 500+ 幣種',dd_by_d:'合約最強 · 業界最高返佣',dd_hl_d:'永續合約 DEX · 無 KYC · 潛在空投',dd_bw_n:'Binance 錢包',dd_bw_d:'多鏈 · 內建 DEX',dd_ow_n:'OKX 錢包',dd_ow_d:'DEX 聚合最強',dd_all_cex:'查看全部 CEX',dd_all_dex:'查看全部 DEX',dd_all_wal:'查看全部錢包',dd_quick_t:'快速操作',dd_cmp:'完整對比',dd_cmp_d:'5 分鐘選出最適合的',dd_mkts_d:'BTC/ETH 即時價格',dd_hub:'官方入口大全',dd_hub_d:'全部官方註冊 + 備用域名',dd_bonus_d:'永久返佣 20%-33%',dd_tools_t:'線上工具',dd_calc_t:'返佣計算器',dd_calc_d:'算出能省多少手續費',dd_hot:'熱門',dd_wiz_t:'交易所嚮導',dd_wiz_d:'5 題選出最適合的',dd_fee_t:'費率對比表',dd_fee_d:'現貨/合約/返佣後實際',dd_cmp_label:'一對一對比',dd_cmp1_d:'兩大頭部對決',dd_cmp2_d:'流動性 vs 返佣',dd_cmp3_d:'中文 vs 合約',dd_all_cmp:'查看全部對比',dd_learn_t:'教學與文章',dd_guides_d:'入門 · KYC · 入金 · 安全',dd_arts_d:'深度教學 · 4 語言',dd_about_t:'關於本站',dd_about_d:'第三方獨立資訊站',dd_disc_d:'Affiliate 揭露 · Cookie',cta_dd_t:'推薦邀請碼',cta_dd_d:'永久有效 · 每月自動到帳 · 無附加條件',cta_dd_bb:'合約最強 · 業界最高返佣',cta_dd_okx:'中文最完善 · 新手首選',cta_dd_bn:'全球最大 · 500+ 幣種',cta_dd_all:'查看全部福利',cmp_section_sl:'⚖️ 一對一對比',cmp_section_t:'幫你 5 分鐘選出交易所',cmp_section_d:'還在猶豫？看主流交易所的逐項對比，找到最適合自己的。',cmp_label:'對比',cmp_recommendation:'快速結論',cmp_table_t:'完整對比表',cmp_dimension:'對比項',cmp_founded:'成立年份',cmp_hq:'總部',cmp_spot_fee:'現貨手續費',cmp_real_spot:'返佣後實際現貨',cmp_fut_fee:'合約手續費 (Taker)',cmp_real_fut:'返佣後實際合約',cmp_max_leverage:'最高槓桿',cmp_coins:'幣種數量',cmp_volume:'24h 交易量',cmp_users:'註冊用戶',cmp_kyc:'KYC 要求',cmp_copy_trade:'跟單交易',cmp_earn:'理財產品',cmp_launchpad:'Launchpad',cmp_languages:'語言支持',cmp_rebate:'本站返佣',cmp_who_t:'誰更適合誰？',cmp_final_t:'選好了？立即註冊',cmp_final_d:'通過本站邀請碼註冊，永久享受手續費返佣，每月自動到帳。',cmp_more_t:'其他對比',tool_reb_h1:'返佣計算器',tool_reb_intro:'輸入你每月預計的交易量，立刻看到在 OKX、Binance、Bybit 各能省多少手續費。',tool_reb_vol_label:'月交易量 (USDT)',tool_reb_type_label:'交易類型',tool_reb_note:'計算基於各交易所公開的 Taker 費率。實際費率可能因 VIP 等級而更低。',tool_reb_monthly:'月返佣',tool_reb_yearly:'年返佣',tool_reb_rate:'實際費率',tool_reb_detail:'完整對比',tool_reb_save_yr:'年省',tool_wiz_q1:'1️⃣ 你的加密交易經驗？',tool_wiz_q1_a:'🐣 新手 (< 6 個月)',tool_wiz_q1_a_d:'剛入門',tool_wiz_q1_b:'🚀 中級 (6 個月 - 2 年)',tool_wiz_q1_b_d:'熟悉基礎',tool_wiz_q1_c:'⚡ 高級 (2 年+)',tool_wiz_q1_c_d:'高頻/API/複雜策略',tool_wiz_q2:'2️⃣ 你在哪個地區？',tool_wiz_q2_a:'🇨🇳 中國 / 港澳台',tool_wiz_q2_a_d:'需要中文支持',tool_wiz_q2_b:'🇰🇷 韓國 / 🇯🇵 日本 / 🇸🇬 新加坡',tool_wiz_q2_c:'🇹🇭 東南亞',tool_wiz_q2_d:'🇪🇺 歐美 / 🇦🇺 澳洲',tool_wiz_q3:'3️⃣ 你主要要做什麼？',tool_wiz_q3_a:'📈 現貨 / 長期持有',tool_wiz_q3_a_d:'買入並持有',tool_wiz_q3_b:'⚡ 合約 / 槓桿',tool_wiz_q3_b_d:'永續合約',tool_wiz_q3_c:'🔁 跟單交易',tool_wiz_q3_c_d:'複製策略',tool_wiz_q3_d:'🌟 綜合',tool_wiz_q4:'4️⃣ 初始資金？',tool_wiz_q4_a:'< $1,000',tool_wiz_q4_b:'$1,000 - $10,000',tool_wiz_q4_c:'$10,000+',tool_wiz_q5:'5️⃣ 最看重什麼？',tool_wiz_q5_a:'💰 最低手續費/最高返佣',tool_wiz_q5_b:'🪙 最多幣種/最高流動性',tool_wiz_q5_c:'🎯 跟單生態',tool_wiz_q5_d:'🇨🇳 中文支持',tool_wiz_h1:'交易所匹配向導',tool_wiz_intro:'回答 5 個問題，30 秒內得到最適合你的交易所推薦。',tool_wiz_back:'上一題',wz_r_okx_new:'OKX 中文界面友好',wz_r_bin_new:'Binance 全球用戶最多',wz_r_byb_int:'Bybit 合約入門首選',wz_r_byb_pro:'Bybit API 延遲最低',wz_r_okx_cn:'OKX 中文支持最完善',wz_r_byb_kr:'Bybit 在韓日新地區流行度高',wz_r_bin_sea:'Binance 東南亞 P2P 最強',wz_r_bin_west:'Binance 全球流動性最高',wz_r_bin_spot:'Binance 現貨幣種 500+',wz_r_byb_fut:'Bybit 永續合約深度業內頂級',wz_r_byb_copy:'Bybit Copy Trading 業界標杆',wz_r_okx_all:'OKX 最均衡的全功能交易所',wz_r_bin_large:'Binance 大資金深度好',wz_r_byb_small:'Bybit 跟單最少 10 USDT 起',wz_r_byb_fee:'Bybit 33% 返佣業內最高',wz_r_bin_coins:'Binance 500+ 幣種',wz_r_byb_eco:'Bybit 跟單生態最成熟',wz_r_okx_lang:'OKX 中文界面+客服最完善',tool_wiz_rec:'根據你的回答，最推薦',tool_wiz_why:'為什麼推薦它',tool_wiz_2nd:'第二選擇',tool_wiz_retry:'🔄 重新測試',tool_fee_h1:'費率實時對比',tool_fee_intro:'OKX、Binance、Bybit 完整費率對比 + 返佣後實際費率。',tool_fee_vol_label:'你的月交易量 (USDT)',tool_fee_vol_hint:'用於計算月成本估算',tool_fee_maker:'Maker',tool_fee_maker_d:'掛單（限價）',tool_fee_taker:'Taker',tool_fee_taker_d:'吃單（市價）',tool_fee_note:'費率為公開 Tier 0 基礎費率。註冊時使用本站邀請碼自動綁定永久返佣。',tool_fee_after_rb:'返佣後',tool_fee_month_cost:'月成本',go_redirecting:'正在跳轉到',go_if_not_redirected:'如果未自動跳轉：',click_here:'點擊這裡',today:'今天',yesterday:'昨天',days_ago:' 天前',weeks_ago:' 週前',months_ago:' 個月前',years_ago:' 年前',art_cta_label:'⭐ 推薦交易所',view_compare:'還在猶豫？看完整對比',tool_reb_cheapest:'實付最低',tool_reb_gross:'毛手續費/月',tool_reb_net:'實付手續費/月',tool_reb_rate_col:'費率 (Taker)',tool_reb_fee_paid_mo:'實付/月',tool_reb_fee_paid_yr:'實付/年',tool_reb_how_t:'計算公式（透明展示）',tool_reb_formula_gross:'毛手續費',tool_reb_formula_rebate:'返佣金額',tool_reb_formula_net:'實付手續費',per_month:'月',cheapest:'最低',tools_section_d:'3 個免費在線工具。',open_tool:'打開工具',tool_idx_reb_t:'返佣計算器',tool_idx_reb_d:'輸入月交易量 → 算出能省多少',tool_idx_wiz_t:'交易所匹配向導',tool_idx_wiz_d:'回答 5 個問題 → 智能推薦',tool_idx_fee_t:'費率實時對比',tool_idx_fee_d:'完整費率表 + 按交易量算成本',nav_tools:'實用工具',nav_compare:'對比',tools_label:'TOOLS',tools_idx_t:'實用工具',tools_idx_d:'3 個免費在線工具。',spot:'現貨',futures:'合約',mixed:'混合 (50/50)',exchange:'交易所',best:'最佳',
 top_sl:'本站推薦',top_t:'三大交易所一鍵註冊',top_d:'透過本站邀請碼註冊，永久享受手續費返佣。無需複雜操作，點擊直達官方。',best_pick:'首選',valid:'有效期',register_now:'立即註冊',view_detail:'詳情',copy:'複製',permanent:'永久',
 why_sl:'為什麼選擇本站',why_t:'獨立 · 透明 · 永久返佣',
 why_1_t:'永久 20-33% 返佣',why_1_d:'透過本站邀請碼註冊的帳戶，每筆交易自動返還手續費，永不過期，無需任何手動申請。',
@@ -1290,7 +1575,7 @@ cp_high:'24h High',cp_low:'24h Low',cp_vol:'24h Volume',cp_open:'24h Open',cp_ch
 hr_badge:'INDEPENDENT · REBATE COMPARISON',
 hr_t:'Save up to <em>60% on trading fees</em><br>with rebate links',
 hr_d:'Register OKX with invite code WLFI47 = 20% permanent rebate. Register Binance with WLFI47 = 20% rebate. Register Bybit with 8DXZXGZ = 33% rebate (industry best). Independent OKX vs Binance vs Bybit comparison, tutorials and live prices.',
-hr_b1:'Compare Exchanges',hr_b2:'Live Prices',hr_b_main:'Get Rebate Now',hr_access_t:'Cannot access main exchange domain?',hr_access_btn:'See Official Mirrors',geo_rec_t:'Based on your region, we recommend',geo_rec_cta:'Sign up',aff_note:'This site contains affiliate invite codes. No extra cost to you.',aff_note_link:'See full disclosure',news_bdg:'NEWSLETTER',news_t:'Weekly Crypto Trading Picks',news_d:'Subscribe for weekly tutorials and new exchange rebate offers. No spam, unsubscribe anytime.',news_placeholder:'your@email.com',news_btn:'Subscribe',news_ok:'Subscribed! We will be in touch shortly',news_err:'Subscription failed, please try again',news_invalid:'Please enter a valid email',tools_section_sl:'🛠 USEFUL TOOLS',tools_section_t:'Make smarter trading decisions',cmp_section_sl:'⚖️ Head-to-head',cmp_section_t:'Pick the right exchange in 5 minutes',cmp_section_d:'Still undecided? See line-by-line comparisons of the top exchanges to find your fit.',cmp_label:'Compare',cmp_recommendation:'Quick verdict',cmp_table_t:'Full comparison table',cmp_dimension:'Dimension',cmp_founded:'Founded',cmp_hq:'HQ',cmp_spot_fee:'Spot fee',cmp_real_spot:'Spot fee after rebate',cmp_fut_fee:'Futures fee (Taker)',cmp_real_fut:'Futures fee after rebate',cmp_max_leverage:'Max leverage',cmp_coins:'Number of coins',cmp_volume:'24h volume',cmp_users:'Registered users',cmp_kyc:'KYC required',cmp_copy_trade:'Copy trading',cmp_earn:'Earn / Savings',cmp_launchpad:'Launchpad',cmp_languages:'Language support',cmp_rebate:'Our site\'s rebate',cmp_who_t:'Who is each best for?',cmp_final_t:'Decided? Sign up now',cmp_final_d:'Register via our invite code to lock in permanent fee rebates, paid automatically each month.',cmp_more_t:'Other comparisons',tool_reb_h1:'Rebate Calculator',tool_reb_intro:'Enter your monthly volume to instantly see how much you save on OKX, Binance, and Bybit.',tool_reb_vol_label:'Monthly volume (USDT)',tool_reb_type_label:'Trade type',tool_reb_note:'Calculations are based on each exchange\'s public Taker fees. Your actual rate may be lower with VIP tier or platform-token discounts.',tool_reb_monthly:'Monthly rebate',tool_reb_yearly:'Yearly rebate',tool_reb_rate:'Effective rate',tool_reb_detail:'Full comparison',tool_reb_save_yr:'Yearly savings',tool_wiz_q1:'1️⃣ Your crypto trading experience?',tool_wiz_q1_a:'🐣 Beginner (< 6 months)',tool_wiz_q1_a_d:'Just starting, need an easy UI',tool_wiz_q1_b:'🚀 Intermediate (6 months - 2 years)',tool_wiz_q1_b_d:'Comfortable, ready for futures or long-term',tool_wiz_q1_c:'⚡ Pro (2+ years)',tool_wiz_q1_c_d:'HFT / API / complex strategies',tool_wiz_q2:'2️⃣ Which region are you in?',tool_wiz_q2_a:'🇨🇳 China / HK / TW / MO',tool_wiz_q2_a_d:'Need Chinese support and stable access',tool_wiz_q2_b:'🇰🇷 Korea / 🇯🇵 Japan / 🇸🇬 Singapore',tool_wiz_q2_c:'🇹🇭 Southeast Asia (VN/TH/ID/PH)',tool_wiz_q2_d:'🇪🇺 Europe / 🇺🇸 US / 🇦🇺 AU',tool_wiz_q3:'3️⃣ What will you mainly do?',tool_wiz_q3_a:'📈 Spot trading / long-term holding',tool_wiz_q3_a_d:'Buy and hold, DCA',tool_wiz_q3_b:'⚡ Futures / leverage trading',tool_wiz_q3_b_d:'Perpetuals, long & short',tool_wiz_q3_c:'🔁 Copy trading',tool_wiz_q3_c_d:'Replicate top traders',tool_wiz_q3_d:'🌟 A mix of everything',tool_wiz_q4:'4️⃣ Your starting capital?',tool_wiz_q4_a:'< $1,000',tool_wiz_q4_b:'$1,000 - $10,000',tool_wiz_q4_c:'$10,000+',tool_wiz_q5:'5️⃣ What matters most?',tool_wiz_q5_a:'💰 Lowest fees / highest rebate',tool_wiz_q5_b:'🪙 Most coins / best liquidity',tool_wiz_q5_c:'🎯 Best copy-trading ecosystem',tool_wiz_q5_d:'🇨🇳 Chinese support / easy UI',tool_wiz_h1:'Exchange Matching Wizard',tool_wiz_intro:'Answer 5 questions to get the best exchange recommendation in 30 seconds.',tool_wiz_back:'Back',wz_r_okx_new:'OKX has the most beginner-friendly Chinese UI',wz_r_bin_new:'Binance has the largest global user base with a smooth app',wz_r_byb_int:'Bybit is the go-to futures entry for intermediate users',wz_r_byb_pro:'Bybit has the lowest API latency, great for HFT',wz_r_okx_cn:'OKX has the best Chinese support with multiple regional domains',wz_r_byb_kr:'Bybit is very popular in Korea, Japan, and Singapore',wz_r_bin_sea:'Binance has the strongest P2P channels in Southeast Asia',wz_r_bin_west:'Binance has the highest global liquidity',wz_r_bin_spot:'Binance offers 500+ spot pairs with top liquidity',wz_r_byb_fut:'Bybit\'s perpetual depth is best-in-class with the lowest fees',wz_r_byb_copy:'Bybit Copy Trading is the industry benchmark with the most strategists',wz_r_okx_all:'OKX is the most balanced all-in-one exchange',wz_r_bin_large:'Binance is best for large capital with the lowest slippage',wz_r_byb_small:'Bybit copy trading starts at just 10 USDT - small accounts welcome',wz_r_byb_fee:'Bybit\'s 33% rebate is the highest in the industry',wz_r_bin_coins:'Binance lists 500+ coins, fastest at adding new ones',wz_r_byb_eco:'Bybit has the most mature copy-trading ecosystem',wz_r_okx_lang:'OKX has the best Chinese UI and customer support',tool_wiz_rec:'Based on your answers, we recommend',tool_wiz_why:'Why this one',tool_wiz_2nd:'Runner-up',tool_wiz_retry:'🔄 Take it again',tool_fee_h1:'Live Fee Comparison',tool_fee_intro:'Full OKX / Binance / Bybit fee comparison + post-rebate effective rates + monthly cost by your volume.',tool_fee_vol_label:'Your monthly volume (USDT)',tool_fee_vol_hint:'Used for monthly cost estimate',tool_fee_maker:'Maker',tool_fee_maker_d:'Limit order',tool_fee_taker:'Taker',tool_fee_taker_d:'Market order',tool_fee_note:'Rates shown are each exchange\'s public Tier-0 base fees (no VIP, no platform-token discount). Using our invite code binds permanent rebates automatically at sign-up.',tool_fee_after_rb:'After rebate',tool_fee_month_cost:'Monthly cost',go_redirecting:'Redirecting to',go_if_not_redirected:'If not redirected automatically:',click_here:'click here',today:'today',yesterday:'yesterday',days_ago:' days ago',weeks_ago:' weeks ago',months_ago:' months ago',years_ago:' years ago',art_cta_label:'⭐ Recommended exchange',view_compare:'Still undecided? See full comparison',tool_reb_cheapest:'Lowest cost',tool_reb_gross:'Gross fee/mo',tool_reb_net:'Net fee/mo',tool_reb_rate_col:'Rate (Taker)',tool_reb_fee_paid_mo:'Paid/mo',tool_reb_fee_paid_yr:'Paid/yr',tool_reb_how_t:'Calculation formula (transparent)',tool_reb_formula_gross:'Gross fee',tool_reb_formula_rebate:'Rebate amount',tool_reb_formula_net:'Net fee paid',per_month:'mo',cheapest:'lowest',tools_section_d:'3 free online tools: rebate calculator, exchange wizard, live fee comparison.',open_tool:'Open Tool',tool_idx_reb_t:'Rebate Calculator',tool_idx_reb_d:'Monthly volume → see monthly & yearly savings',tool_idx_wiz_t:'Exchange Wizard',tool_idx_wiz_d:'Answer 5 questions → smart recommendation',tool_idx_fee_t:'Fee Comparison',tool_idx_fee_d:'Live fee table + monthly cost calculator',nav_tools:'Tools',nav_compare:'Compare',tools_label:'TOOLS',tools_idx_t:'Useful Tools',tools_idx_d:'3 free online tools to help you make smarter exchange decisions.',spot:'Spot',futures:'Futures',mixed:'Mixed (50/50)',exchange:'Exchange',best:'Best',
+hr_b1:'Compare Exchanges',hr_b2:'Live Prices',hr_b_main:'Get Rebate Now',hr_access_t:'Cannot access main exchange domain?',hr_access_btn:'See Official Mirrors',geo_rec_t:'Based on your region, we recommend',geo_rec_cta:'Sign up',aff_note:'This site contains affiliate invite codes. No extra cost to you.',aff_note_link:'See full disclosure',news_bdg:'NEWSLETTER',news_t:'Weekly Crypto Trading Picks',news_d:'Subscribe for weekly tutorials and new exchange rebate offers. No spam, unsubscribe anytime.',news_placeholder:'your@email.com',news_btn:'Subscribe',news_ok:'Subscribed! We will be in touch shortly',news_err:'Subscription failed, please try again',news_invalid:'Please enter a valid email',tools_section_sl:'🛠 USEFUL TOOLS',tools_section_t:'Make smarter trading decisions',dd_tools_label:'🛠 Tools',dd_learn_label:'Learn',nav_cta_btn:'Get Rebate',dd_cex_t:'Centralized Exchanges',dd_dex_t:'Decentralized Exchanges',dd_wal_t:'Web3 Wallets',dd_okx_d:'Best Asian UX · 20% rebate',dd_bn_d:'Largest globally · 500+ coins',dd_by_d:'Top futures · highest rebate',dd_hl_d:'Perp DEX · No KYC · Airdrop potential',dd_bw_n:'Binance Wallet',dd_bw_d:'Multi-chain · built-in DEX',dd_ow_n:'OKX Wallet',dd_ow_d:'Best DEX aggregator',dd_all_cex:'See all CEX',dd_all_dex:'See all DEX',dd_all_wal:'See all wallets',dd_quick_t:'Quick Actions',dd_cmp:'Full Comparison',dd_cmp_d:'Pick the right one in 5 min',dd_mkts_d:'BTC/ETH live prices',dd_hub:'Access Hub',dd_hub_d:'All official URLs + mirrors',dd_bonus_d:'Permanent 20%-33% rebates',dd_tools_t:'Online Tools',dd_calc_t:'Rebate Calculator',dd_calc_d:'See how much you save',dd_hot:'HOT',dd_wiz_t:'Exchange Wizard',dd_wiz_d:'5 questions, best match',dd_fee_t:'Fee Comparison',dd_fee_d:'Spot/Futures/After-rebate',dd_cmp_label:'Head-to-head',dd_cmp1_d:'Top 2 face-off',dd_cmp2_d:'Liquidity vs Rebate',dd_cmp3_d:'Asia UX vs Futures',dd_all_cmp:'See all comparisons',dd_learn_t:'Tutorials & Articles',dd_guides_d:'Setup · KYC · Deposit · Safety',dd_arts_d:'Deep guides · 4 langs',dd_about_t:'About Site',dd_about_d:'Independent info hub',dd_disc_d:'Affiliate · Cookie',cta_dd_t:'Recommended Codes',cta_dd_d:'Permanent · Auto-paid monthly · No conditions',cta_dd_bb:'Best futures · highest rebate',cta_dd_okx:'Best Asian UX · beginner pick',cta_dd_bn:'Largest globally · 500+ coins',cta_dd_all:'See all bonuses',cmp_section_sl:'⚖️ Head-to-head',cmp_section_t:'Pick the right exchange in 5 minutes',cmp_section_d:'Still undecided? See line-by-line comparisons of the top exchanges to find your fit.',cmp_label:'Compare',cmp_recommendation:'Quick verdict',cmp_table_t:'Full comparison table',cmp_dimension:'Dimension',cmp_founded:'Founded',cmp_hq:'HQ',cmp_spot_fee:'Spot fee',cmp_real_spot:'Spot fee after rebate',cmp_fut_fee:'Futures fee (Taker)',cmp_real_fut:'Futures fee after rebate',cmp_max_leverage:'Max leverage',cmp_coins:'Number of coins',cmp_volume:'24h volume',cmp_users:'Registered users',cmp_kyc:'KYC required',cmp_copy_trade:'Copy trading',cmp_earn:'Earn / Savings',cmp_launchpad:'Launchpad',cmp_languages:'Language support',cmp_rebate:'Our site\'s rebate',cmp_who_t:'Who is each best for?',cmp_final_t:'Decided? Sign up now',cmp_final_d:'Register via our invite code to lock in permanent fee rebates, paid automatically each month.',cmp_more_t:'Other comparisons',tool_reb_h1:'Rebate Calculator',tool_reb_intro:'Enter your monthly volume to instantly see how much you save on OKX, Binance, and Bybit.',tool_reb_vol_label:'Monthly volume (USDT)',tool_reb_type_label:'Trade type',tool_reb_note:'Calculations are based on each exchange\'s public Taker fees. Your actual rate may be lower with VIP tier or platform-token discounts.',tool_reb_monthly:'Monthly rebate',tool_reb_yearly:'Yearly rebate',tool_reb_rate:'Effective rate',tool_reb_detail:'Full comparison',tool_reb_save_yr:'Yearly savings',tool_wiz_q1:'1️⃣ Your crypto trading experience?',tool_wiz_q1_a:'🐣 Beginner (< 6 months)',tool_wiz_q1_a_d:'Just starting, need an easy UI',tool_wiz_q1_b:'🚀 Intermediate (6 months - 2 years)',tool_wiz_q1_b_d:'Comfortable, ready for futures or long-term',tool_wiz_q1_c:'⚡ Pro (2+ years)',tool_wiz_q1_c_d:'HFT / API / complex strategies',tool_wiz_q2:'2️⃣ Which region are you in?',tool_wiz_q2_a:'🇨🇳 China / HK / TW / MO',tool_wiz_q2_a_d:'Need Chinese support and stable access',tool_wiz_q2_b:'🇰🇷 Korea / 🇯🇵 Japan / 🇸🇬 Singapore',tool_wiz_q2_c:'🇹🇭 Southeast Asia (VN/TH/ID/PH)',tool_wiz_q2_d:'🇪🇺 Europe / 🇺🇸 US / 🇦🇺 AU',tool_wiz_q3:'3️⃣ What will you mainly do?',tool_wiz_q3_a:'📈 Spot trading / long-term holding',tool_wiz_q3_a_d:'Buy and hold, DCA',tool_wiz_q3_b:'⚡ Futures / leverage trading',tool_wiz_q3_b_d:'Perpetuals, long & short',tool_wiz_q3_c:'🔁 Copy trading',tool_wiz_q3_c_d:'Replicate top traders',tool_wiz_q3_d:'🌟 A mix of everything',tool_wiz_q4:'4️⃣ Your starting capital?',tool_wiz_q4_a:'< $1,000',tool_wiz_q4_b:'$1,000 - $10,000',tool_wiz_q4_c:'$10,000+',tool_wiz_q5:'5️⃣ What matters most?',tool_wiz_q5_a:'💰 Lowest fees / highest rebate',tool_wiz_q5_b:'🪙 Most coins / best liquidity',tool_wiz_q5_c:'🎯 Best copy-trading ecosystem',tool_wiz_q5_d:'🇨🇳 Chinese support / easy UI',tool_wiz_h1:'Exchange Matching Wizard',tool_wiz_intro:'Answer 5 questions to get the best exchange recommendation in 30 seconds.',tool_wiz_back:'Back',wz_r_okx_new:'OKX has the most beginner-friendly Chinese UI',wz_r_bin_new:'Binance has the largest global user base with a smooth app',wz_r_byb_int:'Bybit is the go-to futures entry for intermediate users',wz_r_byb_pro:'Bybit has the lowest API latency, great for HFT',wz_r_okx_cn:'OKX has the best Chinese support with multiple regional domains',wz_r_byb_kr:'Bybit is very popular in Korea, Japan, and Singapore',wz_r_bin_sea:'Binance has the strongest P2P channels in Southeast Asia',wz_r_bin_west:'Binance has the highest global liquidity',wz_r_bin_spot:'Binance offers 500+ spot pairs with top liquidity',wz_r_byb_fut:'Bybit\'s perpetual depth is best-in-class with the lowest fees',wz_r_byb_copy:'Bybit Copy Trading is the industry benchmark with the most strategists',wz_r_okx_all:'OKX is the most balanced all-in-one exchange',wz_r_bin_large:'Binance is best for large capital with the lowest slippage',wz_r_byb_small:'Bybit copy trading starts at just 10 USDT - small accounts welcome',wz_r_byb_fee:'Bybit\'s 33% rebate is the highest in the industry',wz_r_bin_coins:'Binance lists 500+ coins, fastest at adding new ones',wz_r_byb_eco:'Bybit has the most mature copy-trading ecosystem',wz_r_okx_lang:'OKX has the best Chinese UI and customer support',tool_wiz_rec:'Based on your answers, we recommend',tool_wiz_why:'Why this one',tool_wiz_2nd:'Runner-up',tool_wiz_retry:'🔄 Take it again',tool_fee_h1:'Live Fee Comparison',tool_fee_intro:'Full OKX / Binance / Bybit fee comparison + post-rebate effective rates + monthly cost by your volume.',tool_fee_vol_label:'Your monthly volume (USDT)',tool_fee_vol_hint:'Used for monthly cost estimate',tool_fee_maker:'Maker',tool_fee_maker_d:'Limit order',tool_fee_taker:'Taker',tool_fee_taker_d:'Market order',tool_fee_note:'Rates shown are each exchange\'s public Tier-0 base fees (no VIP, no platform-token discount). Using our invite code binds permanent rebates automatically at sign-up.',tool_fee_after_rb:'After rebate',tool_fee_month_cost:'Monthly cost',go_redirecting:'Redirecting to',go_if_not_redirected:'If not redirected automatically:',click_here:'click here',today:'today',yesterday:'yesterday',days_ago:' days ago',weeks_ago:' weeks ago',months_ago:' months ago',years_ago:' years ago',art_cta_label:'⭐ Recommended exchange',view_compare:'Still undecided? See full comparison',tool_reb_cheapest:'Lowest cost',tool_reb_gross:'Gross fee/mo',tool_reb_net:'Net fee/mo',tool_reb_rate_col:'Rate (Taker)',tool_reb_fee_paid_mo:'Paid/mo',tool_reb_fee_paid_yr:'Paid/yr',tool_reb_how_t:'Calculation formula (transparent)',tool_reb_formula_gross:'Gross fee',tool_reb_formula_rebate:'Rebate amount',tool_reb_formula_net:'Net fee paid',per_month:'mo',cheapest:'lowest',tools_section_d:'3 free online tools: rebate calculator, exchange wizard, live fee comparison.',open_tool:'Open Tool',tool_idx_reb_t:'Rebate Calculator',tool_idx_reb_d:'Monthly volume → see monthly & yearly savings',tool_idx_wiz_t:'Exchange Wizard',tool_idx_wiz_d:'Answer 5 questions → smart recommendation',tool_idx_fee_t:'Fee Comparison',tool_idx_fee_d:'Live fee table + monthly cost calculator',nav_tools:'Tools',nav_compare:'Compare',tools_label:'TOOLS',tools_idx_t:'Useful Tools',tools_idx_d:'3 free online tools to help you make smarter exchange decisions.',spot:'Spot',futures:'Futures',mixed:'Mixed (50/50)',exchange:'Exchange',best:'Best',
 top_sl:'Our Picks',top_t:'One-Click Sign Up · Top 3 Exchanges',top_d:'Register with our invite codes for permanent fee rebates. Direct links to official exchange pages — no hassle.',best_pick:'Top Pick',valid:'Validity',register_now:'Register Now',view_detail:'Details',copy:'Copy',permanent:'Permanent',
 why_sl:'Why Choose Us',why_t:'Independent · Transparent · Permanent Rebates',
 why_1_t:'Permanent 20-33% Rebate',why_1_d:'Accounts registered via our invite codes get automatic fee rebates on every trade. Never expires, no manual claiming.',
@@ -1417,7 +1702,7 @@ cp_high:'24h 고가',cp_low:'24h 저가',cp_vol:'24h 거래량',cp_open:'24h 시
 hr_badge:'독립적 · 리베이트 비교',
 hr_t:'리베이트 링크로 거래 수수료를<br><em>최대 60% 절약</em>',
 hr_d:'OKX 초대코드 WLFI47 = 영구 20% 리베이트. Binance 초대코드 WLFI47 = 20% 리베이트. Bybit 초대코드 8DXZXGZ = 33% 리베이트(업계 최고). OKX vs Binance vs Bybit 독립 비교 및 가입 가이드.',
-hr_b1:'거래소 비교 보기',hr_b2:'실시간 시세',hr_b_main:'지금 리베이트 받기',hr_access_t:'거래소 메인 도메인 접속 불가?',hr_access_btn:'공식 미러 보기',geo_rec_t:'당신의 지역 기준 추천',geo_rec_cta:'가입',aff_note:'본 사이트는 제휴 초대 코드를 포함합니다. 추가 비용 없음.',aff_note_link:'전체 공시 보기',news_bdg:'NEWSLETTER',news_t:'주간 암호화폐 거래 픽',news_d:'매주 정선된 가이드 + 새 거래소 리베이트 소식.',news_placeholder:'your@email.com',news_btn:'구독',news_ok:'구독 완료! 곧 연락드리겠습니다',news_err:'구독 실패. 다시 시도해주세요',news_invalid:'유효한 이메일을 입력하세요',tools_section_sl:'🛠 유틸리티',tools_section_t:'더 똑똑한 결정을 위해',cmp_section_sl:'⚖️ 1대1 비교',cmp_section_t:'5분 안에 최적의 거래소 선택',cmp_section_d:'아직 결정하지 못했나요? 주요 거래소를 항목별로 비교해 보세요.',cmp_label:'비교',cmp_recommendation:'빠른 결론',cmp_table_t:'전체 비교표',cmp_dimension:'비교 항목',cmp_founded:'설립 연도',cmp_hq:'본사',cmp_spot_fee:'현물 수수료',cmp_real_spot:'리베이트 후 실제 현물',cmp_fut_fee:'선물 수수료 (Taker)',cmp_real_fut:'리베이트 후 실제 선물',cmp_max_leverage:'최대 레버리지',cmp_coins:'코인 수',cmp_volume:'24시간 거래량',cmp_users:'등록 사용자',cmp_kyc:'KYC 필요',cmp_copy_trade:'카피 트레이딩',cmp_earn:'이자/세이빙',cmp_launchpad:'런치패드',cmp_languages:'언어 지원',cmp_rebate:'본 사이트 리베이트',cmp_who_t:'누구에게 적합한가?',cmp_final_t:'결정했나요? 지금 가입',cmp_final_d:'본 사이트의 초대 코드로 가입하면 영구 수수료 리베이트가 매월 자동 입금됩니다.',cmp_more_t:'기타 비교',tool_reb_h1:'리베이트 계산기',tool_reb_intro:'월 거래량을 입력하여 OKX, 바이낸스, Bybit에서 얼마를 절약하는지 확인하세요.',tool_reb_vol_label:'월 거래량 (USDT)',tool_reb_type_label:'거래 유형',tool_reb_note:'각 거래소의 공개 Taker 수수료를 기준으로 계산. VIP 등급에 따라 실제 요율은 더 낮을 수 있습니다.',tool_reb_monthly:'월 리베이트',tool_reb_yearly:'연 리베이트',tool_reb_rate:'실효 요율',tool_reb_detail:'전체 비교',tool_reb_save_yr:'연 절약',tool_wiz_q1:'1️⃣ 암호화폐 거래 경험은?',tool_wiz_q1_a:'🐣 초보 (< 6개월)',tool_wiz_q1_a_d:'이제 막 시작, 쉬운 UI 필요',tool_wiz_q1_b:'🚀 중급 (6개월~2년)',tool_wiz_q1_b_d:'기본은 알고, 선물/장기 보유 준비',tool_wiz_q1_c:'⚡ 고급 (2년+)',tool_wiz_q1_c_d:'HFT / API / 복잡한 전략',tool_wiz_q2:'2️⃣ 어느 지역에 있나요?',tool_wiz_q2_a:'🇨🇳 중국 / 홍콩 / 대만',tool_wiz_q2_a_d:'중국어 지원 필요',tool_wiz_q2_b:'🇰🇷 한국 / 🇯🇵 일본 / 🇸🇬 싱가포르',tool_wiz_q2_c:'🇹🇭 동남아 (VN/TH/ID/PH)',tool_wiz_q2_d:'🇪🇺 유럽 / 🇺🇸 미국 / 🇦🇺 호주',tool_wiz_q3:'3️⃣ 주로 무엇을 하나요?',tool_wiz_q3_a:'📈 현물 / 장기 보유',tool_wiz_q3_a_d:'매수 후 보유, DCA',tool_wiz_q3_b:'⚡ 선물 / 레버리지',tool_wiz_q3_b_d:'무기한, 롱/숏',tool_wiz_q3_c:'🔁 카피 트레이딩',tool_wiz_q3_c_d:'최고 트레이더 복제',tool_wiz_q3_d:'🌟 종합',tool_wiz_q4:'4️⃣ 초기 자금은?',tool_wiz_q4_a:'< $1,000',tool_wiz_q4_b:'$1,000 - $10,000',tool_wiz_q4_c:'$10,000+',tool_wiz_q5:'5️⃣ 가장 중요한 것은?',tool_wiz_q5_a:'💰 최저 수수료 / 최고 리베이트',tool_wiz_q5_b:'🪙 가장 많은 코인 / 최고 유동성',tool_wiz_q5_c:'🎯 최고 카피 트레이딩 생태계',tool_wiz_q5_d:'🇨🇳 중국어 지원 / 쉬운 UI',tool_wiz_h1:'거래소 매칭 위저드',tool_wiz_intro:'5가지 질문에 답하여 30초 만에 최적의 거래소를 찾으세요.',tool_wiz_back:'뒤로',wz_r_okx_new:'OKX는 초보 친화적인 중국어 UI',wz_r_bin_new:'바이낸스는 글로벌 최대 사용자 + 부드러운 앱',wz_r_byb_int:'Bybit는 중급용 선물 입문 1순위',wz_r_byb_pro:'Bybit는 최저 API 지연 - HFT에 적합',wz_r_okx_cn:'OKX는 최고의 중국어 지원 + 다중 지역 도메인',wz_r_byb_kr:'Bybit는 한국/일본/싱가포르에서 인기',wz_r_bin_sea:'바이낸스는 동남아 P2P 채널 최강',wz_r_bin_west:'바이낸스는 글로벌 최고 유동성',wz_r_bin_spot:'바이낸스 현물 500+ 페어 + 최고 유동성',wz_r_byb_fut:'Bybit 무기한 깊이 업계 최고 + 최저 수수료',wz_r_byb_copy:'Bybit 카피 트레이딩 업계 벤치마크',wz_r_okx_all:'OKX는 가장 균형 잡힌 올인원 거래소',wz_r_bin_large:'바이낸스는 대자본 + 최저 슬리피지',wz_r_byb_small:'Bybit 카피 트레이딩 최저 10 USDT',wz_r_byb_fee:'Bybit 33% 리베이트는 업계 최고',wz_r_bin_coins:'바이낸스 500+ 코인, 신규 상장 최속',wz_r_byb_eco:'Bybit 카피 트레이딩 생태계 최성숙',wz_r_okx_lang:'OKX 중국어 UI + 고객지원 최강',tool_wiz_rec:'당신의 답변 기준 추천',tool_wiz_why:'왜 이것인가',tool_wiz_2nd:'차순위',tool_wiz_retry:'🔄 다시 시도',tool_fee_h1:'실시간 수수료 비교',tool_fee_intro:'OKX, 바이낸스, Bybit 전체 수수료 + 리베이트 후 실효 요율 + 월 비용.',tool_fee_vol_label:'월 거래량 (USDT)',tool_fee_vol_hint:'월 비용 추정용',tool_fee_maker:'Maker',tool_fee_maker_d:'지정가',tool_fee_taker:'Taker',tool_fee_taker_d:'시장가',tool_fee_note:'공개 Tier-0 기본 수수료 (VIP/플랫폼 토큰 할인 없음). 본 사이트 초대 코드로 가입 시 영구 리베이트 자동 연동.',tool_fee_after_rb:'리베이트 후',tool_fee_month_cost:'월 비용',go_redirecting:'리디렉션 중',go_if_not_redirected:'자동으로 이동하지 않는 경우:',click_here:'여기를 클릭',today:'오늘',yesterday:'어제',days_ago:'일 전',weeks_ago:'주 전',months_ago:'개월 전',years_ago:'년 전',art_cta_label:'⭐ 추천 거래소',view_compare:'아직 결정 못했나요? 전체 비교 보기',tool_reb_cheapest:'최저 비용',tool_reb_gross:'총 수수료/월',tool_reb_net:'순 수수료/월',tool_reb_rate_col:'요율 (Taker)',tool_reb_fee_paid_mo:'월 지불',tool_reb_fee_paid_yr:'연 지불',tool_reb_how_t:'계산 공식 (투명)',tool_reb_formula_gross:'총 수수료',tool_reb_formula_rebate:'리베이트 금액',tool_reb_formula_net:'순 지불 수수료',per_month:'월',cheapest:'최저',tools_section_d:'3 가지 무료 온라인 도구.',open_tool:'도구 열기',tool_idx_reb_t:'리베이트 계산기',tool_idx_reb_d:'월 거래량 → 절감액 확인',tool_idx_wiz_t:'거래소 매칭 위저드',tool_idx_wiz_d:'5 가지 질문 → 스마트 추천',tool_idx_fee_t:'수수료 비교',tool_idx_fee_d:'실시간 수수료 + 월 비용 계산',nav_tools:'도구',nav_compare:'비교',tools_label:'TOOLS',tools_idx_t:'유틸리티',tools_idx_d:'3 가지 무료 온라인 도구.',spot:'현물',futures:'선물',mixed:'혼합 (50/50)',exchange:'거래소',best:'최고',
+hr_b1:'거래소 비교 보기',hr_b2:'실시간 시세',hr_b_main:'지금 리베이트 받기',hr_access_t:'거래소 메인 도메인 접속 불가?',hr_access_btn:'공식 미러 보기',geo_rec_t:'당신의 지역 기준 추천',geo_rec_cta:'가입',aff_note:'본 사이트는 제휴 초대 코드를 포함합니다. 추가 비용 없음.',aff_note_link:'전체 공시 보기',news_bdg:'NEWSLETTER',news_t:'주간 암호화폐 거래 픽',news_d:'매주 정선된 가이드 + 새 거래소 리베이트 소식.',news_placeholder:'your@email.com',news_btn:'구독',news_ok:'구독 완료! 곧 연락드리겠습니다',news_err:'구독 실패. 다시 시도해주세요',news_invalid:'유효한 이메일을 입력하세요',tools_section_sl:'🛠 유틸리티',tools_section_t:'더 똑똑한 결정을 위해',dd_tools_label:'🛠 도구',dd_learn_label:'학습',nav_cta_btn:'리베이트 받기',dd_cex_t:'중앙화 거래소',dd_dex_t:'탈중앙 거래소',dd_wal_t:'Web3 지갑',dd_okx_d:'아시아 UX 최고 · 20% 리베이트',dd_bn_d:'세계 최대 · 500+ 코인',dd_by_d:'선물 최강 · 업계 최고 리베이트',dd_hl_d:'무기한 DEX · KYC 없음 · 에어드롭 가능성',dd_bw_n:'바이낸스 지갑',dd_bw_d:'멀티체인 · 내장 DEX',dd_ow_n:'OKX 지갑',dd_ow_d:'최강 DEX 애그리게이터',dd_all_cex:'전체 CEX 보기',dd_all_dex:'전체 DEX 보기',dd_all_wal:'전체 지갑 보기',dd_quick_t:'빠른 작업',dd_cmp:'전체 비교',dd_cmp_d:'5분 만에 결정',dd_mkts_d:'BTC/ETH 실시간 가격',dd_hub:'접속 허브',dd_hub_d:'모든 공식 URL + 미러',dd_bonus_d:'영구 20%-33% 리베이트',dd_tools_t:'온라인 도구',dd_calc_t:'리베이트 계산기',dd_calc_d:'얼마나 절약하는지 확인',dd_hot:'인기',dd_wiz_t:'거래소 위저드',dd_wiz_d:'5질문으로 최적 매칭',dd_fee_t:'수수료 비교',dd_fee_d:'현물/선물/리베이트 후',dd_cmp_label:'1대1 비교',dd_cmp1_d:'양대 거인 대결',dd_cmp2_d:'유동성 vs 리베이트',dd_cmp3_d:'아시아 UX vs 선물',dd_all_cmp:'전체 비교 보기',dd_learn_t:'튜토리얼 및 기사',dd_guides_d:'시작 · KYC · 입금 · 보안',dd_arts_d:'심층 가이드 · 4언어',dd_about_t:'사이트 소개',dd_about_d:'독립 정보 사이트',dd_disc_d:'어필리에이트 · 쿠키',cta_dd_t:'추천 초대코드',cta_dd_d:'영구 · 매월 자동 지급 · 조건 없음',cta_dd_bb:'선물 최강 · 업계 최고 리베이트',cta_dd_okx:'아시아 UX 최고 · 초보 추천',cta_dd_bn:'세계 최대 · 500+ 코인',cta_dd_all:'전체 혜택 보기',cmp_section_sl:'⚖️ 1대1 비교',cmp_section_t:'5분 안에 최적의 거래소 선택',cmp_section_d:'아직 결정하지 못했나요? 주요 거래소를 항목별로 비교해 보세요.',cmp_label:'비교',cmp_recommendation:'빠른 결론',cmp_table_t:'전체 비교표',cmp_dimension:'비교 항목',cmp_founded:'설립 연도',cmp_hq:'본사',cmp_spot_fee:'현물 수수료',cmp_real_spot:'리베이트 후 실제 현물',cmp_fut_fee:'선물 수수료 (Taker)',cmp_real_fut:'리베이트 후 실제 선물',cmp_max_leverage:'최대 레버리지',cmp_coins:'코인 수',cmp_volume:'24시간 거래량',cmp_users:'등록 사용자',cmp_kyc:'KYC 필요',cmp_copy_trade:'카피 트레이딩',cmp_earn:'이자/세이빙',cmp_launchpad:'런치패드',cmp_languages:'언어 지원',cmp_rebate:'본 사이트 리베이트',cmp_who_t:'누구에게 적합한가?',cmp_final_t:'결정했나요? 지금 가입',cmp_final_d:'본 사이트의 초대 코드로 가입하면 영구 수수료 리베이트가 매월 자동 입금됩니다.',cmp_more_t:'기타 비교',tool_reb_h1:'리베이트 계산기',tool_reb_intro:'월 거래량을 입력하여 OKX, 바이낸스, Bybit에서 얼마를 절약하는지 확인하세요.',tool_reb_vol_label:'월 거래량 (USDT)',tool_reb_type_label:'거래 유형',tool_reb_note:'각 거래소의 공개 Taker 수수료를 기준으로 계산. VIP 등급에 따라 실제 요율은 더 낮을 수 있습니다.',tool_reb_monthly:'월 리베이트',tool_reb_yearly:'연 리베이트',tool_reb_rate:'실효 요율',tool_reb_detail:'전체 비교',tool_reb_save_yr:'연 절약',tool_wiz_q1:'1️⃣ 암호화폐 거래 경험은?',tool_wiz_q1_a:'🐣 초보 (< 6개월)',tool_wiz_q1_a_d:'이제 막 시작, 쉬운 UI 필요',tool_wiz_q1_b:'🚀 중급 (6개월~2년)',tool_wiz_q1_b_d:'기본은 알고, 선물/장기 보유 준비',tool_wiz_q1_c:'⚡ 고급 (2년+)',tool_wiz_q1_c_d:'HFT / API / 복잡한 전략',tool_wiz_q2:'2️⃣ 어느 지역에 있나요?',tool_wiz_q2_a:'🇨🇳 중국 / 홍콩 / 대만',tool_wiz_q2_a_d:'중국어 지원 필요',tool_wiz_q2_b:'🇰🇷 한국 / 🇯🇵 일본 / 🇸🇬 싱가포르',tool_wiz_q2_c:'🇹🇭 동남아 (VN/TH/ID/PH)',tool_wiz_q2_d:'🇪🇺 유럽 / 🇺🇸 미국 / 🇦🇺 호주',tool_wiz_q3:'3️⃣ 주로 무엇을 하나요?',tool_wiz_q3_a:'📈 현물 / 장기 보유',tool_wiz_q3_a_d:'매수 후 보유, DCA',tool_wiz_q3_b:'⚡ 선물 / 레버리지',tool_wiz_q3_b_d:'무기한, 롱/숏',tool_wiz_q3_c:'🔁 카피 트레이딩',tool_wiz_q3_c_d:'최고 트레이더 복제',tool_wiz_q3_d:'🌟 종합',tool_wiz_q4:'4️⃣ 초기 자금은?',tool_wiz_q4_a:'< $1,000',tool_wiz_q4_b:'$1,000 - $10,000',tool_wiz_q4_c:'$10,000+',tool_wiz_q5:'5️⃣ 가장 중요한 것은?',tool_wiz_q5_a:'💰 최저 수수료 / 최고 리베이트',tool_wiz_q5_b:'🪙 가장 많은 코인 / 최고 유동성',tool_wiz_q5_c:'🎯 최고 카피 트레이딩 생태계',tool_wiz_q5_d:'🇨🇳 중국어 지원 / 쉬운 UI',tool_wiz_h1:'거래소 매칭 위저드',tool_wiz_intro:'5가지 질문에 답하여 30초 만에 최적의 거래소를 찾으세요.',tool_wiz_back:'뒤로',wz_r_okx_new:'OKX는 초보 친화적인 중국어 UI',wz_r_bin_new:'바이낸스는 글로벌 최대 사용자 + 부드러운 앱',wz_r_byb_int:'Bybit는 중급용 선물 입문 1순위',wz_r_byb_pro:'Bybit는 최저 API 지연 - HFT에 적합',wz_r_okx_cn:'OKX는 최고의 중국어 지원 + 다중 지역 도메인',wz_r_byb_kr:'Bybit는 한국/일본/싱가포르에서 인기',wz_r_bin_sea:'바이낸스는 동남아 P2P 채널 최강',wz_r_bin_west:'바이낸스는 글로벌 최고 유동성',wz_r_bin_spot:'바이낸스 현물 500+ 페어 + 최고 유동성',wz_r_byb_fut:'Bybit 무기한 깊이 업계 최고 + 최저 수수료',wz_r_byb_copy:'Bybit 카피 트레이딩 업계 벤치마크',wz_r_okx_all:'OKX는 가장 균형 잡힌 올인원 거래소',wz_r_bin_large:'바이낸스는 대자본 + 최저 슬리피지',wz_r_byb_small:'Bybit 카피 트레이딩 최저 10 USDT',wz_r_byb_fee:'Bybit 33% 리베이트는 업계 최고',wz_r_bin_coins:'바이낸스 500+ 코인, 신규 상장 최속',wz_r_byb_eco:'Bybit 카피 트레이딩 생태계 최성숙',wz_r_okx_lang:'OKX 중국어 UI + 고객지원 최강',tool_wiz_rec:'당신의 답변 기준 추천',tool_wiz_why:'왜 이것인가',tool_wiz_2nd:'차순위',tool_wiz_retry:'🔄 다시 시도',tool_fee_h1:'실시간 수수료 비교',tool_fee_intro:'OKX, 바이낸스, Bybit 전체 수수료 + 리베이트 후 실효 요율 + 월 비용.',tool_fee_vol_label:'월 거래량 (USDT)',tool_fee_vol_hint:'월 비용 추정용',tool_fee_maker:'Maker',tool_fee_maker_d:'지정가',tool_fee_taker:'Taker',tool_fee_taker_d:'시장가',tool_fee_note:'공개 Tier-0 기본 수수료 (VIP/플랫폼 토큰 할인 없음). 본 사이트 초대 코드로 가입 시 영구 리베이트 자동 연동.',tool_fee_after_rb:'리베이트 후',tool_fee_month_cost:'월 비용',go_redirecting:'리디렉션 중',go_if_not_redirected:'자동으로 이동하지 않는 경우:',click_here:'여기를 클릭',today:'오늘',yesterday:'어제',days_ago:'일 전',weeks_ago:'주 전',months_ago:'개월 전',years_ago:'년 전',art_cta_label:'⭐ 추천 거래소',view_compare:'아직 결정 못했나요? 전체 비교 보기',tool_reb_cheapest:'최저 비용',tool_reb_gross:'총 수수료/월',tool_reb_net:'순 수수료/월',tool_reb_rate_col:'요율 (Taker)',tool_reb_fee_paid_mo:'월 지불',tool_reb_fee_paid_yr:'연 지불',tool_reb_how_t:'계산 공식 (투명)',tool_reb_formula_gross:'총 수수료',tool_reb_formula_rebate:'리베이트 금액',tool_reb_formula_net:'순 지불 수수료',per_month:'월',cheapest:'최저',tools_section_d:'3 가지 무료 온라인 도구.',open_tool:'도구 열기',tool_idx_reb_t:'리베이트 계산기',tool_idx_reb_d:'월 거래량 → 절감액 확인',tool_idx_wiz_t:'거래소 매칭 위저드',tool_idx_wiz_d:'5 가지 질문 → 스마트 추천',tool_idx_fee_t:'수수료 비교',tool_idx_fee_d:'실시간 수수료 + 월 비용 계산',nav_tools:'도구',nav_compare:'비교',tools_label:'TOOLS',tools_idx_t:'유틸리티',tools_idx_d:'3 가지 무료 온라인 도구.',spot:'현물',futures:'선물',mixed:'혼합 (50/50)',exchange:'거래소',best:'최고',
 top_sl:'추천',top_t:'3대 거래소 원클릭 가입',top_d:'본 사이트 초대 코드로 가입하여 영구 수수료 리베이트를 받으세요. 거래소 공식 페이지 직접 링크.',best_pick:'최선택',valid:'유효 기간',register_now:'지금 가입',view_detail:'상세',copy:'복사',permanent:'영구',
 why_sl:'왜 본 사이트인가',why_t:'독립 · 투명 · 영구 리베이트',
 why_1_t:'영구 20-33% 리베이트',why_1_d:'본 사이트 초대 코드로 가입한 계정은 모든 거래에서 자동 리베이트. 만료 없음, 수동 신청 불필요.',
@@ -4171,6 +4456,90 @@ function applyTheme(){
   const ic=document.getElementById('themeIc');
   if(ic)ic.textContent=saved==='dark'?'☀':'🌙';
 }
+
+// ============================================================
+// NAV DROPDOWN SYSTEM (hover on desktop, click on mobile)
+// ============================================================
+function closeAllDropdowns(){
+  document.querySelectorAll('.nl-dd.is-open').forEach(dd=>{
+    dd.classList.remove('is-open');
+    const tg = dd.querySelector('.nl-dd-tg');
+    if(tg) tg.setAttribute('aria-expanded','false');
+  });
+}
+function openDropdown(dd){
+  closeAllDropdowns();
+  dd.classList.add('is-open');
+  const tg = dd.querySelector('.nl-dd-tg');
+  if(tg) tg.setAttribute('aria-expanded','true');
+}
+// Init all dropdowns
+function initDropdowns(){
+  document.querySelectorAll('.nl-dd').forEach(dd=>{
+    const tg = dd.querySelector('.nl-dd-tg');
+    if(!tg) return;
+    let hoverTimer;
+    // Desktop: hover open with small delay close (so user can move mouse to panel)
+    dd.addEventListener('mouseenter', ()=>{
+      if(window.innerWidth < 900) return;
+      clearTimeout(hoverTimer);
+      openDropdown(dd);
+    });
+    dd.addEventListener('mouseleave', ()=>{
+      if(window.innerWidth < 900) return;
+      clearTimeout(hoverTimer);
+      hoverTimer = setTimeout(()=>{
+        dd.classList.remove('is-open');
+        tg.setAttribute('aria-expanded','false');
+      }, 150);
+    });
+    // Click toggle (works on touch + keyboard)
+    tg.addEventListener('click', e=>{
+      e.preventDefault();
+      e.stopPropagation();
+      if(dd.classList.contains('is-open')){
+        dd.classList.remove('is-open');
+        tg.setAttribute('aria-expanded','false');
+      } else {
+        openDropdown(dd);
+      }
+    });
+    // Keyboard: Enter/Space toggles, Escape closes
+    tg.addEventListener('keydown', e=>{
+      if(e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        if(dd.classList.contains('is-open')){
+          dd.classList.remove('is-open');
+          tg.setAttribute('aria-expanded','false');
+        } else {
+          openDropdown(dd);
+        }
+      } else if(e.key === 'Escape'){
+        dd.classList.remove('is-open');
+        tg.setAttribute('aria-expanded','false');
+        tg.focus();
+      }
+    });
+    // Close dropdown when an item is clicked (after navigation)
+    dd.querySelectorAll('.nl-mega-item, .nl-mega-link').forEach(item=>{
+      item.addEventListener('click', ()=>{
+        setTimeout(closeAllDropdowns, 50);
+      });
+    });
+  });
+  // Close on outside click
+  document.addEventListener('click', e=>{
+    if(!e.target.closest('.nl-dd')) closeAllDropdowns();
+  });
+  // Close on Escape (global)
+  document.addEventListener('keydown', e=>{
+    if(e.key === 'Escape') closeAllDropdowns();
+  });
+  // Close when route changes
+  window.addEventListener('popstate', closeAllDropdowns);
+}
+window.closeAllDropdowns = closeAllDropdowns;
+
 // Mobile menu toggle (animated)
 function toggleMobileMenu(force){
   const nl=document.getElementById('nLinks');
@@ -4304,10 +4673,12 @@ document.addEventListener('click', function(e){
 loadData().then(()=>{
   rr();
   document.querySelectorAll('#lngS a').forEach(a=>a.classList.toggle('ac',a.dataset.l===lang));
+  // Init nav dropdowns AFTER first render so DOM is ready
+  initDropdowns();
 }).catch(e=>{
   // Even if data load fails, still render so user sees something
   console.warn('Data load failed, rendering anyway:',e);
-  try{rr()}catch(e2){console.error('Render failed:',e2)}
+  try{rr();initDropdowns()}catch(e2){console.error('Render failed:',e2)}
 });
 </script>
 </body>
