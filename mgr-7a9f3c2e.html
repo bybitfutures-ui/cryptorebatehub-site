@@ -6,7 +6,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
-<meta name="build-id" content="20260518-tools-design-bugs">
+<meta name="build-id" content="20260518-access-hub-light-fix">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>Management · CryptoRebateHub</title>
@@ -247,7 +247,7 @@ setInterval(checkScheduled,60*1000); // Check every 60s for scheduled publishing
 setInterval(()=>syncTime(1),30*60*1000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden){checkDayChange();checkScheduled();syncTime(1)}});
 
-const PAGES={dash:{ic:'📊',n:'仪表盘'},arts:{ic:'📝',n:'文章管理'},exs:{ic:'🏦',n:'交易所'},access:{ic:'🌐',n:'备用网址'},coins:{ic:'💰',n:'币种行情'},links:{ic:'🔗',n:'链接中心'},data:{ic:'💾',n:'数据备份'},settings:{ic:'⚙',n:'网站设置'}};
+const PAGES={dash:{ic:'📊',n:'仪表盘'},arts:{ic:'📝',n:'文章管理'},cex:{ic:'🏛',n:'CEX 交易所'},dex:{ic:'⛓',n:'DEX 交易所'},wallets:{ic:'💼',n:'Web3 钱包'},access:{ic:'🌐',n:'入口大全'},coins:{ic:'💰',n:'币种行情'},links:{ic:'🔗',n:'链接中心'},data:{ic:'💾',n:'数据备份'},settings:{ic:'⚙',n:'网站设置'}};
 
 function gr(){
   const h=location.hash.slice(1)||'';
@@ -255,6 +255,7 @@ function gr(){
   const s=h.split('/').filter(Boolean);
   if(s[0]==='art'&&s[1]==='new')return{p:'arts',sub:'new'};
   if(s[0]==='art'&&s[1])return{p:'arts',sub:'edit',id:+s[1]};
+  if(s[0]==='exs')return{p:'cex'}; // legacy alias → CEX
   if(PAGES[s[0]])return{p:s[0]};
   return{p:'dash'};
 }
@@ -388,9 +389,11 @@ function rDash(){
     '<div class="pn"><div class="pn-h"><h2>📝 最近文章</h2><a class="b b-o" onclick="go(\'arts\')">查看全部</a></div>'+
     (recentArts.length?recentArts.map(a=>'<div class="al"><div style="flex:1;min-width:200px"><h4>'+es(a.title?.zh||a.title?.en||'(无标题)')+'</h4><div class="am">'+es(a.date||'')+' · '+statusBadge(a)+(a.cat?' · '+es(a.cat):'')+'</div></div><button class="b b-o" style="padding:5px 11px;font-size:12px" onclick="go(\'art/'+a.id+'\')">编辑</button></div>').join(''):'<div style="color:var(--tx3);text-align:center;padding:24px">暂无文章</div>')+
     '</div>'+
-    '<div class="pn"><div class="pn-h"><h2>⚡ 快速操作</h2></div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px">'+
+    '<div class="pn"><div class="pn-h"><h2>⚡ 快速操作</h2></div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px">'+
       '<a class="dc" onclick="go(\'art/new\')" style="cursor:pointer;text-align:center;padding:20px"><div style="font-size:24px;margin-bottom:6px">+</div><div style="font-weight:700;color:var(--grn)">写新文章</div><div class="dc-s">支持 4 语言</div></a>'+
-      '<a class="dc" onclick="go(\'exs\')" style="cursor:pointer;text-align:center;padding:20px"><div style="font-size:24px;margin-bottom:6px">🏦</div><div style="font-weight:700;color:var(--blu)">编辑交易所</div><div class="dc-s">返佣 · 链接 · 资料</div></a>'+
+      '<a class="dc" onclick="go(\'cex\')" style="cursor:pointer;text-align:center;padding:20px"><div style="font-size:24px;margin-bottom:6px">🏛</div><div style="font-weight:700;color:var(--blu)">CEX 交易所</div><div class="dc-s">OKX · Binance · Bybit</div></a>'+
+      '<a class="dc" onclick="go(\'dex\')" style="cursor:pointer;text-align:center;padding:20px"><div style="font-size:24px;margin-bottom:6px">⛓</div><div style="font-weight:700;color:#56c8d6">DEX 永续合约</div><div class="dc-s">Hyperliquid 等</div></a>'+
+      '<a class="dc" onclick="go(\'wallets\')" style="cursor:pointer;text-align:center;padding:20px"><div style="font-size:24px;margin-bottom:6px">💼</div><div style="font-weight:700;color:#fcd535">Web3 钱包</div><div class="dc-s">Binance / OKX 钱包</div></a>'+
       '<a class="dc" onclick="go(\'links\')" style="cursor:pointer;text-align:center;padding:20px"><div style="font-size:24px;margin-bottom:6px">🔗</div><div style="font-weight:700;color:var(--yel)">链接中心</div><div class="dc-s">社交 · 友情链接</div></a>'+
       '<a class="dc" onclick="xpArticlesJson()" style="cursor:pointer;text-align:center;padding:20px"><div style="font-size:24px;margin-bottom:6px">📥</div><div style="font-weight:700;color:var(--grn)">下载 articles.json</div><div class="dc-s">部署到网站</div></a>'+
     '</div></div>';
@@ -534,10 +537,48 @@ async function tl(text,src,tgt){
   catch(e){try{const r=await fetch('https://api.mymemory.translated.net/get?q='+encodeURIComponent(text)+'&langpair='+tgtMap[src]+'|'+tgtMap[tgt]);const d=await r.json();return d.responseData?.translatedText||text}catch(e2){return text}}
 }
 
-function rExs(){
-  let html=rTopBar('交易所管理','返佣比例 · 4 语言资料 · 排序拖拽','<button class="b b-g" onclick="addEx()">+ 添加交易所</button> <button class="b b-o" onclick="addPresets()">📦 添加预设（Hyperliquid + 钱包）</button> <button class="b b-g" onclick="saveExs()">💾 保存全部</button>');
-  html+='<div class="tip">💡 排序靠前的交易所在网站上优先展示。「⭐ 推荐」标签会显示在卡片右上角。「返佣比例」是用户最关心的数据，请保持准确。<br>🌐 <strong>备用网址</strong>已迁移到独立子页面 <a onclick="go(\'access\')" style="color:var(--grn);cursor:pointer;text-decoration:underline">「🌐 备用网址」</a> 进行管理。</div>';
-  for(let i=0;i<D.exs.length;i++)html+=rExCard(D.exs[i],i);
+function rExs(typeFilter){
+  // typeFilter: 'cex' | 'dex' | 'wallet' | undefined (all)
+  const TYPE_META = {
+    cex:    {label:'🏛 CEX 中心化交易所', desc:'OKX / Binance / Bybit 等头部 CEX', cta:'+ 添加 CEX'},
+    dex:    {label:'⛓ DEX 去中心化交易所', desc:'Hyperliquid 等永续合约 DEX', cta:'+ 添加 DEX'},
+    wallet: {label:'💼 Web3 钱包', desc:'Binance / OKX Web3 钱包，DeFi 一站式', cta:'+ 添加钱包'}
+  };
+  const meta = typeFilter ? TYPE_META[typeFilter] : {label:'全部交易所',desc:'',cta:'+ 添加'};
+  // Filter the data (preserve original index for save logic)
+  const exs = D.exs;
+  const indices = [];
+  exs.forEach((e, i) => {
+    if (!typeFilter || (e.type || 'cex') === typeFilter) indices.push(i);
+  });
+  let buttons = '<button class="b b-g" onclick="addEx(\''+(typeFilter||'cex')+'\')">'+meta.cta+'</button>';
+  if(typeFilter==='dex' || typeFilter==='wallet'){
+    buttons += ' <button class="b b-o" onclick="addPresets()">📦 添加官方预设</button>';
+  }
+  buttons += ' <button class="b b-g" onclick="saveExs()">💾 保存全部</button>';
+  let html=rTopBar(meta.label, meta.desc+' · 4 语言资料 · 排序拖拽', buttons);
+  // Stats
+  const cnt = indices.length;
+  const ft = indices.filter(i=>exs[i].ft).length;
+  const hidden = indices.filter(i=>exs[i].hidden).length;
+  html+='<div class="tip">💡 当前分类：<strong>'+cnt+' 个</strong>（推荐 '+ft+' · 隐藏 '+hidden+'）。「⭐ 推荐」标签会在首页主推区显示。「返佣比例」是用户最关心的数据，请保持准确。';
+  if(typeFilter==='cex'){
+    html+='<br>🌐 <strong>备用网址</strong>已迁移到独立子页 <a onclick="go(\'access\')" style="color:var(--grn);cursor:pointer;text-decoration:underline">「🌐 备用网址」</a>。';
+  }else if(typeFilter==='dex'){
+    html+='<br>⛓ DEX 通常无 KYC，无备用域名（用钱包连接即可）。';
+  }else if(typeFilter==='wallet'){
+    html+='<br>💼 Web3 钱包通常通过交易所主域名访问，不需要镜像备用入口。';
+  }
+  html+='</div>';
+  if(indices.length===0){
+    html+='<div style="text-align:center;padding:60px 20px;color:var(--tx3)"><div style="font-size:42px;margin-bottom:12px;opacity:.6">📭</div>当前分类没有数据。点击上方「'+meta.cta+'」按钮添加。';
+    if(typeFilter==='dex'||typeFilter==='wallet'){
+      html+='<br><br>或点击 <button class="b b-o" onclick="addPresets()" style="margin-top:8px">📦 添加官方预设</button> 一键添加。';
+    }
+    html+='</div>';
+  }else{
+    indices.forEach(i => { html += rExCard(exs[i], i); });
+  }
   html+='<div style="margin-top:14px"><button class="b b-g" onclick="saveExs()">💾 保存全部交易所</button></div>';
   return html;
 }
@@ -607,46 +648,69 @@ function rAccess(){
   const exsAll=D.exs.filter(e=>!e.hidden);
   const totalMirs=exsAll.reduce((acc,e)=>acc+(e.mirrors?.length||0),0);
   const exsWithMir=exsAll.filter(e=>e.mirrors&&e.mirrors.length).length;
+  const totalLinks = exsAll.reduce((acc,e)=>acc + (e.url?1:0) + (e.mirrors?e.mirrors.length:0), 0);
   const ls=[{k:'zh',n:'简中'},{k:'zh-TW',n:'繁中'},{k:'en',n:'EN'},{k:'ko',n:'한'}];
   const flagOf=r=>r==='CN'?'🇨🇳':r==='HK'?'🇭🇰':r==='TW'?'🇹🇼':r==='JP'?'🇯🇵':r==='KR'?'🇰🇷':r==='EU'?'🇪🇺':r==='US'?'🇺🇸':r==='SG'?'🇸🇬':'🌍';
-  let html=rTopBar('备用网址管理','为每个交易所配置官方备用入口（多区域）','<button class="b b-g" onclick="saveAccessUrls()">💾 保存全部</button>');
+  let html=rTopBar('🌐 官方入口大全管理','统一管理所有交易所/DEX/钱包的官方注册入口 + 多区域备用域名','<button class="b b-g" onclick="saveAccessUrls()">💾 保存全部</button>');
   // Stats panel
-  html+='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:18px">';
-  html+='<div class="dc"><div class="dc-l">交易所总数</div><div class="dc-v" style="color:var(--blu)">'+exsAll.length+'</div><div class="dc-s">已配置备用 '+exsWithMir+'</div></div>';
-  html+='<div class="dc"><div class="dc-l">备用网址总数</div><div class="dc-v" style="color:var(--grn)">'+totalMirs+'</div><div class="dc-s">展示在前台</div></div>';
-  html+='<div class="dc"><div class="dc-l">覆盖区域</div><div class="dc-v" style="color:var(--gld);font-size:18px">'+([...new Set(exsAll.flatMap(e=>(e.mirrors||[]).map(m=>m.region)))].length||0)+'</div><div class="dc-s">不同地区入口</div></div>';
+  html+='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:18px">';
+  html+='<div class="dc"><div class="dc-l">产品总数</div><div class="dc-v" style="color:var(--blu)">'+exsAll.length+'</div><div class="dc-s">CEX + DEX + 钱包</div></div>';
+  html+='<div class="dc"><div class="dc-l">入口总数</div><div class="dc-v" style="color:var(--grn)">'+totalLinks+'</div><div class="dc-s">前台展示</div></div>';
+  html+='<div class="dc"><div class="dc-l">备用网址</div><div class="dc-v" style="color:var(--gld);font-size:18px">'+totalMirs+'</div><div class="dc-s">'+exsWithMir+' 个产品已配</div></div>';
+  html+='<div class="dc"><div class="dc-l">覆盖区域</div><div class="dc-v" style="color:var(--vio);font-size:18px">'+([...new Set(exsAll.flatMap(e=>(e.mirrors||[]).map(m=>m.region)))].length||0)+'</div><div class="dc-s">不同地区入口</div></div>';
   html+='</div>';
   // Tip
-  html+='<div class="tip" style="margin-bottom:18px">💡 此页只填写交易所「官方公告确认」的多区域备用域名。前台「🌐 备用入口」页会自动汇总展示。每条备用支持区域标签和 4 语言显示文字。</div>';
+  html+='<div class="tip" style="margin-bottom:18px">💡 在此页可统一编辑「主入口 URL（含返佣码）」+「多区域备用域名」。前台 <a class="b b-o" style="padding:3px 10px;font-size:12px;cursor:pointer;text-decoration:none" onclick="window.open(\'/access-urls\',\'_blank\')">🌐 官方入口大全</a> 页会自动汇总展示。前台页面 SEO 已优化，可被 Google 收录。</div>';
 
   if(!exsAll.length){
-    html+='<div class="tip warn">⚠ 还未添加任何交易所。请先去「交易所」页面添加。<a class="b b-g" onclick="go(\'exs\')" style="margin-left:8px;cursor:pointer;text-decoration:none">前往添加 →</a></div>';
+    html+='<div class="tip warn">⚠ 还未添加任何交易所。请先添加：<a class="b b-g" onclick="go(\'cex\')" style="margin-left:8px;cursor:pointer;text-decoration:none">前往添加 →</a></div>';
     return html;
   }
 
-  // Per-exchange editor cards
-  for(let i=0;i<exsAll.length;i++){
-    const ex=exsAll[i];
-    // Find original index in D.exs (since we filtered)
-    const origIdx=D.exs.findIndex(e=>e.id===ex.id);
-    if(origIdx<0)continue;
-    const c=ex.color||'#2ecf90';
-    const exName=ex.name?.zh||ex.id;
-    const mirs=ex.mirrors||[];
-    html+='<div class="ex-card" style="margin-bottom:18px">';
-    // Header
-    html+='<div class="ex-head"><div class="ex-logo" style="background:'+c+'22;color:'+c+'">'+es(ex.logo||ex.id?.slice(0,2).toUpperCase()||'EX')+'</div>';
-    html+='<div style="flex:1;min-width:0"><div style="font-size:15px;font-weight:700">'+es(exName)+'</div><div style="font-size:12px;color:var(--tx3);font-family:\'JetBrains Mono\',monospace">id: '+es(ex.id)+(mirs.length?' · 🌐 已配置 '+mirs.length+' 个':' · 未配置')+'</div></div>';
-    html+='<a class="b b-o" style="padding:5px 12px;font-size:12px;cursor:pointer;text-decoration:none" onclick="go(\'exs\')">→ 编辑交易所基本信息</a>';
-    html+='</div>';
-    // Mirrors list
-    if(mirs.length){
-      for(let mi=0;mi<mirs.length;mi++){
-        const m=mirs[mi];
-        const fl=flagOf(m.region||'GLOBAL');
-        html+='<div class="mir-edit" style="background:var(--bg);padding:14px 16px;border-radius:10px;border:1px solid var(--bd);margin-bottom:10px">';
-        html+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">';
-        html+='<span style="font-size:22px;line-height:1">'+fl+'</span>';
+  // Group by type for cleaner display
+  const groupOrder = [
+    {key:'cex', label:'🏛 CEX 中心化交易所'},
+    {key:'dex', label:'⛓ DEX 去中心化交易所'},
+    {key:'wallet', label:'💼 Web3 钱包'}
+  ];
+  for(const grp of groupOrder){
+    const grpExs = exsAll.filter(e => (e.type||'cex') === grp.key);
+    if(grpExs.length === 0) continue;
+    html += '<h3 style="margin:24px 0 12px;font-size:15px;color:var(--tx2);font-weight:700">'+grp.label+' ('+grpExs.length+')</h3>';
+    
+    for(const ex of grpExs){
+      const origIdx=D.exs.findIndex(e=>e.id===ex.id);
+      if(origIdx<0)continue;
+      const c=ex.color||'#2ecf90';
+      const exName=ex.name?.zh||ex.id;
+      const mirs=ex.mirrors||[];
+      html+='<div class="ex-card" style="margin-bottom:18px">';
+      // Header
+      html+='<div class="ex-head"><div class="ex-logo" style="background:'+c+'22;color:'+c+'">'+es(ex.logo||ex.id?.slice(0,2).toUpperCase()||'EX')+'</div>';
+      html+='<div style="flex:1;min-width:0"><div style="font-size:15px;font-weight:700">'+es(exName)+'</div><div style="font-size:12px;color:var(--tx3);font-family:\'JetBrains Mono\',monospace">id: '+es(ex.id)+' · '+(ex.url?'✓ 主入口':'⚠ 缺主入口')+(mirs.length?' · 🌐 '+mirs.length+' 备用':'')+'</div></div>';
+      const editBtnTarget = grp.key === 'cex' ? 'cex' : (grp.key === 'dex' ? 'dex' : 'wallets');
+      html+='<a class="b b-o" style="padding:5px 12px;font-size:12px;cursor:pointer;text-decoration:none" onclick="go(\''+editBtnTarget+'\')">→ 编辑交易所详情</a>';
+      html+='</div>';
+      // === PRIMARY URL editor (new!) ===
+      html+='<div style="background:'+c+'08;padding:14px 16px;border-radius:10px;border:1.5px solid '+c+'30;margin-bottom:10px">';
+      html+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">';
+      html+='<span style="font-size:18px">🎁</span>';
+      html+='<span style="font-weight:700;font-size:13.5px;color:'+c+'">主注册入口 (含返佣邀请码)</span>';
+      html+='<span style="font-size:11px;padding:2px 8px;background:var(--grnA);color:var(--grn);border-radius:99px;font-weight:700">⭐ 必填</span>';
+      html+='</div>';
+      html+='<div class="row3"><div class="r"><label>注册链接（完整 URL）</label><input data-acc-pri="'+origIdx+'" data-acc-f="url" value="'+es(ex.url||'')+'" placeholder="https://www.example.com/join/CODE" style="font-family:\'JetBrains Mono\',monospace;font-size:12.5px"></div>';
+      html+='<div class="r"><label>邀请码</label><input data-acc-pri="'+origIdx+'" data-acc-f="code" value="'+es(ex.code||'')+'" placeholder="WLFI47" style="font-family:\'JetBrains Mono\',monospace"></div>';
+      html+='<div class="r"><label>返佣比例（显示用）</label><input data-acc-pri="'+origIdx+'" data-acc-f="rebate" value="'+es(ex.rebate||'')+'" placeholder="20%"></div></div>';
+      html+='</div>';
+      // === Mirrors editor (existing) ===
+      html+='<div style="display:flex;align-items:center;gap:8px;margin:14px 0 8px"><span style="font-size:13px;font-weight:700;color:var(--tx2)">🌐 多区域备用域名 '+(mirs.length?'('+mirs.length+')':'(可选)')+'</span><button class="b b-o" style="padding:4px 10px;font-size:12px" onclick="addMir('+origIdx+')">+ 添加备用</button></div>';
+      if(mirs.length){
+        for(let mi=0;mi<mirs.length;mi++){
+          const m=mirs[mi];
+          const fl=flagOf(m.region||'GLOBAL');
+          html+='<div class="mir-edit" style="background:var(--bg);padding:14px 16px;border-radius:10px;border:1px solid var(--bd);margin-bottom:10px">';
+          html+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">';
+          html+='<span style="font-size:22px;line-height:1">'+fl+'</span>';
         html+='<div style="flex:1;min-width:0;font-size:11.5px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px;font-weight:700">备用 #'+(mi+1)+'</div>';
         html+='<button class="b b-r" style="padding:5px 11px;font-size:12px" onclick="delMirByOrigIdx('+origIdx+','+mi+')">🗑 删除</button>';
         html+='</div>';
@@ -675,6 +739,7 @@ function rAccess(){
     html+='<button class="b b-o" onclick="bulkAddMirsByOrigIdx('+origIdx+')" style="font-size:12.5px">📋 批量粘贴</button>';
     html+='</div>';
     html+='</div>';
+    }
   }
   html+='<div style="margin-top:20px"><button class="b b-g" onclick="saveAccessUrls()" style="padding:12px 28px">💾 保存全部备用网址</button></div>';
   return html;
@@ -685,6 +750,7 @@ function delMirByOrigIdx(i,mi){delMir(i,mi)}
 function bulkAddMirsByOrigIdx(i){bulkAddMirs(i)}
 // Save just the access page edits
 function saveAccessUrls(){
+  // Save mirror edits (existing)
   $$('[data-am-f]').forEach(inp=>{
     const i=+inp.dataset.amI,mi=+inp.dataset.amMi,f=inp.dataset.amF,l=inp.dataset.amL;
     if(!D.exs[i]||!D.exs[i].mirrors||!D.exs[i].mirrors[mi])return;
@@ -692,13 +758,36 @@ function saveAccessUrls(){
     if(l){m[f]=m[f]||{};m[f][l]=inp.value.trim()}
     else{m[f]=inp.value.trim()}
   });
+  // Save primary URL/code/rebate edits (new)
+  $$('[data-acc-pri]').forEach(inp=>{
+    const i=+inp.dataset.accPri, f=inp.dataset.accF;
+    if(!D.exs[i])return;
+    D.exs[i][f] = inp.value.trim();
+  });
   // Drop empty mirrors (no URL)
   D.exs.forEach(e=>{if(e.mirrors)e.mirrors=e.mirrors.filter(m=>m.url)});
   sv(true);
   scheduleRender();
-  tst('✓ 备用网址已保存');
+  tst('✓ 入口大全已保存（主入口 + 备用网址）');
 }
-function addEx(){const id='exchange'+(D.exs.length+1);D.exs.push({id,url:'',ft:0,logo:'EX',color:'#5fb1ff',rebate:'',type:'cex',name:{zh:'新交易所','zh-TW':'',en:'New Exchange',ko:''},sub:{zh:'','zh-TW':'',en:'',ko:''},features:{zh:[],'zh-TW':[],en:[],ko:[]}});sv();scheduleRender();tst('✓ 已添加，请完善信息')}
+function addEx(type){
+  type = type || 'cex';
+  const defaults = {
+    cex:    {color:'#5fb1ff', logo:'EX', name:'新 CEX 交易所'},
+    dex:    {color:'#56c8d6', logo:'DX', name:'新 DEX'},
+    wallet: {color:'#fcd535', logo:'WL', name:'新 Web3 钱包'}
+  };
+  const d = defaults[type] || defaults.cex;
+  const id='exchange'+(D.exs.length+1);
+  D.exs.push({
+    id, url:'', ft:0, logo:d.logo, color:d.color, rebate:'', type,
+    name:{zh:d.name,'zh-TW':'',en:'New '+(type==='dex'?'DEX':type==='wallet'?'Wallet':'Exchange'),ko:''},
+    sub:{zh:'','zh-TW':'',en:'',ko:''},
+    features:{zh:[],'zh-TW':[],en:[],ko:[]}
+  });
+  sv();scheduleRender();
+  tst('✓ 已添加，请完善信息');
+}
 
 // Add preset exchanges (Hyperliquid + Binance Wallet + OKX Wallet)
 // Only adds ones that don't already exist
@@ -1159,7 +1248,10 @@ function render(){
   switch(r.p){
     case'dash':content=rDash();break;
     case'arts':content=rArticles();break;
-    case'exs':content=rExs();break;
+    case'cex':content=rExs('cex');break;
+    case'dex':content=rExs('dex');break;
+    case'wallets':content=rExs('wallet');break;
+    case'exs':content=rExs();break; // legacy, shows all
     case'access':content=rAccess();break;
     case'coins':content=rCoins();break;
     case'links':content=rLinks();break;

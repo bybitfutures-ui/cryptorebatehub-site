@@ -46,17 +46,6 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cryptorebatehub.com/wallets"/>
   </url>
   <url>
-    <loc>https://cryptorebatehub.com/register-bonus</loc>
-    <lastmod>2026-05-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.95</priority>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cryptorebatehub.com/register-bonus"/>
-    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://cryptorebatehub.com/register-bonus"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cryptorebatehub.com/register-bonus"/>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://cryptorebatehub.com/register-bonus"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cryptorebatehub.com/register-bonus"/>
-  </url>
-  <url>
     <loc>https://cryptorebatehub.com/access-urls</loc>
     <lastmod>2026-05-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -66,6 +55,17 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://cryptorebatehub.com/access-urls"/>
     <xhtml:link rel="alternate" hreflang="ko" href="https://cryptorebatehub.com/access-urls"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cryptorebatehub.com/access-urls"/>
+  </url>
+  <url>
+    <loc>https://cryptorebatehub.com/register-bonus</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://cryptorebatehub.com/register-bonus"/>
+    <xhtml:link rel="alternate" hreflang="zh-TW" href="https://cryptorebatehub.com/register-bonus"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cryptorebatehub.com/register-bonus"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://cryptorebatehub.com/register-bonus"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cryptorebatehub.com/register-bonus"/>
   </url>
   <url>
     <loc>https://cryptorebatehub.com/markets</loc>
