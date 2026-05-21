@@ -6,7 +6,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
-<meta name="build-id" content="20260518-html-articles-fix">
+<meta name="build-id" content="20260518-multilang-campaigns">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>Management · CryptoRebateHub</title>
@@ -247,7 +247,7 @@ setInterval(checkScheduled,60*1000); // Check every 60s for scheduled publishing
 setInterval(()=>syncTime(1),30*60*1000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden){checkDayChange();checkScheduled();syncTime(1)}});
 
-const PAGES={dash:{ic:'📊',n:'仪表盘'},arts:{ic:'📝',n:'文章管理'},cex:{ic:'🏛',n:'CEX 交易所'},dex:{ic:'⛓',n:'DEX 交易所'},wallets:{ic:'💼',n:'Web3 钱包'},access:{ic:'🌐',n:'入口大全'},coins:{ic:'💰',n:'币种行情'},links:{ic:'🔗',n:'链接中心'},data:{ic:'💾',n:'数据备份'},settings:{ic:'⚙',n:'网站设置'}};
+const PAGES={dash:{ic:'📊',n:'仪表盘'},arts:{ic:'📝',n:'文章管理'},cex:{ic:'🏛',n:'CEX 交易所'},dex:{ic:'⛓',n:'DEX 交易所'},wallets:{ic:'💼',n:'Web3 钱包'},access:{ic:'🌐',n:'入口大全'},news:{ic:'📧',n:'订阅管理'},camp:{ic:'📨',n:'邮件群发'},coins:{ic:'💰',n:'币种行情'},links:{ic:'🔗',n:'链接中心'},data:{ic:'💾',n:'数据备份'},settings:{ic:'⚙',n:'网站设置'}};
 
 function gr(){
   const h=location.hash.slice(1)||'';
@@ -255,7 +255,9 @@ function gr(){
   const s=h.split('/').filter(Boolean);
   if(s[0]==='art'&&s[1]==='new')return{p:'arts',sub:'new'};
   if(s[0]==='art'&&s[1])return{p:'arts',sub:'edit',id:+s[1]};
-  if(s[0]==='exs')return{p:'cex'}; // legacy alias → CEX
+  if(s[0]==='camp'&&s[1]==='new')return{p:'campedit',id:'new'};
+  if(s[0]==='camp'&&s[1])return{p:'campedit',id:s[1]};
+  if(s[0]==='exs')return{p:'cex'};
   if(PAGES[s[0]])return{p:s[0]};
   return{p:'dash'};
 }
@@ -374,7 +376,7 @@ function rDash(){
   const seoColor=seoIssues===0?'var(--grn)':seoIssues<5?'var(--yel)':'var(--red)';
   const recentArts=D.arts.slice().sort((a,b)=>(b.date||'').localeCompare(a.date||'')).slice(0,5);
   const dataKB=(JSON.stringify(D).length/1024).toFixed(1);
-  return rTopBar('仪表盘','网站当前状态总览','<button class="b b-g" onclick="xpArticlesJson()">📥 articles.json</button> <button class="b b-g" onclick="xpSitemap()">🗺 sitemap.xml</button> <button class="b b-o" onclick="xpNewsletterEmails()">📧 邮箱列表</button> <button class="b b-o" onclick="go(\'art/new\')">+ 新建文章</button> <button class="b b-o" onclick="xpD()">📤 完整备份</button>')+
+  return rTopBar('仪表盘','网站当前状态总览','<button class="b b-g" onclick="xpArticlesJson()">📥 articles.json</button> <button class="b b-g" onclick="xpSitemap()">🗺 sitemap.xml</button> <button class="b b-o" onclick="go(\'news\')">📧 订阅管理</button> <button class="b b-o" onclick="go(\'art/new\')">+ 新建文章</button> <button class="b b-o" onclick="xpD()">📤 完整备份</button>')+
     '<div class="dash">'+
       '<div class="dc"><div class="dc-l">当前年份</div><div class="dc-v" style="color:var(--grn)">'+Y+'</div><div class="dc-s">网站显示自动跟随</div></div>'+
       '<div class="dc"><div class="dc-l">文章总数</div><div class="dc-v">'+stats.total+'</div><div class="dc-s">已发布 '+stats.pub+' · 草稿 '+stats.draft+(stats.scheduled?' · ⏰ 定时 '+stats.scheduled:'')+'</div></div>'+
@@ -1077,25 +1079,621 @@ function xpArticlesJson(){
 }
 
 // Export sitemap.xml — auto-generated from current data (matches frontend)
-// Export collected newsletter emails (from localStorage on user browsers — only collects ones THIS browser collected)
-// For real production: use Formspree/Mailerlite endpoint in NEWSLETTER_ENDPOINT
-// This exports what's been collected locally (admin's own browser is unlikely to have many)
-function xpNewsletterEmails(){
-  let emails = [];
-  try{
-    emails = JSON.parse(localStorage.getItem('crh_news_emails')||'[]');
-  }catch(e){}
-  if(!emails.length){
-    tst('⚠ 当前浏览器 localStorage 没有邮箱。建议配置 Formspree/Mailerlite 在 NEWSLETTER_ENDPOINT 收集邮件。');
+// ════════════════════════════════════════════════════════════
+// 📧 NEWSLETTER MANAGEMENT — Cloudflare D1 backend
+// ════════════════════════════════════════════════════════════
+// Uses /api/admin/* endpoints (protected by X-Admin-Key header).
+// Admin key is stored in sessionStorage (per-tab, cleared on close).
+
+let _newsState = {
+  page: 1, limit: 50, q: '', status: '', lang: '', source: '', sort: 'created_desc',
+  selected: new Set(), data: null, stats: null
+};
+
+function getAdminKey(){
+  let k = sessionStorage.getItem('crh_admin_key');
+  if(!k){
+    k = prompt('请输入 Admin API Key（管理订阅需要）:\n\n首次部署时在 Cloudflare Pages 项目中设置环境变量 ADMIN_KEY。');
+    if(!k) return null;
+    sessionStorage.setItem('crh_admin_key', k);
+  }
+  return k;
+}
+
+async function newsApi(path, method='GET', body){
+  const key = getAdminKey();
+  if(!key){ tst('⚠ 未输入 Admin Key，操作取消'); return null; }
+  try {
+    const r = await fetch(path, {
+      method,
+      headers: {'X-Admin-Key': key, 'Content-Type': 'application/json'},
+      body: body ? JSON.stringify(body) : undefined
+    });
+    if(r.status === 401){
+      sessionStorage.removeItem('crh_admin_key');
+      tst('⚠ Admin Key 错误，请重新输入');
+      return null;
+    }
+    if(r.status === 503){
+      tst('⚠ 数据库未配置。请先在 Cloudflare 创建 D1 并绑定（参见 db/README.md）');
+      return null;
+    }
+    return await r.json();
+  } catch(e){
+    tst('⚠ 请求失败：' + e.message);
+    return null;
+  }
+}
+
+function rNews(){
+  // Render shell, data loads async
+  const h = rTopBar('📧 订阅管理','Cloudflare D1 数据库 · 实时同步全网订阅',
+    '<button class="b b-o" onclick="newsRefresh()">🔄 刷新</button> ' +
+    '<button class="b b-o" onclick="newsAddManually()">+ 手动添加</button> ' +
+    '<button class="b b-o" onclick="newsExportCSV(\'\')">📥 导出 CSV (全部)</button> ' +
+    '<button class="b b-g" onclick="newsExportCSV(\'active\')">📥 导出活跃用户 CSV</button>');
+  // Stats panel + filters + table — will be filled by JS
+  let body = '<div id="newsStats"></div>';
+  body += '<div id="newsFilters" style="background:var(--bg2);border:1px solid var(--bd);border-radius:12px;padding:16px;margin-bottom:14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px">';
+  body += '<input id="newsQ" placeholder="🔍 搜索邮箱…" style="padding:9px 12px" oninput="newsDebounceSearch()">';
+  body += '<select id="newsStatus" onchange="newsApplyFilters()" style="padding:9px 12px">';
+  body += '<option value="">全部状态</option>';
+  body += '<option value="active">✓ 活跃</option>';
+  body += '<option value="pending">📬 待确认</option>';
+  body += '<option value="unsubscribed">✗ 已退订</option>';
+  body += '<option value="bounced">⚠ 已退信</option>';
+  body += '</select>';
+  body += '<select id="newsLang" onchange="newsApplyFilters()" style="padding:9px 12px">';
+  body += '<option value="">全部语言</option>';
+  body += '<option value="zh">简中</option><option value="zh-TW">繁中</option>';
+  body += '<option value="en">English</option><option value="ko">한국어</option>';
+  body += '</select>';
+  body += '<select id="newsSort" onchange="newsApplyFilters()" style="padding:9px 12px">';
+  body += '<option value="created_desc">⬇ 最新优先</option>';
+  body += '<option value="created_asc">⬆ 最早优先</option>';
+  body += '<option value="email_asc">A→Z 邮箱</option>';
+  body += '</select>';
+  body += '</div>';
+  body += '<div id="newsBulkBar" style="display:none;background:var(--bg3);border:1px solid var(--bd2);border-radius:10px;padding:12px 16px;margin-bottom:12px;align-items:center;gap:12px">' +
+    '<span id="newsBulkCount" style="font-weight:600"></span>' +
+    '<button class="b b-o" onclick="newsBulkPatch(\'unsubscribed\')">标记退订</button>' +
+    '<button class="b b-o" onclick="newsBulkPatch(\'active\')">标记活跃</button>' +
+    '<button class="b b-o" onclick="newsBulkPatch(\'bounced\')">标记退信</button>' +
+    '<button class="b b-r" onclick="newsBulkDelete()" style="background:#f6536a22;color:#f6536a;border:1px solid #f6536a40">🗑 删除选中</button>' +
+    '</div>';
+  body += '<div id="newsTable" style="background:var(--bg2);border:1px solid var(--bd);border-radius:12px;overflow:hidden">' +
+    '<div style="padding:40px 20px;text-align:center;color:var(--tx3)">加载中…</div></div>';
+  body += '<div id="newsPager" style="margin-top:14px;text-align:center"></div>';
+
+  // Trigger load AFTER DOM is in place
+  setTimeout(newsLoadAll, 50);
+  return h + body;
+}
+
+async function newsLoadAll(){
+  // Stats
+  const stats = await newsApi('/api/admin/stats');
+  if(stats && stats.ok){
+    _newsState.stats = stats;
+    newsRenderStats();
+  }
+  // Subscribers list
+  await newsLoadPage();
+}
+
+function newsRenderStats(){
+  const s = _newsState.stats;
+  if(!s) return;
+  const el = document.getElementById('newsStats');
+  if(!el) return;
+  const langName = {zh:'简中', 'zh-TW':'繁中', en:'EN', ko:'한국어', unknown:'未知'};
+  const statusName = {active:'✓ 活跃', pending:'📬 待确认', unsubscribed:'✗ 已退订', bounced:'⚠ 退信'};
+  let html = '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:18px">';
+  html += '<div class="dc"><div class="dc-l">总订阅数</div><div class="dc-v" style="color:var(--blu)">'+s.total+'</div><div class="dc-s">含所有状态</div></div>';
+  html += '<div class="dc"><div class="dc-l">活跃订阅</div><div class="dc-v" style="color:var(--grn)">'+(s.byStatus.active||0)+'</div><div class="dc-s">可发邮件</div></div>';
+  html += '<div class="dc"><div class="dc-l">最近 24h</div><div class="dc-v" style="color:var(--gld)">'+s.last24h+'</div><div class="dc-s">本周共 '+s.last7d+'</div></div>';
+  html += '<div class="dc"><div class="dc-l">最近 30 天</div><div class="dc-v" style="color:var(--vio)">'+s.last30d+'</div><div class="dc-s">月增长</div></div>';
+  html += '</div>';
+  // Status breakdown chips
+  if(Object.keys(s.byStatus).length){
+    html += '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px">';
+    for(const [k,v] of Object.entries(s.byStatus)){
+      html += '<span style="background:var(--bg3);border:1px solid var(--bd);padding:6px 12px;border-radius:99px;font-size:12.5px;font-weight:600">'+(statusName[k]||k)+' <strong>'+v+'</strong></span>';
+    }
+    html += '</div>';
+  }
+  // Language breakdown
+  if(Object.keys(s.byLang).length){
+    html += '<div style="margin-bottom:18px"><div style="font-size:12px;color:var(--tx3);text-transform:uppercase;letter-spacing:.8px;font-weight:700;margin-bottom:8px">活跃用户语言分布</div>';
+    html += '<div style="display:flex;gap:8px;flex-wrap:wrap">';
+    for(const [k,v] of Object.entries(s.byLang)){
+      html += '<span style="background:var(--grnA);color:var(--grn);padding:5px 11px;border-radius:99px;font-size:12px;font-weight:700">'+(langName[k]||k)+' <strong>'+v+'</strong></span>';
+    }
+    html += '</div></div>';
+  }
+  el.innerHTML = html;
+}
+
+async function newsLoadPage(){
+  const p = new URLSearchParams({
+    page: _newsState.page, limit: _newsState.limit,
+    q: _newsState.q, status: _newsState.status, lang: _newsState.lang,
+    sort: _newsState.sort
+  });
+  const data = await newsApi('/api/admin/subscribers?' + p.toString());
+  if(!data || !data.ok){
+    const el = document.getElementById('newsTable');
+    if(el) el.innerHTML = '<div style="padding:40px;text-align:center;color:var(--tx3)">无法加载，请检查 Admin Key 或数据库配置</div>';
     return;
   }
-  const csv = 'email,collected_at\n' + emails.map(e=>e+','+(localStorage.getItem('crh_news_last')||'')).join('\n');
-  const b = new Blob([csv], {type:'text/csv'});
-  const u = URL.createObjectURL(b);
-  const a = document.createElement('a');
-  a.href = u; a.download = 'newsletter_emails.csv'; a.click();
-  setTimeout(()=>URL.revokeObjectURL(u), 2000);
-  tst('✓ 已导出 '+emails.length+' 个邮箱');
+  _newsState.data = data;
+  _newsState.selected.clear();
+  newsRenderTable();
+  newsRenderPager();
+}
+
+function newsRenderTable(){
+  const el = document.getElementById('newsTable');
+  if(!el) return;
+  const rows = _newsState.data.rows || [];
+  if(!rows.length){
+    el.innerHTML = '<div style="padding:60px 20px;text-align:center;color:var(--tx3)"><div style="font-size:42px;margin-bottom:12px;opacity:.5">📭</div>没有订阅者匹配当前筛选条件</div>';
+    return;
+  }
+  const statusColor = {active:'#2ecf90', pending:'#f0b41e', unsubscribed:'#6f7588', bounced:'#f6536a'};
+  const statusIcon = {active:'✓', pending:'📬', unsubscribed:'✗', bounced:'⚠'};
+  const langName = {zh:'🇨🇳 简', 'zh-TW':'🇹🇼 繁', en:'🇬🇧 EN', ko:'🇰🇷 한'};
+  let html = '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;min-width:880px">';
+  html += '<thead><tr style="background:var(--bg3);border-bottom:1px solid var(--bd);font-size:12px;color:var(--tx3);text-transform:uppercase;letter-spacing:.6px">';
+  html += '<th style="padding:12px;text-align:left;width:30px"><input type="checkbox" onchange="newsSelectAll(this.checked)"></th>';
+  html += '<th style="padding:12px;text-align:left">邮箱</th>';
+  html += '<th style="padding:12px;text-align:center">状态</th>';
+  html += '<th style="padding:12px;text-align:center">语言</th>';
+  html += '<th style="padding:12px;text-align:left">来源</th>';
+  html += '<th style="padding:12px;text-align:left">订阅时间</th>';
+  html += '<th style="padding:12px;text-align:left">标签</th>';
+  html += '<th style="padding:12px;text-align:right">操作</th>';
+  html += '</tr></thead><tbody>';
+  for(const r of rows){
+    const date = r.created_at ? new Date(r.created_at).toLocaleString('zh-CN', {month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}) : '';
+    const c = statusColor[r.status] || 'var(--tx3)';
+    html += '<tr style="border-bottom:1px solid var(--bd);font-size:13px" id="news-row-'+r.id+'">';
+    html += '<td style="padding:12px"><input type="checkbox" data-id="'+r.id+'" onchange="newsToggleSelect(\''+r.id+'\',this.checked)"></td>';
+    html += '<td style="padding:12px"><div style="font-weight:600">'+es(r.email)+'</div>'+(r.notes?'<div style="font-size:11px;color:var(--tx3);margin-top:2px">📝 '+es(r.notes)+'</div>':'')+'</td>';
+    html += '<td style="padding:12px;text-align:center"><span style="background:'+c+'22;color:'+c+';padding:3px 10px;border-radius:99px;font-size:11.5px;font-weight:700">'+(statusIcon[r.status]||'')+' '+r.status+'</span></td>';
+    html += '<td style="padding:12px;text-align:center;font-size:12px">'+(langName[r.lang]||r.lang||'—')+'</td>';
+    html += '<td style="padding:12px;font-size:12px;color:var(--tx3)">'+(es(r.source||'-'))+(r.route?'<br><span style="opacity:.7">'+es(r.route).slice(0,30)+'</span>':'')+'</td>';
+    html += '<td style="padding:12px;font-family:\'JetBrains Mono\',monospace;font-size:12px;color:var(--tx2)">'+date+'</td>';
+    html += '<td style="padding:12px">'+(r.tags?'<span style="background:var(--bg3);color:var(--tx2);padding:3px 8px;border-radius:6px;font-size:11px">'+es(r.tags)+'</span>':'<span style="color:var(--tx3);font-size:11px">—</span>')+'</td>';
+    html += '<td style="padding:12px;text-align:right;white-space:nowrap">';
+    html += '<button class="b b-o" onclick="newsEdit(\''+r.id+'\')" style="padding:4px 10px;font-size:11px">✎</button> ';
+    html += '<button class="b b-o" onclick="newsCopyUnsub(\''+r.unsub_token+'\')" style="padding:4px 10px;font-size:11px" title="复制退订链接">🔗</button> ';
+    html += '<button class="b b-o" onclick="newsDelete(\''+r.id+'\',\''+es(r.email)+'\')" style="padding:4px 10px;font-size:11px;color:#f6536a">🗑</button>';
+    html += '</td></tr>';
+  }
+  html += '</tbody></table></div>';
+  el.innerHTML = html;
+}
+
+function newsRenderPager(){
+  const el = document.getElementById('newsPager');
+  if(!el) return;
+  const d = _newsState.data;
+  if(!d || d.pages <= 1){ el.innerHTML = ''; return; }
+  let html = '<span style="color:var(--tx3);font-size:13px;margin-right:14px">共 '+d.total+' 条 · 第 '+d.page+' / '+d.pages+' 页</span>';
+  if(d.page > 1) html += '<button class="b b-o" onclick="newsGoPage('+(d.page-1)+')">← 上一页</button> ';
+  if(d.page < d.pages) html += '<button class="b b-o" onclick="newsGoPage('+(d.page+1)+')">下一页 →</button>';
+  el.innerHTML = html;
+}
+
+function newsGoPage(p){ _newsState.page = p; newsLoadPage(); }
+function newsApplyFilters(){
+  _newsState.page = 1;
+  _newsState.q = document.getElementById('newsQ').value || '';
+  _newsState.status = document.getElementById('newsStatus').value || '';
+  _newsState.lang = document.getElementById('newsLang').value || '';
+  _newsState.sort = document.getElementById('newsSort').value || 'created_desc';
+  newsLoadPage();
+}
+let _newsSearchTimer;
+function newsDebounceSearch(){
+  clearTimeout(_newsSearchTimer);
+  _newsSearchTimer = setTimeout(newsApplyFilters, 350);
+}
+
+function newsToggleSelect(id, checked){
+  if(checked) _newsState.selected.add(id); else _newsState.selected.delete(id);
+  newsUpdateBulkBar();
+}
+function newsSelectAll(checked){
+  document.querySelectorAll('#newsTable input[type="checkbox"][data-id]').forEach(cb => {
+    cb.checked = checked;
+    if(checked) _newsState.selected.add(cb.dataset.id); else _newsState.selected.delete(cb.dataset.id);
+  });
+  newsUpdateBulkBar();
+}
+function newsUpdateBulkBar(){
+  const bar = document.getElementById('newsBulkBar');
+  if(!bar) return;
+  if(_newsState.selected.size === 0){ bar.style.display = 'none'; return; }
+  bar.style.display = 'flex';
+  document.getElementById('newsBulkCount').textContent = '已选 '+_newsState.selected.size+' 个';
+}
+
+async function newsBulkPatch(status){
+  if(!_newsState.selected.size) return;
+  if(!confirm('确定要将 '+_newsState.selected.size+' 个订阅者标记为 '+status+' 吗？')) return;
+  for(const id of _newsState.selected){
+    await newsApi('/api/admin/subscribers', 'PATCH', {id, status});
+  }
+  tst('✓ 已更新 '+_newsState.selected.size+' 个订阅者');
+  _newsState.selected.clear();
+  newsRefresh();
+}
+async function newsBulkDelete(){
+  if(!_newsState.selected.size) return;
+  if(!confirm('⚠ 永久删除 '+_newsState.selected.size+' 个订阅者？此操作不可撤销。')) return;
+  const r = await newsApi('/api/admin/subscribers', 'DELETE', {ids: Array.from(_newsState.selected)});
+  if(r && r.ok){ tst('✓ 已删除 '+r.deleted+' 个'); _newsState.selected.clear(); newsRefresh(); }
+}
+
+async function newsDelete(id, email){
+  if(!confirm('⚠ 永久删除 '+email+' ？此操作不可撤销。\n\n提示：如果是退订请求，建议改用「标记退订」而不是删除（保留审计记录）。')) return;
+  const r = await newsApi('/api/admin/subscribers', 'DELETE', {id});
+  if(r && r.ok){ tst('✓ 已删除'); newsRefresh(); }
+}
+
+async function newsEdit(id){
+  const row = (_newsState.data.rows || []).find(r => r.id === id);
+  if(!row) return;
+  const newTags = prompt('编辑标签（逗号分隔）：', row.tags || '');
+  if(newTags === null) return;
+  const newNotes = prompt('编辑备注：', row.notes || '');
+  if(newNotes === null) return;
+  const newStatus = prompt('修改状态：active / pending / unsubscribed / bounced', row.status);
+  if(newStatus === null) return;
+  const r = await newsApi('/api/admin/subscribers', 'PATCH', {
+    id, tags: newTags, notes: newNotes, status: newStatus
+  });
+  if(r && r.ok){ tst('✓ 已更新'); newsRefresh(); }
+}
+
+async function newsAddManually(){
+  const email = prompt('订阅者邮箱：');
+  if(!email) return;
+  const lang = prompt('语言代码（zh / zh-TW / en / ko）：', 'zh');
+  const tags = prompt('标签（逗号分隔，可选）：', '');
+  const notes = prompt('备注（可选）：', 'admin manual add');
+  const r = await newsApi('/api/admin/subscribers', 'POST', {email, lang, tags, notes, source: 'manual'});
+  if(r && r.ok){ tst('✓ 已添加'); newsRefresh(); }
+  else if(r && r.error === 'already_exists') tst('⚠ 该邮箱已存在');
+  else if(r) tst('⚠ 添加失败：'+r.error);
+}
+
+function newsCopyUnsub(token){
+  const url = location.origin + '/u/' + token;
+  navigator.clipboard.writeText(url).then(() => tst('✓ 已复制退订链接')).catch(() => prompt('退订链接（手动复制）：', url));
+}
+
+function newsExportCSV(status){
+  const key = getAdminKey();
+  if(!key) return;
+  // We can't add header to <a href>, so use fetch + blob
+  fetch('/api/admin/export'+(status?'?status='+status:''), {headers:{'X-Admin-Key':key}})
+    .then(r => r.ok ? r.blob() : Promise.reject(r.status))
+    .then(blob => {
+      const u = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = u;
+      a.download = 'crh-subscribers-'+(status||'all')+'-'+new Date().toISOString().slice(0,10)+'.csv';
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(u), 2000);
+      tst('✓ CSV 已下载');
+    })
+    .catch(s => tst('⚠ 导出失败 ('+s+')'));
+}
+
+function newsRefresh(){ newsLoadAll(); }
+
+// ════════════════════════════════════════════════════════════
+// 📨 EMAIL CAMPAIGNS — Multi-language broadcast newsletters
+// ════════════════════════════════════════════════════════════
+// Uses /api/admin/campaigns* endpoints. Same Admin Key as subscribers.
+
+let _campState = { editLang: 'zh', current: null, preview: null, sending: false };
+
+// ─── CAMPAIGN LIST PAGE ─────────────────────────────────────
+function rCampList(){
+  const h = rTopBar('📨 邮件群发','按语言精准推送 · 多版本同步编辑 · Resend 邮件服务',
+    '<button class="b b-g" onclick="go(\'camp/new\')">+ 新建邮件</button> ' +
+    '<button class="b b-o" onclick="campRefresh()">🔄 刷新</button>');
+  let body = '<div id="campList" style="margin-top:14px"><div style="padding:40px;text-align:center;color:var(--tx3)">加载中…</div></div>';
+  setTimeout(campLoadList, 50);
+  return h + body;
+}
+
+async function campLoadList(){
+  const r = await newsApi('/api/admin/campaigns');
+  const el = document.getElementById('campList');
+  if(!el) return;
+  if(!r || !r.ok){
+    el.innerHTML = '<div style="padding:40px;text-align:center;color:var(--tx3)">无法加载，请检查 Admin Key 或数据库</div>';
+    return;
+  }
+  const rows = r.rows || [];
+  if(!rows.length){
+    el.innerHTML = '<div style="background:var(--bg2);border:1px dashed var(--bd2);border-radius:14px;padding:60px 24px;text-align:center"><div style="font-size:54px;margin-bottom:14px;opacity:.5">📨</div><h3 style="margin:0 0 8px;font-size:18px">还没有任何邮件</h3><p style="color:var(--tx3);margin:0 0 20px">点击「+ 新建邮件」开始撰写。系统会按订阅者语言自动选择对应版本。</p><button class="b b-g" onclick="go(\'camp/new\')">+ 新建邮件</button></div>';
+    return;
+  }
+  const sBadge = {
+    draft:'<span style="background:var(--bg3);color:var(--tx2);padding:3px 10px;border-radius:99px;font-size:11.5px;font-weight:700">📝 草稿</span>',
+    sending:'<span style="background:rgba(255,181,71,.12);color:#ffb547;padding:3px 10px;border-radius:99px;font-size:11.5px;font-weight:700">⏳ 发送中</span>',
+    sent:'<span style="background:var(--grnA);color:var(--grn);padding:3px 10px;border-radius:99px;font-size:11.5px;font-weight:700">✓ 已发送</span>',
+    paused:'<span style="background:rgba(122,192,255,.12);color:#7ac0ff;padding:3px 10px;border-radius:99px;font-size:11.5px;font-weight:700">⏸ 已暂停</span>',
+    failed:'<span style="background:rgba(246,83,106,.12);color:#f6536a;padding:3px 10px;border-radius:99px;font-size:11.5px;font-weight:700">⚠ 失败</span>'
+  };
+  let html = '<div style="background:var(--bg2);border:1px solid var(--bd);border-radius:12px;overflow:hidden">';
+  html += '<table style="width:100%;border-collapse:collapse;font-size:13.5px">';
+  html += '<thead><tr style="background:var(--bg3);border-bottom:1px solid var(--bd);font-size:12px;color:var(--tx3);text-transform:uppercase;letter-spacing:.6px">';
+  html += '<th style="padding:12px 16px;text-align:left">名称</th>';
+  html += '<th style="padding:12px;text-align:center">状态</th>';
+  html += '<th style="padding:12px;text-align:right">发送进度</th>';
+  html += '<th style="padding:12px;text-align:left">主题预览</th>';
+  html += '<th style="padding:12px;text-align:right">操作</th>';
+  html += '</tr></thead><tbody>';
+  for(const c of rows){
+    const date = c.created_at ? new Date(c.created_at).toLocaleDateString('zh-CN') : '';
+    const total = c.recipients_sent + c.recipients_failed + c.recipients_skipped;
+    const subj = c.subject_zh || c.subject_en || c.subject_zh_tw || c.subject_ko || '(未设置标题)';
+    html += '<tr style="border-bottom:1px solid var(--bd)">';
+    html += '<td style="padding:14px 16px"><div style="font-weight:600">'+es(c.name||'Untitled')+'</div><div style="font-size:11px;color:var(--tx3);margin-top:2px;font-family:\'JetBrains Mono\',monospace">'+es(c.id.slice(0,8))+' · '+date+'</div></td>';
+    html += '<td style="padding:14px;text-align:center">'+(sBadge[c.status]||c.status)+'</td>';
+    html += '<td style="padding:14px;text-align:right"><div style="font-weight:700;color:var(--grn)">'+c.recipients_sent+'</div>';
+    if(c.recipients_failed>0) html += '<div style="font-size:11px;color:#f6536a">⚠ '+c.recipients_failed+' 失败</div>';
+    if(c.recipients_skipped>0) html += '<div style="font-size:11px;color:var(--tx3)">⊘ '+c.recipients_skipped+' 跳过</div>';
+    html += '</td>';
+    html += '<td style="padding:14px;color:var(--tx2);font-size:12.5px">'+es(subj.slice(0,50))+(subj.length>50?'…':'')+'</td>';
+    html += '<td style="padding:14px;text-align:right;white-space:nowrap">';
+    html += '<button class="b b-o" onclick="go(\'camp/'+c.id+'\')" style="padding:5px 12px;font-size:11.5px">'+(c.status==='draft'?'✎ 编辑':'👁 查看')+'</button>';
+    html += '</td></tr>';
+  }
+  html += '</tbody></table></div>';
+  el.innerHTML = html;
+}
+function campRefresh(){ campLoadList(); }
+
+// ─── CAMPAIGN EDIT PAGE ─────────────────────────────────────
+function rCampEdit(id){
+  _campState.editLang = 'zh';
+  _campState.current = null;
+  const h = rTopBar('📨 编辑邮件','按 4 种语言分别撰写 · 订阅者按 lang 自动接收对应版本','<a class="b b-o" onclick="go(\'camp\')" style="cursor:pointer;text-decoration:none">← 返回列表</a>');
+  const body = '<div id="campEdit" style="margin-top:14px"><div style="padding:40px;text-align:center;color:var(--tx3)">加载中…</div></div>';
+  setTimeout(() => campLoadEdit(id), 50);
+  return h + body;
+}
+
+async function campLoadEdit(id){
+  if(id === 'new'){
+    const r = await newsApi('/api/admin/campaigns', 'POST', {name:'新邮件 ' + new Date().toLocaleString('zh-CN')});
+    if(!r || !r.ok){ tst('⚠ 创建失败'); return; }
+    location.hash = '/camp/' + r.id;
+    return;
+  }
+  const r = await newsApi('/api/admin/campaigns/' + id);
+  if(!r || !r.ok){
+    document.getElementById('campEdit').innerHTML = '<div style="padding:40px;text-align:center;color:var(--tx3)">无法加载该邮件</div>';
+    return;
+  }
+  _campState.current = r.campaign;
+  _campState.preview = r.preview;
+  campRenderEdit();
+}
+
+function campRenderEdit(){
+  const c = _campState.current;
+  const p = _campState.preview;
+  if(!c) return;
+  const el = document.getElementById('campEdit');
+  if(!el) return;
+  const isLocked = c.status === 'sending' || c.status === 'sent';
+  const langs = [
+    {k:'zh', n:'🇨🇳 简体中文', sk:'subject_zh', bk:'body_zh'},
+    {k:'zh-TW', n:'🇹🇼 繁體中文', sk:'subject_zh_tw', bk:'body_zh_tw'},
+    {k:'en', n:'🇬🇧 English', sk:'subject_en', bk:'body_en'},
+    {k:'ko', n:'🇰🇷 한국어', sk:'subject_ko', bk:'body_ko'}
+  ];
+  let html = '';
+
+  // ─── Name + status row ───
+  html += '<div style="background:var(--bg2);border:1px solid var(--bd);border-radius:14px;padding:18px 22px;margin-bottom:14px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">';
+  html += '<input id="cName" placeholder="内部名称（仅 admin 可见）" value="'+es(c.name||'')+'" '+(isLocked?'disabled':'')+' style="flex:1;min-width:200px;padding:10px 14px;font-size:14px;font-weight:600" onchange="campSaveField(\'name\',this.value)">';
+  html += '<div style="display:flex;gap:8px;font-size:12.5px">';
+  if(c.status==='sent') html += '<span style="background:var(--grnA);color:var(--grn);padding:6px 12px;border-radius:99px;font-weight:700">✓ 已发送</span>';
+  else if(c.status==='sending') html += '<span style="background:rgba(255,181,71,.12);color:#ffb547;padding:6px 12px;border-radius:99px;font-weight:700">⏳ 发送中</span>';
+  else html += '<span style="background:var(--bg3);color:var(--tx2);padding:6px 12px;border-radius:99px;font-weight:700">📝 草稿</span>';
+  html += '</div>';
+  html += '</div>';
+
+  // ─── Recipient preview panel ───
+  html += '<div style="background:var(--bg2);border:1px solid var(--bd);border-radius:14px;padding:18px 22px;margin-bottom:14px">';
+  html += '<div style="font-size:12px;color:var(--tx3);text-transform:uppercase;letter-spacing:.8px;font-weight:700;margin-bottom:12px">📊 收件人预览（按语言自动匹配）</div>';
+  html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px">';
+  const lnames = {zh:'🇨🇳 简中', 'zh-TW':'🇹🇼 繁中', en:'🇬🇧 EN', ko:'🇰🇷 한국어', unknown:'❓ 未知'};
+  for(const [lang, n] of Object.entries(p.langCounts || {})){
+    const has = p.hasContent[lang];
+    const fbHas = c.fallback_lang && p.hasContent[c.fallback_lang];
+    const willGet = has || fbHas;
+    html += '<div style="background:var(--bg);border:1px solid '+(willGet?'var(--grn)':'var(--bd)')+'30;border-radius:10px;padding:12px;text-align:center">';
+    html += '<div style="font-size:11px;color:var(--tx3);margin-bottom:4px">'+(lnames[lang]||lang)+'</div>';
+    html += '<div style="font-size:22px;font-weight:800;color:'+(willGet?'var(--grn)':'var(--tx3)')+';font-family:\'JetBrains Mono\',monospace">'+n+'</div>';
+    html += '<div style="font-size:10.5px;color:var(--tx3);margin-top:2px">'+(willGet?(has?'✓ 有内容':'↪ 用 '+lnames[c.fallback_lang]):'⊘ 跳过')+'</div>';
+    html += '</div>';
+  }
+  html += '</div>';
+  html += '<div style="display:flex;gap:12px;margin-top:14px;font-size:13px;color:var(--tx2);flex-wrap:wrap;align-items:center">';
+  html += '<span><strong style="color:var(--grn);font-size:16px">'+p.willReceive+'</strong> 将收到</span>';
+  if(p.willSkip>0) html += '<span style="color:var(--tx3)">· <strong>'+p.willSkip+'</strong> 跳过（无对应语言内容）</span>';
+  if(p.alreadySent>0) html += '<span style="color:var(--tx3)">· 已发送 <strong>'+p.alreadySent+'</strong></span>';
+  html += '<div style="flex:1"></div>';
+  html += '<select onchange="campSaveField(\'fallback_lang\',this.value)" '+(isLocked?'disabled':'')+' style="padding:7px 10px;font-size:12px">';
+  html += '<option value="">不使用回退（无对应语言版本则跳过）</option>';
+  for(const l of langs){
+    html += '<option value="'+l.k+'"'+(c.fallback_lang===l.k?' selected':'')+'>回退到 '+l.n+'</option>';
+  }
+  html += '</select>';
+  html += '</div>';
+  html += '</div>';
+
+  // ─── Language tabs ───
+  html += '<div style="display:flex;gap:4px;margin-bottom:0;flex-wrap:wrap;border-bottom:1px solid var(--bd);padding-bottom:0">';
+  for(const l of langs){
+    const has = !!(c[l.sk] && c[l.bk]);
+    const active = _campState.editLang === l.k;
+    html += '<button onclick="campSwitchLang(\''+l.k+'\')" style="padding:10px 18px;border:none;background:'+(active?'var(--bg2)':'transparent')+';color:'+(active?'var(--tx)':'var(--tx2)')+';font-weight:'+(active?'700':'500')+';cursor:pointer;border-radius:10px 10px 0 0;font-size:13.5px;border-bottom:'+(active?'2px solid var(--grn)':'2px solid transparent')+';font-family:inherit">';
+    html += l.n + (has?' <span style="color:var(--grn);margin-left:3px">✓</span>':'');
+    html += '</button>';
+  }
+  html += '</div>';
+
+  // ─── Active lang editor ───
+  const al = langs.find(l => l.k === _campState.editLang);
+  const sv = c[al.sk] || '';
+  const bv = c[al.bk] || '';
+  html += '<div style="background:var(--bg2);border:1px solid var(--bd);border-top:none;border-radius:0 0 14px 14px;padding:20px 22px">';
+  html += '<label style="display:block;font-size:12px;color:var(--tx3);text-transform:uppercase;letter-spacing:.6px;font-weight:700;margin-bottom:6px">主题 (Subject)</label>';
+  html += '<input id="cSubj" '+(isLocked?'disabled':'')+' placeholder="例：本周加密交易所返佣报告 · 第 12 期" value="'+es(sv)+'" style="width:100%;padding:11px 14px;font-size:14.5px;font-weight:600;margin-bottom:18px" onchange="campSaveField(\''+al.sk+'\',this.value)">';
+  html += '<label style="display:block;font-size:12px;color:var(--tx3);text-transform:uppercase;letter-spacing:.6px;font-weight:700;margin-bottom:6px">正文 (HTML 或 Markdown-Lite 自动识别)</label>';
+  html += '<div style="font-size:11.5px;color:var(--tx3);margin-bottom:8px;line-height:1.5">支持：<code style="background:var(--bg3);padding:1px 5px;border-radius:3px">## 标题</code> <code style="background:var(--bg3);padding:1px 5px;border-radius:3px">**粗体**</code> <code style="background:var(--bg3);padding:1px 5px;border-radius:3px">[链接](url)</code> <code style="background:var(--bg3);padding:1px 5px;border-radius:3px">- 列表</code> · 或直接写 HTML</div>';
+  html += '<textarea id="cBody" '+(isLocked?'disabled':'')+' onchange="campSaveField(\''+al.bk+'\',this.value)" style="width:100%;height:300px;padding:13px;font-family:\'JetBrains Mono\',Menlo,monospace;font-size:13px;line-height:1.6;resize:vertical">'+es(bv)+'</textarea>';
+  html += '<div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">';
+  if(!isLocked){
+    html += '<button class="b b-o" onclick="campPreview()">👁 预览</button>';
+    html += '<button class="b b-o" onclick="campSendTest()">🧪 发测试邮件</button>';
+    html += '<div style="flex:1"></div>';
+    html += '<button class="b b-r" onclick="campDelete()" style="background:rgba(246,83,106,.1);color:#f6536a;border:1px solid rgba(246,83,106,.3)">🗑 删除</button>';
+    if(c.status === 'draft' || c.status === 'paused'){
+      html += '<button class="b b-g" onclick="campStartSend()" style="padding:10px 22px;font-weight:700">🚀 开始发送 ('+p.willReceive+')</button>';
+    } else if(c.status === 'sending'){
+      html += '<button class="b b-g" onclick="campContinueSend()" style="padding:10px 22px;font-weight:700">▶ 继续发送 (剩余 '+(p.willReceive - p.alreadySent)+')</button>';
+    }
+  }
+  html += '</div>';
+  html += '</div>';
+
+  // ─── Sending progress (if active) ───
+  if(c.status === 'sending' || _campState.sending){
+    html += '<div id="campProgress" style="background:var(--bg2);border:1px solid var(--bd);border-radius:14px;padding:18px 22px;margin-top:14px"></div>';
+  }
+
+  el.innerHTML = html;
+}
+
+function campSwitchLang(l){ _campState.editLang = l; campRenderEdit(); }
+
+async function campSaveField(field, value){
+  if(!_campState.current) return;
+  const r = await newsApi('/api/admin/campaigns/' + _campState.current.id, 'PATCH', {[field]: value});
+  if(r && r.ok){
+    _campState.current[field] = value;
+    // Re-fetch full preview to update recipient counts (debounced)
+    clearTimeout(_campState._t);
+    _campState._t = setTimeout(async () => {
+      const r2 = await newsApi('/api/admin/campaigns/' + _campState.current.id);
+      if(r2 && r2.ok){ _campState.current = r2.campaign; _campState.preview = r2.preview; campRenderEdit(); }
+    }, 600);
+  }
+}
+
+async function campPreview(){
+  const c = _campState.current;
+  if(!c) return;
+  const lang = _campState.editLang;
+  const subj = c['subject_' + lang.replace('-','_').toLowerCase()] || c['subject_zh'] || '(no subject)';
+  // We don't have a server preview endpoint, but we can ask the server for the test render via a "render preview" trick:
+  // Instead, just open a basic preview popup with the raw body
+  const body = c['body_' + lang.replace('-','_').toLowerCase()] || c['body_zh'] || '';
+  const w = window.open('', '_blank', 'width=720,height=820');
+  if(!w){ tst('⚠ 请允许弹窗以预览'); return; }
+  w.document.write('<!DOCTYPE html><html><head><meta charset="utf-8"><title>Preview · '+es(subj)+'</title><style>body{font-family:-apple-system,BlinkMacSystemFont,Inter,sans-serif;background:#f7f8fb;padding:24px;color:#0a0e1a}.box{max-width:600px;margin:0 auto;background:#fff;border-radius:14px;padding:32px;box-shadow:0 4px 20px rgba(0,0,0,.06)}h1{font-size:24px;margin:0 0 18px}h2{font-size:22px;margin:24px 0 12px}h3{font-size:18px;margin:20px 0 10px}p{line-height:1.7;color:#3d4659;margin:0 0 14px}a{color:#2ecf90}ul,ol{padding-left:22px;color:#3d4659}table{width:100%;border-collapse:collapse;margin:14px 0}th,td{padding:10px 12px;border:1px solid #e0e5ee;text-align:left}th{background:#eef1f7}.head{font-size:11px;color:#6a7385;text-transform:uppercase;letter-spacing:.8px;margin-bottom:18px}</style></head><body><div class="box"><div class="head">主题预览 / lang: '+lang+'</div><h1>'+es(subj)+'</h1>'+body+'<hr style="margin:28px 0;border:none;border-top:1px solid #eef1f7"><p style="font-size:12px;color:#6a7385">底部将自动加上退订链接 + 法律披露文字</p></div></body></html>');
+  w.document.close();
+}
+
+async function campSendTest(){
+  if(!_campState.current) return;
+  const email = prompt('发送测试邮件到：（建议先发给你自己）', '');
+  if(!email) return;
+  const r = await newsApi('/api/admin/campaigns/' + _campState.current.id + '/test', 'POST', {email, lang: _campState.editLang});
+  if(r && r.ok){ tst('✓ 测试邮件已发送到 ' + email + '（语言: ' + r.lang + '）'); }
+  else if(r && r.error === 'resend_not_configured'){ tst('⚠ 未配置 RESEND_API_KEY，请先在 Cloudflare 设置'); }
+  else if(r && r.error === 'no_content_for_lang'){ tst('⚠ 该语言版本未填写内容'); }
+  else if(r) tst('⚠ 发送失败：' + (r.detail || r.error));
+}
+
+async function campDelete(){
+  if(!_campState.current) return;
+  if(!confirm('⚠ 确定删除这封邮件？此操作不可撤销。')) return;
+  const r = await newsApi('/api/admin/campaigns/' + _campState.current.id, 'DELETE');
+  if(r && r.ok){ tst('✓ 已删除'); go('camp'); }
+}
+
+async function campStartSend(){
+  if(!_campState.current) return;
+  const p = _campState.preview;
+  const msg = '即将向 ' + p.willReceive + ' 个订阅者发送邮件（已确认 active 状态）。\n\n' +
+              (p.willSkip>0 ? '将跳过 ' + p.willSkip + ' 个（无对应语言版本）\n' : '') +
+              '\n确认开始？';
+  if(!confirm(msg)) return;
+  await campSendBatch();
+}
+
+async function campContinueSend(){ await campSendBatch(); }
+
+async function campSendBatch(){
+  _campState.sending = true;
+  campRenderEdit();
+  const progressEl = document.getElementById('campProgress');
+  let totalSent = 0, totalFailed = 0, totalSkipped = 0, remaining = -1, iter = 0;
+  while(true){
+    iter++;
+    if(progressEl){
+      progressEl.innerHTML = '<div style="font-size:13px;color:var(--tx2)">🚀 第 '+iter+' 批发送中…</div>' +
+        '<div style="margin-top:10px;font-family:\'JetBrains Mono\',monospace;font-size:13px"><span style="color:var(--grn)">✓ '+totalSent+'</span> · <span style="color:#f6536a">✗ '+totalFailed+'</span> · <span style="color:var(--tx3)">⊘ '+totalSkipped+'</span>'+(remaining>=0?' · 剩余 ~'+remaining:'')+'</div>';
+    }
+    const r = await newsApi('/api/admin/campaigns/' + _campState.current.id + '/send', 'POST', {batchSize: 25});
+    if(!r || !r.ok){
+      if(progressEl) progressEl.innerHTML = '<div style="color:#f6536a;font-weight:700">⚠ 发送失败：' + (r && (r.detail || r.error || r.message) || '未知错误') + '</div>';
+      _campState.sending = false;
+      // Re-fetch to refresh status
+      const r2 = await newsApi('/api/admin/campaigns/' + _campState.current.id);
+      if(r2 && r2.ok){ _campState.current = r2.campaign; _campState.preview = r2.preview; campRenderEdit(); }
+      return;
+    }
+    totalSent += r.batch.sent;
+    totalFailed += r.batch.failed;
+    totalSkipped += r.batch.skipped;
+    remaining = r.remaining;
+    if(r.finished || r.remaining === 0) break;
+    // Small breather between batches
+    await new Promise(res => setTimeout(res, 200));
+    // Safety: max 100 iterations (= 2500 emails per click) to prevent infinite loop
+    if(iter > 100){
+      if(progressEl) progressEl.innerHTML += '<div style="color:var(--tx3);margin-top:10px;font-size:12px">已发送 2500 封，请点「继续发送」继续剩余。</div>';
+      break;
+    }
+  }
+  _campState.sending = false;
+  if(progressEl){
+    progressEl.innerHTML = '<div style="font-size:15px;color:var(--grn);font-weight:700;margin-bottom:8px">✓ 本次发送完成</div>' +
+      '<div style="font-family:\'JetBrains Mono\',monospace;font-size:13.5px;color:var(--tx2)"><span style="color:var(--grn)">已发送: '+totalSent+'</span> · <span style="color:#f6536a">失败: '+totalFailed+'</span> · <span style="color:var(--tx3)">跳过: '+totalSkipped+'</span>'+(remaining>0?' · 剩余: '+remaining:'')+'</div>';
+  }
+  // Refresh campaign state
+  const r3 = await newsApi('/api/admin/campaigns/' + _campState.current.id);
+  if(r3 && r3.ok){ _campState.current = r3.campaign; _campState.preview = r3.preview; }
+}
+
+// Legacy helper still exposed for the dashboard top-bar button (kept for backward compat)
+function xpNewsletterEmails(){
+  go('news');
 }
 
 function xpSitemap(){
@@ -1253,6 +1851,9 @@ function render(){
     case'wallets':content=rExs('wallet');break;
     case'exs':content=rExs();break; // legacy, shows all
     case'access':content=rAccess();break;
+    case'news':content=rNews();break;
+    case'camp':content=rCampList();break;
+    case'campedit':content=rCampEdit(r.id);break;
     case'coins':content=rCoins();break;
     case'links':content=rLinks();break;
     case'data':content=rDataPage();break;

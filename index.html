@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="Cache-Control" content="public, max-age=0, must-revalidate">
-<meta name="build-id" content="20260518-html-articles-fix">
+<meta name="build-id" content="20260518-multilang-campaigns">
 
 <!-- ============================================================
      ANALYTICS — Microsoft Clarity (free heatmaps + session recordings)
@@ -1990,12 +1990,11 @@ function trackCtaClick(exId, position, code){
 }
 
 // ============================================================
-// NEWSLETTER EMAIL CAPTURE — graceful with or without backend
-// - If FORM_ENDPOINT is set (Formspree/formsubmit.co/Mailerlite), POST there
-// - Otherwise, save to localStorage and show success
-// - You can later batch-export from localStorage when setting up email service
+// NEWSLETTER EMAIL CAPTURE — uses Cloudflare D1 backend via /api/subscribe
 // ============================================================
-window.NEWSLETTER_ENDPOINT = ''; // TODO: paste your Formspree/etc endpoint here, e.g. 'https://formspree.io/f/xxxxxxxx'
+// Default: POSTs to same-origin /api/subscribe (production)
+// If you want to use Formspree/Mailerlite instead, set window.NEWSLETTER_ENDPOINT to your endpoint URL
+window.NEWSLETTER_ENDPOINT = ''; // empty = use built-in /api/subscribe
 
 function subscribeEmail(e){
   if(e) e.preventDefault();
@@ -2012,28 +2011,43 @@ function subscribeEmail(e){
   if(typeof gtag === 'function'){
     gtag('event','newsletter_subscribe',{email_domain: email.split('@')[1]||''});
   }
-  const ep = window.NEWSLETTER_ENDPOINT;
-  if(ep){
-    // POST to configured backend
-    fetch(ep, {
-      method:'POST',
-      headers:{'Content-Type':'application/json','Accept':'application/json'},
-      body: JSON.stringify({email, source:'crh-newsletter', lang, route:location.pathname})
-    }).then(r=>{
-      if(r.ok){
-        if(msgEl){msgEl.textContent='✓ '+(tr('news_ok')||'订阅成功！请检查你的邮箱确认');msgEl.className='news-msg ok'}
-        inputEl.value='';
-      }else{
-        throw new Error('HTTP '+r.status);
-      }
-    }).catch(()=>{
-      // Network failure or backend not configured — fall back to localStorage
-      _newsletterLocalSave(email, msgEl, inputEl);
-    });
-  }else{
-    // No backend configured — save locally for manual export later
+
+  // Determine endpoint: custom override OR built-in /api/subscribe
+  const ep = window.NEWSLETTER_ENDPOINT || '/api/subscribe';
+  const payload = JSON.stringify({email, source:'crh-newsletter', lang, route:location.pathname});
+
+  // Disable button + show loading state
+  const btnEl = document.querySelector('.news-card button[type="submit"]');
+  const originalBtn = btnEl ? btnEl.textContent : '';
+  if(btnEl){btnEl.disabled=true;btnEl.textContent='...'}
+
+  fetch(ep, {
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body: payload
+  }).then(r => r.json().then(data => ({ok: r.ok, data, status: r.status})))
+  .then(({ok, data, status}) => {
+    if(ok && data.ok){
+      const msg = data.already
+        ? '✓ ' + (tr('news_already')||'你已经订阅过了，谢谢！')
+        : data.confirmRequired
+          ? '📬 ' + (tr('news_check')||'请查收邮件确认订阅')
+          : '✓ ' + (tr('news_ok')||'订阅成功！');
+      if(msgEl){msgEl.textContent=msg;msgEl.className='news-msg ok'}
+      inputEl.value='';
+    } else if(status === 429){
+      if(msgEl){msgEl.textContent='⚠ '+(tr('news_rate_limit')||'订阅太频繁，请稍后再试');msgEl.className='news-msg err'}
+    } else {
+      throw new Error(data.error || 'unknown');
+    }
+  })
+  .catch(() => {
+    // Network failure or backend unavailable — fall back to localStorage so user doesn't see "failed"
     _newsletterLocalSave(email, msgEl, inputEl);
-  }
+  })
+  .finally(() => {
+    if(btnEl){btnEl.disabled=false;btnEl.textContent=originalBtn}
+  });
   return false;
 }
 function _newsletterLocalSave(email, msgEl, inputEl){
