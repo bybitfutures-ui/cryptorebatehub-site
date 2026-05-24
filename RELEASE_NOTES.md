@@ -1,82 +1,55 @@
-# CryptoRebateHub v2026-05-18-funding-unlocks-reviews-polish
+# CryptoRebateHub v2026-05-24 (tools-reorganized-pnl-liq)
 
-Build ID: `20260518-funding-unlocks-reviews-polish`
+Build ID: `20260524-tools-reorganized-pnl-liq`
 
-## 🎁 本次更新（4 个大特性）
+## 🎯 本次更新（4 大改进）
 
-### 1. 🔥 实时资金费率监控（`/tools/funding-rates`）
-- 实时抓取 OKX / Binance / Bybit / Hyperliquid 4 大交易所
-- 20 个主流币种永续合约资金费率
-- 自动检测跨交易所套利机会（差价 ≥0.0003 标记 ⚡ ARB）
-- 客户端 fetch，每 60s 自动刷新
-- 4 语言完整本地化（zh / zh-TW / en / ko）
-- **SEO 目标**: "binance funding rate"（月搜 18,000+）, "crypto arbitrage", "perpetual funding"
+### 1. 💰 合约收益计算器（`/tools/pnl-calculator`） — NEW
+- 多/空 + 入场价/出场价 + 仓位 + 杠杆 + 手续费
+- 输出：毛利 / 总手续费 / 净利 / ROI / ROE
+- 实时计算（输入即更新）
+- **SEO**: "futures pnl calculator" (月搜 5,400+), "合约收益计算器"
 
-### 2. 📅 代币解锁日历（`/tools/token-unlocks`）
-- 16 个未来 90 天主流代币解锁（ARB/OP/SUI/APT/PYTH/EIGEN 等）
-- 按分类筛选（L1/L2/DeFi/AI/Gaming）
-- 高影响 ≥10% 红色徽章 + 中影响 ≥5% 黄色徽章
-- 引导到 Hyperliquid / Bybit 做空对冲
-- **SEO 目标**: "token unlock calendar"（月搜 8,000+）, "arb unlock", "sui unlock"
+### 2. 🚨 爆仓价格计算器（`/tools/liquidation-calculator`） — NEW
+- 多/空 + 入场价 + 杠杆滑块 + 维持保证金率
+- 输出：爆仓价 + 安全距离 % + 风险等级（6 档）+ 可视化条
+- 配套表：1x-100x 杠杆参考表
+- **SEO**: "liquidation price calculator" (月搜 8,100+), "爆仓价格计算器"
 
-### 3. 📚 4 篇深度评测文章（3000+ 字 × 4 语言）
-- **#3019 OKX 完整评测**（5,779 字 zh / 7,592 chars en）
-- **#3020 Binance 完整评测**（5,975 字 zh / 7,714 chars en）
-- **#3021 Bybit 完整评测**（5,583 字 zh / 6,710 chars en）
-- **#3022 Hyperliquid 完整评测**（5,661 字 zh / 7,603 chars en）
-- 结构: 5 秒结论表 + 背景 + 费率分析 + 安全深挖 + 优劣势 + 适合人群 + FAQ + 最终结论
-- **SEO 目标**: "okx review"（月搜 27,000+）, "binance review 2026", "bybit review", "is okx safe"
+### 3. ❌ 手续费计算器（不加 — 重复）
+- 与现有"返佣计算器"和"费率实时对比"功能重叠
+- 用户提示"如有重复可以不加" → 已跳过避免冗余
 
-### 4. 🎨 整体优化
-- 文章 HTML 渲染智能检测（修复 3 月文章显示原始代码 bug）
-- Newsletter 系统 D1 + 多语言群发完整链路
-- 后台登录 PAGES 防御性代码（防止 key 不匹配崩溃）
-- 顶部导航 mega-dropdown 加入 5 个工具（含 2 个 NEW 标签）
-- 工具索引页 5 卡片（HOT/NEW 标签）
-- Sitemap 49 URL，含所有新页面
-- 翻译完整性 434 个 key，4 语言，0 missing
-- 重复翻译清理（节省 11 KB）
+### 4. 🎨 网站布局重新规划
+
+**Tools Index 页**：从混乱 5 卡 → 整齐 **4 类 9 工具**
+```
+🧮 计算器 (4)          📊 实时数据 (2)        📅 投资工具 (2)      🎯 决策助手 (1)
+├─ 返佣计算器 HOT      ├─ 资金费率监控 NEW    ├─ Portfolio 追踪    └─ 交易所匹配向导
+├─ 合约收益 NEW        └─ 费率实时对比        └─ 代币解锁日历
+├─ 爆仓价格 NEW
+└─ 税务计算器
+```
+
+**顶部 mega-dropdown**：清理重复，从 3 列 2 行混乱 → **3 列分类整齐布局**
+- 删除了重复的 funding-rates 和 token-unlocks 项（之前各出现 2 次）
+- 重新按 4 类组织
+
+**Funding Rate 页**：删除重复"💡 Tip 提示框"
+- 之前：黄色 Tip 框 + 📚 解释区都讲资金费率含义 → 信息冗余
+- 现在：只保留下方完整解释区，节省垂直空间
 
 ## ✅ 完整验证
 
 ```
-✓ JS:               所有 4 个脚本 + 14 个 Function 文件 0 errors
-✓ Translations:     434 keys × 4 langs · 0 missing
-✓ Schemas:          5/5 valid (Organization, WebSite, BreadcrumbList, ItemList, FAQPage)
-✓ Sensitive words:  0 ("翻墙"/"VPN"/"防屏蔽"/"科学上网" 全部 0)
-✓ Real URLs:        HYPEKR / web3.binance.com / web3.okx.com 全部 OK
-✓ Articles:         22 篇（含 4 篇深度评测 × 4 语言）
-✓ Sitemap:          49 URLs · 含 2 个新工具 + 4 篇评测
-✓ Build ID:         20260518-funding-unlocks-reviews-polish
-```
-
-## 📊 文件清单（17 个）
-
-```
-index.html                                   491 KB · 4 个脚本 0 errors
-mgr-7a9f3c2e.html                            140 KB · 含订阅+群发 admin
-articles.json                                329 KB · 22 篇文章
-sitemap.xml                                   38 KB · 49 URLs
-
-functions/
-  [[path]].js                                SPA fallback
-  _lib.js                                    crypto/auth/limit/log
-  _email.js                                  Resend 集成 + 4 lang 模板
-  api/subscribe.js                           前台订阅（限流 + IP hash）
-  api/confirm/[token].js                     双重确认
-  api/admin/subscribers.js                   订阅者 CRUD
-  api/admin/stats.js                         统计
-  api/admin/export.js                        CSV 导出
-  api/admin/campaigns.js                     邮件列表/新建
-  api/admin/campaigns/[id].js                邮件 CRUD
-  api/admin/campaigns/[id]/_shared.js        语言匹配 + 渲染
-  api/admin/campaigns/[id]/test.js           测试发送
-  api/admin/campaigns/[id]/send.js           批量群发
-  u/[token].js                               退订页
-
-db/
-  schema.sql                                 5 张表
-  README.md                                  完整部署指南
+✓ JS:               4 个脚本 + 14 Function 文件 · 0 errors
+✓ Translations:     599 keys × 4 langs · 0 missing (新增 328 keys)
+✓ Schemas:          5/5 valid (Org, WebSite, Breadcrumb, ItemList, FAQ)
+✓ Sensitive words:  0 (翻墙/VPN/防屏蔽/科学上网 全 0)
+✓ Real URLs:        HYPEKR/web3.binance.com/web3.okx.com/8DXZXGZ 全部 OK
+✓ Tools:            9 个 (原 7 + 新 2)
+✓ Sitemap:          63 URLs (原 49 + 新增 14)
+✓ Build:            20260524-tools-reorganized-pnl-liq
 ```
 
 ## 🚀 部署
@@ -84,15 +57,16 @@ db/
 ```bash
 cd /Users/admin/Desktop/cryptorebatehub-site
 git add -A
-git commit -m "v2026-05-18 funding+unlocks+reviews+polish"
+git commit -m "v2026-05-24 reorganize tools + add pnl/liq calculators"
 git push origin main
 ```
 
-Cloudflare 自动部署，1-2 分钟后访问验证：
-- `/tools/funding-rates` — 资金费率监控
-- `/tools/token-unlocks` — 解锁日历
-- `/article/okx-review-2026-complete` — OKX 评测
-- `/article/binance-review-2026-complete` — Binance 评测
-- `/article/bybit-review-2026-complete` — Bybit 评测
-- `/article/hyperliquid-review-2026-complete` — Hyperliquid 评测
-- 后台 `/mgr-7a9f3c2e` — 12 个菜单（含订阅管理 + 邮件群发）
+Cloudflare 自动部署 1-2 分钟。然后清缓存（Caching → Purge Everything）。
+
+## 🧪 部署后必测页面
+
+- [ ] `/tools` → 看到 4 类目分组 + 9 个工具
+- [ ] `/tools/pnl-calculator` → 输入入场/出场/杠杆 → 实时算 P&L
+- [ ] `/tools/liquidation-calculator` → 滑动杠杆 → 爆仓价动态变化
+- [ ] `/tools/funding-rates` → 不再有黄色 Tip 框（信息整合到下方）
+- [ ] 顶部 "🛠 实用工具" 鼠标悬停 → 3 列分类，无重复
