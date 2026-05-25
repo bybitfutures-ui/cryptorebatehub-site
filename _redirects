@@ -1,0 +1,17 @@
+# Cloudflare Pages SPA fallback
+# Without this file, /markets etc. would return 404
+
+# /go/<id> affiliate redirects (rewrites to /index.html, SPA handles)
+/go/*  /index.html  200
+
+# Admin must serve directly (not SPA)
+/mgr-7a9f3c2e.html  /mgr-7a9f3c2e.html  200
+
+# All static asset files served directly
+/articles.json  /articles.json  200
+/sitemap.xml  /sitemap.xml  200
+/robots.txt  /robots.txt  200
+/indexnow-tool.html  /indexnow-tool.html  200
+
+# All other URLs → index.html (SPA fallback) with HTTP 200 ← THE KEY FIX
+/*  /index.html  200
