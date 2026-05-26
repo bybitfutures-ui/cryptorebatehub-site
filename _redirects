@@ -12,6 +12,7 @@
 /sitemap.xml  /sitemap.xml  200
 /robots.txt  /robots.txt  200
 /indexnow-tool.html  /indexnow-tool.html  200
+/j38dduk5szf1eqf77h39j39lv1c39sew.txt  /j38dduk5szf1eqf77h39j39lv1c39sew.txt  200
 
 # All other URLs → index.html (SPA fallback) with HTTP 200 ← THE KEY FIX
 /*  /index.html  200

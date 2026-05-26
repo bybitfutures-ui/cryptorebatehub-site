@@ -76,6 +76,12 @@
   Cache-Control: public, max-age=300, s-maxage=300, must-revalidate
   Content-Type: text/plain; charset=utf-8
 
+# IndexNow API key verification file (must be served as plain text)
+/j38dduk5szf1eqf77h39j39lv1c39sew.txt
+  Cache-Control: public, max-age=86400, s-maxage=86400
+  Content-Type: text/plain; charset=utf-8
+  X-Robots-Tag: noindex
+
 # Optional sitemap variants (sitemap-news.xml, sitemap-articles.xml etc.)
 /sitemap-*.xml
   Cache-Control: public, max-age=300, s-maxage=300, must-revalidate
