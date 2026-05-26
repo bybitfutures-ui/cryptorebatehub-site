@@ -6,7 +6,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
-<meta name="build-id" content="20260525-launch-final">
+<meta name="build-id" content="20260526-schema-fix">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>Management · CryptoRebateHub</title>
@@ -247,7 +247,7 @@ setInterval(checkScheduled,60*1000); // Check every 60s for scheduled publishing
 setInterval(()=>syncTime(1),30*60*1000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden){checkDayChange();checkScheduled();syncTime(1)}});
 
-const PAGES={dash:{ic:'📊',n:'仪表盘'},arts:{ic:'📝',n:'文章管理'},cex:{ic:'🏛',n:'CEX 交易所'},dex:{ic:'⛓',n:'DEX 交易所'},wallets:{ic:'💼',n:'Web3 钱包'},access:{ic:'🌐',n:'入口大全'},news:{ic:'📧',n:'订阅管理'},camp:{ic:'📨',n:'邮件群发'},coins:{ic:'💰',n:'币种行情'},links:{ic:'🔗',n:'链接中心'},data:{ic:'💾',n:'数据备份'},settings:{ic:'⚙',n:'网站设置'}};
+const PAGES={dash:{ic:'📊',n:'仪表盘'},arts:{ic:'📝',n:'文章管理'},cex:{ic:'🏛',n:'CEX 交易所'},dex:{ic:'⛓',n:'DEX 交易所'},wallets:{ic:'💼',n:'Web3 钱包'},access:{ic:'🌐',n:'入口大全'},news:{ic:'📧',n:'订阅管理'},camp:{ic:'📨',n:'邮件群发'},coins:{ic:'💰',n:'币种行情'},links:{ic:'🔗',n:'链接中心'},indexnow:{ic:'🚀',n:'IndexNow'},data:{ic:'💾',n:'数据备份'},settings:{ic:'⚙',n:'网站设置'}};
 
 function gr(){
   const h=location.hash.slice(1)||'';
@@ -943,6 +943,235 @@ function saveLinks(){
   });
   D.links.friends=D.links.friends.filter(f=>f.url);
   sv(true);tst('✓ 链接已保存');
+}
+
+// ═════════════════════════════════════════════════════════════
+// IndexNow Monitor — Admin Widget
+// ═════════════════════════════════════════════════════════════
+// Reads Worker URL + Trigger Secret from localStorage.
+// Fetches /status, /history, and can manually /trigger.
+
+function rIndexNow(){
+  // Load config from localStorage (or D.indexnowCfg if stored in main data)
+  const cfg = inLoadCfg();
+  const configured = cfg.workerUrl && cfg.triggerSecret;
+
+  return rTopBar('🚀 IndexNow 监控','搜索引擎自动推送 + GA4 跟踪',
+    configured ?
+      '<button class="b b-g" onclick="inTrigger()">▶ 立即推送</button> '+
+      '<button class="b b-o" onclick="inRefresh()">🔄 刷新</button> '+
+      '<button class="b b-o" onclick="inOpenConfig()">⚙ 配置</button>'
+    : ''
+  ) + (configured ? rIndexNowContent(cfg) : rIndexNowSetup());
+}
+
+function rIndexNowSetup(){
+  return '<div style="background:linear-gradient(135deg,rgba(93,160,255,.12),rgba(167,139,250,.05));border:1px solid var(--bd2);border-radius:14px;padding:28px;margin-top:18px">'+
+    '<h2 style="margin:0 0 12px;font-size:20px">🛠 首次配置 IndexNow Worker</h2>'+
+    '<p style="color:var(--tx2);font-size:14px;line-height:1.6;margin-bottom:18px">请先按照 <code style="background:var(--bg3);padding:2px 6px;border-radius:4px">docs/INDEXNOW_SETUP.md</code> 部署 Cloudflare Worker，然后在下方填入 URL 和密码。</p>'+
+    '<div style="background:var(--bg2);border:1px solid var(--bd);border-radius:10px;padding:18px">'+
+      '<div style="margin-bottom:14px">'+
+        '<label style="display:block;font-size:11.5px;color:var(--tx3);text-transform:uppercase;letter-spacing:.6px;font-weight:700;margin-bottom:6px">Worker URL</label>'+
+        '<input id="inCfgUrl" type="text" placeholder="https://crh-indexnow-cron.YOUR.workers.dev" style="width:100%;padding:10px 14px;background:var(--bg);border:1px solid var(--bd2);color:var(--tx);border-radius:8px;font-family:\'JetBrains Mono\',monospace;font-size:13px;box-sizing:border-box">'+
+      '</div>'+
+      '<div style="margin-bottom:14px">'+
+        '<label style="display:block;font-size:11.5px;color:var(--tx3);text-transform:uppercase;letter-spacing:.6px;font-weight:700;margin-bottom:6px">Trigger Secret</label>'+
+        '<input id="inCfgKey" type="password" placeholder="你在 wrangler secret put TRIGGER_SECRET 时设的密码" style="width:100%;padding:10px 14px;background:var(--bg);border:1px solid var(--bd2);color:var(--tx);border-radius:8px;font-family:\'JetBrains Mono\',monospace;font-size:13px;box-sizing:border-box">'+
+      '</div>'+
+      '<button class="b b-g" onclick="inSaveCfg()">💾 保存配置</button>'+
+      ' <button class="b b-o" onclick="inTestConnection()">🧪 测试连接</button>'+
+    '</div>'+
+    '<div style="margin-top:18px;padding:13px 16px;background:rgba(240,180,30,.08);border:1px solid rgba(240,180,30,.22);border-radius:8px;font-size:12.5px;color:var(--tx2);line-height:1.6">'+
+      '⚠ 配置保存在浏览器 localStorage，<strong>不会上传到服务器</strong>。换浏览器或清缓存后需要重新输入。'+
+    '</div>'+
+  '</div>';
+}
+
+function rIndexNowContent(cfg){
+  return '<div id="inStats"><div style="padding:60px 30px;text-align:center;color:var(--tx3)"><div style="font-size:42px;margin-bottom:14px;opacity:.5">⏳</div>正在加载数据...</div></div>'+
+    '<div id="inHistory"></div>'+
+    '<input type="hidden" id="inCfgUrlHidden" value="'+es(cfg.workerUrl)+'">'+
+    '<input type="hidden" id="inCfgKeyHidden" value="'+es(cfg.triggerSecret)+'">';
+}
+
+// ─── Config storage (localStorage) ───
+function inLoadCfg(){
+  try{
+    const raw = localStorage.getItem('crh_indexnow_cfg');
+    if(!raw) return {workerUrl:'', triggerSecret:''};
+    const p = JSON.parse(raw);
+    return {workerUrl:p.workerUrl||'', triggerSecret:p.triggerSecret||''};
+  }catch(e){ return {workerUrl:'', triggerSecret:''}; }
+}
+function inSaveCfg(){
+  const url = ($('#inCfgUrl')?.value||'').trim();
+  const key = ($('#inCfgKey')?.value||'').trim();
+  if(!url || !key){ tst('请填写 URL 和 Secret', 1); return; }
+  if(!/^https:\/\//.test(url)){ tst('URL 必须以 https:// 开头', 1); return; }
+  localStorage.setItem('crh_indexnow_cfg', JSON.stringify({workerUrl:url.replace(/\/+$/,''), triggerSecret:key}));
+  tst('✓ 配置已保存');
+  setTimeout(render, 500);
+}
+function inOpenConfig(){
+  const cfg = inLoadCfg();
+  if(!confirm('修改配置后会重新加载页面，确定继续？')) return;
+  localStorage.removeItem('crh_indexnow_cfg');
+  setTimeout(render, 100);
+}
+
+// ─── Test connection ───
+async function inTestConnection(){
+  const url = ($('#inCfgUrl')?.value||'').trim();
+  const key = ($('#inCfgKey')?.value||'').trim();
+  if(!url){ tst('请先填写 URL', 1); return; }
+  tst('测试中...');
+  try{
+    const r = await fetch(url.replace(/\/+$/,'')+'/status', {method:'GET'});
+    if(r.ok){ tst('✓ Worker 在线'); }
+    else if(r.status === 403){ tst('Worker 在线但密码错误', 1); }
+    else{ tst('Worker 返回 HTTP '+r.status, 1); }
+  }catch(e){ tst('连接失败: '+e.message, 1); }
+}
+
+// ─── Fetch status + history ───
+async function inRefresh(){
+  const cfg = inLoadCfg();
+  if(!cfg.workerUrl) return;
+  const statsEl = $('#inStats');
+  const histEl = $('#inHistory');
+  if(!statsEl) return;
+  statsEl.innerHTML = '<div style="padding:40px 30px;text-align:center;color:var(--tx3)">⏳ 加载中...</div>';
+
+  try{
+    // Parallel fetch
+    const [statusR, historyR] = await Promise.all([
+      fetch(cfg.workerUrl+'/status'),
+      fetch(cfg.workerUrl+'/history')
+    ]);
+    const status = await statusR.json().catch(()=>({}));
+    const history = await historyR.json().catch(()=>[]);
+    inRenderStats(status, history);
+    inRenderHistory(history);
+  }catch(e){
+    statsEl.innerHTML = '<div style="padding:40px;text-align:center;color:var(--red)">⚠ 加载失败: '+es(e.message)+'</div>';
+  }
+}
+
+function inRenderStats(status, history){
+  const statsEl = $('#inStats');
+  if(!statsEl) return;
+
+  const total = Array.isArray(history) ? history.length : 0;
+  const succ = total ? history.filter(h=>h.success).length : 0;
+  const successRate = total ? (succ/total*100).toFixed(0) : '—';
+  const lastSuccess = total ? history.find(h=>h.success) : null;
+  const lastUrlCount = status?.urlCount || (lastSuccess?.urlCount || 0);
+  const lastTime = status?.timestamp || (lastSuccess?.timestamp);
+  const lastTimeText = lastTime ? inFmtTime(lastTime) : '—';
+  const lastSuccBool = status?.success;
+  const lastSuccText = lastSuccBool === true ? '✓ 成功' : lastSuccBool === false ? '✗ 失败' : '—';
+  const lastSuccColor = lastSuccBool === true ? 'var(--grn)' : lastSuccBool === false ? 'var(--red)' : 'var(--tx3)';
+  const lastErr = status?.error;
+  const lastTrigger = status?.triggerType;
+  const triggerText = ({scheduled:'⏰ Cron 定时', manual:'👆 手动', post_deploy:'🚀 部署后'})[lastTrigger] || lastTrigger || '—';
+
+  statsEl.innerHTML = '<div class="dash" style="margin-bottom:18px">'+
+    '<div class="dc"><div class="dc-l">上次状态</div><div class="dc-v" style="font-size:20px;color:'+lastSuccColor+'">'+lastSuccText+'</div><div class="dc-s">'+es(triggerText)+'</div></div>'+
+    '<div class="dc"><div class="dc-l">上次推送</div><div class="dc-v" style="font-size:18px">'+es(lastTimeText)+'</div><div class="dc-s">'+(status?.durationMs?status.durationMs+'ms · ':'')+lastUrlCount+' 个 URL</div></div>'+
+    '<div class="dc"><div class="dc-l">总推送次数</div><div class="dc-v" style="color:var(--blu)">'+total+'</div><div class="dc-s">最近 30 次记录</div></div>'+
+    '<div class="dc"><div class="dc-l">成功率</div><div class="dc-v" style="color:'+(succ===total?'var(--grn)':succ/total>0.8?'var(--yel)':'var(--red)')+'">'+successRate+(typeof successRate==='string'?'':'%')+'</div><div class="dc-s">'+succ+'/'+total+' 成功</div></div>'+
+  '</div>'+
+  (lastErr ? '<div class="tip warn" style="margin-bottom:18px"><strong>⚠ 上次错误：</strong> '+es(lastErr)+'</div>' : '');
+}
+
+function inRenderHistory(history){
+  const el = $('#inHistory');
+  if(!el) return;
+  if(!Array.isArray(history) || history.length === 0){
+    el.innerHTML = '<div style="background:var(--bg2);border:1px dashed var(--bd2);border-radius:12px;padding:48px 30px;text-align:center;color:var(--tx3)">'+
+      '<div style="font-size:38px;margin-bottom:12px;opacity:.5">📭</div>'+
+      '<div>还没有推送历史</div>'+
+      '<div style="font-size:12px;margin-top:6px">点击右上角 "立即推送" 触发第一次</div>'+
+    '</div>';
+    return;
+  }
+  let html = '<div style="background:var(--bg2);border:1px solid var(--bd);border-radius:12px;overflow:hidden">'+
+    '<div style="padding:13px 18px;border-bottom:1px solid var(--bd);background:var(--bg3);display:flex;justify-content:space-between;align-items:center">'+
+      '<div style="font-size:13px;font-weight:700">📜 最近 '+history.length+' 次推送</div>'+
+      '<div style="font-size:11px;color:var(--tx3)">数据来自 Cloudflare Worker KV</div>'+
+    '</div>'+
+    '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:13px;min-width:680px">'+
+    '<thead><tr style="background:var(--bg3);border-bottom:1px solid var(--bd)">'+
+      '<th style="padding:10px 14px;text-align:left;font-size:10.5px;color:var(--tx3);text-transform:uppercase;letter-spacing:.5px;font-weight:700">时间</th>'+
+      '<th style="padding:10px 14px;text-align:center;font-size:10.5px;color:var(--tx3);text-transform:uppercase;letter-spacing:.5px;font-weight:700">状态</th>'+
+      '<th style="padding:10px 14px;text-align:left;font-size:10.5px;color:var(--tx3);text-transform:uppercase;letter-spacing:.5px;font-weight:700">触发类型</th>'+
+      '<th style="padding:10px 14px;text-align:right;font-size:10.5px;color:var(--tx3);text-transform:uppercase;letter-spacing:.5px;font-weight:700">URL 数</th>'+
+      '<th style="padding:10px 14px;text-align:right;font-size:10.5px;color:var(--tx3);text-transform:uppercase;letter-spacing:.5px;font-weight:700">耗时</th>'+
+      '<th style="padding:10px 14px;text-align:left;font-size:10.5px;color:var(--tx3);text-transform:uppercase;letter-spacing:.5px;font-weight:700">错误</th>'+
+    '</tr></thead><tbody>';
+
+  for(const h of history){
+    const sCol = h.success ? 'var(--grn)' : 'var(--red)';
+    const sIc = h.success ? '✓' : '✗';
+    const trig = ({scheduled:'⏰ Cron', manual:'👆 手动', post_deploy:'🚀 部署后'})[h.triggerType] || h.triggerType || '—';
+    html += '<tr style="border-bottom:1px solid var(--bd)">'+
+      '<td style="padding:10px 14px;color:var(--tx2);font-family:\'JetBrains Mono\',monospace;font-size:12px">'+es(inFmtTime(h.timestamp))+'</td>'+
+      '<td style="padding:10px 14px;text-align:center"><span style="color:'+sCol+';font-weight:700">'+sIc+'</span></td>'+
+      '<td style="padding:10px 14px;font-size:12.5px">'+es(trig)+'</td>'+
+      '<td style="padding:10px 14px;text-align:right;font-family:\'JetBrains Mono\',monospace">'+(h.urlCount||0)+'</td>'+
+      '<td style="padding:10px 14px;text-align:right;font-family:\'JetBrains Mono\',monospace;color:var(--tx3)">'+(h.durationMs||0)+'ms</td>'+
+      '<td style="padding:10px 14px;font-size:11.5px;color:var(--red)">'+(h.error?es(h.error.slice(0,80)):'')+'</td>'+
+    '</tr>';
+  }
+  html += '</tbody></table></div></div>'+
+    '<div style="margin-top:18px;padding:16px 20px;background:var(--bg2);border:1px solid var(--bd);border-radius:10px;font-size:13px;line-height:1.7;color:var(--tx2)">'+
+      '<div style="font-weight:700;color:var(--tx);margin-bottom:8px">💡 提示</div>'+
+      '<div>• <strong>查看 GA4 跟踪</strong>：GA4 → Reports → Realtime，搜索事件 <code style="background:var(--bg3);padding:1px 5px;border-radius:3px">indexnow_push</code></div>'+
+      '<div>• <strong>查看 Worker 日志</strong>：Cloudflare Dashboard → Workers → crh-indexnow-cron → Logs</div>'+
+      '<div>• <strong>Cron 定时</strong>：每周一 09:00 UTC（北京时间周一下午 5 点）自动推送</div>'+
+    '</div>';
+  el.innerHTML = html;
+}
+
+function inFmtTime(iso){
+  if(!iso) return '—';
+  try{
+    const d = new Date(iso);
+    const now = Date.now();
+    const diff = now - d.getTime();
+    // Relative time for recent
+    if(diff < 60000) return '刚刚';
+    if(diff < 3600000) return Math.floor(diff/60000) + ' 分钟前';
+    if(diff < 86400000) return Math.floor(diff/3600000) + ' 小时前';
+    if(diff < 7*86400000) return Math.floor(diff/86400000) + ' 天前';
+    return d.toISOString().slice(0,16).replace('T',' ');
+  }catch(e){ return iso; }
+}
+
+// ─── Manual trigger ───
+async function inTrigger(){
+  const cfg = inLoadCfg();
+  if(!cfg.workerUrl){ tst('请先配置 Worker', 1); return; }
+  if(!confirm('立即触发一次 IndexNow 推送？\n（会向 Bing/Yandex/Seznam/Naver 提交所有 sitemap URL）')) return;
+
+  tst('正在推送...');
+  const startTime = Date.now();
+  try{
+    const url = cfg.workerUrl + '/trigger?key=' + encodeURIComponent(cfg.triggerSecret);
+    const r = await fetch(url, {method:'GET'});
+    const data = await r.json();
+    const duration = Date.now() - startTime;
+
+    if(data.success){
+      tst('✓ 成功推送 '+data.urlCount+' 个 URL ('+duration+'ms)');
+    }else{
+      tst('✗ 推送失败: '+(data.error||'未知错误'), 1);
+    }
+    // Refresh stats
+    setTimeout(inRefresh, 500);
+  }catch(e){
+    tst('请求失败: '+e.message, 1);
+  }
 }
 
 function rDataPage(){
@@ -1867,12 +2096,17 @@ function render(){
     case'campedit':content=rCampEdit(r.id);break;
     case'coins':content=rCoins();break;
     case'links':content=rLinks();break;
+    case'indexnow':content=rIndexNow();break;
     case'data':content=rDataPage();break;
     case'settings':content=rSettings();break;
     default:content=rDash();
   }
   $('#app').innerHTML=rLayout(content);
   updClock();
+  // Trigger IndexNow refresh after page renders (if on indexnow page)
+  if(r.p === 'indexnow' && inLoadCfg().workerUrl){
+    setTimeout(inRefresh, 100);
+  }
   window.scrollTo(0,0);
 }
 

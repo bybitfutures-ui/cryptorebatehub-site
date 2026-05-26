@@ -1,0 +1,17 @@
+name = "crh-indexnow-cron"
+main = "src/worker.js"
+compatibility_date = "2025-01-01"
+
+[triggers]
+crons = ["0 9 * * 1"]
+
+[observability]
+enabled = true
+
+# After: wrangler kv:namespace create "INDEXNOW_KV"
+# [[kv_namespaces]]
+# binding = "INDEXNOW_KV"
+# id = "your-kv-id-here"
+
+# Secrets via `wrangler secret put NAME`:
+# TRIGGER_SECRET, NOTIFY_WEBHOOK, GA4_MEASUREMENT_ID, GA4_API_SECRET
