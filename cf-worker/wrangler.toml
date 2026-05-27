@@ -9,9 +9,9 @@ crons = ["0 9 * * 1"]
 enabled = true
 
 # After: wrangler kv:namespace create "INDEXNOW_KV"
-# [[kv_namespaces]]
-# binding = "INDEXNOW_KV"
-# id = "your-kv-id-here"
+[[kv_namespaces]]
+binding = "INDEXNOW_KV"
+id = "71335fce12c14e97a6574e56161cce3a"
 
 # Secrets via `wrangler secret put NAME`:
 # TRIGGER_SECRET, NOTIFY_WEBHOOK, GA4_MEASUREMENT_ID, GA4_API_SECRET

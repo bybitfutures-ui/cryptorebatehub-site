@@ -82,6 +82,11 @@
   Content-Type: text/plain; charset=utf-8
   X-Robots-Tag: noindex
 
+# Open Graph image (used by social media + Schema.org)
+/og-image.png
+  Cache-Control: public, max-age=604800, s-maxage=604800
+  Content-Type: image/png
+
 # Optional sitemap variants (sitemap-news.xml, sitemap-articles.xml etc.)
 /sitemap-*.xml
   Cache-Control: public, max-age=300, s-maxage=300, must-revalidate

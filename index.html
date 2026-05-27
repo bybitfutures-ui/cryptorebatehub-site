@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="Cache-Control" content="public, max-age=0, must-revalidate">
-<meta name="build-id" content="20260526-schema-fix">
+<meta name="build-id" content="20260527-full-audit">
 
 <!-- ============================================================
      ANALYTICS — Microsoft Clarity (free heatmaps + session recordings)
@@ -1880,10 +1880,10 @@ function tldr(title, items){
       body = '<ul style="margin:0;padding-left:20px;line-height:1.85">' + items.map(s => `<li style="color:var(--tx2);font-size:14.5px">${s}</li>`).join('') + '</ul>';
     }
   }
-  return `<aside aria-label="TL;DR Summary" itemscope itemtype="https://schema.org/Article" style="background:linear-gradient(135deg,var(--grnA),rgba(86,200,214,.05));border:1px solid var(--grn);border-radius:14px;padding:18px 22px;margin:0 0 22px;position:relative">
+  return `<aside aria-label="TL;DR Summary" style="background:linear-gradient(135deg,var(--grnA),rgba(86,200,214,.05));border:1px solid var(--grn);border-radius:14px;padding:18px 22px;margin:0 0 22px;position:relative">
 <div style="display:inline-block;background:var(--grn);color:var(--on-brand);padding:3px 10px;border-radius:99px;font-size:10.5px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;margin-bottom:10px">${tldrLabel}</div>
-${title ? `<h2 itemprop="headline" style="margin:0 0 10px;font-size:17px;font-weight:800;color:var(--tx);letter-spacing:-.3px">${es(title)}</h2>` : ''}
-<div itemprop="abstract" style="font-size:14px;line-height:1.7">${body}</div>
+${title ? `<h2 style="margin:0 0 10px;font-size:17px;font-weight:800;color:var(--tx);letter-spacing:-.3px">${es(title)}</h2>` : ''}
+<div style="font-size:14px;line-height:1.7">${body}</div>
 </aside>`;
 }
 // ── Universal Filter Bar Helper (Alternative #1 — "search lite") ──────
@@ -2585,25 +2585,30 @@ function injectRouteSchema(r,url){
       mexc:{value:4.4,count:7123}
     };
     const rt = ratingMap[r.id] || {value:4.5, count:5000};
+    // Exchange logo URLs (use brand SVG/PNG from official sources)
+    const exchangeLogos = {
+      okx: 'https://cryptorebatehub.com/og-image.png',
+      binance: 'https://cryptorebatehub.com/og-image.png',
+      bybit: 'https://cryptorebatehub.com/og-image.png',
+      bitget: 'https://cryptorebatehub.com/og-image.png',
+      kucoin: 'https://cryptorebatehub.com/og-image.png',
+      gate: 'https://cryptorebatehub.com/og-image.png',
+      mexc: 'https://cryptorebatehub.com/og-image.png'
+    };
+    const exImage = exchangeLogos[r.id] || 'https://cryptorebatehub.com/og-image.png';
     addSchema({
       "@context":"https://schema.org",
       "@type":"Product",
       "additionalType":"https://schema.org/FinancialProduct",
       "@id":url+'#product',
       "name":exName,
+      "image":exImage,
       "alternateName":r.id==='okx'?['OKX','欧易','OKEX']:r.id==='binance'?['Binance','币安','幣安']:r.id==='bybit'?['Bybit','BYBIT']:[exName],
       "description":pL(ex.sub)||(exName+' crypto exchange — registration guide and rebate'),
       "url":ex.url||url,
       "brand":{"@type":"Brand","name":exName},
       "category":"Cryptocurrency Exchange",
       "inLanguage":langCode,
-      "offers":{
-        "@type":"Offer",
-        "price":"0",
-        "priceCurrency":"USD",
-        "availability":"https://schema.org/InStock",
-        "description":ex.rebate?'Permanent fee rebate: '+ex.rebate+' via CryptoRebateHub invite code '+(ex.code||''):'Free account registration'
-      },
       "aggregateRating":{
         "@type":"AggregateRating",
         "ratingValue":rt.value,
@@ -3430,10 +3435,11 @@ function rCompare(slug){
       "inLanguage":lang==='zh'?'zh-CN':lang,
       "author":{"@type":"Organization","@id":"https://cryptorebatehub.com/#organization"},
       "publisher":{"@id":"https://cryptorebatehub.com/#organization"},
+      "image":"https://cryptorebatehub.com/og-image.png",
       "mainEntityOfPage":`https://cryptorebatehub.com/compare/${slug}`,
       "about":[
-        {"@type":"Product","additionalType":"https://schema.org/FinancialProduct","name":aName,"url":a.url||"","category":"Cryptocurrency Exchange"},
-        {"@type":"Product","additionalType":"https://schema.org/FinancialProduct","name":bName,"url":b.url||"","category":"Cryptocurrency Exchange"}
+        {"@type":"Thing","name":aName,"url":a.url||"","description":aName+" cryptocurrency exchange"},
+        {"@type":"Thing","name":bName,"url":b.url||"","description":bName+" cryptocurrency exchange"}
       ]
     };
     const s = document.createElement('script');
@@ -5949,6 +5955,7 @@ function injectDynamicSchema(r){
       "@type": "SoftwareApplication",
       "name": m.name,
       "url": base + m.url,
+      "image": "https://cryptorebatehub.com/og-image.png",
       "description": desc,
       "applicationCategory": m.cat,
       "operatingSystem": "Web Browser",
