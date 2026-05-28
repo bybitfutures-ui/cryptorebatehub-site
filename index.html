@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="Cache-Control" content="public, max-age=0, must-revalidate">
-<meta name="build-id" content="20260527-full-audit">
+<meta name="build-id" content="20260528-table-fix">
 
 <!-- ============================================================
      ANALYTICS — Microsoft Clarity (free heatmaps + session recordings)
@@ -322,6 +322,10 @@ small,.sm{font-size:13px;color:var(--tx2);line-height:1.55}
 a{color:inherit;text-decoration:none;transition:color var(--ts)}
 /* === MONOSPACE === */
 code,kbd,pre,.mono{font-family:'JetBrains Mono','SF Mono','Cascadia Code',Menlo,Consolas,'Roboto Mono',monospace;font-feature-settings:"tnum","liga"}
+
+/* Global: ensure numeric table cells maintain alignment */
+table th,table td{vertical-align:middle;box-sizing:border-box}
+table th[style*="text-align:right"],table td[style*="text-align:right"]{font-variant-numeric:tabular-nums}
 code{background:var(--bg3);color:var(--grn);padding:2px 7px;border-radius:6px;border:1px solid var(--bd);font-size:.92em;font-weight:500}
 kbd{background:var(--bg3);color:var(--tx);padding:2px 8px;border-radius:5px;border:1px solid var(--bd2);font-size:.85em;font-weight:600;box-shadow:0 1px 0 var(--bd2)}
 /* === SELECTION === */
@@ -4264,12 +4268,22 @@ function iToolFundingRender(){
 
   const fmt = v => v == null || isNaN(v) ? '<span style="color:var(--tx3)">—</span>' :
     `<span style="color:${v > 0 ? '#2ecf90' : '#f6536a'};font-family:'JetBrains Mono',monospace;font-weight:700">${(v*100).toFixed(4)}%</span>`;
-  const cellBest = (val, isMax) => {
-    if(val == null) return '';
-    return `style="background:${isMax ? 'rgba(46,207,144,.07)' : 'rgba(246,83,106,.07)'}"`;
+  const cellStyle = (val, isMax) => {
+    const base = 'padding:13px 12px;text-align:right;font-variant-numeric:tabular-nums';
+    if(val == null) return base;
+    return base + ';background:' + (isMax ? 'rgba(46,207,144,.07)' : 'rgba(246,83,106,.07)');
   };
 
-  let html = `<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:13.5px;min-width:780px">
+  let html = `<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:13.5px;min-width:780px;table-layout:fixed">
+<colgroup>
+  <col style="width:14%">
+  <col style="width:15%">
+  <col style="width:15%">
+  <col style="width:15%">
+  <col style="width:15%">
+  <col style="width:14%">
+  <col style="width:12%">
+</colgroup>
 <thead><tr style="background:var(--bg3);border-bottom:2px solid var(--bd2)">
 <th style="padding:14px 16px;text-align:left;font-size:11px;color:var(--tx3);text-transform:uppercase;letter-spacing:.7px;font-weight:700">${tr('fund_coin')||'币种'}</th>
 <th style="padding:14px 12px;text-align:right;font-size:11px;color:#f0b41e;font-weight:700">Binance</th>
@@ -4290,12 +4304,12 @@ function iToolFundingRender(){
     const isMinH = r.h === r.min && r.h != null;
     const diffC = r.diff >= 0.0005 ? '#ff8a3a' : r.diff >= 0.0002 ? '#f0b41e' : 'var(--tx3)';
     html += `<tr style="border-bottom:1px solid var(--bd)">
-<td style="padding:13px 16px"><div style="font-weight:700;font-family:'JetBrains Mono',monospace;font-size:14px">${r.s}</div><div style="font-size:11px;color:var(--tx3)">/USDT</div></td>
-<td ${cellBest(r.b, isMaxB)} style="padding:13px 12px;text-align:right">${fmt(r.b)}</td>
-<td ${cellBest(r.by, isMaxBy)} style="padding:13px 12px;text-align:right">${fmt(r.by)}</td>
-<td ${cellBest(r.o, isMaxO)} style="padding:13px 12px;text-align:right">${fmt(r.o)}</td>
-<td ${cellBest(r.h, isMaxH)} style="padding:13px 12px;text-align:right">${fmt(r.h)}</td>
-<td style="padding:13px 12px;text-align:right;font-family:'JetBrains Mono',monospace;font-weight:800;color:${diffC};font-size:13px">${r.diff > 0 ? (r.diff*100).toFixed(4)+'%' : '—'}</td>
+<td style="padding:13px 16px;text-align:left"><div style="font-weight:700;font-family:'JetBrains Mono',monospace;font-size:14px">${r.s}</div><div style="font-size:11px;color:var(--tx3)">/USDT</div></td>
+<td style="${cellStyle(r.b, isMaxB)}">${fmt(r.b)}</td>
+<td style="${cellStyle(r.by, isMaxBy)}">${fmt(r.by)}</td>
+<td style="${cellStyle(r.o, isMaxO)}">${fmt(r.o)}</td>
+<td style="${cellStyle(r.h, isMaxH)}">${fmt(r.h)}</td>
+<td style="padding:13px 12px;text-align:right;font-family:'JetBrains Mono',monospace;font-weight:800;color:${diffC};font-size:13px;font-variant-numeric:tabular-nums">${r.diff > 0 ? (r.diff*100).toFixed(4)+'%' : '—'}</td>
 <td style="padding:13px 12px;text-align:right">${r.diff >= 0.0003 ? '<span style="background:rgba(255,138,58,.15);color:#ff8a3a;padding:3px 8px;border-radius:99px;font-size:10.5px;font-weight:800">⚡ ARB</span>' : ''}</td>
 </tr>`;
   }

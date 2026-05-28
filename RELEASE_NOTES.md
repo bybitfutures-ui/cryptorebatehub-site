@@ -1,140 +1,106 @@
-# 🔧 CryptoRebateHub · Full-Audit Release
+# 🔧 Build 20260528-table-fix · 资金费率表对齐 + 全站审计
 
-**Build**: `20260527-full-audit`
-**Priority**: 🚨 高 — 全站 bug 修复 + SEO/GEO 全面优化
+**Priority**: 🚨 高 — 关键 UX bug 修复
 
 ---
 
-## 🐛 修复的 3 个关键 Bug
+## 🐛 修复的关键 Bug
 
-### Bug 1: 🚨 **后台 IndexNow 子页面不显示**
+### 资金费率表列对齐错位（HTML 双 `style` 属性 bug）
 
-**根本原因**：
-我之前把 `indexnow:{ic:'🚀',n:'IndexNow'}` 加到了 `PAGES` 对象里，也加了路由 case，但 **忘了把它加到 `rLayout` 的菜单渲染列表里**！
+**用户截图**：
+```
+表头:   币种 |  Binance   |  Bybit    |   OKX    | Hyperliquid | 价差
+数据:   TON  | -0.0487%   0.0050%    -0.0248%   -0.0008%      0.0537% ⚡ARB
+                ↑ 数据值左对齐，与右对齐的表头错位
+```
 
-菜单不是从 PAGES 自动生成的，而是**硬编码**调用 `rNavItem('xxx', cur)` 一项一项渲染。所以即使路由能工作（直接访问 `#indexnow` 有效），左侧菜单看不到。
-
-**修复**：在 `rLayout()` 的"系统"分组里加上：
+**根本原因（line 4267-4270 旧代码）**：
 ```javascript
-'<div class="gp">系统</div>'+
-rNavItem('indexnow',cur)+   ← 新增
-rNavItem('data',cur)+
-rNavItem('settings',cur)+
+const cellBest = (val, isMax) => {
+  if(val == null) return '';
+  return `style="background:${isMax ? 'rgba(46,207,144,.07)' : 'rgba(246,83,106,.07)'}"`;
+};
+// 然后使用:
+<td ${cellBest(r.b, isMaxB)} style="padding:13px 12px;text-align:right">${fmt(r.b)}</td>
 ```
 
-### Bug 2: 🚨 **og-image.png 文件不存在（16 处引用全 404）**
+⚠️ **HTML 规范**：同一个元素只有**第一个** `style` 属性生效，第二个被静默丢弃。
 
-**严重影响**：
-- Open Graph meta 引用（首页 + 所有页面）
-- Schema.org `image` 字段引用（Product / Article / Organization）
-- Twitter Card 引用
+所以当 cellBest 返回 `style="background:..."` 时：
+- ✅ `background` 应用了
+- ❌ `padding` 和 `text-align:right` 被完全忽略 → 数据值变成默认左对齐
 
-Google 抓取 og-image.png 得到 404 后：
-- **Rich Results image 字段验证失败**（即使 schema 写了 `image`）
-- Twitter / Facebook 分享卡片无图
-- Search Console 报"无效图片"
+而表头一直是 `text-align:right` 正常工作 → **数据和表头错位**！
 
-**修复**：
-1. ✅ 生成 1200×630 品牌 OG 图（19 KB，深色背景 + 绿色品牌色 + URL）
-2. ✅ 添加到 `_redirects`（防 SPA fallback 拦截）
-3. ✅ 添加到 `_headers`（正确 Content-Type + 7 天缓存）
+### 修复方案
 
-⚠️ **建议**：后续把这个 OG 图换成你的设计师做的更精美版本。
+```javascript
+// 修复后：合并 style 到单一字符串，再使用 ${} 注入完整 style 内容
+const cellStyle = (val, isMax) => {
+  const base = 'padding:13px 12px;text-align:right;font-variant-numeric:tabular-nums';
+  if(val == null) return base;
+  return base + ';background:' + (isMax ? 'rgba(46,207,144,.07)' : 'rgba(246,83,106,.07)');
+};
+// 使用:
+<td style="${cellStyle(r.b, isMaxB)}">${fmt(r.b)}</td>
+```
 
-### Bug 3: ⚠️ **menu 缺漏可能再次发生**
+### 额外增强
 
-**预防性改进**：
-- 验证脚本现在会检查"PAGES 里所有项是否在 rLayout 菜单中"
-- 以后如果新加页面忘了 rNavItem，验证会报警
+1. **添加 `<colgroup>` 显式定义列宽** —— 防止 thead/tbody 列宽不同
+2. **`table-layout:fixed`** —— 锁定列宽，浏览器不再自动计算
+3. **`font-variant-numeric: tabular-nums`** —— 所有数字用等宽字体（如 `-0.0487%` 和 `0.0050%` 完全对齐）
+4. **全局 CSS 规则** —— 自动给所有右对齐的数字 td 加 tabular-nums
 
 ---
 
-## 🔍 全站 Schema 审计结果（已全绿）
+## 🔍 全站类似 bug 扫描结果
 
 ```
-[1] Schema @type 使用统计
-   24x ListItem · 10x Question/Answer · 7x BreadcrumbList · 
-   4x WebPage · 4x Thing · 3x Organization · 3x ImageObject ·
-   2x ItemList · 2x AggregateRating · 1x Product · 1x SoftwareApplication ·
-   1x Article · 1x HowTo · 1x WebSite · 1x FAQPage · 1x DefinedTerm · ...
-
-[2] Product 类型 image 字段
-   ✓ Exchange Product (line 2601) — image ✓ rating ✓
-   ✓ SoftwareApplication (line 5955) — image ✓ rating ✓
-   ✓ Article (line 3429) — image ✓ author ✓
-
-[3] Article 子模板 image 字段
-   ✓ injectArticleSchema (blog posts) — image, author, headline, publisher, dateModified
-
-[4] HowTo schema (注册教程)
-   ✓ image ✓ totalTime ✓ estimatedCost ✓
-
-[5] HTML 微数据 itemtype
-   ✓ 0 个 — 已清除 TL;DR 的 Article 微数据
-
-[6] FinancialProduct 使用
-   ✓ 主 @type 使用: 0
-   ✓ additionalType: 1 (语义保留，OK)
+[1] 重复 style 属性 bug              ✓  0 处
+[2] 模板返回 style 与元素 style 冲突  ✓  0 处
+[3] 表格列结构一致性                  ✓  10/10 表全部正确
+    Line 2922: cmp-table          5 <th> · 5 <td/row>  ✓
+    Line 3491: cmp-tbl            3 <th> · 3 <td/row>  ✓
+    Line 3807: 工具表             7 <th> · 7 <td/row>  ✓
+    Line 4074: 费率对比 (合并表头) 10 <th>·8 <td/row>  ✓ (rowspan/colspan 正确)
+    Line 4277: 资金费率 (已修复)    7 <th> · 7 <td/row>  ✓
+    Line 4429: 代币解锁           7 <th> · 7 <td/row>  ✓
+    Line 4737: 税务计算           6 <th> · 6 <td/row>  ✓
+    Line 5091: 词典               7 <th> · 7 <td/row>  ✓
+    Line 5351: 小型表             3 <th> · 3 <td/row>  ✓
 ```
+
+只有资金费率表有 bug，其他 9 个表都正常。
 
 ---
 
-## 📊 SEO + GEO 综合状态（全绿）
+## ✅ 全站综合审计结果
 
 ```
-[1] SEO 基础（11/11）
-   ✓ charset / viewport / canonical
-   ✓ description meta
-   ✓ og:title / og:description / og:image / og:url / og:type
-   ✓ twitter:card / twitter:image
-
-[2] GEO (AI 引擎优化)
-   ✓ TL;DR helper
-   ✓ 4 个工具页带 TL;DR
-   ✓ 6/6 AI crawler allowed (GPTBot/ClaudeBot/Perplexity/Apple/OAI/ChatGPT-User)
-
-[3] 性能
-   ✓ 9 个 preconnect (CoinGecko, Binance API, Bybit API, Hyperliquid API, 等)
-   ✓ 6 个 dns-prefetch
-   ✓ 1 个 preload (articles.json)
-
-[4] 可访问性
-   ✓ 0 个空按钮
-   ✓ 0 个无 alt 图片
-
-[5] 图片资源
-   ✓ og-image.png 现已存在 (19 KB · 1200×630)
-   ✓ Schema 图片引用全部指向存在的 URL
-   ✓ 所有本地资源引用都有对应文件
-```
-
----
-
-## 📋 验证全绿
-
-```
-✓ JS:                4 scripts · 480 KB · valid
-✓ Admin JS:          1 script · 128 KB · valid
-✓ 全部 PAGES 在菜单: ✓ (新加的检查)
-✓ Static schemas:    5/5 valid JSON-LD
-✓ Image fields:      Product/SoftwareApp/Article 全有
-✓ Translations:      634 keys × 4 langs · 0 missing
-✓ Real URLs:         HYPEKR/WLFI47/8DXZXGZ 全保留
-✓ Sensitive words:   0
-✓ Build ID:          20260527-full-audit
-```
-
----
-
-## 📦 文件大小
-
-```
-index.html:         643.9 KB
-mgr-7a9f3c2e.html:  150.9 KB
-articles.json:      321.7 KB
-sitemap.xml:        63.1 KB
-og-image.png:       19.1 KB  ← 新增
-robots.txt:         1.3 KB
+[1] JS 验证 (index.html)
+    ✓ 4 scripts, 480 KB main · 全部 valid
+[1b] JS 验证 (admin)
+    ✓ 1 script, 128 KB · valid
+[2] 静态 JSON-LD              ✓ 5/5 valid
+[3] 重复 style bug            ✓ 0 处
+[4] 表格列结构一致性          ✓ 10/10
+[5] 国际化完整性              ✓ 634+ keys · 0 missing
+[6] 敏感词                    ✓ 0 (翻墙/VPN/防屏蔽/科学上网/梯子)
+[7] 真实 affiliate URLs       ✓ 全保留
+   HYPEKR / WLFI47 / 8DXZXGZ / web3.binance / web3.okx
+[8] Schema image 字段         ✓ Product/SoftwareApp/Article 完整
+   og-image.png 引用: 16 处
+[9] AI 爬虫支持               ✓ 6/6
+   GPTBot / ClaudeBot / OAI-SearchBot / PerplexityBot / Applebot / ChatGPT-User
+[10] 文件大小                 
+   index.html:        644.4 KB
+   mgr-7a9f3c2e.html: 150.9 KB
+   articles.json:     321.7 KB
+   sitemap.xml:       63.1 KB
+   og-image.png:      342.5 KB
+[11] Build ID                ✓ 20260528-table-fix
 ```
 
 ---
@@ -145,88 +111,77 @@ robots.txt:         1.3 KB
 cd ~/Desktop/cryptorebatehub-site
 unzip -o ~/Downloads/cryptorebatehub-final.zip
 git add -A
-git status   # 应该看到 og-image.png 是新增
-git commit -m "fix: admin menu + og-image + full schema audit"
+git commit -m "fix: funding rate table column alignment + full audit"
 git push origin main
-# Cloudflare Pages 自动部署 → Caching → Purge Everything
+# 等 Cloudflare Pages 自动部署 → Caching → Purge Everything
 ```
 
 ---
 
-## 🧪 部署后验证清单（10 分钟）
+## 🧪 部署后验证
 
-### A. 后台 IndexNow 子页面
-- [ ] 访问 `https://cryptorebatehub.com/mgr-7a9f3c2e.html`
-- [ ] **Cmd+Shift+R** 硬刷新
-- [ ] 左侧"系统"分组下应出现 🚀 IndexNow
-- [ ] 点进去配置 Worker URL + Secret
+### 1. 资金费率表对齐
+1. 访问 `https://cryptorebatehub.com/tools/funding-rates`
+2. **Cmd+Shift+R** 强制刷新
+3. 检查 TON / DOT / APT 这些行
+4. ✅ 数据值应该**严格在 Binance / Bybit / OKX / Hyperliquid 表头正下方**对齐
+5. ✅ 负数 `-0.0487%` 和正数 `0.0050%` 的小数点应该完美对齐
 
-### B. OG 图片
-- [ ] 浏览器直接打开 `https://cryptorebatehub.com/og-image.png`
-- [ ] 应显示 1200×630 品牌图（深色背景 + 绿色品牌色 + URL）
-- [ ] **不应**返回 SPA 首页或 404
+### 2. 其他表也检查
+- 解锁日历: `/tools/token-unlocks`
+- 费率对比: `/tools/fee-comparison`  
+- 词典: `/glossary`
+- 税务计算器: `/tools/tax-calculator`
 
-### C. Google Rich Results Test（再测一遍）
-打开 https://search.google.com/test/rich-results
-
-| URL | 期望 |
-|---|---|
-| `https://cryptorebatehub.com/exchange/bybit` | ✓ 0 严重 + 0 非严重 |
-| `https://cryptorebatehub.com/tools/funding-rates` | ✓ 0 严重 |
-| `https://cryptorebatehub.com/compare/okx-vs-binance` | ✓ 0 严重 |
-
-### D. Twitter Card Validator
-打开 https://cards-dev.twitter.com/validator
-- 输入：`https://cryptorebatehub.com`
-- 应该显示带图片的预览卡片
-
-### E. Facebook Sharing Debugger
-打开 https://developers.facebook.com/tools/debug/
-- 输入：`https://cryptorebatehub.com`
-- 应该显示完整 OG 信息 + 图片
-
-### F. Search Console 验证修复
-- Search Console → **增强功能 → 评价摘要** → 找到原错误 → **验证修复**
-- Google 在 1-7 天内重新检查
+### 3. 触发 IndexNow 推送
+登录 admin 面板 → **🚀 IndexNow** → 点 **▶ 立即推送**
+让 Bing / Yandex / Seznam / Naver 立即重新爬取修复版。
 
 ---
 
-## ⏰ 预期效果时间线
+## 💡 知识点：HTML 双 style 属性陷阱
 
-| 时间 | 状态 |
-|---|---|
-| 立即 | Rich Results Test 全绿 |
-| 24-48h | Google 重爬，错误数下降 |
-| 3-7 天 | Search Console 显示 "已通过" |
-| 7-14 天 | 搜索结果显示星级 ⭐⭐⭐⭐⭐ |
+这个 bug 是经典的 HTML 反模式。每个元素只允许**一个** `style` 属性：
 
----
+```html
+<!-- ❌ 错误 - 第二个 style 被静默丢弃 -->
+<td style="color:red" style="font-weight:bold">
 
-## 🎯 下一步建议
+<!-- ❌ 错误 - 模板字符串拼接出双 style -->
+<td ${someFunc()} style="...">
+   ↑ 如果 someFunc() 返回 "style=..."，就坏了
 
-设置完后台 IndexNow → 用 **▶ 立即推送** 通知所有搜索引擎你刚部署了新内容（特别有用！可以让 Bing/Yandex 几小时内重新爬取）。
+<!-- ✅ 正确 - 合并为单个 style -->
+<td style="color:red;font-weight:bold">
 
-接下来你也可以选做：
-- 📊 **GA4 跟踪**（5 分钟，Worker 推送数据进 GA4）
-- 🔄 **GitHub Action 自动触发**（5 分钟，push 后自动推 IndexNow）
-- 🎨 **替换 og-image.png** 为设计师做的精美版本
-- 🌐 **Bing Webmaster + Yandex Webmaster** 提交 sitemap
+<!-- ✅ 正确 - 让函数返回 style 的值（不含 "style=" 前缀） -->
+<td style="${getStyles()}">
+```
+
+**自动检测**：可以加 ESLint 规则或 HTML 验证器在 CI 中防止此类 bug。
 
 ---
 
 ## 📦 包内容
 
 ```
-cryptorebatehub-final.zip
-├── 网站文件 (含所有修复)
-│   ├── index.html             ← Schema 全修复
-│   ├── mgr-7a9f3c2e.html      ← IndexNow 菜单已加
-│   ├── og-image.png           ← 🆕 新增！
-│   ├── _redirects             ← 加了 og-image 路由
-│   ├── _headers               ← 加了 og-image 缓存
-│   └── 其他静态文件
-├── functions/                 ← 14 个 Cloudflare Functions
-└── db/                        ← D1 schema
+cryptorebatehub-final.zip (27 files)
+├── 网站文件 (含修复的 index.html + admin)
+├── og-image.png (Solana Glass v2)
+├── functions/ (14 个 Cloudflare Functions)
+└── db/ (D1 schema)
 ```
 
-注：本次包**不含** cf-worker/ 和 .github/（已独立部署，无需重传）。
+---
+
+## 🎁 修复后效果对比
+
+| 指标 | 修复前 | 修复后 |
+|---|---|---|
+| 数据值对齐 | ❌ 默认左对齐 | ✅ 严格右对齐 |
+| 与表头对齐 | ❌ 错位 | ✅ 完美对齐 |
+| 数字字符宽度 | ❌ 比例字体 | ✅ 等宽数字 |
+| 浏览器列宽计算 | ❌ 自动可变 | ✅ 固定 colgroup |
+| 视觉一致性 | ❌ 混淆用户 | ✅ 一目了然 |
+
+**用户现在能瞬间看出**：哪个交易所费率最高、最低，套利机会在哪一列。
